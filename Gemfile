@@ -1,11 +1,15 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.6'
+gem 'bcrypt-ruby', '3.0.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
+
+
+gem 'annotate', group: :development
 
 group :development, :test do
 	gem 'rspec-rails'
@@ -13,7 +17,7 @@ group :development, :test do
 	gem 'spork'
 	gem 'guard-rspec'
 	gem 'rb-inotify'
-  	gem 'libnotify'
+  gem 'libnotify'
  end
 
 # Gems used only for assets and not required
