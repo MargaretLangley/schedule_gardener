@@ -34,10 +34,10 @@ class User < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
 	validates :email, presence: true, uniqueness: { case_sensitive: false}, format: { with: VALID_EMAIL_REGEX }
 	validates :password, presence: true, length: { minimum: 6 }
-	validates :password_confirmation, presence: true
+	#validates :password_confirmation, presence: true
   validates :town, presence: true, length: { maximum: 50 }
   validates :address_line_1, presence: true
   validates :phone_number, presence: true
 
-  before_save { self.email = email.downcase! }
+  before_save { |user| user.email = email.downcase }
 end
