@@ -19,6 +19,7 @@ group :development, :test do
 	gem 'guard-rspec'
 	gem 'rb-inotify'
   gem 'libnotify'
+  gem 'factory_girl_rails'
  end
 
 # Gems used only for assets and not required
