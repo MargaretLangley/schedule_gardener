@@ -39,5 +39,5 @@ class User < ActiveRecord::Base
   validates :address_line_1, presence: true
   validates :phone_number, presence: true
 
-  before_save { |user| user.email = email.downcase }
+  before_save { self.email = email.downcase! }
 end

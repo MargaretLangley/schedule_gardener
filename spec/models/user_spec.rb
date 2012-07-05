@@ -107,13 +107,23 @@ describe User do
 
 
 		context	"valid" do
-			it "should be valid" do
+			it "should handle these email addresses" do
 	      addresses = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
 	      addresses.each do |valid_address|
 	        @user.email = valid_address
 	        @user.should be_valid
 	      end      
     	end
+		end
+
+		context "email addresses with mixed case" do
+			let(:mixed_case_email) { "Foo@ExAMPLe.CoM"}
+
+			it "should be saved as all lower-case" do
+				@user.email = mixed_case_email
+				@user.save
+				@user.reload.email.should == mixed_case_email.downcase
+			end
 		end
 	end
 	
