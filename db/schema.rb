@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 20120703175940) do
     t.string   "last_name"
     t.string   "email"
     t.string   "password_digest"
+    t.string   "remember_token"
     t.string   "address_line_1"
     t.string   "address_line_2"
     t.string   "town"
@@ -29,5 +30,6 @@ ActiveRecord::Schema.define(:version => 20120703175940) do
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
 
 end

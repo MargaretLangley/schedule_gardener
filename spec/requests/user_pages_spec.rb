@@ -60,7 +60,16 @@ describe "User pages" do
 
         it { should have_selector('title', text: user.first_name) }
         it { should have_selector('div.alert.alert-success', text: 'Welcome') }
+        it { should have_link('Sign out')}
+
+        context "followed by signout" do
+          before { click_link "Sign out" }
+          it { should have_link('Sign in')}
+        end
       end
+
+
+
   	end
   end
 end

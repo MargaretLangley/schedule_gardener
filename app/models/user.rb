@@ -17,15 +17,11 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :first_name
-  attr_accessible :last_name
+  attr_accessible :first_name,     :last_name
   attr_accessible :email
-  attr_accessible :password
-  attr_accessible :password_confirmation
-  attr_accessible :address_line_1
-  attr_accessible :address_line_2
-  attr_accessible :town
-  attr_accessible :post_code
+  attr_accessible :password,       :password_confirmation
+  attr_accessible :address_line_1, :address_line_2
+  attr_accessible :town,           :post_code
   attr_accessible :phone_number
   attr_accessible :garden_requirements
   has_secure_password
@@ -34,10 +30,17 @@ class User < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
 	validates :email, presence: true, uniqueness: { case_sensitive: false}, format: { with: VALID_EMAIL_REGEX }
 	validates :password, presence: true, length: { minimum: 6 }
-	#validates :password_confirmation, presence: true
+	validates :password_confirmation, presence: true
   validates :town, presence: true, length: { maximum: 50 }
   validates :address_line_1, presence: true
   validates :phone_number, presence: true
 
   before_save { |user| user.email = email.downcase }
+  before_save :create_remember_token
+
+  private
+
+    def create_remember_token
+      self.remember_token = SecureRandom.urlsafe_base64
+    end
 end
