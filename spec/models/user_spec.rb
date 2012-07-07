@@ -25,8 +25,8 @@ describe User do
 														email: "user@example.com",
 														password: "foobar",
 														password_confirmation: "foobar", 
+														address_line_1: "55 Essex Road",
 														town: "Sutton Coldfield",
-														address_line_1: "55 Essex Road", 
 														phone_number: "0121-308-1439") 
 				}
 
@@ -39,7 +39,6 @@ describe User do
 	it { should respond_to (:password) }
 	it { should respond_to (:password_confirmation) }
 	it { should respond_to (:remember_token) }
-	it { should respond_to (:authenticate) }
 	it { should respond_to (:address_line_1) }
 	it { should respond_to (:address_line_2) }
 	it { should respond_to (:town) }
@@ -47,7 +46,23 @@ describe User do
 	it { should respond_to (:phone_number) }
 	it { should respond_to (:garden_requirements) }
 
+	it { should respond_to(:admin) }
+	it { should respond_to (:authenticate) }
+
 	it { should be_valid }
+	it { should_not be_admin }
+
+	context "with admin attribute set to 'true'" do
+		before { @user.toggle(:admin) }
+
+		it { should be_admin }
+	end
+
+	context "accessible attributes" do
+		it "should not allow acess to admin" do
+			expect { User.new(admin: true)}.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+		end
+	end
 
 	context "first_name" do
 

@@ -12,6 +12,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :post_code
       t.string :phone_number
       t.text :garden_requirements
+      t.boolean :admin, default: false
 
       t.timestamps
     end
