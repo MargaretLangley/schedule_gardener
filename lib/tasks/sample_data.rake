@@ -2,7 +2,7 @@ namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
     Faker::Config.locale = 'en-gb'
-    User.create!(first_name: "Example",
+    admin = User.create!(first_name: "Example",
                  last_name: "User",
                  email: "example@railstutorial.org",
                  password: "foobar",
@@ -10,7 +10,7 @@ namespace :db do
                  address_line_1: "12 High Street",
                  town:  "London",
                  phone_number: "0181-333-8888")
-    admin.toggle(:admin)
+    admin.toggle!(:admin)
     99.times do |n|
       first_name  = Faker::Name.first_name
       last_name = Faker::Name.last_name
