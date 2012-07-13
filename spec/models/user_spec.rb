@@ -84,10 +84,10 @@ describe User do
 
 	context "last_name" do
 
-		it "invalid when last_name missing" do
-			@user.last_name = " "
-			@user.should_not be_valid
-		end
+		# it "invalid when last_name missing" do
+		# 	@user.last_name = " "
+		# 	@user.should_not be_valid
+		# end
 
 			it "when name too long" do
 				@user.last_name = "a" * 51
@@ -98,10 +98,11 @@ describe User do
 	context "email" do
 
 		context "invalid" do
-			it "when email missing" do
-				@user.email = ""
-				@user.should_not be_valid
-			end
+			# Records are v poor and missing most info
+			#it "when email missing" do
+			#	@user.email = ""
+			# 	@user.should_not be_valid
+			# end
 
 			it "when format wrong" do
       	addresses = %w[user@foo,com user_at_foo.org example.user@foo.
@@ -112,18 +113,24 @@ describe User do
       	end
       end
 
-      it "for email duplicate" do
-      	user_with_same_email = @user.dup
-      	user_with_same_email.email = @user.email.upcase
-      	user_with_same_email.save
+      # it "for email duplicate" do
+      # 	user_with_same_email = @user.dup
+      # 	user_with_same_email.email = @user.email.upcase
+      # 	user_with_same_email.save
 
-      	should_not be_valid
+      # 	should_not be_valid
 
-      end
+      # end
 		end
 
 
 		context	"valid" do
+
+			it "when email missing" do
+				@user.email = ""
+				@user.should be_valid
+			end
+
 			it "should handle these email addresses" do
 	      addresses = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
 	      addresses.each do |valid_address|
@@ -217,6 +224,13 @@ describe User do
 				@user.should_not be_valid
 			end
 		end
+
+		context "valid"
+			it "when phone_number has punctuation" do
+				@user.phone_number = "(0121).,;.308-1439" 
+				@user.save
+				@user.reload.phone_number.should == "01213081439"
+			end
 	end
 
 
