@@ -1,19 +1,22 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.6'
+gem 'jquery-rails'
 gem 'bootstrap-sass'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'faker'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 gem 'pg'
 
-
-gem 'annotate', group: :development
+group :development do
+  gem 'annotate'
+  # use require:false when you need to run something from
+  # command line but not don't need in code.
+  gem 'taps', require: false
+  # Dependency between taps and sqlite3
+  gem 'sqlite3'
+end
 
 group :development, :test do
 	gem 'rspec-rails'
@@ -37,7 +40,12 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
+
+# Bundle edge Rails instead:
+# gem 'rails', :git => 'git://github.com/rails/rails.git'
+
+# 1 line group structure
+# gem 'annotate', group: :development
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
