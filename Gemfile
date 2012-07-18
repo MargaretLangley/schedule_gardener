@@ -8,6 +8,7 @@ gem 'faker'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem 'pg'
+gem 'thin'
 
 group :development do
   gem 'annotate'
@@ -27,7 +28,6 @@ group :development, :test do
 	gem 'rb-inotify'
   gem 'libnotify'
   gem 'factory_girl_rails'
-  gem 'thin'
  end
 
  group :test do
