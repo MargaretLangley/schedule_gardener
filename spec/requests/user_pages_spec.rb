@@ -7,25 +7,28 @@ describe "User pages" do
   context "index" do
     # sign in with one user and Create two other users 
 
-    let(:user) { FactoryGirl.create(:user) }
-
-    before(:all) { 30.times { FactoryGirl.create(:user) } }
-    after(:all) { User.delete_all }
-
-    before(:each) do
-      sign_in user
+    before do
+      sign_in FactoryGirl.create(:user)
+      FactoryGirl.create(:user, first_name: "Bob", email: "bob@example.com", phone_number: "077812345678")
+      FactoryGirl.create(:user, first_name: "Ben", email: "ben@example.com", phone_number: "077812345679")
       visit users_path
     end
 
     it { should have_selector('title', text: 'All users')}
     it { should have_selector('h1', text: 'All users')}
-    
+
     describe "pagination" do
+
+      before(:all) { 30.times { FactoryGirl.create(:user) } }
+      after(:all) { User.delete_all }
+
+      let(:first_page) { User.paginate(page: 1) }
+      let(:second_page) { User.paginate(page: 2) }
 
       it { should have_selector('div.pagination') }
 
       it "should list each user" do
-        User.paginate(page: 1).each do |user|
+        User.order('first_name ASC').all[0..3].each do |user|
           page.should have_selector('li', text: user.first_name)
         end
       end
@@ -46,6 +49,37 @@ describe "User pages" do
           expect { click_link("delete") }.to change(User, :count).by(-1)
         end
         it { should_not have_link('delete', href: user_path(admin)) }
+      end
+    end
+
+    context "search" do
+      context "by name" do
+        before do
+          fill_in('search', with: 'Bob')
+          click_on('search')
+        end
+        it { should have_selector('input.input-medium.search-query')}
+        it "should return Bob" do
+          page.should have_selector('li', text: "Bob")
+        end
+
+        it "should not return Ben" do
+          page.should_not have_selector('li', text: "Ben")
+        end
+      end
+
+      context "by number" do
+        before do
+          fill_in('search', with: '45678')
+          click_on('search')
+        end
+        it "should return Bob" do
+          page.should have_selector('li', text: "Bob")
+        end
+
+        it "should not return Ben" do
+          page.should_not have_selector('li', text: "Ben")
+        end
       end
     end
   end

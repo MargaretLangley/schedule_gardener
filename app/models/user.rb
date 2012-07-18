@@ -47,6 +47,14 @@ class User < ActiveRecord::Base
     write_attribute(:phone_number,num.gsub(/\D/, ''))
   end
 
+  def self.search(search)
+    if search
+      where('first_name LIKE ? OR last_name LIKE ? OR phone_number LIKE ?', "%#{search}%", "%#{search}%", "%#{search}%").order('first_name ASC')
+    else
+      scoped.order('first_name ASC')
+    end
+  end
+
   private
 
     def create_remember_token

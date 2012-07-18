@@ -5,6 +5,11 @@ class UsersController < ApplicationController
   # 9.6.6 
   #before_filter :unsigned_in_can_create, only: [:create, :new]
 
+  def index
+    @users = User.search(params[:search]).paginate(per_page: 20, page: params[:page])
+  end
+
+
 	def show
 		@user = User.find(params[:id])
 	end
@@ -35,10 +40,6 @@ class UsersController < ApplicationController
     else
       render 'edit'
     end
-  end
-
-  def index
-    @users = User.paginate(page: params[:page])
   end
 
   def destroy
