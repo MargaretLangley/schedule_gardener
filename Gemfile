@@ -16,6 +16,7 @@ group :development do
   gem 'taps', require: false
   # Dependency between taps and sqlite3
   gem 'sqlite3'
+  gem 'quiet_assets'
 end
 
 group :development, :test do
@@ -26,6 +27,11 @@ group :development, :test do
 	gem 'rb-inotify'
   gem 'libnotify'
   gem 'factory_girl_rails'
+  gem 'thin'
+ end
+
+ group :test do
+  gem 'launchy'
  end
 
 # Gems used only for assets and not required
