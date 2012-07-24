@@ -1,15 +1,9 @@
 @import "bootstrap";
 
-
 /* mixins, variables, etc. */
 
 $grayMediumLight: #eaeaea;
 
-@mixin box_sizing {
-  -moz-box-sizing: border-box; 
-  -webkit-box-sizing: border-box; 
-  box-sizing: border-box;
-}
 
 /* universal */
 
@@ -115,7 +109,6 @@ footer {
   float: left;
   width: 100%;
   margin-top: 45px;
-  @include box_sizing;
 }
 
 /* sidebar */
@@ -150,7 +143,6 @@ input, textarea, select, .uneditable-input {
   padding: 10px;
   height: auto;
   margin-bottom: 15px;
-  @include box_sizing;
 }
 
 #error_explanation {
