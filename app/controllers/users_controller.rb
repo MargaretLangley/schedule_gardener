@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:edit, :update,:index, :destroy]
   before_filter :correct_user, only: [:edit, :update]
-  before_filter :admin_user,     only: :destroy
+  before_filter :admin_user,     only: [:index, :destroy]
   # 9.6.6 
   #before_filter :unsigned_in_can_create, only: [:create, :new]
 
   def index
-    @users = User.search(params[:search]).paginate(per_page: 20, page: params[:page])
+    @users = User.search_ordered(params[:search]).paginate(per_page: 20, page: params[:page])
   end
 
 
@@ -35,7 +35,9 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated"
-      sign_in @user
+      # 9.10 changing account results in the remember token getting reset
+      # so we login again - sounds like I only need it for admin if change admin?
+      sign_in @user unless current_user.admin?
       redirect_to @user
     else
       render 'edit'
@@ -65,7 +67,7 @@ class UsersController < ApplicationController
 
     def correct_user
       @user = User.find(params[:id])
-      redirect_to(root_path) unless current_user?(@user)
+      redirect_to(root_path) unless current_user.admin? || current_user?(@user)
     end  
 
     def admin_user

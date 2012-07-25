@@ -176,6 +176,22 @@ describe User do
 
 		end
 
+
+		context "valid" do
+
+			context "Updating user doesn't require password" do
+				let(:original_password) { @original_password = @user.password }
+				before do
+					@user.update_attributes(first_name: "Example2")
+					@user.reload
+				end
+				it { should be_valid }
+				context "Should not change password" do
+					its (:password) { should == original_password }
+				end
+			end
+		end
+
 	end
 
 	context "authenticate" do
@@ -231,6 +247,19 @@ describe User do
 				@user.save
 				@user.reload.phone_number.should == "01213081439"
 			end
+	end
+
+	context "search_ordered" do
+ 		before(:all) do 
+ 			3.times { |i| user = FactoryGirl.create(:user, first_name: "Person #{i+1}")  }
+ 			FactoryGirl.create(:user, first_name: "Person 0")
+ 		end
+    after(:all) { User.delete_all }
+
+    it "count" do
+	    first_name_array = User.search_ordered("Person").map { |user| user.first_name }
+    	first_name_array.should == ["Person 0", "Person 1", "Person 2", "Person 3"]
+    end 
 	end
 
 

@@ -29,8 +29,8 @@ class User < ActiveRecord::Base
   validates :last_name, length:  { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
 	validates :email, allow_blank: true, format: { with: VALID_EMAIL_REGEX }
-	validates :password, length: { minimum: 6 }
-	validates :password_confirmation, presence: true
+	validates :password, length: { minimum: 6 }, on: :create
+	validates :password_confirmation, presence: true, on: :create
   validates :town, presence: true, length: { maximum: 50 }
   validates :address_line_1, presence: true
   validates :phone_number, presence: true
@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
     write_attribute(:phone_number,num.gsub(/\D/, ''))
   end
 
-  def self.search(search)
+  def self.search_ordered(search = nil)
     if search
       where('first_name LIKE ? OR last_name LIKE ? OR phone_number LIKE ?', "%#{search}%", "%#{search}%", "%#{search}%").order('first_name ASC')
     else

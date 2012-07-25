@@ -6,9 +6,17 @@ describe "User pages" do
 
   context "index" do
     # sign in with one user and Create two other users 
+    context "only admin can index users" do
+      before do
+        sign_in FactoryGirl.create(:user)
+        visit users_path
+      end
+
+      it { current_path.should == root_path }
+    end
 
     before do
-      sign_in FactoryGirl.create(:user)
+      sign_in FactoryGirl.create(:admin)
       FactoryGirl.create(:user, first_name: "Bob", email: "bob@example.com", phone_number: "077812345678")
       FactoryGirl.create(:user, first_name: "Ben", email: "ben@example.com", phone_number: "077812345679")
       visit users_path
@@ -34,21 +42,40 @@ describe "User pages" do
       end
     end
 
-    context "delete links" do
-      it { should_not have_link('delete') }
+    context "index links" do
+      before do
+        sign_in admin
+        visit users_path
+      end
 
-      context "as an admin user" do
-        let(:admin) { FactoryGirl.create(:admin)}
-        before do
-          sign_in admin
-          visit users_path
+      let(:admin) { FactoryGirl.create(:admin)}
+      let(:first_user)  { User.search_ordered().all[0] }
+
+      context "edit" do
+        it { should have_link('edit', href: edit_user_path(first_user)) }
+
+        context "should visit the first user's edit page" do
+          before do 
+            click_link 'edit' 
+          end
+          it { have_selector('h1', 'Update your profile')}
+          it { have_selector('user_email', 'ben@example.com') }
+          context "on update it should show user"
+          before do
+            click_on 'Save changes'
+          end
+          it { current_path.should == user_path(first_user) }
         end
+      end
 
-        it { should have_link('delete', href: user_path(User.first))}
+      context "delete" do
+        it { should have_link('delete', href: user_path(first_user))}
         it "should be able to delete another user" do
           expect { click_link("delete") }.to change(User, :count).by(-1)
         end
-        it { should_not have_link('delete', href: user_path(admin)) }
+        it 'should not delete self' do 
+          should_not have_link('delete', href: user_path(admin)) 
+        end
       end
     end
 
@@ -163,7 +190,7 @@ describe "User pages" do
     end
 
     describe "with invalid information" do
-      before { click_button "Save changes" }
+      before { save_and_open_page; click_button "Save changes" }
 
       it { should have_content('error') }
     end
