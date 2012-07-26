@@ -190,7 +190,10 @@ describe "User pages" do
     end
 
     describe "with invalid information" do
-      before { save_and_open_page; click_button "Save changes" }
+      before do 
+        fill_in "First name", with: ""
+        click_button "Save changes" 
+      end
 
       it { should have_content('error') }
     end
@@ -207,8 +210,6 @@ describe "User pages" do
         fill_in "First name",       with: new_first_name
         fill_in "Last name",        with: new_last_name
         fill_in "Email",            with: new_email
-        fill_in "Password",         with: user.password
-        fill_in "Confirm Password", with: user.password
         fill_in "Address Line 1",   with: new_address_line_1
         fill_in "Town",             with: new_town
         fill_in "Phone number",     with: new_phone
