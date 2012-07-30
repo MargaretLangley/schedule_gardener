@@ -1,36 +1,43 @@
 require 'spec_helper'
 
-describe "User pages" do
+describe "users" do
 
   subject { page }
 
-  context "index" do
-    # sign in with one user and Create two other users 
-    context "only admin can index users" do
-      before do
-        sign_in FactoryGirl.create(:user)
-        visit users_path
-      end
+  let(:update_profile)      { "Update Profile" }
+  let(:admin_first_name)    { "bob_admin" }
+  let(:user_first_name)     { "alice_user" }
 
-      it { current_path.should == root_path }
-    end
+  context "#index" do
+
+    # Need constants but don't know which is best way in RSpec
+    AdminPhoneNumber  = "44884488" 
+    UserPhoneNumber   = "0123456789" 
+    let(:all_users)   { "All users" }
+
+    let!(:admin)            { FactoryGirl.create(:admin, first_name: admin_first_name, email: "#{admin_first_name}@example.com", phone_number: AdminPhoneNumber)}  
+    let!(:none_admin_user)  { FactoryGirl.create(:user,  first_name: user_first_name,  email: "#{user_first_name}@example.com", phone_number: UserPhoneNumber ) }
 
     before do
-      sign_in FactoryGirl.create(:admin)
-      FactoryGirl.create(:user, first_name: "Bob", email: "bob@example.com", phone_number: "077812345678")
-      FactoryGirl.create(:user, first_name: "Ben", email: "ben@example.com", phone_number: "077812345679")
+      sign_in admin 
       visit users_path
     end
 
-    it { should have_selector('title', text: 'All users')}
-    it { should have_selector('h1', text: 'All users')}
+    context "view" do
+      it "should see users list" do
+        current_path.should eq users_path
+      end
+
+      it { should have_selector('title',  text: all_users)}
+      it { should have_selector('h1',     text: all_users)}
+    end
 
     describe "pagination" do
 
-      before(:all) { 30.times { FactoryGirl.create(:user) } }
-      after(:all) { User.delete_all }
+      before(:all)  { 30.times { FactoryGirl.create(:user) } }
+      after(:all)   { User.delete_all }
 
-      let(:first_page) { User.paginate(page: 1) }
+      let(:first_page)  { User.paginate(page: 1) }
       let(:second_page) { User.paginate(page: 2) }
 
       it { should have_selector('div.pagination') }
@@ -41,77 +48,95 @@ describe "User pages" do
         end
       end
     end
+  
+    context "search" do
+      let(:search) { 'search' }
 
-    context "index links" do
-      before do
-        sign_in admin
-        visit users_path
-      end
+      context "by name" do
+        before do
+          fill_in(search, with: admin_first_name)
+          click_on(search)
+        end
+        it { should have_selector('input.input-medium.search-query')}
+        it "should return matched searched name"  do
+          page.should have_selector('li', text: admin_first_name)
+        end
 
-      let(:admin) { FactoryGirl.create(:admin)}
-      let(:first_user)  { User.search_ordered().all[0] }
-
-      context "edit" do
-        it { should have_link('edit', href: edit_user_path(first_user)) }
-
-        context "should visit the first user's edit page" do
-          before do 
-            click_link 'edit' 
-          end
-          it { have_selector('h1', 'Update your profile')}
-          it { have_selector('user_email', 'ben@example.com') }
-          context "on update it should show user"
-          before do
-            click_on 'Save changes'
-          end
-          it { current_path.should == user_path(first_user) }
+        it "should not return unmatched searched name" do
+          page.should_not have_selector('li', text: user_first_name)
         end
       end
 
-      context "delete" do
-        it { should have_link('delete', href: user_path(first_user))}
+      context "by number" do
+        before do
+          fill_in(search, with: AdminPhoneNumber[2,5])
+          click_on(search)
+        end
+
+        it "should return user with phone number" do
+          page.should have_selector('li', text: admin_first_name)
+        end
+
+        it "should not return user without phone number" do
+          page.should_not have_selector('li', text: user_first_name)
+        end
+      end
+    end   # search
+
+    context "User links" do
+          
+      context "for none-admin user" do
+
+        it "should include edit link" do
+          should have_link('edit', href: edit_user_path(none_admin_user))
+        end
+      end
+
+      context "for admin user" do
+        let!(:admin_edit_self) { FactoryGirl.create(:admin, first_name: "admin_edit_self")}
+        before do
+          visit users_path
+        end
+      
+        it "should edit self" do
+          should have_link('edit', href: edit_user_path(admin))
+        end
+
+        it "should not edit another admin" do
+          should_not have_link('edit', href: edit_user_path(admin_edit_self))
+        end
+      end
+      
+      context "#delete" do
+        let!(:admin_undeleteable) { FactoryGirl.create(:admin, first_name: "admin_undeletable")}  
+        before do
+          visit users_path
+        end
+
+        it { should have_link('delete', href: user_path(none_admin_user))}
         it "should be able to delete another user" do
           expect { click_link("delete") }.to change(User, :count).by(-1)
         end
         it 'should not delete self' do 
           should_not have_link('delete', href: user_path(admin)) 
         end
+        it 'should not delete another admin' do
+          should_not have_link('delete', href: user_path(admin_undeleteable))
+        end
+      end
+    end # user links
+
+    # sign in with one user and Create two other users 
+    context "None-admin users" do
+      it "should be sent to root" do
+        sign_in FactoryGirl.create(:user)
+        visit users_path
+        current_path.should eq root_path 
       end
     end
+  end # index 
 
-    context "search" do
-      context "by name" do
-        before do
-          fill_in('search', with: 'Bob')
-          click_on('search')
-        end
-        it { should have_selector('input.input-medium.search-query')}
-        it "should return Bob" do
-          page.should have_selector('li', text: "Bob")
-        end
-
-        it "should not return Ben" do
-          page.should_not have_selector('li', text: "Ben")
-        end
-      end
-
-      context "by number" do
-        before do
-          fill_in('search', with: '45678')
-          click_on('search')
-        end
-        it "should return Bob" do
-          page.should have_selector('li', text: "Bob")
-        end
-
-        it "should not return Ben" do
-          page.should_not have_selector('li', text: "Ben")
-        end
-      end
-    end
-  end
-
-  describe "profile page" do
+  describe "#show profile page" do
   	let(:user) { FactoryGirl.create(:user) }
   	before { visit user_path(user) }
 
@@ -151,8 +176,8 @@ describe "User pages" do
   				fill_in "Last name",				with: "User"
   				fill_in "Email",						with: "user@example.com"
   				fill_in	"Password",					with: "foobar"
-  				fill_in "Confirm Password",			with: "foobar"
-  				fill_in "Address Line 1",		with: "23 High Street"
+  				fill_in "Confirm password",	with: "foobar"
+  				fill_in "Address line 1",		with: "23 High Street"
   				fill_in "Town",							with: "Sutton Coldfield"
   				fill_in "Phone number",			with: "0123-333-4444"
   		end
@@ -177,7 +202,7 @@ describe "User pages" do
   	end
   end
 
-  context "edit" do
+  context "#edit" do
     let(:user) { FactoryGirl.create(:user) }
     before do
       sign_in user
@@ -185,14 +210,15 @@ describe "User pages" do
     end
 
     describe "page" do
-      it { should have_selector('h1',    text: "Update your profile") }
+
+      it { should have_selector('h1',    text: update_profile) }
       it { should have_selector('title', text: "Edit user") }
     end
 
     describe "with invalid information" do
       before do 
         fill_in "First name", with: ""
-        click_button "Save changes" 
+        click_button update_profile
       end
 
       it { should have_content('error') }
@@ -210,17 +236,17 @@ describe "User pages" do
         fill_in "First name",       with: new_first_name
         fill_in "Last name",        with: new_last_name
         fill_in "Email",            with: new_email
-        fill_in "Address Line 1",   with: new_address_line_1
+        fill_in "Address line 1",   with: new_address_line_1
         fill_in "Town",             with: new_town
         fill_in "Phone number",     with: new_phone
-        click_button "Save changes"
+        click_button update_profile
       end
 
       it { should have_selector('title', text: new_first_name) }
       it { should have_selector('div.alert.alert-success') }
       it { should have_link('Sign out', href: signout_path) }
-      specify { user.reload.first_name.should  == new_first_name }
-      specify { user.reload.email.should == new_email }
+      specify { user.reload.first_name.should  eq new_first_name }
+      specify { user.reload.email.should eq new_email }
     end
   end
 end

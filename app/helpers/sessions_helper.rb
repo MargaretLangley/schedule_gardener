@@ -17,12 +17,17 @@ module SessionsHelper
 		@current_user = user
 	end
 
+	# current_user is nil user signed out
 	def current_user
 		@current_user ||= User.find_by_remember_token(cookies[:remember_token])
 	end
 
 	def current_user?(user)
 		user == current_user
+	end
+
+	def admin_user?(user)
+		user.admin? unless user.nil?
 	end
 
 	def redirect_back_or(default)

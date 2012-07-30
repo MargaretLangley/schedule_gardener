@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
-  before_filter :signed_in_user, only: [:edit, :update,:index, :destroy]
-  before_filter :correct_user, only: [:edit, :update]
-  before_filter :admin_user,     only: [:index, :destroy]
+  # signing in must happen before testing filters allowed_user and admin_user
+  before_filter :signed_in_user,  only: [:index, :edit, :update, :destroy]
+
+  before_filter :allowed_user,    only: [:edit,  :update]
+  before_filter :admin_user,      only: [:index, :destroy]
   # 9.6.6 
   #before_filter :unsigned_in_can_create, only: [:create, :new]
 
@@ -36,8 +38,10 @@ class UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated"
       # 9.10 changing account results in the remember token getting reset
-      # so we login again - sounds like I only need it for admin if change admin?
-      sign_in @user unless current_user.admin?
+      # so we login again. 
+
+      #sign_in if we are the user
+      sign_in @user if current_user?(@user)
       redirect_to @user
     else
       render 'edit'
@@ -52,6 +56,21 @@ class UsersController < ApplicationController
 
   private
 
+    def admin_user
+      redirect_to(root_path) unless current_user.admin?
+    end
+
+    # 9.6.6 but don't know what doing
+    # def unsigned_in_can_create
+    #   redirect_to(root_path) if signed_in? 
+    # end
+
+    def allowed_user
+      @user = User.find(params[:id])
+      # Current user assigns @current_user from cookie if null
+      redirect_to(root_path) unless current_user?(@user) || admin_user?(@user)
+    end 
+
     def signed_in_user
       # signed_in? means sessions helper has the @user set
       unless signed_in?
@@ -60,17 +79,4 @@ class UsersController < ApplicationController
       end
     end
 
-    # 9.6.6 but don't know what doing
-    # def unsigned_in_can_create
-    #   redirect_to(root_path) if signed_in? 
-    # end
-
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_path) unless current_user.admin? || current_user?(@user)
-    end  
-
-    def admin_user
-      redirect_to(root_path) unless current_user.admin?
-    end
 end

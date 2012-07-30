@@ -1,29 +1,20 @@
 <% provide(:title, "Edit user") %> 
-<h1>Update your profile</h1>
+	<h1>Update Profile</h1>
+	  
+
 
 <div class="row">
   <div class="span6 offset3">
-    <%= form_for(@user) do |f| %>
-      <%= render 'shared/error_messages' %>
-      <%= f.label :first_name %>
-			<%= f.text_field :first_name %>
-
-			<%= f.label :last_name %>
-			<%= f.text_field :last_name %>
-
-			<%= f.label :email %>
-			<%= f.text_field :email %>
-
-			<%= f.label :address_line_1, "Address Line 1" %>
-			<%= f.text_field :address_line_1 %>
-
-			<%= f.label :town, "Town" %>
-			<%= f.text_field :town %>
-
-			<%= f.label :phone_number %>
-			<%= f.text_field :phone_number %>
-
-      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
-    <% end %>
-  </div>
+	<%= simple_form_for(@user, html: { class: 'form-vertical'}) do |f| %>
+	  <%= render 'shared/error_messages' %>
+		<%= f.input :first_name	%>
+		<%= f.input :last_name %>
+		<%= f.input :email %>
+		<%= f.input :address_line_1, label: "Address line 1" %>
+		<%= f.input :town %>
+		<%= f.input :phone_number %>
+		<%= f.button :submit, class: 'btn-primary',value: "Update Profile" %>
+	</div>
+	<% end %>
 </div>
+

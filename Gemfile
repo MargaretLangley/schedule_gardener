@@ -9,6 +9,7 @@ gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem 'pg'
 gem 'thin'
+gem 'simple_form'
 
 group :development do
   gem 'annotate'
