@@ -49,7 +49,6 @@ class User < ActiveRecord::Base
 
   def self.search_ordered(search = nil)
     if search
-      
       where("first_name ILIKE ? OR last_name ILIKE ? OR (first_name || ' ' || last_name) ILIKE ? OR phone_number LIKE ?", 
             "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%"
            )
