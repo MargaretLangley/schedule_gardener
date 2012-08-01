@@ -251,15 +251,33 @@ describe User do
 
 	context "search_ordered" do
  		before(:all) do 
- 			3.times { |i| user = FactoryGirl.create(:user, first_name: "Person #{i+1}")  }
- 			FactoryGirl.create(:user, first_name: "Person 0")
+ 			3.times { |i| user = FactoryGirl.create(:user, first_name: "Person#{i+1}", last_name: "Surname#{i+1}")  }
+
  		end
     after(:all) { User.delete_all }
 
-    it "count" do
-	    first_name_array = User.search_ordered("Person").map { |user| user.first_name }
-    	first_name_array.should eq ["Person 0", "Person 1", "Person 2", "Person 3"]
+    it "should match only one user" do
+    	# Creates an array of matching users and passes them into first_name_array
+	    first_name_array = User.search_ordered("Person2").map { |user| user.first_name }
+    	first_name_array.should eq ["Person2"]
     end 
+
+
+    it "should match expected array" do
+    	# Creates an array of matching users and passes them into first_name_array
+	    first_name_array = User.search_ordered("Person").map { |user| user.first_name }
+    	first_name_array.should eq ["Person1", "Person2", "Person3"]
+    end 
+
+    it "should be case insenstive" do
+	    first_name_array = User.search_ordered("PERSON").map { |user| user.first_name }
+    	first_name_array.should eq ["Person1", "Person2", "Person3"]
+    end 
+
+    it "should match full name" do
+    	first_name_array = User.search_ordered("PERSON1 SURNAME1").map { |user| user.first_name }
+    	first_name_array.should eq ["Person1"]
+    end
 	end
 
 
