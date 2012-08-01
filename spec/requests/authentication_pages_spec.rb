@@ -62,7 +62,7 @@ describe "Authentication" do
     # end
 
     describe "for non-signed-in users" do
-      let!(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryGirl.create(:user) }
 
       describe "when attempting to visit a protected page" do
         before do
@@ -90,12 +90,10 @@ describe "Authentication" do
           specify { response.should redirect_to(signin_path) }
         end
 
-        # If a none signed in user asks to list users.
-        # Tell them to sign in.
-        # BEHAVIOUR NEEDS TO BE MORE SECURE see white board
+        # only admin should be asking for users index!
         describe "visiting the user index" do
           before { visit users_path}
-          it { should have_selector('title', text: 'Sign in')}
+          it { current_path.should eq signin_path }
         end
       end
     end
@@ -104,6 +102,11 @@ describe "Authentication" do
       let(:user) { FactoryGirl.create(:user) }
       let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
       before { sign_in user }
+
+      describe "visiting Users#show page" do
+        before { visit user_path(wrong_user) }
+        it { current_path.should eq root_path }
+      end
 
       describe "visiting Users#edit page" do
         before { visit edit_user_path(wrong_user) }

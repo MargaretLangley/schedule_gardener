@@ -1,3 +1,9 @@
+$navbarHeight: 40px;
+$navbarBackground: #46a546;
+$navbarBackgroundHighlight:#46a546;
+$navbarText: #46a546;
+$navbarLinkColor: #fff;
+
 @import "bootstrap";
 
 /* mixins, variables, etc. */
@@ -158,17 +164,42 @@ input, textarea, select, .uneditable-input {
   @extend .error;
  }
 
-/* users index */
 
-.users {
-  list-style: none;
-  margin: 0;
-  li {
-    overflow: auto;
-    padding: 10px 0;
-    border-top: 1px solid $grayLighter;
-    &:last-child {
-      border-bottom: 1px solid $grayLighter;
-    }
+/* search box on index page  */
+
+.well.form-search {
+    position: relative;
+}
+  
+.well.form-search .search-query {
+    padding-left: 29px;
+}
+
+.well.form-search .icon-search {
+    position: absolute;
+    top: 25px;
+    left: 30px;
+}
+
+
+/*
+.navbar{
+  .navbar-inner{
+
+    border-bottom:solid 1px #ccc;
+    .nav{
+        margin-left:20px;
+        li{
+            a{
+              padding:5px;
+              margin:5px 5px 0 0;
+              @include border-radius(5px);
+              &:hover{
+                      background:#000;
+                      };
+            }
+          }
+      }
   }
 }
+*/

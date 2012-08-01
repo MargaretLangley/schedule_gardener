@@ -1,13 +1,13 @@
-<li>
-  <%= link_to user.first_name, user %>
-  <%= link_to user.last_name, user %>
-  <%= link_to user.email, user %>
-  <%=  %>
-  <%= if current_user?(user) || !admin_user?(user)
-  			(link_to "edit", edit_user_path(user))
+<td><%= link_to "#{user.first_name} #{user.last_name}", user %></td>
+<td><%= link_to user.phone_number, user %></td>
+<td>
+  <%= if current_user?(user) || !user.admin?
+  			(link_to "edit", edit_user_path(user), class: 'btn btn-mini')
   		end %>
-  <%= if !admin_user?(user)
-  			(link_to	"delete", user, method: :delete, data: { confirm: "You sure?" })
+</td>
+<td>
+  <%= if !user.admin?
+  			(link_to	"delete", user, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-mini btn-danger')
   		end %>
-</li>
+</td>
  

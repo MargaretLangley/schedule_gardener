@@ -1,6 +1,5 @@
 include ApplicationHelper
 
-
 def valid_signin(user)
   fill_in "Email",    with: user.email
   fill_in "Password", with: user.password
@@ -21,3 +20,4 @@ RSpec::Matchers.define :have_error_message do |message|
     page.should have_selector('div.alert.alert-error', text: message)
   end
 end
+

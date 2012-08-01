@@ -146,7 +146,7 @@ describe User do
 			it "should be saved as all lower-case" do
 				@user.email = mixed_case_email
 				@user.save
-				@user.reload.email.should == mixed_case_email.downcase
+				@user.reload.email.should eq mixed_case_email.downcase
 			end
 		end
 	end
@@ -187,7 +187,7 @@ describe User do
 				end
 				it { should be_valid }
 				context "Should not change password" do
-					its (:password) { should == original_password }
+					its (:password) { should eq original_password }
 				end
 			end
 		end
@@ -201,11 +201,11 @@ describe User do
 		let(:found_user) { User.find_by_email(@user.email) }
 
 		
-		it { should == found_user.authenticate(@user.password) }
+		it { should eq found_user.authenticate(@user.password) }
 
 		context "user with wrong authentication should be false"  do
 			let(:user_for_invalid_password) { found_user.authenticate("invalid") }
-			it { should_not == user_for_invalid_password }
+			it { should_not eq user_for_invalid_password }
 			specify { user_for_invalid_password.should be_false }
 		end
 	end
@@ -245,7 +245,7 @@ describe User do
 			it "when phone_number has punctuation" do
 				@user.phone_number = "(0121).,;.308-1439" 
 				@user.save
-				@user.reload.phone_number.should == "01213081439"
+				@user.reload.phone_number.should eq "01213081439"
 			end
 	end
 
@@ -258,7 +258,7 @@ describe User do
 
     it "count" do
 	    first_name_array = User.search_ordered("Person").map { |user| user.first_name }
-    	first_name_array.should == ["Person 0", "Person 1", "Person 2", "Person 3"]
+    	first_name_array.should eq ["Person 0", "Person 1", "Person 2", "Person 3"]
     end 
 	end
 
@@ -266,6 +266,10 @@ describe User do
 	describe "remember token" do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
+
+    it "should generate unique tokens" do
+    	pending
+    end
   end
 end
 

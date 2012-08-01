@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
   # signing in must happen before testing filters allowed_user and admin_user
-  before_filter :signed_in_user,  only: [:index, :edit, :update, :destroy]
+  # we should be signed in except when creating a new user
+  before_filter :signed_in_user,      except: [:new, :create]
 
-  before_filter :allowed_user,    only: [:edit,  :update]
-  before_filter :admin_user,      only: [:index, :destroy]
+  before_filter :allowed_user,        only: [ :show, :edit,  :update]
+  before_filter :allowed_admin_user,  only: [ :index, :destroy]
   # 9.6.6 
   #before_filter :unsigned_in_can_create, only: [:create, :new]
 
@@ -56,21 +57,8 @@ class UsersController < ApplicationController
 
   private
 
-    def admin_user
-      redirect_to(root_path) unless current_user.admin?
-    end
 
-    # 9.6.6 but don't know what doing
-    # def unsigned_in_can_create
-    #   redirect_to(root_path) if signed_in? 
-    # end
-
-    def allowed_user
-      @user = User.find(params[:id])
-      # Current user assigns @current_user from cookie if null
-      redirect_to(root_path) unless current_user?(@user) || admin_user?(@user)
-    end 
-
+    #  only people who are signed in can access users pages
     def signed_in_user
       # signed_in? means sessions helper has the @user set
       unless signed_in?
@@ -78,5 +66,30 @@ class UsersController < ApplicationController
         redirect_to signin_path, notice: 'Please sign in.' unless signed_in?
       end
     end
+
+
+    def allowed_admin_user
+       unless current_user.admin? 
+        sign_out
+        redirect_to(root_path)  
+       end
+    end
+
+    # 9.6.6 but don't know what doing
+    # def unsigned_in_can_create
+    #   redirect_to(root_path) if signed_in? 
+    # end
+
+
+    # clicking an edit link sets id to the user you clicked
+    # current user assigns @current_user from cookie if null
+    # current user is the user returned from the cookie 
+    def allowed_user
+      @user = User.find(params[:id])
+      unless (current_user?(@user) || current_user.admin?)
+        sign_out
+        redirect_to(root_path) 
+      end
+    end 
 
 end

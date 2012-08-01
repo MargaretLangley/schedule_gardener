@@ -58,6 +58,7 @@ class User < ActiveRecord::Base
   private
 
     def create_remember_token
+      # SecureRandom generates a unique (though really should check it's unique)
       self.remember_token = SecureRandom.urlsafe_base64
     end
 

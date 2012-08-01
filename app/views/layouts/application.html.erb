@@ -6,13 +6,18 @@
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>    
+    <%= favicon_link_tag "icons/favicon.png" %>
   </head>
   <body>
-    <%= render 'layouts/header' %>
+    <header class="navbar navbar-fixed-top">
+      <nav class="navbar-inner">
+        <div class="container">
+          <%= render 'layouts/navigation' %>
+        </div>
+      </nav>
+    </header>
     <div class="container">
-      <% flash.each do |key, value| %>
-        <%= content_tag(:div, value, class: "alert alert-#{key}") %>
-      <% end %>
+      <%= render 'layouts/messages' %>
       <%= yield %>
       <%= render 'layouts/footer' %>
       <%= debug(params) unless Rails.env.production? %>

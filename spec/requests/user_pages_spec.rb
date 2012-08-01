@@ -7,16 +7,16 @@ describe "users" do
   let(:update_profile)      { "Update Profile" }
   let(:admin_first_name)    { "bob_admin" }
   let(:user_first_name)     { "alice_user" }
+  let(:user_phone_number)   { "0123456789" }
+  let(:admin_phone_number)   { "44884488" }
 
   context "#index" do
 
     # Need constants but don't know which is best way in RSpec
-    AdminPhoneNumber  = "44884488" 
-    UserPhoneNumber   = "0123456789" 
-    let(:all_users)   { "All users" }
+    let(:users)   { "Users" }
 
-    let!(:admin)            { FactoryGirl.create(:admin, first_name: admin_first_name, email: "#{admin_first_name}@example.com", phone_number: AdminPhoneNumber)}  
-    let!(:none_admin_user)  { FactoryGirl.create(:user,  first_name: user_first_name,  email: "#{user_first_name}@example.com", phone_number: UserPhoneNumber ) }
+    let!(:admin)            { FactoryGirl.create(:admin, first_name: admin_first_name, email: "#{admin_first_name}@example.com", phone_number: admin_phone_number)}  
+    let!(:none_admin_user)  { FactoryGirl.create(:user,  first_name: user_first_name,  email: "#{user_first_name}@example.com", phone_number: user_phone_number ) }
 
     before do
       sign_in admin 
@@ -28,8 +28,8 @@ describe "users" do
         current_path.should eq users_path
       end
 
-      it { should have_selector('title',  text: all_users)}
-      it { should have_selector('h1',     text: all_users)}
+      it { should have_selector('title',  text: users)}
+      it { should have_selector('h1',     text: users)}
     end
 
     describe "pagination" do
@@ -44,7 +44,7 @@ describe "users" do
 
       it "should list each user" do
         User.order('first_name ASC').all[0..3].each do |user|
-          page.should have_selector('li', text: user.first_name)
+          page.should have_selector('td', text: user.first_name)
         end
       end
     end
@@ -59,26 +59,26 @@ describe "users" do
         end
         it { should have_selector('input.input-medium.search-query')}
         it "should return matched searched name"  do
-          page.should have_selector('li', text: admin_first_name)
+          page.should have_selector('td', text: admin_first_name)
         end
 
         it "should not return unmatched searched name" do
-          page.should_not have_selector('li', text: user_first_name)
+          page.should_not have_selector('td', text: user_first_name)
         end
       end
 
       context "by number" do
         before do
-          fill_in(search, with: AdminPhoneNumber[2,5])
+          fill_in(search, with: admin_phone_number[2,5])
           click_on(search)
         end
 
         it "should return user with phone number" do
-          page.should have_selector('li', text: admin_first_name)
+          page.should have_selector('td', text: admin_first_name)
         end
 
         it "should not return user without phone number" do
-          page.should_not have_selector('li', text: user_first_name)
+          page.should_not have_selector('td', text: user_first_name)
         end
       end
     end   # search
@@ -89,6 +89,12 @@ describe "users" do
 
         it "should include edit link" do
           should have_link('edit', href: edit_user_path(none_admin_user))
+        end
+        context "which is valid" do
+          before { click_on 'edit'}
+          it "and reach the users edit page" do
+            current_path.should eq edit_user_path(none_admin_user)
+          end
         end
       end
 
@@ -138,7 +144,10 @@ describe "users" do
 
   describe "#show profile page" do
   	let(:user) { FactoryGirl.create(:user) }
-  	before { visit user_path(user) }
+  	before do
+      sign_in user
+     visit user_path(user) 
+   end
 
   	it { should have_selector('h1', 		text: user.first_name )}
   	it { should have_selector('title',	text: user.first_name )}
