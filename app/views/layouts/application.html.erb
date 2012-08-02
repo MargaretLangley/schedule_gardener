@@ -6,7 +6,8 @@
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>    
-    <%= favicon_link_tag "icons/favicon.png" %>
+    <%= favicon_link_tag "icons/spade.png"  unless ENV['RAILS_ENV'] == "production"  %>
+    <%= favicon_link_tag "icons/favicon.png" if ENV['RAILS_ENV'] == "production"  %>
   </head>
   <body>
     <header class="navbar navbar-fixed-top">
