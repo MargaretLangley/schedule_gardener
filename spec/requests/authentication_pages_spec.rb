@@ -23,13 +23,14 @@ describe "Authentication" do
       it { should have_error_message('Invalid') }
 
       it { should_not have_link('Users',    href: users_path) }
+      it { should_not have_link("#{user.first_name} #{user.last_name}", href: "#") }
       it { should_not have_link('Profile',  href: user_path(user)) }
       it { should_not have_link('Update Profile', href: edit_user_path(user)) }
       it { should_not have_link('Sign out', href: signout_path) }
 
 
       describe "after visiting another page" do
-        before { click_link "Home" }
+        before { click_link "logo" }
         it { should_not have_selector('div.alert.alert-error') }
       end
     end
@@ -41,6 +42,7 @@ describe "Authentication" do
       it { should have_selector('title', text: user.first_name) }
       
       it { should_not have_link('Users',    href: users_path) }
+      it { should have_link("#{user.first_name} #{user.last_name}", href: "#") }
       it { should have_link('Profile', href: user_path(user)) }
       it { should have_link('Update Profile', href: edit_user_path(user)) }
       it { should have_link('Sign out', href: signout_path) }

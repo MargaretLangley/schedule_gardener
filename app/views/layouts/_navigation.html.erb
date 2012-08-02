@@ -1,13 +1,14 @@
-<%= link_to "Garden Care", root_path, id: "logo" %>
+<a href="<%= root_path %>" id="logo">Garden Care <%= raw("<i class=\"icon-leaf icon-white\"></i>")  %></a>
 <nav>
   <ul class="nav pull-right">
-    <li><%= link_to "Home", root_path %></li>
-    <li><%= link_to "Help", help_path %></li>
+    <li>
+      <a href="<%= help_path %>"><%= raw("<i class=\"icon-question-sign icon-white\"></i>") %>Help</a>
+    </li>
     <% if signed_in? %>
       <li><%= link_to "Users", users_path if current_user.admin? %></li>
       <li id="fat-menu" class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          Account <b class="caret"></b>
+          <%= raw("<i class=\"icon-user icon-white\"></i>") + "#{current_user.first_name} #{current_user.last_name}"%><b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
           <li><%= link_to "Profile", current_user %></li>
@@ -23,3 +24,6 @@
     <% end %>
   </ul>
 </nav>
+
+
+ icon-question-sign

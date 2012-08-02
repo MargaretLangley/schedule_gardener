@@ -1,8 +1,10 @@
 $navbarHeight: 40px;
-$navbarBackground: #46a546;
-$navbarBackgroundHighlight:#46a546;
+$navbarBackground: #50B450;
+$navbarBackgroundHighlight:#50B450;
 $navbarText: #46a546;
 $navbarLinkColor: #fff;
+$navbarLinkColorHover: #000;
+
 
 @import "bootstrap";
 
@@ -69,7 +71,7 @@ p {
 #logo {
   float: left;
   margin-right: 10px;
-  font-size: 1.7em;
+  font-size: 2em;
   color: white;
   text-transform: uppercase;
   letter-spacing: -1px;
@@ -81,6 +83,17 @@ p {
     text-decoration: none;
   }
 }
+
+/* Nav bar  see also colour overrides at the top of scss*/
+
+.nav {
+  font-size: 1.7em;
+}
+
+.icon-question-sign.icon-white, .icon-user.icon-white {
+ vertical-align: 0px;
+}
+.icon-leaf.icon-white { vertical-align: 5px; }
 
 /* footer */
 
