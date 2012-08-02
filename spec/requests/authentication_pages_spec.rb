@@ -39,7 +39,7 @@ describe "Authentication" do
       let(:user) { FactoryGirl.create(:user) }
       before { valid_signin(user) }
 
-      it { should have_selector('title', text: user.first_name) }
+      it { should have_selector('title', text: "Profile") }
       
       it { should_not have_link('Users',    href: users_path) }
       it { should have_link("#{user.first_name} #{user.last_name}", href: "#") }
@@ -75,7 +75,7 @@ describe "Authentication" do
         describe "after signing in" do
 
           it "should render the desired protected page" do
-            page.should have_selector('title', text: 'Edit user')
+            page.should have_selector('title', text: 'Update Profile')
           end
         end
       end

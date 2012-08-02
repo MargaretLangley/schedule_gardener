@@ -149,8 +149,10 @@ describe "users" do
      visit user_path(user) 
    end
 
-  	it { should have_selector('h1', 		text: user.first_name )}
-  	it { should have_selector('title',	text: user.first_name )}
+  	it { should have_selector('h1', 		text: "Profile" )}
+  	it { should have_content("First name") }
+    it { should have_content(user.first_name) }
+
   end
 
   describe "signup page" do
@@ -199,7 +201,7 @@ describe "users" do
         before { click_button submit }
         let(:user) { User.find_by_email('user@example.com') }
 
-        it { should have_selector('title', text: user.first_name) }
+        it { should have_selector('title', text: "Profile") }
         it { should have_selector('div.alert.alert-success', text: 'Welcome') }
         it { should have_link('Sign out')}
 
@@ -221,7 +223,7 @@ describe "users" do
     describe "page" do
 
       it { should have_selector('h1',    text: update_profile) }
-      it { should have_selector('title', text: "Edit user") }
+      it { should have_selector('title', text: "Update Profile") }
     end
 
     describe "with invalid information" do
@@ -251,7 +253,7 @@ describe "users" do
         click_button update_profile
       end
 
-      it { should have_selector('title', text: new_first_name) }
+      it { should have_selector('title', text: "Profile") }
       it { should have_selector('div.alert.alert-success') }
       it { should have_link('Sign out', href: signout_path) }
       specify { user.reload.first_name.should  eq new_first_name }
