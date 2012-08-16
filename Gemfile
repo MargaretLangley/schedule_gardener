@@ -12,7 +12,7 @@ gem 'thin'
 gem 'simple_form'
 
 group :development do
-  gem 'annotate'
+  gem 'annotate', '~> 2.4.1.beta' 
   # use require:false when you need to run something from
   # command line but not don't need in code.
   gem 'taps', require: false
@@ -32,6 +32,7 @@ group :development, :test do
  end
 
  group :test do
+  gem "shoulda-matchers"
   gem 'launchy'
  end
 

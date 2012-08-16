@@ -188,9 +188,10 @@ describe "users" do
   				fill_in "Email",						with: "user@example.com"
   				fill_in	"Password",					with: "foobar"
   				fill_in "Confirm password",	with: "foobar"
-  				fill_in "Address line 1",		with: "23 High Street"
-  				fill_in "Town",							with: "Sutton Coldfield"
-  				fill_in "Phone number",			with: "0123-333-4444"
+  				fill_in "Street number",		with: "23"
+          fill_in "Street name",      with: "High Street"
+  				fill_in "Town",							with: "Stratford"
+  				fill_in "Phone number",			with: "0181-333-4444"
   		end
 
   		it "should create a user" do
@@ -239,15 +240,16 @@ describe "users" do
       let(:new_first_name)  { "New first Name" }
       let(:new_last_name)  { "New last Name" }
       let(:new_email) { "new@example.com" }
-      let(:new_address_line_1) { "New address line 1" }
       let(:new_town) { "New Town" }
       let(:new_phone) { "0181-999-8888" }
       
       before do
+        #save_and_open_page
         fill_in "First name",       with: new_first_name
         fill_in "Last name",        with: new_last_name
         fill_in "Email",            with: new_email
-        fill_in "Address line 1",   with: new_address_line_1
+        fill_in "Street number",    with: "23"
+        fill_in "Street name",      with: "High Street"
         fill_in "Town",             with: new_town
         fill_in "Phone number",     with: new_phone
         click_button update_profile

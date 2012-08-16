@@ -12,10 +12,15 @@ user = User.new(first_name: "Margaret",
 									 email: "margaret.b.langley@gmail.com",
 									 password: "RUMin8te$",
 									 password_confirmation: "RUMin8te$",
-									 address_line_1: "Unavailable",
-									 town: "Unavailable",
-									 phone_number: "000")
+									 phone_number: "0171000001")
 
+address = Address.new(	street_number: "10",
+												street_name: "High Street",
+												town: "London",
+												post_code: "N10 0AA"
+												)
+
+user.address = address
 user.toggle(:admin)
 user.save
 
@@ -25,9 +30,14 @@ user = User.new(first_name: "admin",
 									 email: "admin@gardencare.com",
 									 password: "RUMin8te$",
 									 password_confirmation: "RUMin8te$",
-									 address_line_1: "Unavailable",
-									 town: "Unavailable",
-									 phone_number: "000")
+									 phone_number: "0171000002")
+
+address = Address.new(	street_number: "11",
+												street_name: "High Street",
+												town: "London",
+												post_code: "N10 0AA"
+												)
+user.address = address
 
 user.toggle(:admin)
 user.save

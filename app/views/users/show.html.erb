@@ -3,14 +3,15 @@
 
 <div class="row">
   <div class="span6 offset3">
-	<%= simple_form_for(@user, html: { class: 'form-vertical'}) do |f| %>
+	<%= simple_form_for(@user, defaults: {disabled: true }, html: { class: 'form-vertical'}) do |f| %>
 	  <%= render 'shared/error_messages' %>
-		<%= f.input :first_name, disabled: true	%>
-		<%= f.input :last_name, disabled: true %>
-		<%= f.input :email, disabled: true %>
-		<%= f.input :address_line_1, label: "Address line 1", disabled: true %>
-		<%= f.input :town, disabled: true %>
-		<%= f.input :phone_number, disabled: true %>
+		<%= f.input :first_name %>
+		<%= f.input :last_name %>
+		<%= f.input :email %>
+	  <%=  f.fields_for :address, defaults: {disabled: true } do |address| %>
+    	<%= render :partial => 'shared/address', :locals => {:f => address} %>
+  	<% end %>
+		<%= f.input :phone_number%>
 		<% end %>
 	</div>
 </div>

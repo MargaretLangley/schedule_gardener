@@ -1,18 +1,20 @@
 <% provide(:title, "Update Profile") %> 
-	<h1>Update Profile</h1>
+<h1>Update Profile</h1>
 
 <div class="row">
   <div class="span6 offset3">
 	<%= simple_form_for(@user, html: { class: 'form-vertical'}) do |f| %>
-	  <%= render 'shared/error_messages' %>
-		<%= f.input :first_name	%>
-		<%= f.input :last_name %>
-		<%= f.input :email %>
-		<%= f.input :address_line_1, label: "Address line 1" %>
-		<%= f.input :town %>
-		<%= f.input :phone_number %>
+	  <%= render 'shared/error_messages' 	%>
+		<%= f.input :first_name							%>
+		<%= f.input :last_name 							%>
+		
+
+		<%= f.input :email 									%>
+	  <%= f.fields_for :address do |address| %>
+    	<%= render :partial => 'shared/address', :locals => {:f => address} %>
+  	<% end %>
+		<%= f.input :phone_number 					%>
 		<%= f.button :submit, class: 'btn-primary',value: "Update Profile" %>
-		<% end %>
+	<% end %>
 	</div>
 </div>
-

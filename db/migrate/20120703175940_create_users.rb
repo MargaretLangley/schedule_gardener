@@ -6,14 +6,8 @@ class CreateUsers < ActiveRecord::Migration
       t.string :email
       t.string :password_digest
       t.string :remember_token
-      t.string :address_line_1
-      t.string :address_line_2
-      t.string :town
-      t.string :post_code
       t.string :phone_number
-      t.text :garden_requirements
       t.boolean :admin, default: false
-
       t.timestamps
     end
 
