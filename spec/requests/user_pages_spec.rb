@@ -7,16 +7,20 @@ describe "users" do
   let(:update_profile)      { "Update Profile" }
   let(:admin_first_name)    { "bob_admin" }
   let(:user_first_name)     { "alice_user" }
-  let(:user_phone_number)   { "0123456789" }
-  let(:admin_phone_number)   { "44884488" }
+  let(:user_home_phone)   { "0123456789" }
+  let(:admin_home_phone)   { "44884488" }
 
   context "#index" do
-
     # Need constants but don't know which is best way in RSpec
     let(:users)   { "Users" }
+    
+    let!(:admin)  do
+      FactoryGirl.create(:admin, contact: Factory.create(:contact, first_name: admin_first_name, home_phone: admin_home_phone))
+    end
 
-    let!(:admin)            { FactoryGirl.create(:admin, first_name: admin_first_name, email: "#{admin_first_name}@example.com", phone_number: admin_phone_number)}  
-    let!(:none_admin_user)  { FactoryGirl.create(:user,  first_name: user_first_name,  email: "#{user_first_name}@example.com", phone_number: user_phone_number ) }
+    let!(:none_admin_user)  do 
+       FactoryGirl.create(:user, contact: Factory.create(:contact, first_name: user_first_name, home_phone: user_home_phone))
+    end
 
     before do
       sign_in admin 
@@ -35,7 +39,7 @@ describe "users" do
     describe "pagination" do
 
       before(:all)  { 30.times { FactoryGirl.create(:user) } }
-      after(:all)   { User.delete_all }
+      after(:all)   { User.delete_all; Contact.delete_all; Address.delete_all; }
 
       let(:first_page)  { User.paginate(page: 1) }
       let(:second_page) { User.paginate(page: 2) }
@@ -43,7 +47,7 @@ describe "users" do
       it { should have_selector('div.pagination') }
 
       it "should list each user" do
-        User.order('first_name ASC').all[0..3].each do |user|
+        User.search_ordered.all[0..3].each do |user|
           page.should have_selector('td', text: user.first_name)
         end
       end
@@ -69,15 +73,15 @@ describe "users" do
 
       context "by number" do
         before do
-          fill_in(search, with: admin_phone_number[2,5])
+          fill_in(search, with: admin_home_phone[2,5])
           click_on(search)
         end
 
-        it "should return user with phone number" do
+        it "should return user with home phone number" do
           page.should have_selector('td', text: admin_first_name)
         end
 
-        it "should not return user without phone number" do
+        it "should not return user without home phone number" do
           page.should_not have_selector('td', text: user_first_name)
         end
       end
@@ -99,7 +103,7 @@ describe "users" do
       end
 
       context "for admin user" do
-        let!(:admin_edit_self) { FactoryGirl.create(:admin, first_name: "admin_edit_self")}
+        let!(:admin_edit_self) { FactoryGirl.create(:admin, contact: FactoryGirl.create(:contact, first_name: "admin_edit_self"))} 
         before do
           visit users_path
         end
@@ -114,7 +118,7 @@ describe "users" do
       end
       
       context "#delete" do
-        let!(:admin_undeleteable) { FactoryGirl.create(:admin, first_name: "admin_undeletable")}  
+        let!(:admin_undeleteable) { FactoryGirl.create(:admin, contact: FactoryGirl.create(:contact, first_name: "admin_undeletable")) }  
         before do
           visit users_path
         end
@@ -191,7 +195,8 @@ describe "users" do
   				fill_in "Street number",		with: "23"
           fill_in "Street name",      with: "High Street"
   				fill_in "Town",							with: "Stratford"
-  				fill_in "Phone number",			with: "0181-333-4444"
+  				fill_in "Home phone",			  with: "0181-333-4444"
+
   		end
 
   		it "should create a user" do
@@ -244,14 +249,13 @@ describe "users" do
       let(:new_phone) { "0181-999-8888" }
       
       before do
-        #save_and_open_page
         fill_in "First name",       with: new_first_name
         fill_in "Last name",        with: new_last_name
         fill_in "Email",            with: new_email
         fill_in "Street number",    with: "23"
         fill_in "Street name",      with: "High Street"
         fill_in "Town",             with: new_town
-        fill_in "Phone number",     with: new_phone
+        fill_in "Home phone",     with: new_phone
         click_button update_profile
       end
 

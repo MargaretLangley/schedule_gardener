@@ -9,7 +9,7 @@ namespace :db do
                  password_confirmation: "foobar",
                  address_line_1: "12 High Street",
                  town:  "London",
-                 phone_number: "0181-333-8888")
+                 home_phone: "0181-333-8888")
     admin.toggle!(:admin)
     99.times do |n|
       first_name  = Faker::Name.first_name
@@ -18,7 +18,7 @@ namespace :db do
       password  = "password"
       address_line_1 = Faker::Address.street_address
       town = Faker::Address.city
-      phone_number = Faker::PhoneNumber.phone_number
+      home_phone = Faker::PhoneNumber.home_phone
       User.create!(first_name: first_name,
                    last_name: last_name,
                    email: email,
@@ -26,7 +26,7 @@ namespace :db do
                    password_confirmation: password,
                    address_line_1: address_line_1,
                    town: town,
-                   phone_number: phone_number)
+                   home_phone: home_phone)
     end
   end
 end

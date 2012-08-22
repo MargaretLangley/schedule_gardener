@@ -102,7 +102,7 @@ describe "Authentication" do
 
     describe "as wrong user" do
       let(:user) { FactoryGirl.create(:user) }
-      let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
+      let(:wrong_user) { FactoryGirl.create(:user) }
       before { sign_in user }
 
       describe "visiting Users#show page" do

@@ -11,28 +11,36 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120814150624) do
+ActiveRecord::Schema.define(:version => 20120816151752) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "addressable_id"
     t.string   "addressable_type"
     t.string   "house_name"
-    t.string   "street_number"
-    t.string   "street_name"
+    t.string   "street_number",    :null => false
+    t.string   "street_name",      :null => false
     t.string   "address_line_2"
-    t.string   "town"
+    t.string   "town",             :null => false
     t.string   "post_code"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
   end
 
-  create_table "users", :force => true do |t|
-    t.string   "first_name"
+  create_table "contacts", :force => true do |t|
+    t.integer  "contactable_id"
+    t.string   "contactable_type"
+    t.string   "first_name",       :null => false
     t.string   "last_name"
     t.string   "email"
-    t.string   "password_digest"
+    t.string   "home_phone",       :null => false
+    t.string   "mobile"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "password_digest",                    :null => false
     t.string   "remember_token"
-    t.string   "phone_number"
     t.boolean  "admin",           :default => false
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false

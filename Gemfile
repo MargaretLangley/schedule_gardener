@@ -10,6 +10,7 @@ gem 'bootstrap-will_paginate'
 gem 'pg'
 gem 'thin'
 gem 'simple_form'
+gem 'squeel'
 
 group :development do
   gem 'annotate', '~> 2.4.1.beta' 

@@ -8,52 +8,51 @@
 #  email           :string(255)
 #  password_digest :string(255)
 #  remember_token  :string(255)
-#  phone_number    :string(255)
+#  home_phone    :string(255)
 #  admin           :boolean         default(FALSE)
 #  created_at      :datetime        not null
 #  updated_at      :datetime        not null
 #
 
 class User < ActiveRecord::Base
-  has_one         :address,  autosave: true, dependent: :destroy, as: :addressable
-  attr_accessible :first_name,     :last_name
-  attr_accessible :email
-  attr_accessible :password,       :password_confirmation
-  attr_accessible :phone_number
-  # Defines an attributes writer for the specified association
-  accepts_nested_attributes_for :address
-  # adds the attribute writer to the allowed list
-  attr_accessible :address_attributes
-
   has_secure_password
-  validates :first_name, presence: true, length: { maximum: 50 }
-  validates :last_name, length:  { maximum: 50 }
-  VALID_EMAIL_REGEX = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
-  # Must be present, ignores validation if blank, format to REGEX
-	validates :email, presence: true, allow_blank: true ,format: { with: VALID_EMAIL_REGEX }
-	validates :password, length: { minimum: 6 }, on: :create
-	validates :password_confirmation, presence: true, on: :create
-  validates :phone_number, presence: true
+  has_one :contact, autosave: true, dependent: :destroy, as: :contactable
+  attr_accessible :contact_attributes, :password, :password_confirmation
 
-  before_save { |user| user.email = email.downcase }
+  # attr_accessible :address_attributes - adds the attribute writer to the allowed list
+  # accepts_nes.... Defines an attributes writer for the specified association
+  accepts_nested_attributes_for :contact
+
+  validates :password, presence: true, length: { minimum: 6 }, on: :create
+	validates :password_confirmation, presence: true, on: :create
   before_save :create_remember_token
 
-  def phone_number
-    read_attribute(:phone_number)
+  def first_name
+    contact.first_name
   end
 
-  def phone_number=(num)
-    write_attribute(:phone_number,num ? num.gsub(/\D/, '') : nil)
+  def last_name
+    contact.last_name 
+  end
+
+  def email
+    contact.email
+  end
+
+  def self.find_by_email(email)
+    User.joins{contact}.where{ (contacts.email.eq(email)) }.first
   end
 
   def self.search_ordered(search = nil)
     if search
-      where("first_name ILIKE ? OR last_name ILIKE ? OR (first_name || ' ' || last_name) ILIKE ? OR phone_number LIKE ?", 
-            "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%"
-           )
-           .order('first_name ASC')
+      like_search =  "%#{search}%"
+      User.joins{contact}.where{(contacts.first_name =~ like_search) | 
+                               (contacts.last_name =~ like_search)   |
+                               (contacts.first_name.op('||', ' ').op('||', contacts.last_name) =~ like_search) |
+                               (contacts.home_phone =~ like_search) 
+                                }.order{"contacts.first_name ASC"}
     else
-      scoped.order('first_name ASC')
+      User.joins{contact}.order('contacts.first_name ASC')                     
     end
   end
 
@@ -65,3 +64,4 @@ class User < ActiveRecord::Base
     end
 
 end
+    

@@ -1,25 +1,22 @@
 FactoryGirl.define do
   factory :user do
-    sequence(:first_name) { |n| "Person #{n}" }
-    sequence(:last_name)  { |n| "Surname #{n}" }
-    sequence(:email)      { |n| "person_#{n}@example.com"}
     password "foobar"
     password_confirmation "foobar"
-    sequence(:phone_number)		{ |n| "0181-308-143#{n}" }
 
     factory :admin do
       admin true
     end
-
-    address
+    contact
   end
 
-
-  factory :letter do
-    stamp true
+  factory :contact do
+    sequence(:first_name) { |n| "Firstname#{n}" }
+    sequence(:last_name)  { |n| "Lastname#{n}" }
+    email                 { "#{first_name}.#{last_name}@example.com".downcase }
+    sequence(:home_phone) { |n| "0181-100-100#{n}" }
+    sequence(:mobile)     { |n| "0701-200-200#{n}" }
     address
   end
-
 
   factory :address do
     house_name ""
