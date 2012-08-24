@@ -23,69 +23,55 @@ describe User do
 
 	subject(:user) { FactoryGirl.build(:user) }
 
-	describe "#contact" do
-    before do 
-    	user.save 
-  	end
-
-    it "destroying the contact should destroy the address" do
-      contact = user.contact
-      address = contact.address
-    	user.destroy
-      Contact.find_by_id(contact.id).should be_nil
-      Address.find_by_id(address.id).should be_nil
-    end
-	end
-
-	it { should_not allow_mass_assignment_of(:admin) }
-
-	it { should respond_to (:password_digest) }
-	it { should respond_to (:password) }
-	it { should respond_to (:password_confirmation) }
-	it { should respond_to (:remember_token) }
-
-	it { should respond_to (:admin) }
-	it { should respond_to (:authenticate) }
-	
-	it { should be_valid }
-
-	context "should be valid after saving" do
-		before { user.save  }
+	context "validate factory" do
 		it { should be_valid }
+		it { should_not be_admin }
 	end
 
-	it { should_not be_admin }
+	context "Accessable" do
 
-	context "with admin attribute set to 'true'" do
+		[ :admin ].each do |validate_attr|
+			it { should_not allow_mass_assignment_of(validate_attr) }
+		end
+
+		[:admin, :authenticate, :password, :password_digest, :password_confirmation, :remember_token].each do |expected_attribute|
+  		it { should respond_to expected_attribute }
+		end
+
+  end
+
+  context "validations" do
+
+		[ :password, :password_confirmation ].each do |validate_attr|
+			it { should validate_presence_of(validate_attr) }
+		end
+
+		[ :password, :password_confirmation ].each do |validate_attr|
+			it { should ensure_length_of(validate_attr).is_at_least(6) }
+		end
+
+		it "invalid with different password and confirmation" do
+			user.password_confirmation = "mismatched"
+			should_not be_valid
+		end
+
+  end
+
+	context "#toggle admin" do
 		before { user.toggle(:admin) }
 		it { should be_admin }
 	end
 	
-	context "password" do
+	context "#authenticate" do
 
-		context "invalid" do
-			it "when password and confirmation different" do
-				user.password_confirmation = "mismatched"
-				should_not be_valid
-			end
-			it { should validate_presence_of(:password_confirmation) }
-			it { should ensure_length_of(:password).is_at_least(6)}
+		it "with valid password succeeds" do
+			user.authenticate(user.password).should be_true
 		end
-	end
 
-	context "authenticate" do
-		before do
-			user.save 
+		it "with invalid password fails" do
+			user.authenticate("InvalidPassword").should be_false
 		end
-		let(:found_user) { User.find_by_id(user.id) }
-		
-		it { should eq found_user.authenticate(user.password) }
 
-		context "user with wrong authentication should be false"  do
-			let(:user_for_invalid_password) { found_user.authenticate("invalid") }
-			it { should_not eq user_for_invalid_password }
-			specify { user_for_invalid_password.should be_false }
-		end
 	end
 
 	describe "remember token" do
@@ -97,51 +83,75 @@ describe User do
     end
   end
 
-  context "#find_by_email" do
-  	before(:all) do 
- 			3.times do |i| 
- 				FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Firstname#{i+1}", email: "firstname#{i+1}@example.com") )
- 			end
- 		end
-    after(:all) { User.destroy_all }
+  context "Custom finders" do
 
-		it "empty search should return users" do
-	  	User.find_by_email("firstname2@example.com").first_name.should eq  "Firstname2"
-    end 
-  end
+	  context "#find_by_email" do
+	  	before(:all) do 
+	 			3.times do |i| 
+	 				FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Firstname#{i+1}", email: "firstname#{i+1}@example.com") )
+	 			end
+	 		end
+	    after(:all) { User.destroy_all }
 
-  context "#search_ordered" do
- 		before(:all) do 
- 			3.times { |i| FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Firstname#{i+1}", last_name: "Lastname#{i+1}")  ) }
- 		end
-    after(:all) { User.destroy_all}
+			it "empty search should return users" do
+		  	User.find_by_email("firstname2@example.com").first_name.should eq  "Firstname2"
+	    end 
+	  end
 
-    it "empty search should return users" do
-    	# Creates an array of matching contacts and passes them into first_name_array
-	    first_name_array = User.search_ordered().map { |user| user.contact.first_name }
-    	first_name_array.should eq ["Firstname1", "Firstname2", "Firstname3"]
-    end 
+	  context "#search_ordered" do
+	  	fred = john = sally = nil
+	 		
+	 		before(:all) do 
+	 			john = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "John", last_name: "Smith")  ) 
+		  	sally = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Sally", last_name: "Jones")  ) 
+	  		fred = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Fred", last_name: "Jone")  ) 
 
-    it "should match only one contact" do
-    	# Creates an array of matching contacts and passes them into first_name_array
-	    first_name_array = User.search_ordered("Firstname2").map { |user| user.contact.first_name }
-    	first_name_array.should eq ["Firstname2"]
-    end 
+	 			User.all.should eq [john,sally,fred]
+	 		end
+	    after(:all) { User.destroy_all}
 
-    it "should match expected array" do
-    	# Creates an array of matching contacts and passes them into first_name_array
-	    first_name_array = User.search_ordered("Firstname").map { |user| user.contact.first_name }
-    	first_name_array.should eq ["Firstname1", "Firstname2", "Firstname3"]
-    end 
+	    it "empty search should return users" do
+		    User.search_ordered.should eq [fred, john, sally]
+	    end 
 
-    it "should be case insenstive" do
-	    first_name_array = User.search_ordered("FIRSTNAME").map { |user| user.contact.first_name }
-    	first_name_array.should eq ["Firstname1", "Firstname2", "Firstname3"]
-    end 
+	    it "unique name match" do
+		    User.search_ordered("John").should eq [john]
+	    end 
 
-    it "should match full name" do
-    	first_name_array = User.search_ordered("FIRSTNAME1 LASTNAME1").map { |user| user.contact.first_name }
-    	first_name_array.should eq ["Firstname1"]
-    end
+	    it "match multiple" do
+		    User.search_ordered("Jon").should eq [fred, sally]
+	    end 
+
+	    it "case insenstive" do
+		    User.search_ordered("s").should eq [john, sally]
+	    end 
+
+	    it "should match full name" do
+	    	User.search_ordered("John Smith").should eq [john]
+	    end
+		end
+
+	end
+
+	describe "Association" do
+		describe "#contact" do
+	    before do 
+	    	user.save 
+	  	end
+
+	  	it { should have_one(:contact) }
+
+	  	it "destroying the user should destroy the contact" do
+	      contact = user.contact
+	    	user.destroy
+	      Contact.find_by_id(contact.id).should be_nil
+	    end
+
+	    it "destroying the contact should destroy the address" do
+	      address = user.contact.address
+	    	user.destroy
+	      Address.find_by_id(address.id).should be_nil
+	    end
+		end
 	end
 end

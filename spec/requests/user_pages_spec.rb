@@ -15,11 +15,11 @@ describe "users" do
     let(:users)   { "Users" }
     
     let!(:admin)  do
-      FactoryGirl.create(:admin, contact: Factory.create(:contact, first_name: admin_first_name, home_phone: admin_home_phone))
+      FactoryGirl.create(:admin, contact: FactoryGirl.create(:contact, first_name: admin_first_name, home_phone: admin_home_phone))
     end
 
     let!(:none_admin_user)  do 
-       FactoryGirl.create(:user, contact: Factory.create(:contact, first_name: user_first_name, home_phone: user_home_phone))
+       FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: user_first_name, home_phone: user_home_phone))
     end
 
     before do

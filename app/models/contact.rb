@@ -14,22 +14,22 @@
 #
 
 class Contact < ActiveRecord::Base
-	has_one         :address,  autosave: true, dependent: :destroy, as: :addressable
-  belongs_to      :contactable, polymorphic: true
 	attr_accessible :address_attributes,:email, :first_name, :home_phone, :last_name, :mobile
-  
+
+  # Must be present, ignores validation if blank, format to REGEX
+	validates :email, :first_name, :home_phone, presence: true
+  validates :first_name, :last_name, length: { maximum: 50 }
+  VALID_EMAIL_REGEX = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
+  validates :email, allow_blank: true ,format: { with: VALID_EMAIL_REGEX }
+
+	before_save { |contact| contact.email = email.downcase }
+
+  belongs_to      :contactable, polymorphic: true
+  has_one         :address,  autosave: true, dependent: :destroy, as: :addressable
+
   # attr_accessible :address_attributes - adds the attribute writer to the allowed list
   # accepts_nes.... Defines an attributes writer for the specified association
   accepts_nested_attributes_for :address
-
-	VALID_EMAIL_REGEX = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
-  # Must be present, ignores validation if blank, format to REGEX
-	validates :email, presence: true, allow_blank: true ,format: { with: VALID_EMAIL_REGEX }
-  validates :first_name, presence: true, length: { maximum: 50 }
-	validates :home_phone, presence: true
-  validates :last_name, length:  { maximum: 50 }
-
-	before_save { |contact| contact.email = email.downcase }
 
   def home_phone
     read_attribute(:home_phone)

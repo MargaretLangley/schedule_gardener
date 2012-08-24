@@ -21,56 +21,54 @@ require 'spec_helper'
 
 describe Address do
 
+		subject(:address) { FactoryGirl.build(:address) }
+		
+		context "validate factory" do
+			it { should be_valid}
+		end
 
-		subject(:address) {
-									
-										 FactoryGirl.build(:address,
-														street_number: "15",
-														street_name: "High Street",
-														address_line_2: "Stratford",
-														town: "London",
-														post_code: "NE12 3ST"
-														) 
-									}
+		context "database table" do
+			it { should have_db_column(:id).of_type(:integer) }
+			it { should have_db_column(:addressable_id).of_type(:integer) }
+			it { should have_db_column(:addressable_type).of_type(:string) }
+			it { should have_db_column(:house_name).of_type(:string) }
+			it { should have_db_column(:street_number).of_type(:string) }
+			it { should have_db_column(:street_name).of_type(:string) }
+			it { should have_db_column(:address_line_2).of_type(:string) }
+			it { should have_db_column(:town).of_type(:string) }
+			it { should have_db_column(:post_code).of_type(:string) }
+		end
 
-		it { should have_db_column(:id).of_type(:integer) }
-		it { should have_db_column(:addressable_id).of_type(:integer) }
-		it { should have_db_column(:addressable_type).of_type(:string) }
-		it { should have_db_column(:house_name).of_type(:string) }
-		it { should have_db_column(:street_number).of_type(:string) }
-		it { should have_db_column(:street_name).of_type(:string) }
-		it { should have_db_column(:address_line_2).of_type(:string) }
-		it { should have_db_column(:town).of_type(:string) }
-		it { should have_db_column(:post_code).of_type(:string) }
+		context "Accessable" do
 
-  	it { should_not allow_mass_assignment_of(:addressable_id) }
-  	it { should_not allow_mass_assignment_of(:addressable_type) }
+  		it { should_not allow_mass_assignment_of(:addressable_id) }
+  		it { should_not allow_mass_assignment_of(:addressable_type) }
+
+  	 [:addressable, :addressable_id, :addressable_type, 
+ 			:house_name, :street_number, :street_name, :address_line_2, :town, :post_code ]
+ 			.each do |expected_attribute|
+  			it { should respond_to expected_attribute }
+			end	
+
+  	end
   	
-  	it { should belong_to(:addressable)}		
-		it { should respond_to (:addressable)}
-		it { should respond_to (:addressable_id)}
-		it { should respond_to (:addressable_type)}
-		it { should respond_to (:house_name) }
-		it { should respond_to (:street_number) }
-		it { should respond_to (:street_name) }
-		it { should respond_to (:address_line_2) }
-		it { should respond_to (:town) }
-		it { should respond_to (:post_code) }
 
+		context "validations" do
 
+			# :addressable_id, :addressable_type should be validated but validates doesn't 
+			# work with the create it says they are blank but the parent pointed variables 
+			# are assigned properly
 
-		# This should be validated but validates doesn't work with the create 
-		# it says they are blank but the parent pointed variables are assigned
-		# properly
-		# it { should validate_presence_of(:addressable_id) }
-		# it { should validate_presence_of(:addressable_type) }
-		it { should validate_presence_of(:street_number) }
-		it { should validate_presence_of(:street_number) }
-		it { should validate_presence_of(:street_name) }
-		it { should validate_presence_of(:town) }
-		it { should ensure_length_of(:town).is_at_most(50) }
+			[:street_number, :street_name, :town ].each do |present_attr|
+  			it { should validate_presence_of present_attr }
+			end	
 
+			it { should ensure_length_of(:town).is_at_most(50) }
 
-		it { should be_valid}
+		end
+
+		context "Association" do
+			it { should belong_to(:addressable)}	
+		end
 
 end
