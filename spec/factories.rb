@@ -18,6 +18,14 @@ FactoryGirl.define do
     address
   end
 
+  factory :garden do
+    contact
+  end
+
+  factory :garden_own_address, parent: :garden, class:"Garden"  do
+    association :address, street_number: "16", street_name: "Garden Avenue" 
+  end
+
   factory :address do
     house_name ""
     street_number "15"
@@ -26,6 +34,7 @@ FactoryGirl.define do
     town "London"
     post_code "NE12 3ST"
   end
+
 
 end
 

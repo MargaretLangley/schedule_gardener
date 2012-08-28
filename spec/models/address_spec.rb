@@ -23,9 +23,7 @@ describe Address do
 
 		subject(:address) { FactoryGirl.build(:address) }
 		
-		context "validate factory" do
-			it { should be_valid}
-		end
+		include_examples "All Built Objects", Address
 
 		context "database table" do
 			it { should have_db_column(:id).of_type(:integer) }
@@ -68,7 +66,7 @@ describe Address do
 		end
 
 		context "Association" do
-			it { should belong_to(:addressable)}	
+			it { should belong_to(:addressable) }	
 		end
 
 end

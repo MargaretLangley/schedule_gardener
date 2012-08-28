@@ -23,8 +23,9 @@ describe User do
 
 	subject(:user) { FactoryGirl.build(:user) }
 
+	include_examples "All Built Objects", User
+
 	context "validate factory" do
-		it { should be_valid }
 		it { should_not be_admin }
 	end
 
@@ -134,24 +135,6 @@ describe User do
 	end
 
 	describe "Association" do
-		describe "#contact" do
-	    before do 
-	    	user.save 
-	  	end
-
-	  	it { should have_one(:contact) }
-
-	  	it "destroying the user should destroy the contact" do
-	      contact = user.contact
-	    	user.destroy
-	      Contact.find_by_id(contact.id).should be_nil
-	    end
-
-	    it "destroying the contact should destroy the address" do
-	      address = user.contact.address
-	    	user.destroy
-	      Address.find_by_id(address.id).should be_nil
-	    end
-		end
+	  it { should have_one(:contact).dependent(:destroy) }
 	end
 end

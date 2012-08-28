@@ -20,6 +20,7 @@ group :development do
   # Dependency between taps and sqlite3
   gem 'sqlite3'
   gem 'quiet_assets'
+  gem "rails-erd"
 end
 
 group :development, :test do

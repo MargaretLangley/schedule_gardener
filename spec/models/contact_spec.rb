@@ -20,9 +20,7 @@ describe Contact do
 
 	subject(:contact) { FactoryGirl.build(:contact) }
 
-	context "validate factory" do
-		it { should be_valid}
-	end
+	include_examples "All Built Objects", Contact
 
 	context "Accessable" do
 
@@ -95,20 +93,9 @@ describe Contact do
 	describe "Association" do
 
 		it { should belong_to(:contactable) }
+	  it { should have_one(:address).dependent(:destroy) }
+	  it { should have_many(:gardens).dependent(:destroy)}
 
-		describe "#address" do
-	    before do 
-	    	contact.save 
-	  	end
-
-	  	it { should have_one(:address) }
-
-	    it "destroying the contact should destroy the address" do
-	      address = contact.address
-	    	contact.destroy
-	      Address.find_by_id(address.id).should be_nil
-	    end
-		end
 	end
 
 end
