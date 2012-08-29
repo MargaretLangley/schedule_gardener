@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.6'
-gem 'jquery-rails'
+gem 'jquery-rails'  
+gem 'jquery-rest-rails'
+gem 'fullcalendar-rails'
 gem 'bootstrap-sass'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'faker'
