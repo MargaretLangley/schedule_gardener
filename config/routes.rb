@@ -1,5 +1,6 @@
 ScheduleGardener::Application.routes.draw do
-  
+
+  resource :calendar, only: [:show]  
   resources :events
 
   resources :users

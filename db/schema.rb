@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120827100211) do
+ActiveRecord::Schema.define(:version => 20120829090919) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "addressable_id"
@@ -36,6 +36,16 @@ ActiveRecord::Schema.define(:version => 20120827100211) do
     t.string   "mobile"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+  end
+
+  create_table "events", :force => true do |t|
+    t.string   "title",                          :null => false
+    t.datetime "starts_at",                      :null => false
+    t.datetime "ends_at"
+    t.boolean  "all_day",     :default => false
+    t.text     "description"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   create_table "gardens", :force => true do |t|

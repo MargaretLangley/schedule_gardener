@@ -35,6 +35,13 @@ FactoryGirl.define do
     post_code "NE12 3ST"
   end
 
+  factory :event do
+    title "New Example Event"
+    starts_at {Time.now.utc.beginning_of_day + 9.hours }
+    ends_at { starts_at + 3.hours }
+    all_day false
+    description "I am describing a new example event. For testing only."
+  end
 
 end
 
