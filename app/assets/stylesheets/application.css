@@ -11,5 +11,8 @@
  *= require_self
  *= require fullcalendar
  *= require fullcalendar.print
+ *= require jquery.ui.slider
+ *= require jquery.ui.datepicker
+ *= jquery-ui-timepicker-addon.css
  *= require_tree .
  */

@@ -55,13 +55,18 @@ describe "users" do
   
     context "search" do
       let(:search) { 'search' }
+      let(:search_button) { 'go_search' }
+
+      it "sanity test"  do
+        page.should have_selector('td', text: admin_first_name)
+        page.should have_selector('td', text: user_first_name)
+      end
 
       context "by name" do
         before do
           fill_in(search, with: admin_first_name)
-          click_on(search)
+          click_button(search_button)
         end
-        it { should have_selector('input.input-medium.search-query')}
         it "should return matched searched name"  do
           page.should have_selector('td', text: admin_first_name)
         end
@@ -74,7 +79,7 @@ describe "users" do
       context "by number" do
         before do
           fill_in(search, with: admin_home_phone[2,5])
-          click_on(search)
+          click_button(search_button)
         end
 
         it "should return user with home phone number" do

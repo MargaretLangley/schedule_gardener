@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'
-gem 'jquery-rails'  
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'jquery-rest-rails'
 gem 'fullcalendar-rails'
 gem 'bootstrap-sass'

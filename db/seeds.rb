@@ -13,7 +13,7 @@
 																first_name: "Margaret", 
 																last_name: 	"Gardener", 
 																email: 			"gardener1@gardencare.com",
-																home_phone: "0171000001",
+																home_phone: "0171000002",
 																address_attributes: {
 																	street_number: "11",
 																	street_name: "High Street",
@@ -34,7 +34,7 @@ user = User.new(
 															first_name: "admin", 
 															last_name: 	"gardencare", 
 															email: 			"admin@gardencare.com",
-															home_phone: "0171000002",
+															home_phone: "0171000001",
 															address_attributes: {
 																street_number: "12",
 																street_name: "High Street",
