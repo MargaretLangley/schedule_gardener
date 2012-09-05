@@ -1,14 +1,36 @@
 require 'spec_helper'
 
 describe Garden do
-  let(:garden) { FactoryGirl.build(:garden)}
+  let(:contact) do
+    contact = FactoryGirl.create(:contact) 
+  end
+  let(:garden) do
+    garden = FactoryGirl.build(:garden)
+    contact.gardens << garden
+    garden
+  end
+  let(:garden_own_address) do
+    garden = FactoryGirl.build(:garden_own_address)
+    contact.gardens << garden
+    garden
+  end
+
+
   subject { garden }
   include_examples "All Built Objects", Garden
 
-  context "Garden with address" do
-  	subject(:garden_own_address) { FactoryGirl.build(:garden_own_address)}
-  	it { should_not be_nil }
+  context "Garden with own address" do
+  	subject { garden_own_address }
+    it { should_not be_nil }
 	  it { should be_valid }
+  end
+
+  context "Validations" do
+
+    [ :contact_id ].each do |validate_attr|
+      it { should validate_presence_of(validate_attr) }
+    end
+
   end
 
   context "Associations" do
@@ -20,7 +42,6 @@ describe Garden do
 			 	its(:address) { should eq garden.contact.address}
   		end
   		context "owns" do
-  			let(:garden_own_address) { FactoryGirl.build(:garden_own_address)}
   			subject { garden_own_address }
   			its(:address) { should_not eq garden_own_address.contact.address }
   			its(:address) { should eq garden_own_address.address }

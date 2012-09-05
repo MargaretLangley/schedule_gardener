@@ -6,7 +6,7 @@ FactoryGirl.define do
     factory :admin do
       admin true
     end
-    contact
+    association :contact, strategy: :build
   end
 
   factory :contact do
@@ -15,11 +15,10 @@ FactoryGirl.define do
     email                 { "#{first_name}.#{last_name}@example.com".downcase }
     sequence(:home_phone) { |n| "0181-100-100#{n}" }
     sequence(:mobile)     { |n| "0701-200-200#{n}" }
-    address
+    association :address, strategy: :build
   end
 
   factory :garden do
-    contact
   end
 
   factory :garden_own_address, parent: :garden, class:"Garden"  do
