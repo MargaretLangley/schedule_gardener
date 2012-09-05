@@ -1,7 +1,8 @@
 class Garden < ActiveRecord::Base
   attr_accessible :address_attributes
 
-  validates  :contact_id, presence: true
+  # NOT SURE... look at this
+  #validates  :contact_id, presence: true
   
   has_one    :address,  autosave: true, dependent: :destroy, as: :addressable
   belongs_to :contact

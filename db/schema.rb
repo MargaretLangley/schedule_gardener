@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829090919) do
+ActiveRecord::Schema.define(:version => 20120904095136) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "addressable_id"
@@ -47,6 +47,20 @@ ActiveRecord::Schema.define(:version => 20120829090919) do
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
   end
+
+  create_table "garden_appointments", :force => true do |t|
+    t.integer  "gardener_id"
+    t.integer  "payee_id"
+    t.integer  "garden_id"
+    t.integer  "event_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "garden_appointments", ["event_id"], :name => "index_garden_appointments_on_event_id"
+  add_index "garden_appointments", ["garden_id"], :name => "index_garden_appointments_on_garden_id"
+  add_index "garden_appointments", ["gardener_id"], :name => "index_garden_appointments_on_gardener_id"
+  add_index "garden_appointments", ["payee_id"], :name => "index_garden_appointments_on_payee_id"
 
   create_table "gardens", :force => true do |t|
     t.integer  "contact_id"
