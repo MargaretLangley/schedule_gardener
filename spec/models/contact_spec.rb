@@ -2,23 +2,23 @@
 #
 # Table name: contacts
 #
-#  id         :integer         not null, primary key
-#  first_name :string(255)
-#  last_name  :string(255)
-#  email      :string(255)
-#  home_phone :string(255)
-#  mobile     :string(255)
-#  address_id :integer
-#  created_at :datetime        not null
-#  updated_at :datetime        not null
+#  id               :integer          not null, primary key
+#  contactable_id   :integer
+#  contactable_type :string(255)
+#  first_name       :string(255)      not null
+#  last_name        :string(255)
+#  email            :string(255)
+#  home_phone       :string(255)      not null
+#  mobile           :string(255)
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
 #
 
 
 require 'spec_helper'
 
 describe Contact do
-
-	subject(:contact) { FactoryGirl.build(:contact) }
+	subject(:contact) { FactoryGirl.build(:contact, first_name: "Roger") }
 
 	include_examples "All Built Objects", Contact
 
@@ -44,7 +44,7 @@ describe Contact do
 			it { should ensure_length_of(validate_attr).is_at_most(50) }
 		end
 
-		context "email addresses" do 
+		context "email addresses" do
 			let(:mixed_case_email) { "Foo@ExAMPLe.CoM"}
 
 
@@ -52,9 +52,9 @@ describe Contact do
 	      email_addresses = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
 	      email_addresses.each do |valid_email_address|
 	        should validate_format_of(:email).with(valid_email_address)
-	      end      
+	      end
 	  	end
-		
+
 			it "with upper-case saved as lower-case" do
 				contact.email = mixed_case_email
 				contact.save
@@ -71,20 +71,39 @@ describe Contact do
 		end
 	end
 
+	context "#appointments" do
+		contact1_app1 = contact1_app2 = contact1_app3 = contact2_app4 = nil
+
+		before(:all) do
+		  contact_2  = FactoryGirl.create(:contact, first_name: "Simon")
+			contact1_app2 = FactoryGirl.create(:appointment, :tomorrow, contact: contact)
+			contact1_app1 = FactoryGirl.create(:appointment, :today, contact: contact)
+			contact1_app3 = FactoryGirl.create(:appointment, :two_days_time, contact: contact)
+			contact1_app4 = FactoryGirl.create(:appointment, :tomorrow, contact: contact_2)
+
+			Appointment.all.should eq [contact1_app2,contact1_app1,contact1_app3,contact1_app4]
+		end
+		after(:all) { Appointment.destroy_all; Event.delete_all; }
+
+		its(:appointments) { should_not include(contact2_app4) }
+	  its(:appointments) { should eq [contact1_app1, contact1_app2, contact1_app3] }
+
+  end
+
 
 	context "#home_phone" do
 
 		it "only save numerics" do
-			contact.home_phone = "(0181).,;.300-1234" 
+			contact.home_phone = "(0181).,;.300-1234"
 			contact.home_phone.should eq "01813001234"
 		end
 
 	end
-	
+
 	context "#mobile" do
 
 		it "only save numerics" do
-			contact.mobile = "(0181).,;.300-1234" 
+			contact.mobile = "(0181).,;.300-1234"
 			contact.mobile.should eq "01813001234"
 		end
 
@@ -95,6 +114,8 @@ describe Contact do
 		it { should belong_to(:contactable) }
 	  it { should have_one(:address).dependent(:destroy) }
 	  it { should have_many(:gardens).dependent(:destroy)}
+	  it { should have_many(:appointments).dependent(:destroy) }
+	  it { should have_many(:events).through(:appointments)}
 
 	end
 

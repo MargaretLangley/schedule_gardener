@@ -26,6 +26,18 @@ ActiveRecord::Schema.define(:version => 20120904095136) do
     t.datetime "updated_at",       :null => false
   end
 
+  create_table "appointments", :force => true do |t|
+    t.integer  "contact_id"
+    t.integer  "appointee_id"
+    t.integer  "event_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "appointments", ["appointee_id"], :name => "index_appointments_on_appointee_id"
+  add_index "appointments", ["contact_id"], :name => "index_appointments_on_contact_id"
+  add_index "appointments", ["event_id"], :name => "index_appointments_on_event_id"
+
   create_table "contacts", :force => true do |t|
     t.integer  "contactable_id"
     t.string   "contactable_type"
@@ -47,20 +59,6 @@ ActiveRecord::Schema.define(:version => 20120904095136) do
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
   end
-
-  create_table "garden_appointments", :force => true do |t|
-    t.integer  "gardener_id"
-    t.integer  "payee_id"
-    t.integer  "garden_id"
-    t.integer  "event_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  add_index "garden_appointments", ["event_id"], :name => "index_garden_appointments_on_event_id"
-  add_index "garden_appointments", ["garden_id"], :name => "index_garden_appointments_on_garden_id"
-  add_index "garden_appointments", ["gardener_id"], :name => "index_garden_appointments_on_gardener_id"
-  add_index "garden_appointments", ["payee_id"], :name => "index_garden_appointments_on_payee_id"
 
   create_table "gardens", :force => true do |t|
     t.integer  "contact_id"

@@ -7,9 +7,9 @@ class EventsController < ApplicationController
     # appropriate month/week/day.  It should be possiblt to change
     # this to be starts_at and ends_at to match rails conventions.
     # I'll eventually do that to make the demo a little cleaner.
-    # @events = Event.scoped  
+    # @events = Event.scoped
 
-    @events = Event.within_date_range(params['start'], params['end'])
+    @events = Event.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -87,4 +87,7 @@ class EventsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
+
 end
