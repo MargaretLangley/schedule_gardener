@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   before_filter :allowed_user,        only: [ :show, :edit,  :update]
   before_filter :allowed_admin_user,  only: [ :index, :destroy]
-  # 9.6.6 
+  # 9.6.6
   #before_filter :unsigned_in_can_create, only: [:create, :new]
 
   def index
@@ -13,25 +13,25 @@ class UsersController < ApplicationController
   end
 
 
-	def show
+  def show
     @user = User.find(params[:id])
-	end
+  end
 
   def new
-  	@user = User.new
+    @user = User.new
     @user.contact = Contact.new
     @user.contact.address = Address.new
   end
 
   def create
-  	@user = User.new(params[:user])
-  	if @user.save
+    @user = User.new(params[:user])
+    if @user.save
       sign_in @user
-  		flash[:success] = "Welcome to Garden Care!"
-  		redirect_to @user
-  	else
-  		render 'new'
-  	end
+      flash[:success] = "Welcome to Garden Care!"
+      redirect_to @user
+    else
+      render 'new'
+    end
   end
 
   def edit
@@ -41,7 +41,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated"
       # 9.10 changing account results in the remember token getting reset
-      # so we login again. 
+      # so we login again.
 
       #sign_in if we are the user
       sign_in @user if current_user?(@user)
@@ -71,27 +71,27 @@ class UsersController < ApplicationController
 
 
     def allowed_admin_user
-       unless current_user.admin? 
+       unless current_user.admin?
         sign_out
-        redirect_to(root_path)  
+        redirect_to(root_path)
        end
     end
 
     # 9.6.6 but don't know what doing
     # def unsigned_in_can_create
-    #   redirect_to(root_path) if signed_in? 
+    #   redirect_to(root_path) if signed_in?
     # end
 
 
     # clicking an edit link sets id to the user you clicked
     # current user assigns @current_user from cookie if null
-    # current user is the user returned from the cookie 
+    # current user is the user returned from the cookie
     def allowed_user
       @user = User.find(params[:id])
       unless (current_user?(@user) || current_user.admin?)
         sign_out
-        redirect_to(root_path) 
+        redirect_to(root_path)
       end
-    end 
+    end
 
 end

@@ -2,16 +2,12 @@
 #
 # Table name: users
 #
-#  id              :integer         not null, primary key
-#  first_name      :string(255)
-#  last_name       :string(255)
-#  email           :string(255)
-#  password_digest :string(255)
+#  id              :integer          not null, primary key
+#  password_digest :string(255)      not null
 #  remember_token  :string(255)
-#  home_phone    :string(255)
-#  admin           :boolean         default(FALSE)
-#  created_at      :datetime        not null
-#  updated_at      :datetime        not null
+#  admin           :boolean          default(FALSE)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 
 # cut and paste into terminal

@@ -3,20 +3,20 @@
 
 <div class="row">
   <div class="span6 offset3">
-	<%= simple_form_for(@user, html: { class: 'form-vertical'}) do |f| %>
-	  <%= render 'shared/error_messages'	%>
-		<%= f.simple_fields_for :contact do |c| %>
-		  <%= c.input :first_name %>
-			<%= c.input :last_name %>
-			<%= f.input :password                                                   %>
-			<%= f.input :password_confirmation, label: "Confirm password" %>
-			<%= c.input :email %>
-		  <%= c.simple_fields_for :address do |address| %>
-				<%= render :partial => 'shared/address', :locals => {:f => address} %>
-			<% end %>
-			<%= c.input :home_phone %>
-	  <% end %>
-		<%= f.button :submit,value: "Create my account" %>
-	<% end %>
-	</div>
+  <%= simple_form_for(@user, html: { class: 'form-vertical'}) do |f| %>
+    <%= render 'shared/error_messages'  %>
+    <%= f.simple_fields_for :contact do |c| %>
+      <%= c.input :first_name %>
+      <%= c.input :last_name %>
+      <%= f.input :password                                                   %>
+      <%= f.input :password_confirmation, label: "Confirm password" %>
+      <%= c.input :email %>
+      <%= c.simple_fields_for :address do |address| %>
+        <%= render :partial => 'shared/address', :locals => {:f => address} %>
+      <% end %>
+      <%= c.input :home_phone %>
+    <% end %>
+    <%= f.button :submit,value: "Create my account" %>
+  <% end %>
+  </div>
 </div>

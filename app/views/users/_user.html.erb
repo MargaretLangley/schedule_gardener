@@ -2,12 +2,12 @@
 <td><%= link_to user.contact.home_phone, user %></td>
 <td>
   <%= if current_user?(user) || !user.admin?
-  			(link_to "edit", edit_user_path(user), class: 'edit')
-  		end %>
+        (link_to "edit", edit_user_path(user), class: 'edit')
+      end %>
 </td>
 <td>
   <%= if !user.admin?
-  			(link_to	"delete", user, method: :delete, data: { confirm: "You sure?" }, class: 'delete')
-  		end %>
+        (link_to  "delete", user, method: :delete, data: { confirm: "You sure?" }, class: 'delete')
+      end %>
 </td>
- 
+

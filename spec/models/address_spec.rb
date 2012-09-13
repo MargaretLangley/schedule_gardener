@@ -2,17 +2,17 @@
 #
 # Table name: addresses
 #
-#  id               :integer         not null, primary key
+#  id               :integer          not null, primary key
 #  addressable_id   :integer
 #  addressable_type :string(255)
 #  house_name       :string(255)
-#  street_number    :string(255)
-#  street_name      :string(255)
+#  street_number    :string(255)      not null
+#  street_name      :string(255)      not null
 #  address_line_2   :string(255)
-#  town             :string(255)
+#  town             :string(255)      not null
 #  post_code        :string(255)
-#  created_at       :datetime        not null
-#  updated_at       :datetime        not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
 #
 
 # Address.new( street_number: "15", street_name: "High Street", address_line_2: "Stratford", town: "London", post_code: "NE12 3ST") 

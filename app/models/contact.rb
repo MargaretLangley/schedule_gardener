@@ -2,32 +2,41 @@
 #
 # Table name: contacts
 #
-#  id         :integer         not null, primary key
-#  first_name :string(255)
-#  last_name  :string(255)
-#  email      :string(255)
-#  home_phone :string(255)
-#  mobile     :string(255)
-#  address_id :integer
-#  created_at :datetime        not null
-#  updated_at :datetime        not null
+#  id               :integer          not null, primary key
+#  contactable_id   :integer
+#  contactable_type :string(255)
+#  first_name       :string(255)      not null
+#  last_name        :string(255)
+#  email            :string(255)
+#  home_phone       :string(255)      not null
+#  mobile           :string(255)
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
 #
 
 class Contact < ActiveRecord::Base
   attr_accessible :address_attributes,:email, :first_name, :home_phone, :last_name, :mobile
 
   # Must be present, ignores validation if blank, format to REGEX
-	validates :email, :first_name, :home_phone, presence: true
+  validates :email, :first_name, :home_phone, presence: true
   validates :first_name, :last_name, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
   validates :email, allow_blank: true ,format: { with: VALID_EMAIL_REGEX }
 
-	before_save { |contact| contact.email = email.downcase }
+  before_save { |contact| contact.email = email.downcase }
 
   belongs_to      :contactable, polymorphic: true
   has_one         :address,  autosave: true, dependent: :destroy, as: :addressable
   has_many        :gardens, dependent: :destroy
-  has_many        :garden_appointments, foreign_key: "gardener_id"
+  has_many        :appointments, dependent: :destroy, finder_sql:
+                   proc { "SELECT a.id, appointee_id, contact_id, event_id, a.created_at, a.updated_at " +
+                          "FROM appointments as a " +
+                          "INNER JOIN events as e ON e.id = a.event_id " +
+                          "WHERE a.contact_id = #{id} " +
+                          "ORDER BY e.starts_at "
+                        }
+
+  has_many        :events, through: :appointments
 
   # attr_accessible :address_attributes - adds the attribute writer to the allowed list
   # accepts_nes.... Defines an attributes writer for the specified association
@@ -47,6 +56,10 @@ class Contact < ActiveRecord::Base
 
   def mobile=(num)
     write_attribute(:mobile,num ? strip_none_numeric(num) : nil)
+  end
+
+  def self.appointments_by_start_time
+    Contact.joins{appointments.event}.order{'starts_at ASC'}
   end
 
   private
