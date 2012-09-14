@@ -23,10 +23,6 @@ describe Appointment do
 
  	include_examples "All Built Objects", Appointment
 
- 	 # let (:appointment) { FactoryGirl.create(:appointment)}
- 	 # it "balh" do
- 	 # 	  appointment.should be_valid
- 	 # end
 
   context "Validations" do
 

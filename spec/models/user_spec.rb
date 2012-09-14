@@ -11,7 +11,7 @@
 #
 
 # cut and paste into terminal
-# User.new(first_name: "Example", last_name: "User", email: "user@example.com", password: "foobar", password_confirmation: "foobar", home_phone: "0121-308-1439") 
+# User.new(first_name: "Example", last_name: "User", email: "user@example.com", password: "foobar", password_confirmation: "foobar", home_phone: "0121-308-1439")
 
 require 'spec_helper'
 
@@ -58,7 +58,7 @@ describe User do
 		before { user.toggle(:admin) }
 		it { should be_admin }
 	end
-	
+
 	context "#authenticate" do
 
 		it "with valid password succeeds" do
@@ -74,17 +74,13 @@ describe User do
 	describe "remember token" do
     before { user.save }
     its(:remember_token) { should_not be_blank }
-
-    it "should generate unique tokens" do
-    	pending
-    end
   end
 
   context "Custom finders" do
 
 	  context "#find_by_email" do
-	  	before(:all) do 
-	 			3.times do |i| 
+	  	before(:all) do
+	 			3.times do |i|
 	 				FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Firstname#{i+1}", email: "firstname#{i+1}@example.com") )
 	 			end
 	 		end
@@ -92,16 +88,16 @@ describe User do
 
 			it "empty search should return users" do
 		  	User.find_by_email("firstname2@example.com").first_name.should eq  "Firstname2"
-	    end 
+	    end
 	  end
 
 	  context "#search_ordered" do
 	  	fred = john = sally = nil
-	 		
-	 		before(:all) do 
-	 			john = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "John", last_name: "Smith")  ) 
-		  	sally = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Sally", last_name: "Jones")  ) 
-	  		fred = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Fred", last_name: "Jone")  ) 
+
+	 		before(:all) do
+	 			john = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "John", last_name: "Smith")  )
+		  	sally = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Sally", last_name: "Jones")  )
+	  		fred = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Fred", last_name: "Jone")  )
 
 	 			User.all.should eq [john,sally,fred]
 	 		end
@@ -109,19 +105,19 @@ describe User do
 
 	    it "empty search should return users" do
 		    User.search_ordered.should eq [fred, john, sally]
-	    end 
+	    end
 
 	    it "unique name match" do
 		    User.search_ordered("John").should eq [john]
-	    end 
+	    end
 
 	    it "match multiple" do
 		    User.search_ordered("Jon").should eq [fred, sally]
-	    end 
+	    end
 
 	    it "case insenstive" do
 		    User.search_ordered("s").should eq [john, sally]
-	    end 
+	    end
 
 	    it "should match full name" do
 	    	User.search_ordered("John Smith").should eq [john]
