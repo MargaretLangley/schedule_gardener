@@ -22,6 +22,10 @@ describe Contact do
 
 	include_examples "All Built Objects", Contact
 
+	it "has a valid factory" do
+    FactoryGirl.create(:contact).should be_valid
+  end
+
 	context "Accessable" do
 
 		[ :contactable_id, :contactable_type].each do |validate_attr|
@@ -36,6 +40,7 @@ describe Contact do
 
   context "Validations" do
 
+    # role can't be validated in the same way because of the before validation
 		[ :email, :first_name, :home_phone ].each do |validate_attr|
 			it { should validate_presence_of(validate_attr) }
 		end

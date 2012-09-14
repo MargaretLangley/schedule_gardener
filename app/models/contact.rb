@@ -18,25 +18,26 @@ class Contact < ActiveRecord::Base
   attr_accessible :address_attributes,:email, :first_name, :home_phone, :last_name, :mobile
 
   # Must be present, ignores validation if blank, format to REGEX
-  validates :email, :first_name, :home_phone, presence: true
+  validates :email, :first_name, :home_phone, :role, presence: true
   validates :first_name, :last_name, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
   validates :email, allow_blank: true ,format: { with: VALID_EMAIL_REGEX }
 
-  before_save { |contact| contact.email = email.downcase }
+  before_validation :set_default
+  before_save       :before_save
 
-  belongs_to      :contactable, polymorphic: true
-  has_one         :address,  autosave: true, dependent: :destroy, as: :addressable
-  has_many        :gardens, dependent: :destroy
-  has_many        :appointments, dependent: :destroy, finder_sql:
-                   proc { "SELECT a.id, appointee_id, contact_id, event_id, a.created_at, a.updated_at " +
-                          "FROM appointments as a " +
-                          "INNER JOIN events as e ON e.id = a.event_id " +
-                          "WHERE a.contact_id = #{id} " +
-                          "ORDER BY e.starts_at "
-                        }
+  belongs_to  :contactable, polymorphic: true
+  has_one     :address,  autosave: true, dependent: :destroy, as: :addressable
+  has_many    :gardens, dependent: :destroy
+  has_many    :appointments, dependent: :destroy, finder_sql:
+              proc { "SELECT a.id, appointee_id, contact_id, event_id, a.created_at, a.updated_at " +
+                     "FROM appointments as a " +
+                     "INNER JOIN events as e ON e.id = a.event_id " +
+                     "WHERE a.contact_id = #{id} " +
+                     "ORDER BY e.starts_at "
+                   }
 
-  has_many        :events, through: :appointments
+  has_many    :events, through: :appointments
 
   # attr_accessible :address_attributes - adds the attribute writer to the allowed list
   # accepts_nes.... Defines an attributes writer for the specified association
@@ -66,6 +67,14 @@ class Contact < ActiveRecord::Base
 
     def strip_none_numeric(phone_number_string)
       phone_number_string.gsub(/\D/, '')
+    end
+
+    def set_default
+       self.role ||= 'client'
+    end
+
+    def before_save
+       self.email = email.downcase
     end
 
 end
