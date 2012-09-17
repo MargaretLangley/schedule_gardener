@@ -1,14 +1,18 @@
 ScheduleGardener::Application.routes.draw do
 
   resource :calendar, only: [:show, :edit, :update]
-  resources :events
+  resources :appointments
+
+  match '/signup',  to: 'users#new', via: :get
+  match '/signup',  to: 'users#create', via: :post
 
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
 
   root to: 'static_pages#home'
 
-  match '/signup',  to: 'users#new'
+
+
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
 

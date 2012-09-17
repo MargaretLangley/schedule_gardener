@@ -19,7 +19,7 @@ describe "Static pages" do
     describe "signed in users should be redirected away to users show page" do
       let(:user) { FactoryGirl.create(:user)}
       before do
-        sign_in user 
+        sign_in user
         visit root_path
       end
       it { current_path.should eq user_path(user)}

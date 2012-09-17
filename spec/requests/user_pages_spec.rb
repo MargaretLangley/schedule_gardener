@@ -13,17 +13,17 @@ describe "users" do
   context "#index" do
     # Need constants but don't know which is best way in RSpec
     let(:users)   { "Users" }
-    
+
     let!(:admin)  do
       FactoryGirl.create(:admin, contact: FactoryGirl.create(:contact, first_name: admin_first_name, home_phone: admin_home_phone))
     end
 
-    let!(:none_admin_user)  do 
+    let!(:none_admin_user)  do
        FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: user_first_name, home_phone: user_home_phone))
     end
 
     before do
-      sign_in admin 
+      sign_in admin
       visit users_path
     end
 
@@ -31,9 +31,6 @@ describe "users" do
       it "should see users list" do
         current_path.should eq users_path
       end
-
-      it { should have_selector('title',  text: users)}
-      it { should have_selector('h1',     text: users)}
     end
 
     describe "pagination" do
@@ -52,7 +49,7 @@ describe "users" do
         end
       end
     end
-  
+
     context "search" do
       let(:search) { 'search' }
       let(:search_button) { 'go_search' }
@@ -93,7 +90,7 @@ describe "users" do
     end   # search
 
     context "User links" do
-          
+
       context "for none-admin user" do
 
         it "should include edit link" do
@@ -108,11 +105,11 @@ describe "users" do
       end
 
       context "for admin user" do
-        let!(:admin_edit_self) { FactoryGirl.create(:admin, contact: FactoryGirl.create(:contact, first_name: "admin_edit_self"))} 
+        let!(:admin_edit_self) { FactoryGirl.create(:admin, contact: FactoryGirl.create(:contact, first_name: "admin_edit_self"))}
         before do
           visit users_path
         end
-      
+
         it "should edit self" do
           should have_link('edit', href: edit_user_path(admin))
         end
@@ -121,9 +118,9 @@ describe "users" do
           should_not have_link('edit', href: edit_user_path(admin_edit_self))
         end
       end
-      
+
       context "#delete" do
-        let!(:admin_undeleteable) { FactoryGirl.create(:admin, contact: FactoryGirl.create(:contact, first_name: "admin_undeletable")) }  
+        let!(:admin_undeleteable) { FactoryGirl.create(:admin, contact: FactoryGirl.create(:contact, first_name: "admin_undeletable")) }
         before do
           visit users_path
         end
@@ -132,8 +129,8 @@ describe "users" do
         it "should be able to delete another user" do
           expect { click_link("delete") }.to change(User, :count).by(-1)
         end
-        it 'should not delete self' do 
-          should_not have_link('delete', href: user_path(admin)) 
+        it 'should not delete self' do
+          should_not have_link('delete', href: user_path(admin))
         end
         it 'should not delete another admin' do
           should_not have_link('delete', href: user_path(admin_undeleteable))
@@ -141,34 +138,31 @@ describe "users" do
       end
     end # user links
 
-    # sign in with one user and Create two other users 
+    # sign in with one user and Create two other users
     context "None-admin users" do
       it "should be sent to root" do
         sign_in FactoryGirl.create(:user)
         visit users_path
-        current_path.should eq root_path 
+        current_path.should eq root_path
       end
     end
-  end # index 
+  end # index
 
   describe "#show profile page" do
   	let(:user) { FactoryGirl.create(:user) }
   	before do
       sign_in user
-     visit user_path(user) 
-   end
+     visit user_path(user)
+    end
 
-  	it { should have_selector('h1', 		text: "Profile" )}
-  	it { should have_content("First name") }
-    it { should have_content(user.first_name) }
-
+    it "should open user_path page" do
+      current_path.should eq user_path(user)
+    end
   end
 
   describe "signup page" do
     before { visit signup_path }
-
-    it { should have_selector('h1',			text: 'Sign up') }
-    it { should have_selector('title',	text: full_title('Sign up')) }
+    it { current_path.should eq signup_path }
   end
 
 
@@ -185,27 +179,26 @@ describe "users" do
   		describe "after submission" do
   			before { click_button submit }
 
-  			it { should have_selector('title', text: 'Sign up')}
+        it {  current_path.should eq signup_path  }
   			it { should have_content('error')}
   		end
   	end
 
   	describe "with valid information" do
   		before do
-  				fill_in "First name",				with: "Example"
-  				fill_in "Last name",				with: "User"
-  				fill_in "Email",						with: "user@example.com"
-  				fill_in	"Password",					with: "foobar"
-  				fill_in "Confirm password",	with: "foobar"
-  				fill_in "Street number",		with: "23"
-          fill_in "Street name",      with: "High Street"
-  				fill_in "Town",							with: "Stratford"
-  				fill_in "Home phone",			  with: "0181-333-4444"
-
+  			fill_in "First name",				with: "Example"
+  			fill_in "Last name",				with: "User"
+  			fill_in "Email",						with: "user@example.com"
+  			fill_in	"Password",					with: "foobar"
+  			fill_in "Confirm password",	with: "foobar"
+  			fill_in "Street number",		with: "23"
+        fill_in "Street name",      with: "High Street"
+  			fill_in "Town",							with: "Stratford"
+  			fill_in "Home phone",			  with: "0181-333-4444"
   		end
 
   		it "should create a user" do
-  				expect { click_button submit }.to change(User, :count).by(1)
+  			expect { click_button submit }.to change(User, :count).by(1)
   		end
 
   		describe "after saving the user" do
@@ -228,17 +221,15 @@ describe "users" do
     let(:user) { FactoryGirl.create(:user) }
     before do
       sign_in user
-      visit edit_user_path(user) 
+      visit edit_user_path(user)
     end
 
-    describe "page" do
-
-      it { should have_selector('h1',    text: update_profile) }
-      it { should have_selector('title', text: "Update Profile") }
+    context "page" do
+      it { current_path.should eq edit_user_path(user) }
     end
 
     describe "with invalid information" do
-      before do 
+      before do
         fill_in "First name", with: ""
         click_button update_profile
       end
@@ -252,7 +243,7 @@ describe "users" do
       let(:new_email) { "new@example.com" }
       let(:new_town) { "New Town" }
       let(:new_phone) { "0181-999-8888" }
-      
+
       before do
         fill_in "First name",       with: new_first_name
         fill_in "Last name",        with: new_last_name

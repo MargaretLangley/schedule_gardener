@@ -3,8 +3,9 @@
 
 <div class="row">
   <div class="span6 offset3">
-  <%= simple_form_for(@user, html: { class: 'form-vertical'}) do |f| %>
+  <%= simple_form_for @user, html: { class: 'form-vertical'}, url: :signup, method: :post do |f| %>
     <%= render 'shared/error_messages'  %>
+
     <%= f.simple_fields_for :contact do |c| %>
       <%= c.input :first_name %>
       <%= c.input :last_name %>
@@ -18,5 +19,6 @@
     <% end %>
     <%= f.button :submit,value: "Create my account" %>
   <% end %>
+
   </div>
 </div>
