@@ -14,7 +14,7 @@ require 'spec_helper'
 
 describe Appointment do
 	before(:all) do
-		@contact = FactoryGirl.build(:contact, first_name: "Rodger")
+		@contact = FactoryGirl.create(:contact, first_name: "Rodger")
 		@appointee = FactoryGirl.build(:contact, first_name: "Percy", last_name: "Thrower")
 		@event = FactoryGirl.build(:event, :today)
 	end
@@ -35,6 +35,22 @@ describe Appointment do
 		end
 
 	end
+
+	context "#<<" do
+		it "<< an appointment" do
+    	expect { @contact.appointments << appointment }.to change(@contact.appointments, :count).by(1)
+    end
+	end
+
+	context "#delete - " do
+		before do
+		  @contact.appointments << appointment
+		end
+		it "removes an appointment" do
+    	expect { @contact.appointments.delete(appointment) }.to change(@contact.appointments, :count).by(-1)
+    end
+	end
+
 
  	describe "Association" do
  	  it { should belong_to(:contact) }

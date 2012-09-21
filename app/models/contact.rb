@@ -29,19 +29,29 @@ class Contact < ActiveRecord::Base
   belongs_to  :contactable, polymorphic: true
   has_one     :address,  autosave: true, dependent: :destroy, as: :addressable
   has_many    :gardens, dependent: :destroy
-  has_many    :appointments, dependent: :destroy, finder_sql:
+  has_many    :appointments, dependent: :destroy,
+              finder_sql:
               proc { "SELECT a.id, appointee_id, contact_id, event_id, a.created_at, a.updated_at " +
                      "FROM appointments as a " +
                      "INNER JOIN events as e ON e.id = a.event_id " +
                      "WHERE a.contact_id = #{id} " +
                      "ORDER BY e.starts_at "
-                   }
+                   },
+              counter_sql:
+              proc { "SELECT COUNT(*) FROM appointments as a " +
+                     "WHERE a.contact_id = #{id}"
+                    }
+
 
   has_many    :events, through: :appointments
 
   # attr_accessible :address_attributes - adds the attribute writer to the allowed list
   # accepts_nes.... Defines an attributes writer for the specified association
   accepts_nested_attributes_for :address
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 
   def home_phone
     read_attribute(:home_phone)

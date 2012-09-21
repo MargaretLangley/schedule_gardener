@@ -1,0 +1,17 @@
+<% if false %>
+  <%= simple_form_for(@appointment) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="form-inputs">
+      <%= f.input :title %>
+      <%= f.input :starts_at, as: :string, input_html: { class: 'date_picker' } %>
+      <%= f.input :ends_at,   as: :string, input_html: { class: 'date_picker' } %>
+      <%= f.input :all_day %>
+      <%= f.input :description %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.button :submit %>
+    </div>
+  <% end %>
+<% end %>

@@ -31,7 +31,7 @@ describe User do
 			it { should_not allow_mass_assignment_of(validate_attr) }
 		end
 
-		[:admin, :authenticate, :password, :password_digest, :password_confirmation, :remember_token].each do |expected_attribute|
+		[:admin, :admin?,:authenticate, :full_name, :password, :password_digest, :password_confirmation, :remember_token].each do |expected_attribute|
   		it { should respond_to expected_attribute }
 		end
 
@@ -79,15 +79,24 @@ describe User do
   context "Custom finders" do
 
 	  context "#find_by_email" do
+	  	user1 = user2 = user3 = nil
+
 	  	before(:all) do
-	 			3.times do |i|
-	 				FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Firstname#{i+1}", email: "firstname#{i+1}@example.com") )
-	 			end
+	 			user1 =	FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, email: "user1@example.com") )
+	 			user2 =	FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, email: "user2@example.com") )
+	 			user3 =	FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, email: "user3@example.com") )
+
+	 			User.all.should eq [user1,user2,user3]
 	 		end
+
 	    after(:all) { User.destroy_all }
 
-			it "empty search should return users" do
-		  	User.find_by_email("firstname2@example.com").first_name.should eq  "Firstname2"
+			it "return user by email" do
+		  	User.find_by_email("user2@example.com").should eq  user2
+	    end
+
+	    it "empty email should not return a user" do
+		  	User.find_by_email("").should eq  nil
 	    end
 	  end
 

@@ -18,7 +18,7 @@
 require 'spec_helper'
 
 describe Contact do
-	subject(:contact) { FactoryGirl.build(:contact, first_name: "Roger") }
+	subject(:contact) { FactoryGirl.build(:contact, first_name: "Roger", last_name: "Smith") }
 
 	include_examples "All Built Objects", Contact
 
@@ -32,7 +32,7 @@ describe Contact do
 			it { should_not allow_mass_assignment_of(validate_attr) }
 		end
 
-	 [:address, :email, :first_name, :home_phone, :last_name, :mobile ].each do |expected_attr|
+	 [:address, :email, :first_name, :full_name,:home_phone, :last_name, :mobile ].each do |expected_attr|
 			it { should respond_to expected_attr }
 		end
 
@@ -84,16 +84,24 @@ describe Contact do
 			contact1_app2 = FactoryGirl.create(:appointment, :tomorrow, contact: contact)
 			contact1_app1 = FactoryGirl.create(:appointment, :today, contact: contact)
 			contact1_app3 = FactoryGirl.create(:appointment, :two_days_time, contact: contact)
-			contact1_app4 = FactoryGirl.create(:appointment, :tomorrow, contact: contact_2)
+			contact2_app4 = FactoryGirl.create(:appointment, :tomorrow, contact: contact_2)
 
-			Appointment.all.should eq [contact1_app2,contact1_app1,contact1_app3,contact1_app4]
+			Appointment.all.should eq [contact1_app2,contact1_app1,contact1_app3,contact2_app4]
 		end
 		after(:all) { Appointment.destroy_all; Event.delete_all; }
 
-		its(:appointments) { should_not include(contact2_app4) }
-	  its(:appointments) { should eq [contact1_app1, contact1_app2, contact1_app3] }
+		it "returns expected appointments" do
+	  	contact.appointments.should eq [contact1_app1, contact1_app2, contact1_app3]
+	  end
 
+    it "return event with expected title" do
+    	contact.appointments.fetch(0).event.title.should eq "created by appointment today"
+    end
   end
+
+  context "full_name" do
+    its(:full_name) { should eq "Roger Smith"}
+	end
 
 
 	context "#home_phone" do

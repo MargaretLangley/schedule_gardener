@@ -12,7 +12,7 @@ require 'spec_helper'
 
 describe Garden do
   let(:contact) do
-    contact = FactoryGirl.create(:contact) 
+    contact = FactoryGirl.create(:contact)
   end
   let(:garden) do
     garden = FactoryGirl.build(:garden)
@@ -49,14 +49,17 @@ describe Garden do
   	it { should have_one(:address).dependent(:destroy)}
   	it { should belong_to(:contact)}
 
-  	context "Addresss" do
-  		context "from parent" do
-			 	its(:address) { should eq garden.contact.address}
+  	context "Address" do
+  		context "when from contact" do
+        it "should match contact" do
+			 	  garden.address.should eq garden.contact.address
+        end
   		end
-  		context "owns" do
+  		context "when owned" do
   			subject { garden_own_address }
-  			its(:address) { should_not eq garden_own_address.contact.address }
-  			its(:address) { should eq garden_own_address.address }
+        it "can be different from contact's address" do
+          garden_own_address.address.should_not eq garden_own_address.contact.address
+        end
   		end
   	end
 

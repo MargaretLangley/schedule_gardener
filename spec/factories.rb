@@ -58,15 +58,15 @@ FactoryGirl.define do
     association :appointee, factory: :contact, first_name: "Percy"
 
     trait :today do
-      association :event, :today, title: "created by appointment"
+      association :event, :today, title: "created by appointment today"
     end
 
     trait :tomorrow do
-      association :event, :tomorrow, title: "created by appointment"
+      association :event, :tomorrow, title: "created by appointment tomorrow"
     end
 
     trait :two_days_time do
-      association :event, :two_days_time, title: "created by appointment"
+      association :event, :two_days_time, title: "created by appointment two_days_time"
     end
 
 

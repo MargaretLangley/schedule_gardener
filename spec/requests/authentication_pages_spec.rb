@@ -1,138 +1,56 @@
 require 'spec_helper'
 
+
 describe "Authentication" do
 
+  let(:user) { FactoryGirl.create(:user) }
   subject { page }
 
-  describe "signin page" do
-    before { visit signin_path }
-
-    it { current_path.should eq signin_path }
+  before  do
+    visit signin_path
   end
 
 
-  describe "signin" do
-    before { visit signin_path }
+  it "visits sign in page" do
+    current_path.should eq signin_path
+  end
 
-    describe "with invalid information" do
-      let(:user) { FactoryGirl.create(:user) }
+  context "signin" do
+
+    context "succeeds" do
+
+      context "for standard user" do
+        before { sign_in_user(user) }
+
+        it ("opens protected page")      { current_path.should eq user_path(user) }
+        it ("has no 'users' link")       { should_not have_link('Users',      href: users_path) }
+        it ("has 'full name' link")      { should have_link( user.full_name,  href: "#") }
+        it ("has 'Profile' link")        { should have_link('Profile',        href: user_path(user)) }
+        it ("has 'Update Profile' link") { should have_link('Update Profile', href: edit_user_path(user)) }
+        it ("has 'Sign out' link ")      { should have_link('Sign out',       href: signout_path) }
+      end
+
+      context "for admin user" do
+        pending "until authorization gem introduced"
+      end
+    end
+
+    context "fails for all-users" do
       before { click_button "Sign in" }
 
-      it { should have_selector('title', text: 'Sign in') }
-      it { should have_error_message('Invalid') }
-
-      it { should_not have_link('Users',    href: users_path) }
-      it { should_not have_link("#{user.first_name} #{user.last_name}", href: "#") }
-      it { should_not have_link('Profile',  href: user_path(user)) }
-      it { should_not have_link('Update Profile', href: edit_user_path(user)) }
-      it { should_not have_link('Sign out', href: signout_path) }
-
+      it ("remains on signin page")       { current_path.should eq signin_path }
+      it ("has error banner")             { should have_error_message('Invalid') }
+      it ("has no 'users' link")          { should_not have_link('Users',          href: users_path) }
+      it ("has no 'full name' link")      { should_not have_link( user.full_name,  href: "#") }
+      it ("has no 'Profile' link")        { should_not have_link('Profile',        href: user_path(user)) }
+      it ("has no 'Update Profile' link") { should_not have_link('Update Profile', href: edit_user_path(user)) }
+      it ("has no 'Sign out' link")       { should_not have_link('Sign out',       href: signout_path) }
 
       describe "after visiting another page" do
         before { click_link "logo" }
-        it { should_not have_selector('div.alert.alert-error') }
-      end
-    end
-
-    describe "with valid information" do
-      let(:user) { FactoryGirl.create(:user) }
-      before { valid_signin(user) }
-
-      it { should have_selector('title', text: "Profile") }
-
-      it { should_not have_link('Users',    href: users_path) }
-      it { should have_link("#{user.first_name} #{user.last_name}", href: "#") }
-      it { should have_link('Profile', href: user_path(user)) }
-      it { should have_link('Update Profile', href: edit_user_path(user)) }
-      it { should have_link('Sign out', href: signout_path) }
-      it { should_not have_link('Sign in', href: signin_path) }
-    end
-  end
-
-  describe "authorization" do
-
-    describe "for non-signed-in users" do
-      let(:user) { FactoryGirl.create(:user) }
-
-      describe "when attempting to visit a protected page" do
-        before do
-          visit edit_user_path(user)
-          sign_in(user)
-        end
-
-        describe "after signing in" do
-          it { current_path.should eq edit_user_path(user) }
-        end
-      end
-
-      describe "in the Users controller" do
-
-        describe "visiting the edit page" do
-          before { visit edit_user_path(user) }
-          it { should have_selector('title', text: 'Sign in') }
-        end
-
-        describe "submitting to the update action" do
-          before { put user_path(user) }
-          specify { response.should redirect_to(signin_path) }
-        end
-
-        # only admin should be asking for users index!
-        describe "visiting the user index" do
-          before { visit users_path}
-          it { current_path.should eq signin_path }
-        end
-
-      end
-
-      describe "in the events controller" do
-
-        # describe "submitting to the update action" do
-        #   before { put event_path(user) }
-        #   specify { response.should redirect_to(signin_path) }
-        # end
-
-        # describe "visiting the event index " do
-        #   before { visit events_path }
-        #   specify { current_path.should eq signin_path  }
-        # end
-
-      end
-
-    end
-
-    describe "as wrong user" do
-      let(:user) { FactoryGirl.create(:user) }
-      let(:wrong_user) { FactoryGirl.create(:user) }
-      before { sign_in user }
-
-      describe "visiting Users#show page" do
-        before { visit user_path(wrong_user) }
-        it { current_path.should eq root_path }
-      end
-
-      describe "visiting Users#edit page" do
-        before { visit edit_user_path(wrong_user) }
-
-        it { current_path.should eq root_path }
-      end
-
-      describe "submitting a PUT request to the Users#update action" do
-        before { put user_path(wrong_user) }
-        specify { response.should redirect_to(root_path) }
-      end
-    end
-
-    context "as non-admin user" do
-      let(:user) { FactoryGirl.create(:user) }
-      let(:non_admin) { FactoryGirl.create(:user) }
-
-      before { sign_in non_admin }
-
-      context "submitting a DELETE request to the Users#destroy action" do
-        before { delete user_path(user) }
-        specify { response.should redirect_to(root_path) }
+        it ("No Error Banner") { should_not have_selector('div.alert.alert-error', "error banner") }
       end
     end
   end
+
 end
