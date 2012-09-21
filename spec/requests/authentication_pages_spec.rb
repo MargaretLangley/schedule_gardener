@@ -48,7 +48,7 @@ describe "Authentication" do
 
       describe "after visiting another page" do
         before { click_link "logo" }
-        it ("No Error Banner") { should_not have_selector('div.alert.alert-error', "error banner") }
+        it ("has no error banner") { should_not have_selector('div.alert.alert-error', "error banner") }
       end
     end
   end

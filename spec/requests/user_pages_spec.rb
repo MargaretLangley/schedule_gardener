@@ -144,25 +144,20 @@ describe "users" do
   end # index
 
   describe "#show " do
-  	let(:user) { FactoryGirl.create(:user) }
+  	let(:standard_user) { FactoryGirl.create(:user) }
+
+    it "user profile" do
+      visit_signin_and_login (standard_user)
+      visit user_path(standard_user)
+      current_path.should eq user_path(standard_user)
+    end
+  end
+
+  describe "#new (custom route signup) " do
   	before do
-      visit_signin_and_login user
-      visit user_path(user)
+      visit signup_path
+      current_path.should eq signup_path
     end
-
-    it "profile" do
-      current_path.should eq user_path(user)
-    end
-  end
-
-  describe "signup page" do
-    before { visit signup_path }
-    it { current_path.should eq signup_path }
-  end
-
-
-  describe "signup" do
-  	before { visit signup_path }
 
   	let(:submit) { "Create my account" }
 
@@ -174,8 +169,8 @@ describe "users" do
   		describe "after submission" do
   			before { click_button submit }
 
-        it {  current_path.should eq signup_path  }
-  			it "error banner" do
+        it ("remains on signup url") {  current_path.should eq signup_path  }
+  			it "has error banner" do
           should have_content('error')
         end
   		end
@@ -198,14 +193,14 @@ describe "users" do
   			expect { click_button submit }.to change(User, :count).by(1)
   		end
 
-  		describe "after saving the user" do
+  		context "after saving the user" do
         before { click_button submit }
         let(:user) { User.find_by_email('user@example.com') }
 
         it "displays new profile " do
           current_path.should eq user_path(user)
         end
-        it "welcome banner" do
+        it "has welcome banner" do
           should have_selector('div.alert.alert-success', text: 'Welcome')
         end
         it "link to sign out" do
@@ -221,11 +216,11 @@ describe "users" do
   end
 
   context "#edit" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:standard_user) { FactoryGirl.create(:user) }
     before do
-      visit_signin_and_login user
-      visit edit_user_path(user)
-      current_path.should eq edit_user_path(user)
+      visit_signin_and_login (standard_user)
+      visit edit_user_path (standard_user)
+      current_path.should eq edit_user_path(standard_user)
     end
 
     context "with invalid information" do
@@ -234,7 +229,7 @@ describe "users" do
         click_button update_profile
       end
 
-      it "error banner" do
+      it "has error banner" do
         should have_content('error')
       end
     end
@@ -258,16 +253,16 @@ describe "users" do
       end
 
       it "displays edited profile " do
-        current_path.should eq user_path(user)
+        current_path.should eq user_path(standard_user)
       end
-      it "success banner" do
+      it "has success banner" do
         should have_selector('div.alert.alert-success')
       end
       it "link to sign out" do
         should have_link('Sign out', href: signout_path)
       end
-      it ("has expected full name") { user.reload.full_name.should eq "#{new_first_name} #{new_last_name}" }
-      it ("has expected email") { user.reload.email.should eq new_email }
+      it ("has expected full name") { standard_user.reload.full_name.should eq "#{new_first_name} #{new_last_name}" }
+      it ("has expected email") { standard_user.reload.email.should eq new_email }
     end
   end
 end
