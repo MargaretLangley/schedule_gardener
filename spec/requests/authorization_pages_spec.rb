@@ -10,10 +10,10 @@ describe "authorization" do
 
     context "visit a protected page" do
       before do
-        visit edit_user_path(user)
+        visit edit_profile_path(user)
         visit_signin_and_login(user)
       end
-      it ("forwards to the requested protected page") { current_path.should eq edit_user_path(user) }
+      it ("forwards to the requested protected page") { current_path.should eq edit_profile_path(user) }
     end
 
     context "in the Users controller" do
@@ -26,7 +26,7 @@ describe "authorization" do
         end
 
         it "#edit  redirect to sign in page"  do
-           visit edit_user_path(user)
+           visit edit_profile_path(user)
            current_path.should eq signin_path
         end
 
@@ -76,7 +76,7 @@ describe "authorization" do
       end
 
       it "when visiting Users#edit page" do
-        visit edit_user_path(wrong_user)
+        visit edit_profile_path(wrong_user)
         current_path.should eq root_path
       end
 

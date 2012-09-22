@@ -13,6 +13,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+
   end
 
   def new
@@ -43,10 +44,8 @@ class UsersController < ApplicationController
 
       #sign_in if we are the user
       sign_in @user if current_user?(@user)
-      redirect_to @user
-    else
-      render 'edit'
     end
+    render 'edit'
   end
 
   def destroy

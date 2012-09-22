@@ -4,31 +4,27 @@
 <table>
   <tr>
     <th>Title</th>
+    <th>With</th>
     <th>Starts at</th>
-    <th>Ends at</th>
-    <th>All day</th>
-    <th>Description</th>
-    <th></th>
     <th></th>
     <th></th>
   </tr>
 
-<% @appointments.each do |event| %>
+<% @appointments.each do |appointment| %>
   <tr>
-    <% if false %>
-        <td><%= event.title %></td>
-        <td><%= event.starts_at %></td>
-        <td><%= event.ends_at %></td>
-        <td><%= event.all_day %></td>
-        <td><%= event.description %></td>
-        <td><%= link_to 'Show', event %></td>
-        <td><%= link_to 'Edit', edit_event_path(event) %></td>
-        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    <% end %>
+    <td><%= appointment.event.title %></td>
+    <td><%= appointment.appointee.full_name %></td>
+    <td><%= appointment.event.starts_at %></td>
+    <td><%= link_to 'Show', "#" %></td>
+    <td><%= link_to 'Edit', "#" %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%- # = link_to 'New Event', new_event_path -%>
+<%= link_to 'New', new_user_appointment_path(@user) %>
+
+<%= debug(@appointments) unless Rails.env.production? %>
+
+<%- # = link_to 'New Event', "#" -%>

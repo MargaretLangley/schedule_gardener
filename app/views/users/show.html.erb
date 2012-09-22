@@ -8,12 +8,10 @@
     <%= f.simple_fields_for :contact do |c| %>
       <%= c.input :first_name %>
       <%= c.input :last_name %>
-      <%= c.input :email %>
-      <%= c.simple_fields_for :address do |address| %>
-        <%= render partial: 'shared/address', locals: {f: address} %>
-      <% end %>
-      <%= c.input :home_phone %>
     <% end %>
     <% end %>
   </div>
 </div>
+
+<%= link_to 'appointments', user_appointments_path(@user) %>
+<%= link_to 'calendar', calendar_path %>

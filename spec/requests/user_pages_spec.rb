@@ -91,11 +91,11 @@ describe "users" do
         context "for standard user" do
 
           it "present" do
-            should have_link('edit', href: edit_user_path(standard_user))
+            should have_link('edit', href: edit_profile_path(standard_user))
           end
           it "edits" do
             click_on 'edit'
-            current_path.should eq edit_user_path(standard_user)
+            current_path.should eq edit_profile_path(standard_user)
           end
         end
 
@@ -106,11 +106,11 @@ describe "users" do
           end
 
           it "present for self-edit" do
-            should have_link('edit', href: edit_user_path(admin))
+            should have_link('edit', href: edit_profile_path(admin))
           end
 
           it "missing for other admin" do
-            should_not have_link('edit', href: edit_user_path(admin_edit_self))
+            should_not have_link('edit', href: edit_profile_path(admin_edit_self))
           end
         end
       end
@@ -219,8 +219,8 @@ describe "users" do
     let(:standard_user) { FactoryGirl.create(:user) }
     before do
       visit_signin_and_login (standard_user)
-      visit edit_user_path (standard_user)
-      current_path.should eq edit_user_path(standard_user)
+      visit edit_profile_path (standard_user)
+      current_path.should eq edit_profile_path(standard_user)
     end
 
     context "with invalid information" do
@@ -253,7 +253,7 @@ describe "users" do
       end
 
       it "displays edited profile " do
-        current_path.should eq user_path(standard_user)
+        current_path.should eq edit_profile_path(standard_user)
       end
       it "has success banner" do
         should have_selector('div.alert.alert-success')

@@ -3,7 +3,8 @@ class AppointmentsController < ApplicationController
   before_filter :signed_in_user
 
   def index
-    @appointments = Appointment.all
+    @user = User.find(params[:user_id])
+    @appointments = @user.contact.appointments
   end
 
   def show
@@ -11,6 +12,7 @@ class AppointmentsController < ApplicationController
   end
 
   def new
+    @user = User.find(params[:user_id])
     @appointment = Appointment.new
   end
 
