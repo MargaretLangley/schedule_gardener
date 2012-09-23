@@ -1,12 +1,11 @@
 module ApplicationHelper
 
-  # Returns the full title on a per-page basis.
-  def full_title(page_title)
-    base_title = "Garden Care"
+  def application_title_pipe_page_title(page_title)
+    application_title = "Garden Care"
     if page_title.empty?
-      base_title
+      application_title
     else
-      "#{base_title} | #{page_title}"
+      "#{application_title} | #{page_title}"
     end
   end
 end
