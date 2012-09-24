@@ -69,8 +69,8 @@ class Contact < ActiveRecord::Base
     write_attribute(:mobile,num ? strip_none_numeric(num) : nil)
   end
 
-  def self.appointments_by_start_time
-    Contact.joins{appointments.event}.order{'starts_at ASC'}
+  def self.gardeners
+    Contact.where{ contacts.role == "gardener"}.order{"contacts.first_name ASC"}
   end
 
   private

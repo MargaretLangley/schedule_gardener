@@ -88,7 +88,7 @@ describe Contact do
 
 			Appointment.all.should eq [contact1_app2,contact1_app1,contact1_app3,contact2_app4]
 		end
-		after(:all) { Appointment.destroy_all; Event.delete_all; }
+		after(:all) { Contact.destroy_all; Appointment.destroy_all; Event.delete_all; }
 
 		it "returns expected appointments" do
 	  	contact.appointments.should eq [contact1_app1, contact1_app2, contact1_app3]
@@ -98,6 +98,30 @@ describe Contact do
     	contact.appointments.fetch(0).event.title.should eq "created by appointment today"
     end
   end
+
+  context "Custom finders" do
+
+    context "#gardeners" do
+	  	percy = allan = roger = nil
+
+	 		before(:all) do
+	 			percy = FactoryGirl.create(:contact, first_name: "Percy", last_name: "Thrower", role: :gardener  )
+		  	allan = FactoryGirl.create(:contact, first_name: "Alan",  last_name: "Titmarsh", role: :gardener  )
+	  		roger = FactoryGirl.create(:contact, first_name: "Roger", last_name: "Smith", role: :client  )
+
+	 			Contact.all.should eq [percy,allan,roger]
+	 		end
+	    after(:all) { Contact.destroy_all}
+
+	    it "empty search should return first name ordered contacts" do
+		    Contact.gardeners.should eq [allan, percy]
+	    end
+
+		end
+
+  end
+
+
 
   context "full_name" do
     its(:full_name) { should eq "Roger Smith"}

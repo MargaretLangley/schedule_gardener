@@ -1,17 +1,18 @@
-<% if false %>
-  <%= simple_form_for(@appointment) do |f| %>
-    <%= f.error_notification %>
+<%= simple_form_for [@user, @appointment] do |f| %>
+  <%= f.error_notification %>
+  <div class="form-inputs">
+    <%= f.association :appointee, collection: @gardeners,  label_method: "first_name", include_blank: false %>
 
-    <div class="form-inputs">
-      <%= f.input :title %>
-      <%= f.input :starts_at, as: :string, input_html: { class: 'date_picker' } %>
-      <%= f.input :ends_at,   as: :string, input_html: { class: 'date_picker' } %>
-      <%= f.input :all_day %>
-      <%= f.input :description %>
-    </div>
-
-    <div class="form-actions">
-      <%= f.button :submit %>
-    </div>
+    <%= f.simple_fields_for  :event do |e| %>
+      <%= e.input :title %>
+      <%= e.input :starts_at, as: :string, input_html: { class: 'date_picker' } %>
+      <%= e.input :ends_at,   as: :string, input_html: { class: 'date_picker' } %>
+      <%= e.input :all_day %>
+      <%= e.input :description %>
   <% end %>
+  </div>
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
 <% end %>
+

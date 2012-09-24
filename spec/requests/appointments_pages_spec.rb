@@ -4,11 +4,13 @@ require 'spec_helper'
 describe "Appointments" do
 
   before(:all) do
-    @contact     = FactoryGirl.create(:contact, first_name: "Rodger", first_name: "Smith")
+    @contact     = FactoryGirl.create(:contact, first_name: "Rodger", first_name: "Smith",role: :client)
     @user        = FactoryGirl.create(:user, contact: @contact)
-    @appointee   = FactoryGirl.create(:contact, first_name: "Alan", last_name: "Titmarsh")
+    @appointee   = FactoryGirl.create(:contact, first_name: "Alan", last_name: "Titmarsh",role: :gardener)
     @event       = FactoryGirl.create(:event, :today, title: "appointment pages spec test")
-    @appointment = Appointment.create(contact: @contact, appointee: @appointee, event: @event)
+    @appointment = Appointment.new(contact: @contact, appointee_id: @appointee.id)
+    @appointment.event = @event
+    @appointment.save
   end
 
   before(:each) do
@@ -43,6 +45,21 @@ describe "Appointments" do
     before(:each) {  visit new_user_appointment_path @user }
     it "open page" do
        current_path.should eq new_user_appointment_path(@user)
+    end
+
+    context "with valid information" do
+      before do
+        fill_in "Title", with: "Weeding appointment pages spec test"
+        fill_in "Starts at", with: "2012-09-24 00:00"
+      end
+      it "add one appointment" do
+        expect { click_on("Create Appointment") }.to change(Appointment, :count).by(1)
+      end
+
+    end
+
+    context "with invalid information" do
+      pending
     end
 
   end

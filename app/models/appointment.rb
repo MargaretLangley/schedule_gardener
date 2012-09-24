@@ -12,11 +12,14 @@
 
 class Appointment < ActiveRecord::Base
 
-  attr_accessible :appointee, :contact,:event
+  attr_accessible :appointee_id, :contact, :event_attributes
 
   validates :appointee, :contact, :event, presence: true
 
   belongs_to :appointee, class_name: "Contact", :foreign_key => "appointee_id"
   belongs_to :contact
   belongs_to :event
+  accepts_nested_attributes_for :event
 end
+
+#

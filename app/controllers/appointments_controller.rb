@@ -14,22 +14,25 @@ class AppointmentsController < ApplicationController
   def new
     @user = User.find(params[:user_id])
     @appointment = Appointment.new
+    @appointment.build_event
+    @gardeners = Contact.gardeners
+  end
+
+
+  def create
+    @user = User.find(params[:user_id])
+    @appointment = Appointment.new(params[:appointment])
+    @appointment.contact = @user.contact
+
+    if @appointment.save
+      redirect_to user_appointments_path(@user), notice: 'appointment was successfully created.'
+    else
+      render :new
+    end
   end
 
   def edit
     @appointment = Appointment.find(params[:id])
-  end
-
-  def create
-    @appointment = Appointment.new(params[:appointment])
-
-    respond_to do |format|
-      if @appointment.save
-        format.html { redirect_to @appointment, notice: 'appointment was successfully created.' }
-      else
-        format.html { render action: "new" }
-      end
-    end
   end
 
   def update

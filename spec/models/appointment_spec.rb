@@ -15,11 +15,19 @@ require 'spec_helper'
 describe Appointment do
 	before(:all) do
 		@contact = FactoryGirl.create(:contact, first_name: "Rodger")
-		@appointee = FactoryGirl.build(:contact, first_name: "Percy", last_name: "Thrower")
+		@appointee = FactoryGirl.create(:contact, first_name: "Percy", last_name: "Thrower")
 		@event = FactoryGirl.build(:event, :today)
 	end
 
-	subject(:appointment) { Appointment.new(contact: @contact, appointee: @appointee, event: @event) }
+	after(:all) do
+    Contact.delete_all; Address.delete_all; Appointment.delete_all;
+	end
+
+	subject(:appointment) do
+		                       @appointment = Appointment.new(contact: @contact, appointee_id: @appointee.id)
+		                       @appointment.event = @event
+                           @appointment
+		                    end
 
  	include_examples "All Built Objects", Appointment
 
