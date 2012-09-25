@@ -25,7 +25,7 @@ class AppointmentsController < ApplicationController
     @appointment.contact = @user.contact
 
     if @appointment.save
-      redirect_to user_appointments_path(@user), notice: 'appointment was successfully created.'
+      redirect_to user_appointments_path(@user), flash: { success: 'appointment was successfully created.' }
     else
       render :new
     end

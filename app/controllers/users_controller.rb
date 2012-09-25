@@ -13,8 +13,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-
   end
+
 
   def new
     @user = User.new
@@ -22,36 +22,37 @@ class UsersController < ApplicationController
     @user.contact.address = Address.new
   end
 
+
   def create
     @user = User.new(params[:user])
     if @user.save
       sign_in @user
-      flash[:success] = "Welcome to Garden Care!"
-      redirect_to @user
+      redirect_to @user, flash: { success: "Welcome to Garden Care!" }
     else
       render 'new'
     end
   end
 
+
   def edit
   end
+
 
   def update
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated"
-      # 9.10 changing account results in the remember token getting reset
-      # so we login again.
 
-      #sign_in if we are the user
+      # if the account we are using changes, The remember token changes
+      # we then need to re-signin
       sign_in @user if current_user?(@user)
     end
     render 'edit'
   end
 
+
   def destroy
     User.find(params[:id]).destroy
-    flash[:success] = "user destroyed."
-    redirect_to users_path
+    redirect_to users_path , flash: { success: "user destroyed." }
   end
 
 end

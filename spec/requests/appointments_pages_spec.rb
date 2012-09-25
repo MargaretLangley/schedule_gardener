@@ -55,11 +55,27 @@ describe "Appointments" do
       it "add one appointment" do
         expect { click_on("Create Appointment") }.to change(Appointment, :count).by(1)
       end
+      context "after creation" do
+        before { click_on("Create Appointment") }
+        it "displays new profile " do
+          current_path.should eq user_appointments_path(@user)
+        end
+        it "has welcome banner" do
+          should have_selector('div.alert.alert-success', text: 'appointment was successfully created.')
+        end
+      end
 
     end
 
     context "with invalid information" do
-      pending
+      it "does not add an appointment" do
+        expect { click_on("Create Appointment") }.to change(Appointment, :count).by(0)
+      end
+
+       it "has error banner" do
+        click_on("Create Appointment")
+        should have_content('error')
+      end
     end
 
   end

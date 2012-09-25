@@ -4,7 +4,7 @@
 <div class="row">
   <div class="span6 offset3">
   <%= simple_form_for @user, html: { class: 'form-vertical'}, url: :signup, method: :post do |f| %>
-    <%= render 'shared/error_messages'  %>
+    <%= render 'shared/error_messages', object: f.object  %>
 
     <%= f.simple_fields_for :contact do |c| %>
       <%= c.input :first_name %>
