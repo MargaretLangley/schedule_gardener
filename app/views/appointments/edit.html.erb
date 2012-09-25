@@ -1,8 +1,6 @@
-<% if false %>
+
   <h1>Editing appointment</h1>
 
   <%= render 'form' %>
 
-  <%= link_to 'Show', @appointment %> |
-  <%= link_to 'Back', appointments_path %>
-<% end %>
+  <%= link_to 'Back', user_appointments_path(@user) %>

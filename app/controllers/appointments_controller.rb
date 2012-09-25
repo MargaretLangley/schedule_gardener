@@ -32,19 +32,19 @@ class AppointmentsController < ApplicationController
   end
 
   def edit
-    @appointment = Appointment.find(params[:id])
+    @user = User.find(params[:user_id])
+    @appointment = @user.contact.appointments.find(params[:id])
+    @gardeners = Contact.gardeners
   end
 
   def update
-     @appointment = Appointment.find(params[:id])
-
-    # respond_to do |format|
-    #   if @appointment.update_attributes(params[:appointment])
-    #     format.html { redirect_to @appointment, notice: 'appointment was successfully updated.' }
-    #   else
-    #     format.html { render action: "edit" }
-    #   end
-    # end
+    @user = User.find(params[:user_id])
+    @appointment = Appointment.find(params[:id])
+    if @appointment.update_attributes(params[:appointment])
+      redirect_to user_appointments_path(@user), flash: { success: 'appointment was successfully updated.' }
+    else
+      render :edit
+    end
   end
 
   def destroy

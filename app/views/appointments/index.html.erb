@@ -16,7 +16,7 @@
     <td><%= appointment.appointee.full_name %></td>
     <td><%= appointment.event.starts_at %></td>
     <td><%= link_to 'Show', "#" %></td>
-    <td><%= link_to 'Edit', "#" %></td>
+    <td><%= link_to 'Edit', edit_user_appointment_path(@user,appointment) %></td>
   </tr>
 <% end %>
 </table>

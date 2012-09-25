@@ -223,17 +223,6 @@ describe "users" do
       current_path.should eq edit_profile_path(standard_user)
     end
 
-    context "with invalid information" do
-      before do
-        fill_in "First name", with: ""
-        click_button update_profile
-      end
-
-      it "has error banner" do
-        should have_content('error')
-      end
-    end
-
     context "with valid information" do
       let(:new_first_name)  { "New" }
       let(:new_last_name)  { "Name" }
@@ -263,6 +252,17 @@ describe "users" do
       end
       it ("has expected full name") { standard_user.reload.full_name.should eq "#{new_first_name} #{new_last_name}" }
       it ("has expected email") { standard_user.reload.email.should eq new_email }
+    end
+
+     context "with invalid information" do
+      before do
+        fill_in "First name", with: ""
+        click_button update_profile
+      end
+
+      it "has error banner" do
+        should have_content('error')
+      end
     end
   end
 end

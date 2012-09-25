@@ -31,6 +31,10 @@ describe "Appointments" do
   context "#index" do
     before(:each) {  visit user_appointments_path @user }
 
+    it "open page" do
+      current_path.should eq user_appointments_path @user
+    end
+
 
     it "displays title" do
       should have_selector('td', text: "appointment pages spec test")
@@ -40,12 +44,16 @@ describe "Appointments" do
     end
   end
 
+  context "#show" do
+     pending
+  end
 
   context "#new" do
     before(:each) {  visit new_user_appointment_path @user }
     it "open page" do
        current_path.should eq new_user_appointment_path(@user)
     end
+
 
     context "with valid information" do
       before do
@@ -80,13 +88,55 @@ describe "Appointments" do
 
   end
 
-  context "#show" do
-     pending
-  end
-
 
   context "#update" do
-    pending
+    before(:each) {  visit edit_user_appointment_path @user, @appointment }
+
+    it "open page" do
+       current_path.should eq edit_user_appointment_path(@user,@appointment)
+    end
+
+    context "verify appointment content" do
+
+      it "have expected title" do
+        should have_field 'Title', text: "appointment pages spec test"
+      end
+    end
+
+    context "with valid information" do
+      before do
+        fill_in "Title", with: "Weeding update appointment - appointmentpages spec"
+        fill_in "Starts at", with: "2012-09-30 00:00"
+        click_on("Update Appointment")
+      end
+      context "after update" do
+        it "displays new profile " do
+          current_path.should eq user_appointments_path(@user)
+        end
+        it "has success banner" do
+          should have_selector('div.alert.alert-success', text: 'appointment was successfully updated.')
+        end
+      end
+    end
+
+    context "with invalid information" do
+      before do
+        fill_in "Title", with: ""
+        click_on("Update Appointment")
+      end
+      context "after update" do
+        it "displays edit profile " do
+          current_path.should eq user_appointment_path(@user,@appointment)
+        end
+        it "has error banner" do
+          should have_content('error')
+        end
+      end
+    end
+
+
+
+
   end
 
 end
