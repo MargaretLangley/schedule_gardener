@@ -1,8 +1,19 @@
+# == Schema Information
+#
+# Table name: gardens
+#
+#  id         :integer          not null, primary key
+#  contact_id :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class Garden < ActiveRecord::Base
   attr_accessible :address_attributes
 
-  validates  :contact_id, presence: true
-  
+  # NOT SURE... look at this
+  #validates  :contact_id, presence: true
+
   has_one    :address,  autosave: true, dependent: :destroy, as: :addressable
   belongs_to :contact
 
@@ -12,8 +23,8 @@ class Garden < ActiveRecord::Base
 
   alias_method :garden_address, :address
   def address
-  	#      owned address       || parent address
-  	return self.garden_address || contact.address
+    #      owned address       || parent address
+    return self.garden_address || contact.address
   end
 
 end

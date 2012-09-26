@@ -22,7 +22,7 @@ FactoryGirl.define do
   end
 
   factory :garden_own_address, parent: :garden, class:"Garden"  do
-    association :address, street_number: "16", street_name: "Garden Avenue" 
+    association :address, street_number: "16", street_name: "Garden Avenue"
   end
 
   factory :address do
@@ -36,10 +36,40 @@ FactoryGirl.define do
 
   factory :event do
     title "New Example Event"
-    starts_at {Time.now.utc.beginning_of_day + 9.hours }
-    ends_at { starts_at + 3.hours }
     all_day false
     description "I am describing a new example event. For testing only."
+
+    trait :today do
+      starts_at {Time.now.utc.beginning_of_day + 9.hours }
+    end
+    trait :tomorrow do
+      starts_at {Time.now.utc.beginning_of_day + 9.hours + 1.days }
+    end
+
+    trait :two_days_time do
+      starts_at {Time.now.utc.beginning_of_day + 9.hours + 2.days }
+    end
+    ends_at { starts_at + 3.hours }
+
+  end
+
+  factory :appointment do
+    association :contact, first_name: "Rodger"
+    association :appointee, factory: :contact, first_name: "Percy"
+
+    trait :today do
+      association :event, :today, title: "created by appointment today"
+    end
+
+    trait :tomorrow do
+      association :event, :tomorrow, title: "created by appointment tomorrow"
+    end
+
+    trait :two_days_time do
+      association :event, :two_days_time, title: "created by appointment two_days_time"
+    end
+
+
   end
 
 end

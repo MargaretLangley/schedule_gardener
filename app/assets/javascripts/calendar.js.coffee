@@ -10,7 +10,7 @@ $(document).ready ->
     slotMinutes: 15,
       
     eventSources: [{
-      url: '/events',
+      url: '/calendar',
       color: 'yellow',
       textColor: 'black',
       ignoreTimezone: false
@@ -27,9 +27,9 @@ $(document).ready ->
 
       
 updateEvent = (the_event) ->
-  $.update "/events/" + the_event.id,
+  $.update "/calendar/" + the_event.id,
     event: 
-      title: the_event.title + "chuck",
+      title: the_event.title,
       starts_at: "" + the_event.start,
       ends_at: "" + the_event.end,
       description: the_event.description

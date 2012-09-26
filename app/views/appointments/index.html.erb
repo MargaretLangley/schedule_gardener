@@ -1,0 +1,30 @@
+<% provide(:title, 'Appointment') %>
+<h1>Appointments</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>With</th>
+    <th>Starts at</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @appointments.each do |appointment| %>
+  <tr>
+    <td><%= appointment.event.title %></td>
+    <td><%= appointment.appointee.full_name %></td>
+    <td><%= appointment.event.starts_at %></td>
+    <td><%= link_to 'Show', "#" %></td>
+    <td><%= link_to 'Edit', edit_user_appointment_path(@user,appointment) %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New', new_user_appointment_path(@user) %>
+
+<%= debug(@appointments) unless Rails.env.production? %>
+
+<%- # = link_to 'New Event', "#" -%>

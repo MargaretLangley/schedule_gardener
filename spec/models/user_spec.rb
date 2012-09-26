@@ -2,20 +2,16 @@
 #
 # Table name: users
 #
-#  id              :integer         not null, primary key
-#  first_name      :string(255)
-#  last_name       :string(255)
-#  email           :string(255)
-#  password_digest :string(255)
+#  id              :integer          not null, primary key
+#  password_digest :string(255)      not null
 #  remember_token  :string(255)
-#  home_phone    :string(255)
-#  admin           :boolean         default(FALSE)
-#  created_at      :datetime        not null
-#  updated_at      :datetime        not null
+#  admin           :boolean          default(FALSE)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 
 # cut and paste into terminal
-# User.new(first_name: "Example", last_name: "User", email: "user@example.com", password: "foobar", password_confirmation: "foobar", home_phone: "0121-308-1439") 
+# User.new(first_name: "Example", last_name: "User", email: "user@example.com", password: "foobar", password_confirmation: "foobar", home_phone: "0121-308-1439")
 
 require 'spec_helper'
 
@@ -35,7 +31,7 @@ describe User do
 			it { should_not allow_mass_assignment_of(validate_attr) }
 		end
 
-		[:admin, :authenticate, :password, :password_digest, :password_confirmation, :remember_token].each do |expected_attribute|
+		[:admin, :admin?,:authenticate, :full_name, :password, :password_digest, :password_confirmation, :remember_token].each do |expected_attribute|
   		it { should respond_to expected_attribute }
 		end
 
@@ -62,7 +58,7 @@ describe User do
 		before { user.toggle(:admin) }
 		it { should be_admin }
 	end
-	
+
 	context "#authenticate" do
 
 		it "with valid password succeeds" do
@@ -78,34 +74,39 @@ describe User do
 	describe "remember token" do
     before { user.save }
     its(:remember_token) { should_not be_blank }
-
-    it "should generate unique tokens" do
-    	pending
-    end
   end
 
   context "Custom finders" do
 
 	  context "#find_by_email" do
-	  	before(:all) do 
-	 			3.times do |i| 
-	 				FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Firstname#{i+1}", email: "firstname#{i+1}@example.com") )
-	 			end
+	  	user1 = user2 = user3 = nil
+
+	  	before(:all) do
+	 			user1 =	FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, email: "user1@example.com") )
+	 			user2 =	FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, email: "user2@example.com") )
+	 			user3 =	FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, email: "user3@example.com") )
+
+	 			User.all.should eq [user1,user2,user3]
 	 		end
+
 	    after(:all) { User.destroy_all }
 
-			it "empty search should return users" do
-		  	User.find_by_email("firstname2@example.com").first_name.should eq  "Firstname2"
-	    end 
+			it "return user by email" do
+		  	User.find_by_email("user2@example.com").should eq  user2
+	    end
+
+	    it "empty email should not return a user" do
+		  	User.find_by_email("").should eq  nil
+	    end
 	  end
 
 	  context "#search_ordered" do
 	  	fred = john = sally = nil
-	 		
-	 		before(:all) do 
-	 			john = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "John", last_name: "Smith")  ) 
-		  	sally = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Sally", last_name: "Jones")  ) 
-	  		fred = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Fred", last_name: "Jone")  ) 
+
+	 		before(:all) do
+	 			john = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "John", last_name: "Smith")  )
+		  	sally = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Sally", last_name: "Jones")  )
+	  		fred = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Fred", last_name: "Jone")  )
 
 	 			User.all.should eq [john,sally,fred]
 	 		end
@@ -113,19 +114,19 @@ describe User do
 
 	    it "empty search should return users" do
 		    User.search_ordered.should eq [fred, john, sally]
-	    end 
+	    end
 
 	    it "unique name match" do
 		    User.search_ordered("John").should eq [john]
-	    end 
+	    end
 
 	    it "match multiple" do
 		    User.search_ordered("Jon").should eq [fred, sally]
-	    end 
+	    end
 
 	    it "case insenstive" do
 		    User.search_ordered("s").should eq [john, sally]
-	    end 
+	    end
 
 	    it "should match full name" do
 	    	User.search_ordered("John Smith").should eq [john]

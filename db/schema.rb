@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829090919) do
+ActiveRecord::Schema.define(:version => 20120904095136) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "addressable_id"
@@ -26,6 +26,18 @@ ActiveRecord::Schema.define(:version => 20120829090919) do
     t.datetime "updated_at",       :null => false
   end
 
+  create_table "appointments", :force => true do |t|
+    t.integer  "contact_id"
+    t.integer  "appointee_id"
+    t.integer  "event_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "appointments", ["appointee_id"], :name => "index_appointments_on_appointee_id"
+  add_index "appointments", ["contact_id"], :name => "index_appointments_on_contact_id"
+  add_index "appointments", ["event_id"], :name => "index_appointments_on_event_id"
+
   create_table "contacts", :force => true do |t|
     t.integer  "contactable_id"
     t.string   "contactable_type"
@@ -34,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20120829090919) do
     t.string   "email"
     t.string   "home_phone",       :null => false
     t.string   "mobile"
+    t.string   "role",             :null => false
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
   end

@@ -16,7 +16,7 @@ gem 'simple_form'
 gem 'squeel'
 
 group :development do
-  gem 'annotate', '~> 2.4.1.beta' 
+  gem 'annotate', '2.5.0'
   # use require:false when you need to run something from
   # command line but not don't need in code.
   gem 'taps', require: false
@@ -24,6 +24,7 @@ group :development do
   gem 'sqlite3'
   gem 'quiet_assets'
   gem "rails-erd"
+  gem "rails_best_practices"
 end
 
 group :development, :test do
