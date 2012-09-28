@@ -1,13 +1,6 @@
 
 # Define abilities for the passed in user here. For example:
 #
-#   user ||= User.new # guest user (not logged in)
-#   if user.admin?
-#     can :manage, :all
-#   else
-#     can :read, :all
-#   end
-#
 # The first argument to `can` is the action you are giving the user permission to do.
 # If you pass :manage it will apply to every action. Other common actions here are
 # :read, :create, :update and :destroy.
@@ -37,8 +30,7 @@ class Ability
       # All Registered users
       Rails.logger.debug "user role is:" + user.contact.role.to_s
 
-      can :manage, User, id: user.id
-      cannot [:index, :destroy], User
+      can [:show, :new, :create, :update ], User, id: user.id
       can :manage, Appointment, contact_id: user.contact.id
       # Different Roles
       case user.contact.role
@@ -48,6 +40,7 @@ class Ability
           can :manage, :all
       when "admin"
           can :manage, :all
+          cannot :destroy, user, id: user.id
       else
         raise "Missing Role: #{user.contact.role} in Ability#initialize"
       end

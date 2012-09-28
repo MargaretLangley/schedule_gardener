@@ -1,12 +1,12 @@
 <td><%= link_to user.full_name, user %></td>
 <td><%= link_to user.contact.home_phone, user %></td>
 <td>
-  <%= if current_user?(user) || !user.admin?
+  <%= if can? :edit, user
         (link_to "edit", edit_profile_path(user), class: 'edit')
       end %>
 </td>
 <td>
-  <%= if !user.admin?
+  <%= if  can? :destroy, user
         (link_to  "delete", user, method: :delete, data: { confirm: "You sure?" }, class: 'delete')
       end %>
 </td>

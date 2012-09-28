@@ -5,7 +5,7 @@
       <a href="<%= help_path %>"><%= raw("<i class=\"icon-question-sign icon-white\"></i>") %>Help</a>
     </li>
     <% if signed_in? %>
-      <li><%= link_to "Users", users_path if current_user.admin? %></li>
+      <li><%= link_to "Users", users_path if can? :index, @user %></li>
       <li id="fat-menu" class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <%= raw("<i class=\"icon-user icon-white\"></i>") + current_user.full_name %><b class="caret"></b>

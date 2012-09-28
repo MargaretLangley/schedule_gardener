@@ -22,7 +22,7 @@ class UsersController < ApplicationController
 
   def create
     if @user.save
-      sign_in @user
+      sign_in_remember_session @user
       redirect_to @user, flash: { success: "Welcome to Garden Care!" }
     else
       render 'new'
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
 
       # if the account we are using changes, The remember token changes
       # we then need to re-signin
-      sign_in @user if current_user?(@user)
+      sign_in_remember_session @user if current_user?(@user)
     end
     render 'edit'
   end

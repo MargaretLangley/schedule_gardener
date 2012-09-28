@@ -108,10 +108,6 @@ describe "users" do
           it "present for self-edit" do
             should have_link('edit', href: edit_profile_path(admin))
           end
-
-          it "missing for other admin" do
-            should_not have_link('edit', href: edit_profile_path(admin_edit_self))
-          end
         end
       end
 
@@ -133,9 +129,6 @@ describe "users" do
         context "an admin user" do
           it 'missing for self' do
             should_not have_link('delete', href: user_path(admin))
-          end
-          it 'missing for other admin' do
-            should_not have_link('delete', href: user_path(admin_undeleteable))
           end
         end
       end
