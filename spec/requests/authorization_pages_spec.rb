@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe "authorization" do
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryGirl.create(:user, :client) }
 
 
-  describe "for signed out user" do
+  describe "for guests" do
     let(:appointment) { FactoryGirl.create(:appointment, :today) }
 
     context "visit a protected page" do
@@ -37,28 +37,27 @@ describe "authorization" do
       end
     end
 
-    describe "in the appointments controller" do
-      let!(:wrong_user) { FactoryGirl.create(:user) }
+    describe "appointments controller" do
+      let!(:wrong_user) { FactoryGirl.create(:user, :client) }
 
-      describe "visiting the user appointments index " do
-        before { visit user_appointments_path(user)  }
-        it { current_path.should eq signin_path  }
+      describe "#index " do
+        before do
+          visit appointments_path(user)
+        end
+        it ("redirect to signin"){ current_path.should eq signin_path  }
       end
 
       describe "submitting to the update action" do
-        before { put user_appointment_path(user, appointment) }
+        before { put appointment_path(appointment) }
         it { response.should redirect_to(signin_path) }
       end
 
       describe "wrong user accessing appointments" do
         before do
-         #  puts appointment.inspect
-         #  puts wrong_user.inspect
-         # sign_in wrong_user
-         # visit edit_user_appointment_path(wrong_user, appointment)
+         visit_signin_and_login wrong_user
+         visit edit_appointment_path(appointment)
         end
-        #it { current_path.should eq root_path }
-        pending
+        it ("redirect to root"){ current_path.should eq root_path }
       end
     end
 
@@ -68,7 +67,7 @@ describe "authorization" do
     before { visit_signin_and_login user }
 
     describe "as wrong user" do
-      let(:wrong_user) { FactoryGirl.create(:user) }
+      let(:wrong_user) { FactoryGirl.create(:user, :client) }
 
       it "when visiting Users#show page" do
         visit user_path(wrong_user)
@@ -81,9 +80,8 @@ describe "authorization" do
       end
 
       it "when submitting a PUT request to the Users#update action" do
-        # put user_path(wrong_user)
-        # response.should redirect_to(root_path)
-        pending "wait for authorization gem can can"
+         put user_path(wrong_user)
+         response.should redirect_to(root_path)
       end
 
     end
@@ -91,9 +89,8 @@ describe "authorization" do
     context "for standard user" do
 
       it "when submitting a DELETE request to the Users#destroy action" do
-        # delete user_path(user)
-        # response.should redirect_to(root_path)
-        pending "wait for authorization gem can can"
+        delete user_path(user)
+        response.should redirect_to(root_path)
       end
 
       it "visiting users index are sent to root" do

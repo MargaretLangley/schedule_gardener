@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Static pages" do
-  let(:user) { FactoryGirl.create(:user)}
+  let(:user) { FactoryGirl.create(:user, :client)}
   subject { page }
 
   context "Home Page" do

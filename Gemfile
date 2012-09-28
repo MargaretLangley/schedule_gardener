@@ -14,6 +14,7 @@ gem 'pg'
 gem 'thin'
 gem 'simple_form'
 gem 'squeel'
+gem 'cancan'
 
 group :development do
   gem 'annotate', '2.5.0'

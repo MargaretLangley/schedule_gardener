@@ -1,10 +1,9 @@
 class UsersController < ApplicationController
 
-  # signing in must happen before testing filters allowed_user and admin_user
-  # we should be signed in except when creating a new user
-  before_filter :signed_in_user,      except: [:new, :create]
-  before_filter :allowed_user,        only: [ :show, :edit,  :update]
-  before_filter :allowed_admin_user,  only: [ :index, :destroy]
+  before_filter :guest_redirect_to_signin_path,   except: [:new, :create]
+  check_authorization
+  load_and_authorize_resource
+
 
   def index
     @users = User.search_ordered(params[:search]).paginate(per_page: 20, page: params[:page])
@@ -16,14 +15,12 @@ class UsersController < ApplicationController
 
 
   def new
-    @user = User.new
     @user.contact = Contact.new
     @user.contact.address = Address.new
   end
 
 
   def create
-    @user = User.new(params[:user])
     if @user.save
       sign_in @user
       redirect_to @user, flash: { success: "Welcome to Garden Care!" }
@@ -53,5 +50,6 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
     redirect_to users_path , flash: { success: "user destroyed." }
   end
+
 
 end

@@ -3,7 +3,8 @@ require 'spec_helper'
 
 describe "Authentication" do
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryGirl.create(:user, :client) }
+  let(:admin) { FactoryGirl.create(:user, :admin) }
   subject { page }
 
   before  do
@@ -20,7 +21,7 @@ describe "Authentication" do
     context "succeeds" do
 
       context "for standard user" do
-        before { sign_in_user(user) }
+        before { login_user(user) }
 
         it ("opens protected page")      { current_path.should eq user_path(user) }
         it ("has no 'users' link")       { should_not have_link('Users',      href: users_path) }
@@ -30,7 +31,9 @@ describe "Authentication" do
       end
 
       context "for admin user" do
-        pending "until authorization gem introduced"
+        before { login_user(admin) }
+
+        it ("opens protected page")      { current_path.should eq user_path(admin) }
       end
     end
 

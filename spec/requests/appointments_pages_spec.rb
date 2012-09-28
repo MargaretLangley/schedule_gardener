@@ -25,14 +25,14 @@ describe "Appointments" do
     User.delete_all;
   end
 
-   subject { page }
+  subject { page }
 
 
   context "#index" do
-    before(:each) {  visit user_appointments_path @user }
+    before(:each) {  visit appointments_path }
 
     it "open page" do
-      current_path.should eq user_appointments_path @user
+      current_path.should eq appointments_path
     end
 
 
@@ -44,14 +44,10 @@ describe "Appointments" do
     end
   end
 
-  context "#show" do
-     pending
-  end
-
   context "#new" do
-    before(:each) {  visit new_user_appointment_path @user }
+    before(:each) {  visit new_appointment_path }
     it "open page" do
-       current_path.should eq new_user_appointment_path(@user)
+       current_path.should eq new_appointment_path
     end
 
 
@@ -66,7 +62,7 @@ describe "Appointments" do
       context "after creation" do
         before { click_on("Create Appointment") }
         it "displays new profile " do
-          current_path.should eq user_appointments_path(@user)
+          current_path.should eq appointments_path
         end
         it "has welcome banner" do
           should have_selector('div.alert.alert-success', text: 'appointment was successfully created.')
@@ -89,11 +85,11 @@ describe "Appointments" do
   end
 
 
-  context "#update" do
-    before(:each) {  visit edit_user_appointment_path @user, @appointment }
+  context "#edit" do
+    before(:each) {  visit edit_appointment_path(@appointment) }
 
     it "open page" do
-       current_path.should eq edit_user_appointment_path(@user,@appointment)
+       current_path.should eq edit_appointment_path(@appointment)
     end
 
     context "verify appointment content" do
@@ -102,6 +98,13 @@ describe "Appointments" do
         should have_field 'Title', text: "appointment pages spec test"
       end
     end
+  end
+
+  context "#update" do
+    before do
+      visit edit_appointment_path(@appointment)
+    end
+
 
     context "with valid information" do
       before do
@@ -111,7 +114,7 @@ describe "Appointments" do
       end
       context "after update" do
         it "displays new profile " do
-          current_path.should eq user_appointments_path(@user)
+          current_path.should eq appointments_path
         end
         it "has success banner" do
           should have_selector('div.alert.alert-success', text: 'appointment was successfully updated.')
@@ -126,17 +129,14 @@ describe "Appointments" do
       end
       context "after update" do
         it "displays edit profile " do
-          current_path.should eq user_appointment_path(@user,@appointment)
+          current_path.should eq appointment_path(@appointment)
         end
         it "has error banner" do
           should have_content('error')
         end
       end
     end
-
-
-
-
   end
+
 
 end

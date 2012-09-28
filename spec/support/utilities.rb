@@ -1,6 +1,6 @@
 include ApplicationHelper
 
-def sign_in_user(user)
+def login_user(user)
   fill_in "Email",    with: user.email
   fill_in "Password", with: user.password
   click_button "Sign in"
@@ -28,6 +28,3 @@ RSpec::Matchers.define :have_error_message do |expected|
     "expected that #{actual} would not have the banner #{expected}"
   end
 end
-
-
-#$0ft&wher3

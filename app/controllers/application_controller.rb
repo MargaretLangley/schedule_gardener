@@ -19,13 +19,8 @@ class ApplicationController < ActionController::Base
     @current_user = user
   end
 
-  def current_user
-    @current_user ||= User.find_by_remember_token(cookies[:remember_token])
-  end
-
     #  only people who are signed in can access users pages
-  def signed_in_user
-    # signed_in? means sessions helper has the @user set
+  def guest_redirect_to_signin_path
     unless signed_in?
       store_current_path
       redirect_to signin_path, notice: 'Please sign in.'
@@ -33,9 +28,12 @@ class ApplicationController < ActionController::Base
   end
 
   def signed_in?
-    !current_user.nil?
+    current_user.present?
   end
 
+  def current_user
+    @current_user ||= User.find_by_remember_token(cookies[:remember_token])
+  end
 
   def store_current_path
     session[:return_to_path] = request.fullpath
@@ -47,24 +45,8 @@ class ApplicationController < ActionController::Base
     session.delete(:return_to_path)
   end
 
-
- # clicking an edit link sets id to the user you clicked
-  # current user assigns @current_user from cookie if null
-  # current user is the user returned from the cookie
-  def allowed_user
+  def user_from_param
     @user = User.find(params[:id])
-    unless (current_user?(@user) || current_user.admin?)
-      sign_out
-      redirect_to(root_path)
-    end
-  end
-
-
-  def allowed_admin_user
-    unless current_user.admin?
-      sign_out
-      redirect_to(root_path)
-    end
   end
 
 
@@ -76,5 +58,10 @@ class ApplicationController < ActionController::Base
     user.admin?
   end
 
+  rescue_from CanCan::AccessDenied do |exception|
+    logger.debug "CanCan::AccessDenied Controller: #{exception.subject.class} Action: #{exception.action}"
+    sign_out
+    redirect_to root_url, :alert => exception.message
+  end
 
 end

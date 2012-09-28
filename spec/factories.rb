@@ -3,10 +3,18 @@ FactoryGirl.define do
     password "foobar"
     password_confirmation "foobar"
 
-    factory :admin do
+    trait :admin do
       admin true
+      association :contact, role: "admin", strategy: :build
     end
-    association :contact, strategy: :build
+
+    trait :client do
+      association :contact, role: "client", strategy: :build
+    end
+
+    trait :gardener do
+      association :contact, role: "gardener", strategy: :build
+    end
   end
 
   factory :contact do
@@ -16,6 +24,7 @@ FactoryGirl.define do
     sequence(:home_phone) { |n| "0181-100-100#{n}" }
     sequence(:mobile)     { |n| "0701-200-200#{n}" }
     association :address, strategy: :build
+    role "client"
   end
 
   factory :garden do

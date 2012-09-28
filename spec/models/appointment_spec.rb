@@ -12,6 +12,7 @@
 
 require 'spec_helper'
 
+
 describe Appointment do
 	before(:all) do
 		@contact = FactoryGirl.create(:contact, first_name: "Rodger")
@@ -65,4 +66,5 @@ describe Appointment do
  	  it { should belong_to(:appointee) }
 	  it { should belong_to(:event) }
 	end
+
 end

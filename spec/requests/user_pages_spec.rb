@@ -10,16 +10,16 @@ describe "users" do
   let(:user_home_phone)   { "0123456789" }
   let(:admin_home_phone)   { "44884488" }
 
-  context "#index" do
+  context "#index as admin" do
     # Need constants but don't know which is best way in RSpec
     let(:users)   { "Users" }
 
     let!(:admin)  do
-      FactoryGirl.create(:admin, contact: FactoryGirl.create(:contact, first_name: admin_first_name, home_phone: admin_home_phone))
+      FactoryGirl.create(:user, :admin, contact: FactoryGirl.create(:contact, role: "admin", first_name: admin_first_name, home_phone: admin_home_phone))
     end
 
     let!(:standard_user)  do
-       FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: user_first_name, home_phone: user_home_phone))
+       FactoryGirl.create(:user, :client, contact: FactoryGirl.create(:contact, first_name: user_first_name, home_phone: user_home_phone))
     end
 
     before do
@@ -30,7 +30,7 @@ describe "users" do
 
     describe "pagination" do
 
-      before(:all)  { 30.times { FactoryGirl.create(:user) } }
+      before(:all)  { 30.times { FactoryGirl.create(:user,:client) } }
       after(:all)   { User.delete_all; Contact.delete_all; Address.delete_all; }
 
       it "present" do
@@ -88,7 +88,7 @@ describe "users" do
 
       context "edit" do
 
-        context "for standard user" do
+        context "a standard user" do
 
           it "present" do
             should have_link('edit', href: edit_profile_path(standard_user))
@@ -99,8 +99,8 @@ describe "users" do
           end
         end
 
-        context "for admin user" do
-          let!(:admin_edit_self) { FactoryGirl.create(:admin, contact: FactoryGirl.create(:contact, first_name: "admin_edit_self"))}
+        context "an admin user" do
+          let!(:admin_edit_self) { FactoryGirl.create(:user, :admin, contact: FactoryGirl.create(:contact, first_name: "admin_edit_self"))}
           before do
             visit users_path
           end
@@ -116,12 +116,12 @@ describe "users" do
       end
 
       context "delete" do
-        let!(:admin_undeleteable) { FactoryGirl.create(:admin, contact: FactoryGirl.create(:contact, first_name: "admin_undeletable")) }
+        let!(:admin_undeleteable) { FactoryGirl.create(:user,:admin, contact: FactoryGirl.create(:contact, first_name: "admin_undeletable")) }
         before do
           visit users_path
         end
 
-        context "for standard user" do
+        context "a standard user" do
           it "present" do
              should have_link('delete', href: user_path(standard_user))
           end
@@ -130,7 +130,7 @@ describe "users" do
           end
         end
 
-        context "for admin user" do
+        context "an admin user" do
           it 'missing for self' do
             should_not have_link('delete', href: user_path(admin))
           end
@@ -144,7 +144,7 @@ describe "users" do
   end # index
 
   describe "#show " do
-  	let(:standard_user) { FactoryGirl.create(:user) }
+  	let(:standard_user) { FactoryGirl.create(:user, :client) }
 
     it "user profile" do
       visit_signin_and_login (standard_user)
@@ -159,22 +159,8 @@ describe "users" do
       current_path.should eq signup_path
     end
 
+
   	let(:submit) { "Create my account" }
-
-  	describe "with invalid information" do
-  		it "should not create a user" do
-  			expect { click_button submit }.not_to change(User, :count)
-  		end
-
-  		describe "after submission" do
-  			before { click_button submit }
-
-        it ("remains on signup url") {  current_path.should eq signup_path  }
-  			it "has error banner" do
-          should have_content('error')
-        end
-  		end
-  	end
 
   	describe "with valid information" do
   		before do
@@ -213,10 +199,25 @@ describe "users" do
         end
       end
   	end
+
+      describe "with invalid information" do
+      it "should not create a user" do
+        expect { click_button submit }.not_to change(User, :count)
+      end
+
+      describe "after submission" do
+        before { click_button submit }
+
+        it ("remains on signup url") {  current_path.should eq signup_path  }
+        it "has error banner" do
+          should have_content('error')
+        end
+      end
+    end
   end
 
   context "#edit" do
-    let(:standard_user) { FactoryGirl.create(:user) }
+    let(:standard_user) { FactoryGirl.create(:user, :client) }
     before do
       visit_signin_and_login (standard_user)
       visit edit_profile_path (standard_user)

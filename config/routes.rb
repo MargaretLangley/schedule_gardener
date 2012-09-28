@@ -10,9 +10,9 @@ ScheduleGardener::Application.routes.draw do
   match '/signin',  to: 'sessions#new', via: :get
   match '/signin',  to: 'sessions#create', via: :post
 
-  resources :users, except: [:edit]  do
-    resources :appointments
-  end
+  resources :users, except: [:edit]
+  resources :appointments
+
   resources :sessions, only: [:new, :create, :destroy]
 
   root to: 'static_pages#home'
