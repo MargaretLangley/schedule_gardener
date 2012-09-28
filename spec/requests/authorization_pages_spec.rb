@@ -31,7 +31,7 @@ describe "authorization" do
         end
 
         context "submitting to the update action" do
-          before { put user_path(user) }
+          before { put update_profile_path(user) }
           it ("should redirect to sign in page") { response.should redirect_to(signin_path) }
         end
       end
@@ -80,7 +80,7 @@ describe "authorization" do
       end
 
       it "when submitting a PUT request to the Users#update action" do
-         put user_path(wrong_user)
+         put update_profile_path(wrong_user)
          response.should redirect_to(root_path)
       end
 
