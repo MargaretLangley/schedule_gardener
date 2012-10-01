@@ -3,102 +3,163 @@ require 'spec_helper'
 describe "authorization" do
 
   let(:user) { FactoryGirl.create(:user, :client) }
+  let!(:wrong_user) { FactoryGirl.create(:user, :client) }
 
-
-  describe "for guests" do
-    let(:appointment) { FactoryGirl.create(:appointment, :today) }
-
-    context "visit a protected page" do
-      before do
-        visit edit_profile_path(user)
-        visit_signin_and_login(user)
-      end
-      it ("forwards to the requested protected page") { current_path.should eq edit_profile_path(user) }
+  context "guests visiting a protected page" do
+    before do
+      visit edit_profile_path(user)
+      visit_signin_and_login(user)
     end
-
-    context "in the Users controller" do
-
-      describe "visiting a protected page" do
-
-        it "#index redirect to sign in page" do
-          visit users_path
-          current_path.should eq signin_path
-        end
-
-        it "#edit  redirect to sign in page"  do
-           visit edit_profile_path(user)
-           current_path.should eq signin_path
-        end
-
-        context "submitting to the update action" do
-          before { put update_profile_path(user) }
-          it ("should redirect to sign in page") { response.should redirect_to(signin_path) }
-        end
-      end
-    end
-
-    describe "appointments controller" do
-      let!(:wrong_user) { FactoryGirl.create(:user, :client) }
-
-      describe "#index " do
-        before do
-          visit appointments_path(user)
-        end
-        it ("redirect to signin"){ current_path.should eq signin_path  }
-      end
-
-      describe "submitting to the update action" do
-        before { put appointment_path(appointment) }
-        it { response.should redirect_to(signin_path) }
-      end
-
-      describe "wrong user accessing appointments" do
-        before do
-         visit_signin_and_login wrong_user
-         visit edit_appointment_path(appointment)
-        end
-        it ("redirect to root"){ current_path.should eq root_path }
-      end
-    end
-
+    it ("forwards to the requested protected page") { current_path.should eq edit_profile_path(user) }
   end
 
-  context "redirect to root" do
-    before { visit_signin_and_login user }
+  context "in Users controller" do
 
-    describe "as wrong user" do
-      let(:wrong_user) { FactoryGirl.create(:user, :client) }
-
-      it "when visiting Users#show page" do
-        visit user_path(wrong_user)
-        current_path.should eq root_path
+    context "client user" do
+      before do
+       visit_signin_and_login user
       end
 
-      it "when visiting Users#edit page" do
-        visit edit_profile_path(wrong_user)
-        current_path.should eq root_path
+      it "#index" do
+        get users_path
+        response.should redirect_to(root_path)
       end
 
-      it "when submitting a PUT request to the Users#update action" do
-         put update_profile_path(wrong_user)
-         response.should redirect_to(root_path)
+      it "#edit"  do
+         get edit_profile_path(user)
+         response.should render_template('edit')
       end
 
-    end
+      it "#update" do
+         put update_profile_path(user)
+         response.code.should == '200'
+      end
 
-    context "for standard user" do
-
-      it "when submitting a DELETE request to the Users#destroy action" do
+      it "#delete" do
         delete user_path(user)
         response.should redirect_to(root_path)
       end
 
-      it "visiting users index are sent to root" do
+    end
 
-        visit users_path
-        current_path.should eq root_path
+    context "guests visiting protected page -> signin" do
+
+      it "#index" do
+        get users_path
+        response.should redirect_to(signin_path)
       end
 
+      it "#edit"  do
+         get edit_profile_path(user)
+         response.should redirect_to(signin_path)
+      end
+
+      it "#update" do
+         put update_profile_path(user)
+         response.should redirect_to(signin_path)
+      end
+
+      it "#delete" do
+        delete user_path(user)
+        response.should redirect_to(signin_path)
+      end
+
+    end
+
+    context "wrong user action redirect to root" do
+      before do
+       visit_signin_and_login wrong_user
+      end
+      it "#show" do
+        get user_path(user)
+        response.should redirect_to(root_path)
+      end
+      it "#edit" do
+        get edit_profile_path(user)
+        response.should redirect_to(root_path)
+      end
+      it "#update" do
+        put update_profile_path(user)
+        response.should redirect_to(root_path)
+      end
+      it "#delete" do
+        delete user_path(user)
+        response.should redirect_to(root_path)
+      end
+    end
+  end
+
+  describe "in appointments controller" do
+    let(:appointment) { FactoryGirl.create(:appointment, :today, contact: user.contact) }
+
+    context "client user" do
+      before do
+       visit_signin_and_login user
+      end
+
+      it "#index" do
+        get appointments_path
+        response.code.should == '200'
+      end
+
+      it "#edit"  do
+         get edit_appointment_path(appointment)
+         response.code.should == '200'
+      end
+
+      it "#update" do
+         put appointment_path(appointment)
+         response.should redirect_to appointments_path
+      end
+
+      it "#delete" do
+        delete appointment_path(appointment)
+        response.should redirect_to appointments_path
+      end
+
+    end
+
+
+    context "guests visiting protected page -> signin" do
+
+      it "#index" do
+        get appointments_path
+        response.should redirect_to(signin_path)
+      end
+
+      it "#edit"  do
+        get edit_appointment_path(appointment)
+        response.should redirect_to(signin_path)
+      end
+
+      it "#update" do
+        put appointment_path(appointment)
+        response.should redirect_to(signin_path)
+      end
+
+      it "#delete" do
+        delete appointment_path(appointment)
+        response.should redirect_to(signin_path)
+      end
+
+    end
+
+    context "wrong user action redirect to root" do
+      before do
+       visit_signin_and_login wrong_user
+      end
+      it "#edit" do
+        get edit_appointment_path(appointment)
+        response.should redirect_to(root_path)
+      end
+      it "#update" do
+        put appointment_path(appointment)
+        response.should redirect_to(root_path)
+      end
+      it "#delete" do
+        delete appointment_path(appointment)
+        response.should redirect_to(root_path)
+      end
     end
   end
 

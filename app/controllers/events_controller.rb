@@ -1,4 +1,4 @@
-class CalendarController < ApplicationController
+class EventsController < ApplicationController
 
   # to make the HTML more bootstrap twittery... follow this link
   # http://stackoverflow.com/questions/11279394/fullcalendar-with-twitter-bootstrap
