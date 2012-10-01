@@ -2,12 +2,12 @@
 <td><%= link_to user.contact.home_phone, user %></td>
 <td>
   <%= if can? :edit, user
-        (link_to "edit", edit_profile_path(user), class: 'edit')
+        link_to 'Edit', edit_profile_path(user)
       end %>
 </td>
 <td>
   <%= if  can? :destroy, user
-        (link_to  "delete", user, method: :delete, data: { confirm: "You sure?" }, class: 'delete')
+        link_to  'Delete', user, confirm: 'You sure?', method: 'delete'
       end %>
 </td>
 

@@ -33,7 +33,7 @@ class CalendarController < ApplicationController
         format.html { redirect_to @event, notice: 'Event was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'Edit' }
         format.json { render json: @event.errors, status: :unprocessable_entity }
       end
      end

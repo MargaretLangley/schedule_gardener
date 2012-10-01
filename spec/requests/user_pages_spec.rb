@@ -86,15 +86,15 @@ describe "users" do
 
     context "User links" do
 
-      context "edit" do
+      context 'Edit' do
 
         context "a standard user" do
 
           it "present" do
-            should have_link('edit', href: edit_profile_path(standard_user))
+            should have_link('Edit', href: edit_profile_path(standard_user))
           end
           it "edits" do
-            click_on 'edit'
+            click_on 'Edit'
             current_path.should eq edit_profile_path(standard_user)
           end
         end
@@ -106,12 +106,12 @@ describe "users" do
           end
 
           it "present for self-edit" do
-            should have_link('edit', href: edit_profile_path(admin))
+            should have_link('Edit', href: edit_profile_path(admin))
           end
         end
       end
 
-      context "delete" do
+      context 'Delete' do
         let!(:admin_undeleteable) { FactoryGirl.create(:user,:admin, contact: FactoryGirl.create(:contact, first_name: "admin_undeletable")) }
         before do
           visit users_path
@@ -119,16 +119,16 @@ describe "users" do
 
         context "a standard user" do
           it "present" do
-             should have_link('delete', href: user_path(standard_user))
+             should have_link('Delete', href: user_path(standard_user))
           end
           it "deletes" do
-            expect { click_link("delete") }.to change(User, :count).by(-1)
+            expect { click_link('Delete') }.to change(User, :count).by(-1)
           end
         end
 
         context "an admin user" do
           it 'missing for self' do
-            should_not have_link('delete', href: user_path(admin))
+            should_not have_link('Delete', href: user_path(admin))
           end
         end
       end

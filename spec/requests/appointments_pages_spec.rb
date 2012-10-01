@@ -29,7 +29,7 @@ describe "Appointments" do
 
 
   context "#index" do
-    before(:each) {  visit appointments_path }
+    before(:each) { visit appointments_path }
 
     it "open page" do
       current_path.should eq appointments_path
@@ -41,6 +41,13 @@ describe "Appointments" do
     end
     it "displays appointmee" do
       should have_selector('td', text: "Alan Titmarsh")
+    end
+    it "edits appointments" do
+      click_on('Edit')
+      current_path.should eq edit_appointment_path(@appointment)
+    end
+    it "deletes appointments" do
+      expect { click_on('Delete')}.to change(Appointment, :count).by(-1)
     end
   end
 

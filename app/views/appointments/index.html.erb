@@ -15,8 +15,8 @@
     <td><%= appointment.event.title %></td>
     <td><%= appointment.appointee.full_name %></td>
     <td><%= appointment.event.starts_at %></td>
-    <td><%= link_to 'Show', "#" %></td>
     <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
+    <td><%= link_to 'Delete', appointment_path(appointment), confirm: 'You sure?' , method: 'delete' %></td>
   </tr>
 <% end %>
 </table>
