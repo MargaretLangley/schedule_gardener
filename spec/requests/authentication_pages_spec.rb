@@ -24,10 +24,10 @@ describe "Authentication" do
         before { login_user(user) }
 
         it ("opens protected page")      { current_path.should eq user_path(user) }
-        it ("has no 'users' link")       { should_not have_link('Users',      href: users_path) }
-        it ("has 'full name' link")      { should have_link( user.full_name,  href: "#") }
-        it ("has 'Update Profile' link") { should have_link('Update Profile', href: edit_profile_path(user)) }
-        it ("has 'Sign out' link ")      { should have_link('Sign out',       href: signout_path) }
+        it ("has no 'users' link")       { should_not have_link('Users',     href: users_path) }
+        it ("has 'full name' link")      { should have_link(user.full_name,  href: "#") }
+        it ("has 'Update Profile' link") { should have_link('Update Profile',href: edit_profile_path(user)) }
+        it ("has 'Sign out' link ")      { should have_link('Sign out',      href: signout_path) }
       end
 
       context "for admin user" do
@@ -43,7 +43,7 @@ describe "Authentication" do
       it ("remains on signin page")       { current_path.should eq signin_path }
       it ("has error banner")             { should have_error_message('Invalid') }
       it ("has no 'users' link")          { should_not have_link('Users',          href: users_path) }
-      it ("has no 'full name' link")      { should_not have_link( user.full_name,  href: "#") }
+      it ("has no 'full name' link")      { should_not have_link(user.full_name,   href: "#") }
       it ("has no 'Update Profile' link") { should_not have_link('Update Profile', href: edit_profile_path(user)) }
       it ("has no 'Sign out' link")       { should_not have_link('Sign out',       href: signout_path) }
 

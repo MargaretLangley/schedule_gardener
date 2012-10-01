@@ -49,6 +49,8 @@ GEM
     childprocess (0.3.5)
       ffi (~> 1.0, >= 1.0.6)
     choice (0.1.6)
+    code_analyzer (0.2.0)
+      sexp_processor
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -78,7 +80,7 @@ GEM
     guard-rspec (1.2.1)
       guard (>= 1.1)
     hike (1.2.1)
-    i18n (0.6.0)
+    i18n (0.6.1)
     journey (1.0.4)
     jquery-rails (2.1.1)
       railties (>= 3.1.0, < 5.0)
@@ -131,14 +133,14 @@ GEM
       activesupport (>= 3.0)
       choice (~> 0.1.6)
       ruby-graphviz (~> 1.0.4)
-    rails_best_practices (1.10.1)
+    rails_best_practices (1.11.1)
       activesupport
       awesome_print
+      code_analyzer
       colored
       erubis
       i18n
       progressbar
-      sexp_processor
     railties (3.2.8)
       actionpack (= 3.2.8)
       activesupport (= 3.2.8)

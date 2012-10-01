@@ -15,29 +15,39 @@
 #
 # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
 
+# CanCan Aliases
+#
+# :create  = :new     + :create
+# :read    = :index   + :show
+# :update  = :edit    + :update
+# :destroy = :destroy
+#
+# :manage = :create + :read + :update + :destroy
+
 
 class Ability
   include CanCan::Ability
 
   def initialize(user)
 
-
-    # Guest
     unless user
+      # Guest
       Rails.logger.debug  "user role is guest"
-      can :create, [User]
+      can [:create], [User]
+
     else
       # All Registered users
       Rails.logger.debug "user role is:" + user.contact.role.to_s
 
-      can [:show, :new, :create, :update ], User, id: user.id
-      can :manage, Appointment, contact_id: user.contact.id
+      can [:show, :create, :update ], User, id: user.id
+      can [:manage],                  Appointment, contact_id: user.contact.id
       # Different Roles
       case user.contact.role
       when "client"
         # nothing more to do
       when "gardener"
-          can :manage, :all
+          can :manage, Appointment
+          can [:read, :create, :update ], User
       when "admin"
           can :manage, :all
           cannot :destroy, user, id: user.id

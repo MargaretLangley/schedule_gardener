@@ -18,7 +18,7 @@ ScheduleGardener::Application.routes.draw do
   match '/signout',               to: 'sessions#destroy', via: :delete
 
 
-  resources :appointments
+  resources :appointments, only: [:new, :create, :edit, :update, :destroy, :index]
   resources :events
   resources :calendar , only: [:index, :edit, :update]
 

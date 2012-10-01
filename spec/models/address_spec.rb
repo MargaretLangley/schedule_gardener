@@ -15,14 +15,14 @@
 #  updated_at       :datetime         not null
 #
 
-# Address.new( street_number: "15", street_name: "High Street", address_line_2: "Stratford", town: "London", post_code: "NE12 3ST") 
+# Address.new(street_number: "15", street_name: "High Street", address_line_2: "Stratford", town: "London", post_code: "NE12 3ST")
 
 require 'spec_helper'
 
 describe Address do
 
 		subject(:address) { FactoryGirl.build(:address) }
-		
+
 		include_examples "All Built Objects", Address
 
 		context "database table" do
@@ -42,31 +42,31 @@ describe Address do
   		it { should_not allow_mass_assignment_of(:addressable_id) }
   		it { should_not allow_mass_assignment_of(:addressable_type) }
 
-  	 [:addressable, :addressable_id, :addressable_type, 
+  	 [:addressable, :addressable_id, :addressable_type,
  			:house_name, :street_number, :street_name, :address_line_2, :town, :post_code ]
  			.each do |expected_attribute|
   			it { should respond_to expected_attribute }
-			end	
+			end
 
   	end
-  	
+
 
 		context "validations" do
 
-			# :addressable_id, :addressable_type should be validated but validates doesn't 
-			# work with the create it says they are blank but the parent pointed variables 
+			# :addressable_id, :addressable_type should be validated but validates doesn't
+			# work with the create it says they are blank but the parent pointed variables
 			# are assigned properly
 
 			[:street_number, :street_name, :town ].each do |present_attr|
   			it { should validate_presence_of present_attr }
-			end	
+			end
 
 			it { should ensure_length_of(:town).is_at_most(50) }
 
 		end
 
 		context "Association" do
-			it { should belong_to(:addressable) }	
+			it { should belong_to(:addressable) }
 		end
 
 end

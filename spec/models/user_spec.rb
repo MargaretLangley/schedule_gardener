@@ -82,9 +82,9 @@ describe User do
 	  	user1 = user2 = user3 = nil
 
 	  	before(:all) do
-	 			user1 =	FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, email: "user1@example.com") )
-	 			user2 =	FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, email: "user2@example.com") )
-	 			user3 =	FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, email: "user3@example.com") )
+	 			user1 =	FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, email: "user1@example.com"))
+	 			user2 =	FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, email: "user2@example.com"))
+	 			user3 =	FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, email: "user3@example.com"))
 
 	 			User.all.should eq [user1,user2,user3]
 	 		end
@@ -104,9 +104,9 @@ describe User do
 	  	fred = john = sally = nil
 
 	 		before(:all) do
-	 			john = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "John", last_name: "Smith")  )
-		  	sally = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Sally", last_name: "Jones")  )
-	  		fred = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Fred", last_name: "Jone")  )
+	 			john = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "John", last_name: "Smith"))
+		  	sally = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Sally", last_name: "Jones"))
+	  		fred = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Fred", last_name: "Jone"))
 
 	 			User.all.should eq [john,sally,fred]
 	 		end

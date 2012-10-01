@@ -105,9 +105,9 @@ describe Contact do
 	  	percy = allan = roger = nil
 
 	 		before(:all) do
-	 			percy = FactoryGirl.create(:contact, first_name: "Percy", last_name: "Thrower", role: :gardener  )
-		  	allan = FactoryGirl.create(:contact, first_name: "Alan",  last_name: "Titmarsh", role: :gardener  )
-	  		roger = FactoryGirl.create(:contact, first_name: "Roger", last_name: "Smith", role: :client  )
+	 			percy = FactoryGirl.create(:contact, first_name: "Percy", last_name: "Thrower", role: :gardener)
+		  	allan = FactoryGirl.create(:contact, first_name: "Alan",  last_name: "Titmarsh", role: :gardener)
+	  		roger = FactoryGirl.create(:contact, first_name: "Roger", last_name: "Smith", role: :client)
 
 	 			Contact.all.should eq [percy,allan,roger]
 	 		end

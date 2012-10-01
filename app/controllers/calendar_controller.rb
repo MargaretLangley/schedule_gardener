@@ -8,7 +8,7 @@ class CalendarController < ApplicationController
     if params.has_key?(:start)
       # When FullCalendar displays it calls it's events source (/calendars url)
       # it filters with a start and end UNIX time stamp.
-      @events = Event.in_time_range( Time.at(params[:start].to_i) .. Time.at(params[:end].to_i) )
+      @events = Event.in_time_range(Time.at(params[:start].to_i) .. Time.at(params[:end].to_i))
     else
       @events = Event.all
     end
