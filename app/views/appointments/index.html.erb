@@ -12,9 +12,9 @@
 
 <% @appointments.each do |appointment| %>
   <tr>
-    <td><%= appointment.event.title %></td>
+    <td><%= appointment.title %></td>
     <td><%= appointment.appointee.full_name %></td>
-    <td><%= appointment.event.starts_at %></td>
+    <td><%= appointment.starts_at %></td>
     <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
     <td><%= link_to 'Delete', appointment_path(appointment), confirm: 'You sure?' , method: 'delete' %></td>
   </tr>
@@ -23,8 +23,8 @@
 
 <br />
 
-<%= link_to 'New', new_appointment_path %>
-
+<%= link_to 'New Appointment', new_appointment_path %>&nbsp;&nbsp;
+<%= link_to 'Calendar', events_path %>
 <%= debug(@appointments) unless Rails.env.production? %>
 
 <%- # = link_to 'New Event', "#" -%>

@@ -8,7 +8,6 @@ class AppointmentsController < ApplicationController
 
 
   def new
-    @appointment.build_event
     @gardeners = Contact.gardeners
   end
 
@@ -40,6 +39,5 @@ class AppointmentsController < ApplicationController
     @appointment.destroy
     redirect_to appointments_path
   end
-
 
 end

@@ -10,6 +10,7 @@
 #  email            :string(255)
 #  home_phone       :string(255)      not null
 #  mobile           :string(255)
+#  role             :string(255)      not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #
@@ -88,15 +89,12 @@ describe Contact do
 
 			Appointment.all.should eq [contact1_app2,contact1_app1,contact1_app3,contact2_app4]
 		end
-		after(:all) { Contact.destroy_all; Appointment.destroy_all; Event.delete_all; }
+		after(:all) { Contact.destroy_all; Appointment.destroy_all; }
 
-		it "returns expected appointments" do
+		it "returns expected appointments ordered by date" do
 	  	contact.appointments.should eq [contact1_app1, contact1_app2, contact1_app3]
 	  end
 
-    it "return event with expected title" do
-    	contact.appointments.fetch(0).event.title.should eq "created by appointment today"
-    end
   end
 
   context "Custom finders" do
@@ -152,7 +150,6 @@ describe Contact do
 	  it { should have_one(:address).dependent(:destroy) }
 	  it { should have_many(:gardens).dependent(:destroy)}
 	  it { should have_many(:appointments).dependent(:destroy) }
-	  it { should have_many(:events).through(:appointments)}
 
 	end
 

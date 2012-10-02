@@ -29,14 +29,17 @@ ActiveRecord::Schema.define(:version => 20120904095136) do
   create_table "appointments", :force => true do |t|
     t.integer  "contact_id"
     t.integer  "appointee_id"
-    t.integer  "event_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.string   "title",                           :null => false
+    t.datetime "starts_at",                       :null => false
+    t.datetime "ends_at"
+    t.boolean  "all_day",      :default => false
+    t.text     "description"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
   add_index "appointments", ["appointee_id"], :name => "index_appointments_on_appointee_id"
   add_index "appointments", ["contact_id"], :name => "index_appointments_on_contact_id"
-  add_index "appointments", ["event_id"], :name => "index_appointments_on_event_id"
 
   create_table "contacts", :force => true do |t|
     t.integer  "contactable_id"
@@ -49,16 +52,6 @@ ActiveRecord::Schema.define(:version => 20120904095136) do
     t.string   "role",             :null => false
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
-  end
-
-  create_table "events", :force => true do |t|
-    t.string   "title",                          :null => false
-    t.datetime "starts_at",                      :null => false
-    t.datetime "ends_at"
-    t.boolean  "all_day",     :default => false
-    t.text     "description"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
   end
 
   create_table "gardens", :force => true do |t|

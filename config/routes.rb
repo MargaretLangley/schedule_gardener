@@ -19,6 +19,6 @@ ScheduleGardener::Application.routes.draw do
 
 
   resources :appointments, only: [:new, :create, :edit, :update, :destroy, :index]
-  resources :events , only: [:index, :edit, :update]
+  resources :events , only: [:index]
 
 end

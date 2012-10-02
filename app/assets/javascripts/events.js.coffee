@@ -3,9 +3,9 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 jQuery ->
-  $('#appointment_event_attributes_starts_at').datetimepicker
+  $('#appointment_starts_at').datetimepicker
     dateFormat: 'yy-mm-dd'
 
 jQuery ->
-  $('#appointment_event_attributes_ends_at').datetimepicker
+  $('#appointment_ends_at').datetimepicker
     dateFormat: 'yy-mm-dd'

@@ -12,14 +12,20 @@
 #  updated_at  :datetime         not null
 #
 
-class Event < ActiveRecord::Base
+class Event
+  include ActiveAttr::Model
+  include ActiveAttr::MassAssignment
+
   attr_accessible :all_day, :description, :ends_at, :starts_at, :title
+  attribute :id, type: Integer
+  attribute :all_day, type: Boolean
+  attribute :description, type: String
+  attribute :ends_at, type: DateTime
+  attribute :starts_at, type: DateTime
+  attribute :title, type: String
 
   validates :starts_at, :title, presence: true
   validates :title, length: { maximum: 50 }
-
-  has_many  :appointments, dependent: :destroy
-
 
   # as_json - returns a hash representing the model
   # need to override the json view to return what full_calendar is expecting.
@@ -33,14 +39,9 @@ class Event < ActiveRecord::Base
       end: ends_at && ends_at.rfc822,
       allDay: self.all_day,
       recurring: false,
-      url: Rails.application.routes.url_helpers.event_path(id),
+      url: Rails.application.routes.url_helpers.edit_appointment_path(id),
       #:color => "red"
     }
-
-  end
-
-  def self.in_time_range(time_range)
-      where { (starts_at.in time_range) | (ends_at.in time_range) }
   end
 
 end

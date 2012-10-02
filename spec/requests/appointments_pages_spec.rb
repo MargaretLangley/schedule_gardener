@@ -6,11 +6,7 @@ describe "Appointments" do
   before(:all) do
     @contact     = FactoryGirl.create(:contact, first_name: "Rodger", first_name: "Smith",role: :client)
     @user        = FactoryGirl.create(:user, contact: @contact)
-    @appointee   = FactoryGirl.create(:contact, first_name: "Alan", last_name: "Titmarsh",role: :gardener)
-    @event       = FactoryGirl.create(:event, :today, title: "appointment pages spec test")
-    @appointment = Appointment.new(contact: @contact, appointee_id: @appointee.id)
-    @appointment.event = @event
-    @appointment.save
+    @appointment = FactoryGirl.create(:appointment, :today, contact: @contact, title: "appointment pages spec test")
   end
 
   before(:each) do
@@ -19,7 +15,6 @@ describe "Appointments" do
 
   after(:all) do
     Appointment.delete_all;
-    Event.delete_all;
     Address.delete_all;
     Contact.delete_all;
     User.delete_all;
@@ -49,6 +44,10 @@ describe "Appointments" do
     it "deletes appointments" do
       expect { click_on('Delete')}.to change(Appointment, :count).by(-1)
     end
+    it "shows calendar" do
+      click_on('Calendar')
+      current_path.should eq events_path
+    end
   end
 
   context "#new" do
@@ -60,6 +59,7 @@ describe "Appointments" do
 
     context "with valid information" do
       before do
+        select 'Alan', from: 'appointment_appointee_id'
         fill_in "Title", with: "Weeding appointment pages spec test"
         fill_in "Starts at", with: "2012-09-24 00:00"
       end

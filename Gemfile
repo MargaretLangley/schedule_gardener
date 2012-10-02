@@ -15,6 +15,7 @@ gem 'thin'
 gem 'simple_form'
 gem 'squeel'
 gem 'cancan'
+gem 'active_attr'
 
 group :development do
   gem 'annotate', '2.5.0'

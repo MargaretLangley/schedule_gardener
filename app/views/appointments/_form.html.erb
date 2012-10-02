@@ -3,13 +3,11 @@
   <div class="form-inputs">
     <%= f.association :appointee, collection: @gardeners,  label_method: "first_name", include_blank: false %>
 
-    <%= f.simple_fields_for  :event do |e| %>
-      <%= e.input :title %>
-      <%= e.input :starts_at, as: :string, input_html: { class: 'date_picker' } %>
-      <%= e.input :ends_at,   as: :string, input_html: { class: 'date_picker' } %>
-      <%= e.input :all_day %>
-      <%= e.input :description %>
-  <% end %>
+    <%= f.input :title %>
+    <%= f.input :starts_at, as: :string, input_html: { class: 'date_picker' } %>
+    <%= f.input :ends_at,   as: :string, input_html: { class: 'date_picker' } %>
+    <%= f.input :all_day %>
+    <%= f.input :description %>
   </div>
   <div class="form-actions">
     <%= f.button :submit %>
