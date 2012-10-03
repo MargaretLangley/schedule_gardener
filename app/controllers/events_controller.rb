@@ -2,7 +2,8 @@
 # http://stackoverflow.com/questions/11279394/fullcalendar-with-twitter-bootstrap
 
 class EventsController < ApplicationController
-
+  before_filter :guest_redirect_to_signin_path
+  check_authorization
   load_and_authorize_resource :appointment, parent: false
 
   def index

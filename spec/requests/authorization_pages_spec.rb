@@ -4,6 +4,7 @@ describe "authorization" do
 
   let(:user) { FactoryGirl.create(:user, :client) }
   let!(:wrong_user) { FactoryGirl.create(:user, :client) }
+  let(:appointment) { FactoryGirl.create(:appointment, :today, contact: user.contact) }
 
   context "guests visiting a protected page" do
     before do
@@ -90,7 +91,7 @@ describe "authorization" do
   end
 
   describe "in appointments controller" do
-    let(:appointment) { FactoryGirl.create(:appointment, :today, contact: user.contact) }
+
 
     context "client user" do
       before do
@@ -148,6 +149,7 @@ describe "authorization" do
       before do
        visit_signin_and_login wrong_user
       end
+
       it "#edit" do
         get edit_appointment_path(appointment)
         response.should redirect_to(root_path)
@@ -161,6 +163,30 @@ describe "authorization" do
         response.should redirect_to(root_path)
       end
     end
+  end
+
+  describe "events controller" do
+    context "client user" do
+      before do
+       visit_signin_and_login user
+      end
+
+      it "#index" do
+        get events_path
+        response.code.should == '200'
+      end
+
+    end
+
+    context "guests visiting protected page -> signin" do
+
+      it "#index" do
+        get events_path
+        response.should redirect_to(signin_path)
+      end
+
+    end
+
   end
 
 end
