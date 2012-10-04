@@ -10,11 +10,10 @@ describe "abilities" do
   let(:gardener_ability) { Ability.new(gardener) }
   let(:admin_ability)    { Ability.new(admin) }
 
-  let(:client)         { FactoryGirl.create(:user, :client) }
-  let(:another_client) { FactoryGirl.create(:user, :client) }
-  let(:gardener)       { FactoryGirl.create(:user, :gardener) }
   let(:admin)          { FactoryGirl.create(:user, :admin) }
-
+  let(:another_client) { FactoryGirl.create(:user, :client) }
+  let(:client)         { FactoryGirl.create(:user, :client) }
+  let(:gardener)       { FactoryGirl.create(:user, :gardener) }
 
 shared_examples_for "can_manage_user" do |ability, user|
     it ("can show")     { ability.should     be_able_to(:show, user) }
@@ -128,6 +127,14 @@ end
         # it ("can update")   { should     be_able_to(:update, User.new) }
         # it ("can destroy")  { should     be_able_to(:destroy, User.new) }
         # it ("can manage")   { should     be_able_to(:manage, User.new) }
+      end
+    end
+
+    context "unexpected role" do
+      subject { unexpected_ability }
+
+      it "causes exception" do
+        expect { Ability.new(FactoryGirl.create(:user, :unexpected)) }.to raise_error(RuntimeError,"Missing Role: unexpected in Ability#initialize")
       end
     end
   end

@@ -19,3 +19,6 @@ erd.pdf
 
 # file with passwords AND it varies between developers
 config/database.yml
+
+# SimpleCov
+coverage

@@ -42,6 +42,7 @@ group :development, :test do
  group :test do
   gem "shoulda-matchers"
   gem 'launchy'
+  gem 'simplecov', require: false
  end
 
 # Gems used only for assets and not required

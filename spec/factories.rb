@@ -15,6 +15,10 @@ FactoryGirl.define do
     trait :gardener do
       association :contact, role: "gardener", strategy: :build
     end
+
+    trait :unexpected do
+      association :contact, role: "unexpected", strategy: :build
+    end
   end
 
   factory :contact do
