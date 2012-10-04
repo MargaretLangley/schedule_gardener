@@ -8,7 +8,7 @@ class AppointmentsController < ApplicationController
 
 
   def new
-    @gardeners = Contact.gardeners
+    @gardeners = Contact.contacts_by_role("gardener")
   end
 
 
@@ -22,7 +22,7 @@ class AppointmentsController < ApplicationController
 
 
   def edit
-    @gardeners = Contact.gardeners
+    @gardeners = Contact.contacts_by_role("gardener")
   end
 
 

@@ -56,8 +56,8 @@ class Contact < ActiveRecord::Base
     write_attribute(:mobile,num ? strip_none_numeric(num) : nil)
   end
 
-  def self.gardeners
-    Contact.where{ contacts.role == "gardener"}.order{"contacts.first_name ASC"}
+  def self.contacts_by_role(role)
+    Contact.where{ contacts.role == role}.order{"contacts.first_name ASC"}
   end
 
   private

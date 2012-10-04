@@ -111,10 +111,39 @@ describe Contact do
 	 		end
 	    after(:all) { Contact.destroy_all}
 
-	    it "empty search should return first name ordered contacts" do
-		    Contact.gardeners.should eq [allan, percy]
+	    it "return first name ordered gardeners" do
+		    Contact.contacts_by_role("gardener").should eq [allan, percy]
+	    end
+		end
+
+		context "#clients" do
+	  	roger = ann = alan = nil
+
+	 		before(:all) do
+	 			roger = FactoryGirl.create(:contact, first_name: "Roger", last_name: "Smith", role: :client)
+		  	ann   = FactoryGirl.create(:contact, first_name: "Ann",  last_name: "Abbey", role: :client)
+	  		alan  = FactoryGirl.create(:contact, first_name: "Alan", last_name: "Titmarsh", role: :gardener)
+
+	 			Contact.all.should eq [roger,ann,alan]
+	 		end
+	    after(:all) { Contact.destroy_all}
+
+	    it "return first name ordered clients" do
+		    Contact.contacts_by_role("client").should eq [ann, roger]
 	    end
 
+      context "case insenstive" do
+      	bob = nil
+      	before do
+      	 bob  = FactoryGirl.create(:contact, first_name: "bob",  last_name: "Abbey", role: :client)
+      	 Contact.all.should eq [roger,ann,alan,bob]
+      	end
+
+	      it "ordering of clients" do
+	        Contact.contacts_by_role("client").should eq [ann, bob, roger]
+	      end
+
+	    end
 		end
 
   end

@@ -104,12 +104,12 @@ footer {
   color: $grayLight;
   a {
     color: $gray;
-    &:hover { 
+    &:hover {
       color: $grayDarker;
     }
-  }  
-  small { 
-    float: left; 
+  }
+  small {
+    float: left;
   }
   ul {
     float: right;
@@ -183,7 +183,7 @@ input, textarea, select, .uneditable-input {
 .well.form-search {
     position: relative;
 }
-  
+
 .well.form-search .search-query {
     padding-left: 29px;
 }
@@ -193,26 +193,3 @@ input, textarea, select, .uneditable-input {
     top: 25px;
     left: 30px;
 }
-
-
-/*
-.navbar{
-  .navbar-inner{
-
-    border-bottom:solid 1px #ccc;
-    .nav{
-        margin-left:20px;
-        li{
-            a{
-              padding:5px;
-              margin:5px 5px 0 0;
-              @include border-radius(5px);
-              &:hover{
-                      background:#000;
-                      };
-            }
-          }
-      }
-  }
-}
-*/

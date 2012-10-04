@@ -1,7 +1,7 @@
 <%= simple_form_for @appointment do |f| %>
   <%= render 'shared/error_messages', object: f.object  %>
   <div class="form-inputs">
-    <%= f.association :appointee, collection: @gardeners,  label_method: "first_name", include_blank: false %>
+    <%= f.association :appointee, label: "Gardener", collection: @gardeners,  label_method: "first_name", include_blank: false %>
 
     <%= f.input :title %>
     <%= f.input :starts_at, as: :string, input_html: { class: 'date_picker' } %>
