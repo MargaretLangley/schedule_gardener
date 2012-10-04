@@ -35,7 +35,6 @@ GEM
     annotate (2.5.0)
       rake
     arel (3.0.2)
-    awesome_print (1.1.0)
     bcrypt-ruby (3.0.1)
     bootstrap-sass (2.0.4.1)
     bootstrap-will_paginate (0.0.8)
@@ -52,8 +51,6 @@ GEM
     childprocess (0.3.5)
       ffi (~> 1.0, >= 1.0.6)
     choice (0.1.6)
-    code_analyzer (0.2.0)
-      sexp_processor
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -61,7 +58,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.3.3)
-    colored (1.2)
     daemons (1.1.9)
     diff-lcs (1.1.3)
     erubis (2.7.0)
@@ -113,7 +109,6 @@ GEM
     polyamorous (0.5.0)
       activerecord (~> 3.0)
     polyglot (0.3.3)
-    progressbar (0.11.0)
     quiet_assets (1.0.1)
       railties (~> 3.1)
     rack (1.4.1)
@@ -136,14 +131,6 @@ GEM
       activesupport (>= 3.0)
       choice (~> 0.1.6)
       ruby-graphviz (~> 1.0.4)
-    rails_best_practices (1.11.1)
-      activesupport
-      awesome_print
-      code_analyzer
-      colored
-      erubis
-      i18n
-      progressbar
     railties (3.2.8)
       actionpack (= 3.2.8)
       activesupport (= 3.2.8)
@@ -187,7 +174,6 @@ GEM
       multi_json (~> 1.0)
       rubyzip
     sequel (3.20.0)
-    sexp_processor (4.0.1)
     shoulda-matchers (1.2.0)
       activesupport (>= 3.0.0)
     simple_form (2.0.2)
@@ -256,7 +242,6 @@ DEPENDENCIES
   quiet_assets
   rails (= 3.2.8)
   rails-erd
-  rails_best_practices
   rb-inotify
   rspec-rails
   sass-rails (~> 3.2.3)

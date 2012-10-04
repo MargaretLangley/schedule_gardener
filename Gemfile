@@ -26,7 +26,7 @@ group :development do
   gem 'sqlite3'
   gem 'quiet_assets'
   gem "rails-erd"
-  gem "rails_best_practices"
+
 end
 
 group :development, :test do
