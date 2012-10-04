@@ -7,12 +7,11 @@ gem 'jquery-rest-rails'
 gem 'fullcalendar-rails'
 gem 'bootstrap-sass'
 gem 'bcrypt-ruby', '3.0.1'
-gem 'faker'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem 'pg'
 gem 'thin'
-gem 'simple_form'
+gem 'simple_form', '2.0.2'
 gem 'squeel'
 gem 'cancan'
 gem 'active_attr'
@@ -30,16 +29,16 @@ group :development do
 end
 
 group :development, :test do
-	gem 'rspec-rails'
-	gem 'capybara'
-	gem 'spork'
-	gem 'guard-rspec'
-	gem 'rb-inotify'
+  gem 'rspec-rails'
+  gem 'spork'
+  gem 'rb-inotify'
   gem 'libnotify'
-  gem 'factory_girl_rails'
  end
 
  group :test do
+  gem 'factory_girl_rails'
+  gem 'capybara'
+  gem 'guard-rspec'
   gem "shoulda-matchers"
   gem 'launchy'
   gem 'simplecov', require: false

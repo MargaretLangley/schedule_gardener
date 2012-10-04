@@ -39,11 +39,11 @@ describe User do
 
   context "validations" do
 
-		[ :password, :password_confirmation ].each do |validate_attr|
+		[ :password ].each do |validate_attr|
 			it { should validate_presence_of(validate_attr) }
 		end
 
-		[ :password, :password_confirmation ].each do |validate_attr|
+		[ :password ].each do |validate_attr|
 			it { should ensure_length_of(validate_attr).is_at_least(6) }
 		end
 

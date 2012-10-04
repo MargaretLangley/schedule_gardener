@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   attr_accessible :contact_attributes, :password, :password_confirmation
 
 
-  validates :password, :password_confirmation, presence: true, length: { minimum: 6 }, on: :create
+  validates :password, presence: true, length: { minimum: 6 }, on: :create, confirmation: true
   before_save :create_remember_token
 
   has_one :contact, autosave: true, dependent: :destroy, as: :contactable
