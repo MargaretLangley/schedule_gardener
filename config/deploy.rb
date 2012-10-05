@@ -1,25 +1,72 @@
 set :application, "schedule_gardener"
-set :repository,  "set your repository location here"
+#set :repository,  "set your repository location here"
+# puts "hello #{fetch(:application,"world")}"
+
+#set :staging  "git@heroku.com:gardener-staging.git"
 
 set :scm, :git
 
-role :web, "your web-server here"                          # Your HTTP server, Apache/etc
-role :app, "your app-server here"                          # This may be the same as your `Web` server
-role :db,  "your primary db-server here", :primary => true # This is where Rails migrations will run
-role :db,  "your slave db-server here"
 
-# if you want to clean up old releases on each deploy uncomment this:
-# after "deploy:restart", "deploy:cleanup"
+task :stpush   do
+  puts "#{application} code to staging"
+  run_locally 'git push staging master'
+end
 
-# if you're still using the script/reaper helper you will need
-# these http://github.com/rails/irs_process_scripts
+task :stmig do
+  run_locally 'heroku run rake db:migrate --remote staging'
+  run_locally 'heroku ps --remote staging'
+end
 
-# If you are using Passenger mod_rails uncomment this:
-# namespace :deploy do
-#   task :start do ; end
-#   task :stop do ; end
-#   task :restart, :roles => :app, :except => { :no_release => true } do
-#     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-#   end
-# end
+task :stinfo  do
+  puts "#{application} pg information"
+  system 'heroku pg:info --remote staging'
+end
 
+task :stpsql do
+  puts "#{application} Remote Staging Database"
+  system 'heroku pg:psql HEROKU_POSTGRESQL_PURPLE --remote staging'
+end
+
+task :strestore do
+  run_locally 'pg_dump -Fc --no-acl --no-owner schedule_gardener_development > data.dump'
+  run_locally 'pg_restore -W --verbose --clean --no-acl --no-owner -h ec2-54-243-235-169.compute-1.amazonaws.com -U alawohniburtoq -d dcgonjhl76emj8 -p 5432 data.dump'
+  run_locally 'rm data.dump'
+end
+
+
+task :pdpush do
+  puts "\n\n*********************************************************************************"
+  puts "****** #{application} updating the PRODUCTION Web server ********"
+  puts "*********************************************************************************\n\n"
+
+ system 'git push production master'
+end
+
+task :pdinfo  do
+  system 'heroku pg:info --remote production'
+end
+
+task :pdpsql do
+  puts "*** #{application} Remote PRODUCTION Database ***"
+  system 'heroku pg:psql HEROKU_POSTGRESQL_MAROON --remote production'
+end
+
+
+task :pdrestore do
+  puts "\n\n*********************************************************************************"
+  puts "****** #{application} wiping out and resoring the PRODUCTION Database ********"
+  puts "*********************************************************************************\n\n"
+  run_locally 'pg_dump -Fc --no-acl --no-owner schedule_gardener_development > data.dump'
+  run_locally 'pg_restore -W --verbose --clean --no-acl --no-owner -h ec2-54-243-190-152.compute-1.amazonaws.com -U cuzufrejeteocm -d d1re16pjjfhcp7 -p 5432 data.dump'
+  run_locally 'rm data.dump'
+end
+
+
+task :pdbackup do
+  puts "#{application} Backing up PRODUCTION Database"
+  system 'curl -o latest.dump `heroku pgbackups:url --app furious-mouse`'
+  system 'pg_restore -O --clean -d schedule_gardener_development latest.dump'
+end
+
+#https://devcenter.heroku.com/articles/multiple-environments
+#https://github.com/capistrano/capistrano/wiki/2.x-Getting-Started
