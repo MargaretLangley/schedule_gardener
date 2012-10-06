@@ -1,9 +1,10 @@
 class AppointmentsController < ApplicationController
   before_filter :guest_redirect_to_signin_path
   check_authorization
-  load_and_authorize_resource
+  load_and_authorize_resource through: :current_user
 
   def index
+    @appointments = @appointments.after_now()
   end
 
 

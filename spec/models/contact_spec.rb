@@ -78,23 +78,39 @@ describe Contact do
 	end
 
 	context "#appointments" do
-		contact1_app1 = contact1_app2 = contact1_app3 = contact2_app4 = nil
 
-		before(:all) do
-		  contact_2  = FactoryGirl.create(:contact, first_name: "Simon")
-			contact1_app2 = FactoryGirl.create(:appointment, :tomorrow, contact: contact)
-			contact1_app1 = FactoryGirl.create(:appointment, :today, contact: contact)
-			contact1_app3 = FactoryGirl.create(:appointment, :two_days_time, contact: contact)
-			contact2_app4 = FactoryGirl.create(:appointment, :tomorrow, contact: contact_2)
+    context "returns expected appointments ordered by date" do
 
-			Appointment.all.should eq [contact1_app2,contact1_app1,contact1_app3,contact2_app4]
+			contact1_app1 = contact1_app2 = contact1_app3 = nil
+			before do
+
+				contact1_app2 = FactoryGirl.create(:appointment, :tomorrow, contact: contact)
+				contact1_app3 = FactoryGirl.create(:appointment, :two_days_time, contact: contact)
+				contact1_app1 = FactoryGirl.create(:appointment, :today, contact: contact)
+
+				Appointment.all.should eq [contact1_app2,contact1_app3, contact1_app1]
+			end
+
+			it "true" do
+		  	contact.appointments.should eq [contact1_app1, contact1_app2, contact1_app3]
+		  end
+    end
+
+    context "only returns appointments for the expected user" do
+
+    	contact1_app1 = contact2_app2 = nil
+			contact_2  = FactoryGirl.create(:contact, first_name: "Simon")
+
+      before do
+	      contact1_app1 = FactoryGirl.create(:appointment, :today, contact: contact)
+				contact2_app2 = FactoryGirl.create(:appointment, :tomorrow, contact: contact_2)
+				Appointment.all.should eq [contact1_app1,contact2_app2]
+			end
+
+	    it "true" do
+        contact.appointments.should eq [contact1_app1]
+			end
 		end
-		after(:all) { Contact.destroy_all; Appointment.destroy_all; }
-
-		it "returns expected appointments ordered by date" do
-	  	contact.appointments.should eq [contact1_app1, contact1_app2, contact1_app3]
-	  end
-
   end
 
   context "Custom finders" do

@@ -74,6 +74,24 @@ describe Appointment do
 
 	context "Custom finders" do
 
+    context "#after_now" do
+
+      context "before boundary" do
+        e1 = e2 = e3 = e4 = nil
+        before do
+          puts Time.now.utc
+          e1 = FactoryGirl.create(:appointment, contact:  @contact, title: "e1 just before boundary", starts_at: Time.now.utc.advance(minutes: -10))
+          e2 = FactoryGirl.create(:appointment, contact:  @contact, title: "e2 just after boundary",  starts_at: Time.now.utc.advance(minutes: 5))
+          e3 = FactoryGirl.create(:appointment, contact:  @contact, title: "e3 well after_boundary",  starts_at: Time.now.utc.end_of_month)
+          Appointment.all.should eq [e1, e2, e3]
+        end
+
+        it "are not included" do
+          @contact.appointments.after_now().should eq [e2,e3]
+        end
+      end
+    end
+
 	  context "#in_time_range" do
 
 	 		context "on boundary" do

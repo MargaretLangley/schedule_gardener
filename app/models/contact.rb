@@ -30,7 +30,7 @@ class Contact < ActiveRecord::Base
   belongs_to  :contactable, polymorphic: true
   has_one     :address,  autosave: true, dependent: :destroy, as: :addressable
   has_many    :gardens, dependent: :destroy
-  has_many    :appointments, dependent: :destroy, order: 'starts_at ASC'
+  has_many    :appointments, dependent: :destroy, order: "appointments.starts_at ASC"
 
   # attr_accessible :address_attributes - adds the attribute writer to the allowed list
   # accepts_nes.... Defines an attributes writer for the specified association

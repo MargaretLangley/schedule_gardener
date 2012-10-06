@@ -28,9 +28,15 @@ class Appointment < ActiveRecord::Base
   belongs_to :appointee, class_name: "Contact", :foreign_key => "appointee_id"
   belongs_to :contact
 
+  def self.after_now()
+     where { starts_at > DateTime.now }
+  end
+
+
   def self.in_time_range(time_range)
       where { (starts_at.in time_range) | (ends_at.in time_range) }
   end
+
 
   def to_event
     event = Event.new(all_day: all_day, description: description,

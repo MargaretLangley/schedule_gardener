@@ -23,6 +23,10 @@ class User < ActiveRecord::Base
   # accepts_nes.... Defines an attributes writer for the specified association
   accepts_nested_attributes_for :contact
 
+  def appointments
+    contact.appointments
+  end
+
   def full_name
     contact.full_name
   end
