@@ -28,9 +28,9 @@ task :stpsql do
 end
 
 task :strestore do
-  run_locally 'pg_dump -Fc --no-acl --no-owner schedule_gardener_development > data.dump'
-  run_locally 'pg_restore -W --verbose --clean --no-acl --no-owner -h ec2-54-243-235-169.compute-1.amazonaws.com -U alawohniburtoq -d dcgonjhl76emj8 -p 5432 data.dump'
-  run_locally 'rm data.dump'
+  run_locally "pg_dump -Fc --no-acl --no-owner #{application}_development > tmp/schedule_gardener.dump"
+  run_locally 'pg_restore -W --verbose --clean --no-acl --no-owner -h ec2-54-243-235-169.compute-1.amazonaws.com -U alawohniburtoq -d dcgonjhl76emj8 -p 5432 tmp/schedule_gardener.dump'
+  run_locally 'rm tmp/schedule_gardener.dump'
 end
 
 
@@ -56,17 +56,27 @@ task :pdrestore do
   puts "\n\n*********************************************************************************"
   puts "****** #{application} wiping out and resoring the PRODUCTION Database ********"
   puts "*********************************************************************************\n\n"
-  run_locally 'pg_dump -Fc --no-acl --no-owner schedule_gardener_development > data.dump'
+  run_locally 'pg_dump -Fc --no-acl --no-owner #{application}_development > data.dump'
   run_locally 'pg_restore -W --verbose --clean --no-acl --no-owner -h ec2-54-243-190-152.compute-1.amazonaws.com -U cuzufrejeteocm -d d1re16pjjfhcp7 -p 5432 data.dump'
   run_locally 'rm data.dump'
 end
 
 
 task :pdbackup do
-  puts "#{application} Backing up PRODUCTION Database"
-  system 'curl -o latest.dump `heroku pgbackups:url --app furious-mouse`'
-  system 'pg_restore -O --clean -d schedule_gardener_development latest.dump'
+  puts "#{application} Backing up PRODUCTION Database, drops and restores local"
+  puts "#{application} Capturing...."
+  system 'heroku pgbackups:capture --expire --app gardener-production'
+  puts "#{application} Copied to local...."
+  system 'curl -o tmp/latest.dump `heroku pgbackups:url --app gardener-production`'
+  puts "#{application} replacing the local database...."
+  system 'pg_restore --verbose --clean  --no-acl --no-owner -d schedule_gardener_development tmp/latest.dump'
+
+  puts "prepare test"
+
+  system 'rake db:test:prepare'
 end
 
+# More ideas while getting hang of scripts ... must remove comments!
 #https://devcenter.heroku.com/articles/multiple-environments
 #https://github.com/capistrano/capistrano/wiki/2.x-Getting-Started
+#https://gist.github.com/2577832
