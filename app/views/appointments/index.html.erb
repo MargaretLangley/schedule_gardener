@@ -14,7 +14,7 @@
   <tr>
     <td><%= appointment.title %></td>
     <td><%= appointment.appointee.full_name %></td>
-    <td><%= distance_of_time_in_words(Time.now,appointment.starts_at) %></td>
+    <td><%= appointment.starts_at %></td>
     <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
     <td><%= link_to 'Delete', appointment_path(appointment), confirm: 'You sure?' , method: 'delete' %></td>
   </tr>

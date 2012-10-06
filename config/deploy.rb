@@ -28,6 +28,9 @@ task :stpsql do
 end
 
 task :strestore do
+  puts "\n\n*********************************************************************************"
+  puts "****** #{application} wiping out and resoring the STAGING Database ********"
+  puts "*********************************************************************************\n\n"
   run_locally "pg_dump -Fc --no-acl --no-owner #{application}_development > tmp/schedule_gardener.dump"
   run_locally 'pg_restore -W --verbose --clean --no-acl --no-owner -h ec2-54-243-235-169.compute-1.amazonaws.com -U alawohniburtoq -d dcgonjhl76emj8 -p 5432 tmp/schedule_gardener.dump'
   run_locally 'rm tmp/schedule_gardener.dump'
@@ -71,8 +74,7 @@ task :pdbackup do
   puts "#{application} replacing the local database...."
   system 'pg_restore --verbose --clean  --no-acl --no-owner -d schedule_gardener_development tmp/latest.dump'
 
-  puts "prepare test"
-
+  puts "prepare test db"
   system 'rake db:test:prepare'
 end
 
