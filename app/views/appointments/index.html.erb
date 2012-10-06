@@ -14,7 +14,7 @@
   <tr>
     <td><%= appointment.title %></td>
     <td><%= appointment.appointee.full_name %></td>
-    <td><%= appointment.starts_at %></td>
+    <td><%= distance_of_time_in_words(Time.now,appointment.starts_at) %></td>
     <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
     <td><%= link_to 'Delete', appointment_path(appointment), confirm: 'You sure?' , method: 'delete' %></td>
   </tr>
@@ -23,7 +23,7 @@
 
 <br />
 
-<%= link_to 'New Appointment', new_appointment_path %>&nbsp;&nbsp;
+<%= link_to 'Create Appointment', new_appointment_path %>&nbsp;&nbsp;&nbsp;
 <%= link_to 'Calendar', events_path %>
 <%= debug(@appointments) unless Rails.env.production? %>
 

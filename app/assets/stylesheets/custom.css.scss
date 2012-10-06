@@ -177,6 +177,13 @@ input, textarea, select, .uneditable-input {
   @extend .error;
  }
 
+ /* this is the default action for that form */
+
+ .primary_action_button  {
+   @extend .btn;
+   @extend .btn-large;
+   @extend .btn-primary;
+ }
 
 /* search box on index page  */
 
