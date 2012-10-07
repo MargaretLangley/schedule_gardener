@@ -4,14 +4,14 @@ require 'spec_helper'
 describe "Appointments" do
 
   before(:all) do
-    @contact     = FactoryGirl.create(:contact, first_name: "Rodger", first_name: "Smith",role: :client)
-    @user        = FactoryGirl.create(:user, contact: @contact)
-    @appointment = FactoryGirl.create(:appointment, :today, contact: @contact, title: "appointment pages spec test")
-    @admin = FactoryGirl.create(:user, :admin)
+    @user        = FactoryGirl.create(:user, contact: FactoryGirl.build(:contact, first_name: "Rodger", last_name: "Smith",role: :client))
+  end
+
+  before(:each) do
+    @appointment = FactoryGirl.create(:appointment, :tomorrow, contact: @user.contact, title: "appointment pages spec test")
   end
 
   after(:all) do
-    Appointment.delete_all;
     Address.delete_all;
     Contact.delete_all;
     User.delete_all;
@@ -23,7 +23,6 @@ describe "Appointments" do
 
   subject { page }
 
-
   context "#index" do
     before(:each) { visit appointments_path }
 
@@ -31,10 +30,10 @@ describe "Appointments" do
       current_path.should eq appointments_path
     end
 
-
     it "displays title" do
       should have_selector('td', text: "appointment pages spec test")
     end
+
     it "displays appointmee" do
       should have_selector('td', text: "Alan Titmarsh")
     end
@@ -94,7 +93,10 @@ describe "Appointments" do
     end
 
     context "admin" do
+
       before do
+        #@admin = FactoryGirl.create(:user, :admin)
+
         # visit_signin_and_login @admin
         # select 'Rodger', from: 'appointment_contact_id'
         # select 'Alan', from: 'appointment_appointee_id'

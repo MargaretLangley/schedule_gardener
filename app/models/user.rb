@@ -23,6 +23,8 @@ class User < ActiveRecord::Base
   # accepts_nes.... Defines an attributes writer for the specified association
   accepts_nested_attributes_for :contact
 
+  Roles = %w[admin client gardner]
+
   def appointments
     contact.appointments
   end
@@ -33,6 +35,10 @@ class User < ActiveRecord::Base
 
   def email
     contact.email
+  end
+
+  def role
+    contact.role
   end
 
   def self.find_by_email(email)

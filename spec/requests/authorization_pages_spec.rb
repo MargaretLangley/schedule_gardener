@@ -4,7 +4,6 @@ describe "authorization" do
 
   let(:user) { FactoryGirl.create(:user, :client) }
   let!(:wrong_user) { FactoryGirl.create(:user, :client) }
-  let(:appointment) { FactoryGirl.create(:appointment, :today, contact: user.contact) }
 
   context "guests visiting a protected page" do
     before do
@@ -92,6 +91,7 @@ describe "authorization" do
 
   describe "in appointments controller" do
 
+    let!(:appointment) { FactoryGirl.create(:appointment, :today, contact: user.contact) }
 
     context "client user" do
       before do
@@ -151,16 +151,13 @@ describe "authorization" do
       end
 
       it "#edit" do
-        get edit_appointment_path(appointment)
-        response.should redirect_to(root_path)
+        expect { get edit_appointment_path(appointment) }.to raise_error(ActiveRecord::RecordNotFound)
       end
       it "#update" do
-        put appointment_path(appointment)
-        response.should redirect_to(root_path)
+        expect { put appointment_path(appointment) }.to raise_error(ActiveRecord::RecordNotFound)
       end
       it "#delete" do
-        delete appointment_path(appointment)
-        response.should redirect_to(root_path)
+        expect { delete appointment_path(appointment) }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

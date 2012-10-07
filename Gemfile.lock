@@ -1,3 +1,22 @@
+GIT
+  remote: git://github.com/sferik/rails_admin.git
+  revision: 9691d54bed0a3eed3253325e732a6ded423d778a
+  specs:
+    rails_admin (0.1.1)
+      bootstrap-sass (~> 2.0)
+      builder (~> 3.0)
+      coffee-rails (~> 3.1)
+      font-awesome-sass-rails (~> 2.0)
+      haml (~> 3.1)
+      jquery-rails (~> 2.0)
+      jquery-ui-rails (~> 2.0)
+      kaminari (~> 0.12)
+      nested_form (~> 0.2.3)
+      rack-pjax (~> 0.5)
+      rails (~> 3.1)
+      remotipart (~> 1.0)
+      sass-rails (~> 3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -76,6 +95,9 @@ GEM
       factory_girl (~> 4.1.0)
       railties (>= 3.0.0)
     ffi (1.1.5)
+    font-awesome-sass-rails (2.0.0.0)
+      railties (>= 3.1.1)
+      sass-rails (>= 3.1.1)
     fullcalendar-rails (1.5.3.0)
     guard (1.4.0)
       listen (>= 0.4.2)
@@ -83,6 +105,7 @@ GEM
     guard-rspec (2.0.0)
       guard (>= 1.1)
       rspec (~> 2.11)
+    haml (3.1.7)
     highline (1.6.15)
     hike (1.2.1)
     i18n (0.6.1)
@@ -96,6 +119,9 @@ GEM
       railties (>= 3.1.0)
     jruby-pageant (1.1.1)
     json (1.7.5)
+    kaminari (0.14.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     launchy (2.1.2)
       addressable (~> 2.3)
     libnotify (0.8.0)
@@ -109,6 +135,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.19)
     multi_json (1.3.6)
+    nested_form (0.2.3)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
@@ -127,6 +154,9 @@ GEM
     rack (1.4.1)
     rack-cache (1.2)
       rack (>= 0.4)
+    rack-pjax (0.6.0)
+      nokogiri (~> 1.5)
+      rack (~> 1.3)
     rack-ssl (1.3.2)
       rack
     rack-test (0.6.2)
@@ -156,6 +186,7 @@ GEM
       ffi (>= 0.5.0)
     rdoc (3.12)
       json (~> 1.4)
+    remotipart (1.0.2)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec (2.11.0)
@@ -252,6 +283,7 @@ DEPENDENCIES
   quiet_assets
   rails (= 3.2.8)
   rails-erd
+  rails_admin!
   rb-inotify
   rspec-rails
   sass-rails (~> 3.2.3)

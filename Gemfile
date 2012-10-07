@@ -15,6 +15,8 @@ gem 'simple_form', '2.0.2'
 gem 'squeel'
 gem 'cancan'
 gem 'active_attr'
+gem 'rails_admin', :git => "git://github.com/sferik/rails_admin.git"
+
 
 group :development do
   gem 'annotate', '2.5.0'

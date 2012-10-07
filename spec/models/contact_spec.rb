@@ -84,9 +84,9 @@ describe Contact do
 			contact1_app1 = contact1_app2 = contact1_app3 = nil
 			before do
 
-				contact1_app2 = FactoryGirl.create(:appointment, :tomorrow, contact: contact)
-				contact1_app3 = FactoryGirl.create(:appointment, :two_days_time, contact: contact)
-				contact1_app1 = FactoryGirl.create(:appointment, :today, contact: contact)
+				contact1_app2 = FactoryGirl.create(:appointment, :two_days_time, contact: contact)
+				contact1_app3 = FactoryGirl.create(:appointment, :three_days_time, contact: contact)
+				contact1_app1 = FactoryGirl.create(:appointment, :tomorrow, contact: contact)
 
 				Appointment.all.should eq [contact1_app2,contact1_app3, contact1_app1]
 			end
@@ -99,11 +99,11 @@ describe Contact do
     context "only returns appointments for the expected user" do
 
     	contact1_app1 = contact2_app2 = nil
-			contact_2  = FactoryGirl.create(:contact, first_name: "Simon")
 
       before do
-	      contact1_app1 = FactoryGirl.create(:appointment, :today, contact: contact)
-				contact2_app2 = FactoryGirl.create(:appointment, :tomorrow, contact: contact_2)
+	  		contact_2  = FactoryGirl.create(:contact, first_name: "Simon")
+	      contact1_app1 = FactoryGirl.create(:appointment, :tomorrow, contact: contact)
+				contact2_app2 = FactoryGirl.create(:appointment, :two_days_time, contact: contact_2)
 				Appointment.all.should eq [contact1_app1,contact2_app2]
 			end
 
@@ -118,14 +118,13 @@ describe Contact do
     context "#gardeners" do
 	  	percy = allan = roger = nil
 
-	 		before(:all) do
+	 		before do
 	 			percy = FactoryGirl.create(:contact, first_name: "Percy", last_name: "Thrower", role: :gardener)
 		  	allan = FactoryGirl.create(:contact, first_name: "Alan",  last_name: "Titmarsh", role: :gardener)
 	  		roger = FactoryGirl.create(:contact, first_name: "Roger", last_name: "Smith", role: :client)
 
 	 			Contact.all.should eq [percy,allan,roger]
 	 		end
-	    after(:all) { Contact.destroy_all}
 
 	    it "return first name ordered gardeners" do
 		    Contact.contacts_by_role("gardener").should eq [allan, percy]

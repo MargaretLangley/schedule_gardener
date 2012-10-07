@@ -37,12 +37,12 @@ class Ability
 
     else
       # All Registered users
-      Rails.logger.debug "user role is:" + user.contact.role.to_s
+      Rails.logger.debug "user role is:" + user.role.to_s
 
       can [:show, :create, :update ], User, id: user.id
       can [:manage],                  Appointment, contact_id: user.contact.id
       # Different Roles
-      case user.contact.role
+      case user.role
       when "client"
         # nothing more to do
       when "gardener"
@@ -52,7 +52,7 @@ class Ability
           can :manage, :all
           cannot :destroy, user, id: user.id
       else
-        raise "Missing Role: #{user.contact.role} in Ability#initialize"
+        raise "Missing Role: #{user.role} in Ability#initialize"
       end
     end
   end

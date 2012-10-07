@@ -52,6 +52,35 @@ describe "Authentication" do
         it ("has no error banner") { should_not have_selector('div.alert.alert-error', "error banner") }
       end
     end
+
+    context "admin area" do
+      before do
+        visit rails_admin_path
+      end
+
+      it "redirected to signin path" do
+        current_path.should eq signin_path
+      end
+
+      context "for admin user" do
+        before { login_user(admin) }
+
+        it "redirected to signin path" do
+          current_path.should eq rails_admin_path + '/'
+        end
+      end
+
+      context "for standard user" do
+        before { login_user(user) }
+
+        it "redirected to signin path" do
+          current_path.should eq signin_path
+        end
+      end
+
+    end
+
+
   end
 
 end

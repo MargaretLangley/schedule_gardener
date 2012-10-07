@@ -18,7 +18,7 @@ require 'active_support/core_ext/time/calculations'
 
 
 describe Event do
-  # subject(:event) { FactoryGirl.build(:event, :today, title: "event_spec_subject") }
+  # subject(:event) { FactoryGirl.build(:event, :tomorrow, title: "event_spec_subject") }
   # include_examples "All Built Objects", Event
 
 end

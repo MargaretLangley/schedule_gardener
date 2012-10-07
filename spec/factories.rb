@@ -68,6 +68,11 @@ FactoryGirl.define do
       title "created by appointment two_days_time"
       starts_at {Time.now.utc.beginning_of_day + 9.hours + 2.days }
     end
+    trait :three_days_time do
+      title "created by appointment two_days_time"
+      starts_at {Time.now.utc.beginning_of_day + 9.hours + 3.days }
+    end
+
     ends_at { starts_at + 3.hours }
 
 

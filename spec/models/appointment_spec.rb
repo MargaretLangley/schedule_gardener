@@ -27,7 +27,7 @@ describe Appointment do
      Contact.delete_all; Address.delete_all;
 	 end
 
-	subject(:appointment) { FactoryGirl.create(:appointment, :today, contact: @contact)}
+	subject(:appointment) { FactoryGirl.create(:appointment, :tomorrow, contact: @contact)}
 
  	include_examples "All Built Objects", Appointment
 
@@ -165,7 +165,7 @@ describe Appointment do
 	describe "to_event" do
     let(:event) { appointment.to_event }
     it "title output" do
-			event.title.should eq "created by appointment today"
+			event.title.should eq "created by appointment tomorrow"
     end
 
     it "can serialize" do

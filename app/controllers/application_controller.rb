@@ -21,6 +21,10 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by_remember_token(cookies[:remember_token])
   end
 
+  def current_admin?
+    current_user && current_user.role == "admin"
+  end
+
   def current_user=(user)
     @current_user = user
   end
