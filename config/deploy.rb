@@ -67,12 +67,17 @@ end
 
 task :pdbackup do
   puts "#{application} Backing up PRODUCTION Database, drops and restores local"
+  puts "backing up local database"
+  run_locally "pg_dump -Fc --no-acl --no-owner #{application}_development > tmp/#{application}_backup.dump"
   puts "#{application} Capturing...."
   system 'heroku pgbackups:capture --expire --app gardener-production'
   puts "#{application} Copied to local...."
   system 'curl -o tmp/latest.dump `heroku pgbackups:url --app gardener-production`'
+  puts "drop local database and create"
+  system "rake db:drop"
+  system "rake db:create"
   puts "#{application} replacing the local database...."
-  system 'pg_restore --verbose --clean  --no-acl --no-owner -d schedule_gardener_development tmp/latest.dump'
+  system "pg_restore --verbose --clean  --no-acl --no-owner -d #{application}_development tmp/latest.dump"
 
   puts "prepare test db"
   system 'rake db:test:prepare'
