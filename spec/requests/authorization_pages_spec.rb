@@ -5,13 +5,7 @@ describe "authorization" do
   let(:user) { FactoryGirl.create(:user, :client) }
   let!(:wrong_user) { FactoryGirl.create(:user, :client) }
 
-  context "guests visiting a protected page" do
-    before do
-      visit edit_profile_path(user)
-      visit_signin_and_login(user)
-    end
-    it ("forwards to the requested protected page") { current_path.should eq edit_profile_path(user) }
-  end
+
 
   context "in Users controller" do
 

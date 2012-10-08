@@ -1,6 +1,5 @@
 ScheduleGardener::Application.routes.draw do
 
-  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   root                            to: 'static_pages#home'
   match '/help',                  to: 'static_pages#help'
@@ -23,4 +22,5 @@ ScheduleGardener::Application.routes.draw do
   resources :appointments, only: [:new, :create, :edit, :update, :destroy, :index]
   resources :events , only: [:index]
 
+  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 end

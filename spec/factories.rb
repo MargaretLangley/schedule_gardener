@@ -9,11 +9,11 @@ FactoryGirl.define do
     end
 
     trait :client do
-      association :contact, role: "client", strategy: :build
+      association :contact, first_name: "John", last_name: "Smith", role: "client", strategy: :build
     end
 
     trait :gardener do
-      association :contact, role: "gardener", strategy: :build
+      association :contact, first_name: "Alan", last_name: "Titmarsh", role: "gardener", strategy: :build
     end
 
     trait :unexpected do

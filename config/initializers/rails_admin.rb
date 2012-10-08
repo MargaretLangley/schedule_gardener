@@ -5,8 +5,16 @@ RailsAdmin.config do |config|
 
   config.authenticate_with {} # leave it to authorize
   config.authorize_with do
-    store_path()
-    redirect_to main_app.signin_path unless current_admin?
+    if current_user.present?
+      unless current_admin?
+        clear_path()
+        sign_out_forget_session
+        redirect_to main_app.root_path
+      end
+    else
+      store_path()
+      redirect_to main_app.signin_path
+    end
   end
 
   ################  Global configuration  ################
