@@ -21,8 +21,7 @@ class Contact < ActiveRecord::Base
   # Must be present, ignores validation if blank, format to REGEX
   validates :email, :first_name, :home_phone, :role, presence: true
   validates :first_name, :last_name, length: { maximum: 50 }
-  VALID_EMAIL_REGEX = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
-  validates :email, allow_blank: true ,format: { with: VALID_EMAIL_REGEX }
+  validates :email, allow_blank: true, email_format: true
 
   before_validation :set_default
   before_save       :before_save

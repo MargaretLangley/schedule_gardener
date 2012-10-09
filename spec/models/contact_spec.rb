@@ -51,15 +51,12 @@ describe Contact do
 		end
 
 		context "email addresses" do
-			let(:mixed_case_email) { "Foo@ExAMPLe.CoM"}
 
-
-			it "with good format are valid" do
-	      email_addresses = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
-	      email_addresses.each do |valid_email_address|
-	        should validate_format_of(:email).with(valid_email_address)
-	      end
+			it "are validated" do
+				should allow_value("user@foo.COM").for(:email)
 	  	end
+
+			let(:mixed_case_email) { "Foo@ExAMPLe.CoM"}
 
 			it "with upper-case saved as lower-case" do
 				contact.email = mixed_case_email
@@ -68,12 +65,8 @@ describe Contact do
 			end
 
 			it "with bad format are invalid" do
-		  	email_addresses = %w[user@foo,com user_at_foo.org example.user@foo.
-		                 foo@bar_baz.com foo@bar+baz.com]
-		  	email_addresses.each do |invalid_address|
-		    	should validate_format_of(:email).not_with(invalid_address)
-		  	end
-		  end
+				should_not allow_value("foo@bar_baz.com").for(:email)
+			end
 		end
 	end
 
