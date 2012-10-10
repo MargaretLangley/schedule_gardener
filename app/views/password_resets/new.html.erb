@@ -1,0 +1,14 @@
+
+
+<% provide(:title, "Forgot your password?") %>
+<h1>Forgot your password?</h1>
+
+<%= simple_form_for @password_reset do |f| %>
+<%= render 'shared/error_messages', object: f.object  %>
+  <div class="form-inputs">
+    <%= f.input :email, label: "Enter your email address" %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Email me password reset instructions", class: 'primary_action_button' %>
+  </div>
+<% end %>

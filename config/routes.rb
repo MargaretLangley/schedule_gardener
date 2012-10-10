@@ -5,6 +5,7 @@ ScheduleGardener::Application.routes.draw do
   match '/help',                  to: 'static_pages#help'
   match '/about',                 to: 'static_pages#about'
   match '/contact',               to: 'static_pages#contact'
+  match '/password_reset_sent',   to: 'static_pages#password_reset_sent'
 
 
   match '/signup',                to: 'users#new',    via: :get
@@ -21,6 +22,8 @@ ScheduleGardener::Application.routes.draw do
 
   resources :appointments, only: [:new, :create, :edit, :update, :destroy, :index]
   resources :events , only: [:index]
+
+  resources :password_resets
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 end

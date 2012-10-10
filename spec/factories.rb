@@ -19,6 +19,11 @@ FactoryGirl.define do
     trait :unexpected do
       association :contact, role: "unexpected", strategy: :build
     end
+
+    trait :resetting_password do
+      password_reset_token "i8pCKXq7UArg164qUXfJXg"
+      password_reset_sent_at {Time.zone.now}
+    end
   end
 
   factory :contact do
@@ -75,8 +80,16 @@ FactoryGirl.define do
 
     ends_at { starts_at + 3.hours }
 
+  end
 
+  factory :message, class: Mail::Message do
+    #multipart false
+    from 'from@example.com'
+    to  'john.smith@example.com'
+    subject 'Password Reset'
   end
 
 end
+
+#<Mail::Message:89263770, Multipart: false, Headers: <From: from@example.com>, <To: john.smith@example.com>, <Subject: Password Reset>, <Mime-Version: 1.0>, <Content-Type: text/plain>>
 

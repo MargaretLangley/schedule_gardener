@@ -5,6 +5,11 @@ ScheduleGardener::Application.configure do
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped
   # and recreated between test runs. Don't rely on the data there!
+
+ require 'yaml'
+  yaml_data = YAML::load(ERB.new(IO.read(File.join(Rails.root, 'config', 'sensitive_information.yml'))).result)
+  APP_CONFIG = HashWithIndifferentAccess.new(yaml_data)
+
   config.cache_classes = true
 
   # Configure static asset server for tests with Cache-Control for performance
@@ -28,6 +33,26 @@ ScheduleGardener::Application.configure do
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
+
+    # Don't care if the mailer can't send
+  config.action_mailer.raise_delivery_errors = true
+
+  config.action_mailer.default_url_options = {
+    :host => '127.0.0.1',
+    :port => 3000
+  }
+
+  # Change mail delvery to either :smtp, :sendmail, :file, :test
+  config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+    address: "smtp.gmail.com",
+    port: 587,
+    domain: "sutton.garden.care.com",
+    authentication: "plain",
+    enable_starttls_auto: true,
+    user_name: "Garden.Care.Mail.Server@gmail.com",
+    password: "WuxZJrcuB8DwtuVBP8"
+  }
 
   # Raise exception on mass assignment protection for Active Record models
   config.active_record.mass_assignment_sanitizer = :strict

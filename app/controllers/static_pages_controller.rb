@@ -11,4 +11,7 @@ class StaticPagesController < ApplicationController
 
   def contact
   end
+
+  def password_reset
+  end
 end

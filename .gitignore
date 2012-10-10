@@ -22,3 +22,5 @@ config/database.yml
 
 # SimpleCov
 coverage
+
+config/sensitive_information.yml

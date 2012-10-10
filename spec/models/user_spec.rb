@@ -2,12 +2,14 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
-#  password_digest :string(255)      not null
-#  remember_token  :string(255)
-#  admin           :boolean          default(FALSE)
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  id                     :integer          not null, primary key
+#  password_digest        :string(255)      not null
+#  remember_token         :string(255)
+#  admin                  :boolean          default(FALSE)
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  password_reset_token   :string(255)
+#  password_reset_sent_at :datetime
 #
 
 # cut and paste into terminal

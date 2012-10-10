@@ -19,6 +19,10 @@ describe "Authentication" do
       current_path.should eq signin_path
     end
 
+    context "visible" do
+      it ("has forgotten password link")   { should have_link('forgotten password?', href: new_password_reset_path) }
+    end
+
     context "signin" do
 
       context "succeeds" do
