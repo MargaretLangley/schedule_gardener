@@ -1,11 +1,6 @@
 ScheduleGardener::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-
-  require 'yaml'
-  yaml_data = YAML::load(ERB.new(IO.read(File.join(Rails.root, 'config', 'sensitive_information.yml'))).result)
-  APP_CONFIG = HashWithIndifferentAccess.new(yaml_data)
-
   # Code is not reloaded between requests
   config.cache_classes = true
 
@@ -61,11 +56,11 @@ ScheduleGardener::Application.configure do
     config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
     port: 587,
-    domain: APP_CONFIG[:DOMAIN],
+    domain: ENV[:DOMAIN],
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name: APP_CONFIG[:GMAIL_USERNAME],
-    password: APP_CONFIG[:GMAIL_PASSWORD]
+    user_name: ENV[:GMAIL_USERNAME],
+    password: ENV[:GMAIL_PASSWORD]
   }
 
   # Enable threaded mode
