@@ -4,6 +4,11 @@ class CreateUsers < ActiveRecord::Migration
       t.string :password_digest, null: false
       t.string :remember_token
       t.boolean :admin, default: false
+      t.string :password_reset_token
+      t.datetime :password_reset_sent_at
+      t.boolean :email_verified, default: false
+      t.string :verify_email_token
+      t.datetime :verify_email_sent_at
       t.timestamps
     end
 
