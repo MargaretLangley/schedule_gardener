@@ -17,6 +17,10 @@ task :stinfo  do
   system 'heroku pg:info --remote staging'
 end
 
+task :stlogs do
+ system 'heroku logs -t --remote staging'
+end
+
 task :stpsql do
   puts "#{application} Remote Staging Database"
   system 'heroku pg:psql HEROKU_POSTGRESQL_PURPLE --remote staging'
@@ -25,7 +29,7 @@ end
 task :strestore do
   start_banner("wiping out and resoring the STAGING Database")
   run_locally "pg_dump #{dump_options} #{application}_development > tmp/schedule_gardener.dump"
-  run_locally 'pg_restore #{restore_options} -h ec2-54-243-235-169.compute-1.amazonaws.com -U alawohniburtoq -d dcgonjhl76emj8 -p 5432 tmp/schedule_gardener.dump'
+  run_locally "pg_restore -W #{restore_options} -h ec2-54-243-235-169.compute-1.amazonaws.com -U alawohniburtoq -d dcgonjhl76emj8 -p 5432 tmp/schedule_gardener.dump"
   run_locally 'rm tmp/schedule_gardener.dump'
 end
 
@@ -55,7 +59,7 @@ end
 task :pdrestore do
   start_banner("wiping out and resoring the PRODUCTION Database")
   run_locally "pg_dump #{dump_options} #{application}_development > data.dump"
-  run_locally 'pg_restore #{restore_options} -h ec2-54-243-190-152.compute-1.amazonaws.com -U cuzufrejeteocm -d d1re16pjjfhcp7 -p 5432 data.dump'
+  run_locally "pg_restore -W #{restore_options} -h ec2-54-243-190-152.compute-1.amazonaws.com -U cuzufrejeteocm -d d1re16pjjfhcp7 -p 5432 data.dump"
   run_locally 'rm data.dump'
 end
 
