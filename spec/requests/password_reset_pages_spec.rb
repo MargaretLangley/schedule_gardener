@@ -92,7 +92,7 @@ describe "PasswordReset" do
           should have_flash_notice("Password has been reset")
         end
       end
-      context "band input" do
+      context "bad input" do
         before do
           fill_in "Password", with: "password"
           fill_in "Confirm password", with: "wrong"
