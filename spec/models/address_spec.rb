@@ -25,18 +25,6 @@ describe Address do
 
 		include_examples "All Built Objects", Address
 
-		context "database table" do
-			it { should have_db_column(:id).of_type(:integer) }
-			it { should have_db_column(:addressable_id).of_type(:integer) }
-			it { should have_db_column(:addressable_type).of_type(:string) }
-			it { should have_db_column(:house_name).of_type(:string) }
-			it { should have_db_column(:street_number).of_type(:string) }
-			it { should have_db_column(:street_name).of_type(:string) }
-			it { should have_db_column(:address_line_2).of_type(:string) }
-			it { should have_db_column(:town).of_type(:string) }
-			it { should have_db_column(:post_code).of_type(:string) }
-		end
-
 		context "Accessable" do
 
   		it { should_not allow_mass_assignment_of(:addressable_id) }

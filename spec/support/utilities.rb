@@ -15,16 +15,3 @@ def visit_signin_and_login(user)
   cookies[:remember_token] = user.remember_token
 end
 
-RSpec::Matchers.define :have_error_message do |expected|
-  match do |actual|
-    actual.should have_selector('div.alert.alert-error', text: expected)
-  end
-
-  failure_message_for_should do |actual|
-    "expected that #{actual} would have the banner #{expected}"
-  end
-
-  failure_message_for_should_not do |actual|
-    "expected that #{actual} would not have the banner #{expected}"
-  end
-end

@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     logger.debug "CanCan::AccessDenied Controller: #{exception.subject.class} Action: #{exception.action}"
     sign_out_forget_session
-    redirect_to root_url, :alert => exception.message
+    redirect_to root_url, alert: exception.message
   end
 
 end

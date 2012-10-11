@@ -24,6 +24,11 @@ FactoryGirl.define do
       password_reset_token "i8pCKXq7UArg164qUXfJXg"
       password_reset_sent_at {Time.zone.now}
     end
+
+    trait :expired_reset_password do
+      password_reset_token "expiredTimedOutXXXXXXg"
+      password_reset_sent_at {Time.zone.now - 2.hours - 5.minutes}
+    end
   end
 
   factory :contact do

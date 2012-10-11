@@ -73,7 +73,7 @@ describe "Appointments" do
             current_path.should eq appointments_path
           end
           it "has welcome banner" do
-            should have_selector('div.alert.alert-success', text: 'appointment was successfully created.')
+            should have_flash_success ('appointment was successfully created.')
           end
         end
 
@@ -143,7 +143,7 @@ describe "Appointments" do
           current_path.should eq appointments_path
         end
         it "has success banner" do
-          should have_selector('div.alert.alert-success', text: 'appointment was successfully updated.')
+          should have_flash_success('appointment was successfully updated.')
         end
       end
     end

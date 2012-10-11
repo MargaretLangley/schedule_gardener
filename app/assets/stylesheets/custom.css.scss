@@ -95,6 +95,24 @@ p {
 }
 .icon-leaf.icon-white { vertical-align: 5px; }
 
+
+/* Flash Messages - to correspond to bootstrap styling */
+
+
+/* :alert styled as bootstrap alert */
+div.alert.alert-alert {
+   @extend .alert-error
+ }
+
+/* :notice styled as bootstrap notice */
+div.alert.alert-notice {
+  @extend .alert-info
+}
+
+
+
+
+
 /* footer */
 
 footer {
@@ -154,6 +172,7 @@ aside {
   }
 }
 
+
 /* forms */
 
 input, textarea, select, .uneditable-input {
@@ -176,6 +195,7 @@ input, textarea, select, .uneditable-input {
   @extend .control-group;
   @extend .error;
  }
+
 
  /* this is the default action for that form */
 

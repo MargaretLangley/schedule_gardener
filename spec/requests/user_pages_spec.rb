@@ -179,9 +179,8 @@ describe "users" do
         it "displays new profile " do
           current_path.should eq user_path(user)
         end
-        it "has welcome banner" do
-          should have_selector('div.alert.alert-success', text: 'Welcome')
-        end
+        it  { should have_flash_success('Welcome') }
+
         it "link to sign out" do
           should have_link('Sign out')
         end
@@ -239,7 +238,7 @@ describe "users" do
         current_path.should eq edit_profile_path(standard_user)
       end
       it "has success banner" do
-        should have_selector('div.alert.alert-success')
+        should have_flash_success('Profile update')
       end
       it "link to sign out" do
         should have_link('Sign out', href: signout_path)

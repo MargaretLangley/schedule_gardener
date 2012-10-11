@@ -61,7 +61,7 @@ describe "Authentication" do
         before { click_button "Sign in" }
 
         it ("remains on signin page")       { current_path.should eq signin_path }
-        it ("has error banner")             { should have_error_message('Invalid') }
+        it ("has error banner")             { should have_flash_error('Invalid') }
         it ("has no 'users' link")          { should_not have_link('Users',          href: users_path) }
         it ("has no 'full name' link")      { should_not have_link(user.full_name,   href: "#") }
         it ("has no 'Update Profile' link") { should_not have_link('Update Profile', href: edit_profile_path(user)) }
@@ -69,7 +69,7 @@ describe "Authentication" do
 
         describe "after visiting another page" do
           before { click_link "logo" }
-          it ("has no error banner") { should_not have_selector('div.alert.alert-error', "error banner") }
+          it ("has no error banner") { should_not have_flash_error("error banner") }
         end
       end
 
