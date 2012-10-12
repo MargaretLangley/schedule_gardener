@@ -50,6 +50,10 @@ task :pdinfo  do
   system 'heroku pg:info --remote production'
 end
 
+task :pdlogs do
+ system 'heroku logs -t --remote production'
+end
+
 task :pdpsql do
   start_banner("Remote PRODUCTION Database")
   system 'heroku pg:psql HEROKU_POSTGRESQL_MAROON --remote production'

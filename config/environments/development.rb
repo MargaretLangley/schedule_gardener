@@ -5,10 +5,6 @@ ScheduleGardener::Application.configure do
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
 
-  require 'yaml'
-  yaml_data = YAML::load(ERB.new(IO.read(File.join(Rails.root, 'config', 'sensitive_information.yml'))).result)
-  APP_CONFIG = HashWithIndifferentAccess.new(yaml_data)
-
   config.cache_classes = false
 
   # Log error messages when you accidentally call methods on nil.
@@ -26,17 +22,17 @@ ScheduleGardener::Application.configure do
     :port => 3000
   }
 
-  # Change mail delvery to either :smtp, :sendmail, :file, :test
-  config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    domain: APP_CONFIG[:DOMAIN],
-    authentication: "plain",
-    enable_starttls_auto: true,
-    user_name: APP_CONFIG[:GMAIL_USERNAME],
-    password: APP_CONFIG[:GMAIL_PASSWORD]
-  }
+  # # Change mail delvery to either :smtp, :sendmail, :file, :test
+  # config.action_mailer.delivery_method = :smtp
+  #   config.action_mailer.smtp_settings = {
+  #   address: "smtp.gmail.com",
+  #   port: 587,
+  #   domain: APP_CONFIG[:DOMAIN],
+  #   authentication: "plain",
+  #   enable_starttls_auto: true,
+  #   user_name: APP_CONFIG[:GMAIL_USERNAME],
+  #   password: APP_CONFIG[:GMAIL_PASSWORD]
+  # }
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
