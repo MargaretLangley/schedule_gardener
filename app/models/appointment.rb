@@ -25,8 +25,8 @@ class Appointment < ActiveRecord::Base
   validates :starts_at, :title, presence: true
   validates :title, length: { maximum: 50 }
 
-  belongs_to :appointee, class_name: "Contact", :foreign_key => "appointee_id"
-  belongs_to :contact
+  belongs_to :contact, class_name: "Contact", foreign_key: 'contact_id'
+  belongs_to :appointee, class_name: "Contact", foreign_key: 'appointee_id'
 
   def self.after_now()
      where { starts_at > DateTime.now }

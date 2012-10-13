@@ -18,7 +18,6 @@
 class Contact < ActiveRecord::Base
   attr_accessible :address_attributes,:email, :first_name, :home_phone, :last_name, :mobile
 
-  # Must be present, ignores validation if blank, format to REGEX
   validates :email, :first_name, :home_phone, :role, presence: true
   validates :first_name, :last_name, length: { maximum: 50 }
   validates :email, allow_blank: true, email_format: true
@@ -29,7 +28,10 @@ class Contact < ActiveRecord::Base
   belongs_to  :contactable, polymorphic: true
   has_one     :address,  autosave: true, dependent: :destroy, as: :addressable
   has_many    :gardens, dependent: :destroy
-  has_many    :appointments, dependent: :destroy, order: "appointments.starts_at ASC"
+  has_many    :appointments, dependent: :destroy, order: 'appointments.starts_at ASC'
+  has_many    :visits, class_name: 'Appointment', foreign_key: 'appointee_id', dependent: :destroy, order: 'appointments.starts_at ASC'
+
+
 
   # attr_accessible :address_attributes - adds the attribute writer to the allowed list
   # accepts_nes.... Defines an attributes writer for the specified association
@@ -56,7 +58,7 @@ class Contact < ActiveRecord::Base
   end
 
   def self.contacts_by_role(role)
-    Contact.where{ contacts.role == role}.order{"contacts.first_name ASC"}
+    Contact.where{ contacts.role == role}.order{'contacts.first_name ASC'}
   end
 
   private

@@ -29,10 +29,6 @@ class User < ActiveRecord::Base
 
   Roles = %w[admin client gardner]
 
-  def appointments
-    contact.appointments
-  end
-
   def full_name
     contact.full_name
   end
@@ -43,6 +39,14 @@ class User < ActiveRecord::Base
 
   def role
     contact.role
+  end
+
+  def appointments
+    contact.appointments
+  end
+
+  def visits
+    contact.visits
   end
 
   def self.find_by_email(email)
