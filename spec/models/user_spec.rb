@@ -6,10 +6,13 @@
 #  password_digest        :string(255)      not null
 #  remember_token         :string(255)
 #  admin                  :boolean          default(FALSE)
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
 #  password_reset_token   :string(255)
 #  password_reset_sent_at :datetime
+#  email_verified         :boolean          default(FALSE)
+#  verify_email_token     :string(255)
+#  verify_email_sent_at   :datetime
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
 #
 
 # cut and paste into terminal
