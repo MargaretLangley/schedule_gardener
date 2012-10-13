@@ -5,6 +5,7 @@ describe "Appointments" do
 
   before(:all) do
     @user        = FactoryGirl.create(:user, :client_r)
+    @gardener        = FactoryGirl.create(:user, :gardener)
   end
 
   before(:each) do
@@ -64,6 +65,10 @@ describe "Appointments" do
           fill_in "Title", with: "Weeding appointment pages spec test"
           fill_in "Starts at", with: "2012-09-24 00:00"
         end
+        it "has client missing" do
+          should_not have_selector('#appointment_contact_id')
+        end
+
         it "add one appointment" do
           expect { click_on("Create Appointment") }.to change(Appointment, :count).by(1)
         end
@@ -84,9 +89,39 @@ describe "Appointments" do
           expect { click_on("Create Appointment") }.to change(Appointment, :count).by(0)
         end
 
-         it "has error banner" do
+        it "has error banner" do
           click_on("Create Appointment")
           should have_content('error')
+        end
+
+      end
+
+    end
+
+    context "gardener" do
+      before do
+       visit_signin_and_login @gardener
+       visit new_appointment_path
+      end
+
+      it "open page" do
+        current_path.should eq new_appointment_path
+      end
+
+      it "has client" do
+        should have_selector('#appointment_contact_id', visible: true)
+      end
+
+      context "with valid information" do
+        before do
+          select 'Alan', from: 'appointment_appointee_id'
+          select 'Roger', from: 'appointment_contact_id'
+          fill_in "Title", with: "Weeding appointment pages spec test"
+          fill_in "Starts at", with: "2012-09-24 00:00"
+        end
+
+        it "add one appointment" do
+          expect { click_on("Create Appointment") }.to change(Appointment, :count).by(1)
         end
       end
 

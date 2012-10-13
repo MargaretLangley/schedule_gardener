@@ -1,8 +1,11 @@
 <%= simple_form_for @appointment, :html => { :class => 'form-horizontal' } do |f| %>
   <%= render 'shared/error_messages', object: f.object  %>
   <div class="form-inputs">
-    <%= f.association :appointee, label: "Gardener", collection: @gardeners, label_method: "first_name", include_blank: false %>
+    <%= f.association :appointee, label: "Gardener", collection: Contact.contacts_by_role("gardener"), label_method: "first_name", include_blank: false %>
 
+    <% if current_user.role == "gardener" %>
+      <%= f.association :contact, label: "Client", collection: Contact.contacts_by_role("client"), label_method: "first_name", include_blank: false %>
+    <% end %>
     <%= f.input :title %>
     <%= f.input :starts_at, as: :string, input_html: { class: 'date_picker' } %>
     <%= f.input :ends_at,   as: :string, input_html: { class: 'date_picker' } %>

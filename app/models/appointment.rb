@@ -18,7 +18,7 @@
 
 class Appointment < ActiveRecord::Base
 
-  attr_accessible :all_day, :appointee_id, :contact, :description, :ends_at, :starts_at, :title
+  attr_accessible :all_day, :appointee_id, :contact, :contact_id, :description, :ends_at, :starts_at, :title
 
   validates :appointee, :contact, presence: true
 

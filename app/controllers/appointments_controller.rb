@@ -1,15 +1,15 @@
 class AppointmentsController < ApplicationController
   before_filter :guest_redirect_to_signin_path
   check_authorization
-  load_and_authorize_resource through: :current_user
+  load_and_authorize_resource
 
   def index
+    @appointments = current_user.visits if current_user.role == "gardener"
     @appointments = @appointments.after_now()
   end
 
 
   def new
-    @gardeners = Contact.contacts_by_role("gardener")
   end
 
 
@@ -23,7 +23,6 @@ class AppointmentsController < ApplicationController
 
 
   def edit
-    @gardeners = Contact.contacts_by_role("gardener")
   end
 
 

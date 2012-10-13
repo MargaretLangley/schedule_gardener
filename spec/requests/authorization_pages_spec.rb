@@ -145,13 +145,16 @@ describe "authorization" do
       end
 
       it "#edit" do
-        expect { get edit_appointment_path(appointment) }.to raise_error(ActiveRecord::RecordNotFound)
+        get edit_appointment_path(appointment)
+        response.should redirect_to(root_path)
       end
       it "#update" do
-        expect { put appointment_path(appointment) }.to raise_error(ActiveRecord::RecordNotFound)
+        put appointment_path(appointment)
+        response.should redirect_to(root_path)
       end
       it "#delete" do
-        expect { delete appointment_path(appointment) }.to raise_error(ActiveRecord::RecordNotFound)
+        delete appointment_path(appointment)
+        response.should redirect_to(root_path)
       end
     end
   end
