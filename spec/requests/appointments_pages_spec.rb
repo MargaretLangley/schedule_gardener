@@ -4,11 +4,11 @@ require 'spec_helper'
 describe "Appointments" do
 
   before(:all) do
-    @user        = FactoryGirl.create(:user, contact: FactoryGirl.build(:contact, first_name: "Rodger", last_name: "Smith",role: :client))
+    @user        = FactoryGirl.create(:user, :client_r)
   end
 
   before(:each) do
-    @appointment = FactoryGirl.create(:appointment, :tomorrow, contact: @user.contact, title: "appointment pages spec test")
+    @appointment = FactoryGirl.create(:appointment, :gardener_a, :tomorrow, contact: @user.contact, title: 'appointment pages spec test')
   end
 
   after(:all) do

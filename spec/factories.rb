@@ -5,19 +5,33 @@ FactoryGirl.define do
 
     trait :admin do
       admin true
-      association :contact, role: "admin", strategy: :build
+      association :contact, :admin, strategy: :build
     end
 
     trait :client do
-      association :contact, first_name: "John", last_name: "Smith", role: "client", strategy: :build
+      association :contact, :client_j, strategy: :build
     end
 
+
+    trait :client_a do
+      association :contact, :client_a, strategy: :create
+    end
+
+    trait :client_j do
+      association :contact, :client_j, strategy: :create
+    end
+
+    trait :client_r do
+      association :contact, :client_r, strategy: :create
+    end
+
+
     trait :gardener do
-      association :contact, first_name: "Alan", last_name: "Titmarsh", role: "gardener", strategy: :build
+      association :contact, :gardener_a, strategy: :build
     end
 
     trait :unexpected do
-      association :contact, role: "unexpected", strategy: :build
+      association :contact, :client_a, role: "unexpected", strategy: :build
     end
 
     trait :resetting_password do
@@ -31,14 +45,51 @@ FactoryGirl.define do
     end
   end
 
+
   factory :contact do
-    sequence(:first_name) { |n| "Firstname#{n}" }
-    sequence(:last_name)  { |n| "Lastname#{n}" }
+
+    trait :admin do
+      first_name 'Alice'
+      last_name 'Springs'
+      role 'admin'
+    end
+
+    trait :client_a do
+      first_name 'Ann'
+      last_name  'Abbey'
+      role 'client'
+    end
+
+    trait :client_j do
+      first_name 'John'
+      last_name  'Smith'
+      role 'client'
+    end
+
+
+    trait :client_r do
+      first_name 'Roger'
+      last_name  'Smith'
+      role 'client'
+    end
+
+    trait :gardener_a do
+      first_name 'Alan'
+      last_name  'Titmarsh'
+      role 'gardener'
+    end
+
+    trait :gardener_p do
+      first_name 'Percy'
+      last_name  'Thrower'
+      role 'gardener'
+    end
+
     email                 { "#{first_name}.#{last_name}@example.com".downcase }
     sequence(:home_phone) { |n| "0181-100-100#{n}" }
-    sequence(:mobile)     { |n| "0701-200-200#{n}" }
+    mobile '0701-200-2007'
     association :address, strategy: :build
-    role "client"
+
   end
 
   factory :garden do
@@ -57,9 +108,21 @@ FactoryGirl.define do
     post_code "NE12 3ST"
   end
 
+
   factory :appointment do
-    association :contact, first_name: "Rodger"
-    association :appointee, factory: :contact, first_name: "Alan", last_name: "Titmarsh", role: "gardener"
+
+    trait :client do
+      association :contact, :client_r
+    end
+
+    trait :gardener_a do
+      association :appointee, factory: :contact, first_name: "Alan", last_name: "Titmarsh", role: "gardener"
+    end
+
+    trait :gardener_p do
+      association :appointee, factory: :contact, first_name: "Percy", last_name: "Thrower", role: "gardener"
+    end
+
 
     title "Appointment"
     all_day false

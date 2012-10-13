@@ -12,7 +12,7 @@ require 'spec_helper'
 
 describe Garden do
   let(:contact) do
-    contact = FactoryGirl.create(:contact)
+    contact = FactoryGirl.create(:contact,:client_a)
   end
   let(:garden) do
     garden = FactoryGirl.build(:garden)

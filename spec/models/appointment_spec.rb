@@ -20,14 +20,14 @@ require 'spec_helper'
 
 describe Appointment do
 	 before(:all) do
-	 	@contact = FactoryGirl.create(:contact, first_name: "Rodger")
+	 	@contact = FactoryGirl.create(:contact, :client_r)
 	 end
 
 	 after(:all) do
      Contact.delete_all; Address.delete_all;
 	 end
 
-	subject(:appointment) { FactoryGirl.create(:appointment, :tomorrow, contact: @contact)}
+	subject(:appointment) { FactoryGirl.create(:appointment, :gardener_a, :tomorrow, contact: @contact)}
 
  	include_examples "All Built Objects", Appointment
 
@@ -80,9 +80,9 @@ describe Appointment do
         e1 = e2 = e3 = e4 = nil
         before do
           puts Time.now.utc
-          e1 = FactoryGirl.create(:appointment, contact:  @contact, title: "e1 just before boundary", starts_at: Time.now.utc.advance(minutes: -10))
-          e2 = FactoryGirl.create(:appointment, contact:  @contact, title: "e2 just after boundary",  starts_at: Time.now.utc.advance(minutes: 5))
-          e3 = FactoryGirl.create(:appointment, contact:  @contact, title: "e3 well after_boundary",  starts_at: Time.now.utc.end_of_month)
+          e1 = FactoryGirl.create(:appointment, :gardener_a, contact:  @contact, title: "e1 just before boundary", starts_at: Time.now.utc.advance(minutes: -10))
+          e2 = FactoryGirl.create(:appointment, :gardener_a, contact:  @contact, title: "e2 just after boundary",  starts_at: Time.now.utc.advance(minutes: 5))
+          e3 = FactoryGirl.create(:appointment, :gardener_a, contact:  @contact, title: "e3 well after_boundary",  starts_at: Time.now.utc.end_of_month)
           Appointment.all.should eq [e1, e2, e3]
         end
 
@@ -97,10 +97,10 @@ describe Appointment do
 	 		context "on boundary" do
 	 		  e1 = e2 = e3 = e4 = nil
 	 		  before do
-		 			e1 = FactoryGirl.create(:appointment, contact: 	@contact, title: "e1_on_boundary", starts_at: Time.now.utc.beginning_of_month.advance(hours: -4))
-		 			e2 = FactoryGirl.create(:appointment, contact: 	@contact, title: "e2_on_boundary", starts_at: Time.now.utc.beginning_of_month.advance(hours: 1))
-		 			e3 = FactoryGirl.create(:appointment, contact: 	@contact, title: "e3_on_boundary", starts_at: Time.now.utc.end_of_month.advance(hours: -4))
-		 			e4 = FactoryGirl.create(:appointment, contact: 	@contact, title: "e4_on_boundary", starts_at: Time.now.utc.end_of_month.advance(hours: 4))
+		 			e1 = FactoryGirl.create(:appointment, :gardener_a, contact: 	@contact, title: "e1_on_boundary", starts_at: Time.now.utc.beginning_of_month.advance(hours: -4))
+		 			e2 = FactoryGirl.create(:appointment, :gardener_a, contact: 	@contact, title: "e2_on_boundary", starts_at: Time.now.utc.beginning_of_month.advance(hours: 1))
+		 			e3 = FactoryGirl.create(:appointment, :gardener_a, contact: 	@contact, title: "e3_on_boundary", starts_at: Time.now.utc.end_of_month.advance(hours: -4))
+		 			e4 = FactoryGirl.create(:appointment, :gardener_a, contact: 	@contact, title: "e4_on_boundary", starts_at: Time.now.utc.end_of_month.advance(hours: 4))
 		 			Appointment.all.should eq [e1, e2,e3,e4]
 		 		end
 
@@ -114,8 +114,8 @@ describe Appointment do
 		  context "accross boundary" do
 			  e1 = e2 = nil
 	 		  before do
-	 		  	e1 = FactoryGirl.create(:appointment, contact: 	@contact, title: "e1_accross_boundary", starts_at: Time.now.utc.beginning_of_month.advance(hours: -2))
-	 			  e2 = FactoryGirl.create(:appointment, contact: 	@contact, title: "e2_accross_boundary", starts_at: Time.now.utc.end_of_month.advance(hours: - 1))
+	 		  	e1 = FactoryGirl.create(:appointment, :gardener_a, contact: 	@contact, title: "e1_accross_boundary", starts_at: Time.now.utc.beginning_of_month.advance(hours: -2))
+	 			  e2 = FactoryGirl.create(:appointment, :gardener_a, contact: 	@contact, title: "e2_accross_boundary", starts_at: Time.now.utc.end_of_month.advance(hours: - 1))
 		 			Appointment.all.should eq [e1, e2]
 		 		end
 
@@ -129,7 +129,7 @@ describe Appointment do
 		  context "nil end" do
 			  e1 = e2 = nil
 	 		  before do
-	 		  	e1 = FactoryGirl.create(:appointment, contact: 	@contact, title: "e1_nil_end", ends_at: nil, starts_at: Time.now.utc.beginning_of_month.advance(hours: + 10))
+	 		  	e1 = FactoryGirl.create(:appointment, :gardener_a, contact: 	@contact, title: "e1_nil_end", ends_at: nil, starts_at: Time.now.utc.beginning_of_month.advance(hours: + 10))
 		 			Appointment.all.should eq [e1]
 		 		end
 
@@ -144,8 +144,8 @@ describe Appointment do
       context "doesn't pick up other contacts appointments" do
         e1 = e2 = nil
         before do
-        	e1 = FactoryGirl.create(:appointment, title: "e2_on_boundary", starts_at: Time.now.utc.beginning_of_month.advance(hours: 1))
-		 			e2 = FactoryGirl.create(:appointment, contact: 	@contact, title: "e3_on_boundary", starts_at: Time.now.utc.end_of_month.advance(hours: -4))
+        	e1 = FactoryGirl.create(:appointment, :gardener_a, :client, title: "e2_on_boundary", starts_at: Time.now.utc.beginning_of_month.advance(hours: 1))
+		 			e2 = FactoryGirl.create(:appointment, :gardener_a, contact: 	@contact, title: "e3_on_boundary", starts_at: Time.now.utc.end_of_month.advance(hours: -4))
         	Appointment.all.should eq [e1,e2]
         end
 

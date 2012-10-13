@@ -87,17 +87,17 @@ describe User do
 	  	user1 = user2 = user3 = nil
 
 	  	before(:all) do
-	 			user1 =	FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, email: "user1@example.com"))
-	 			user2 =	FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, email: "user2@example.com"))
-	 			user3 =	FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, email: "user3@example.com"))
+	 			user1 =	FactoryGirl.create(:user, :client_j)
+	 			user2 =	FactoryGirl.create(:user, :client_a)
+	 			user3 =	FactoryGirl.create(:user, :client_r)
 
 	 			User.all.should eq [user1,user2,user3]
 	 		end
 
-	    after(:all) { User.destroy_all }
+	    after(:all) { User.destroy_all;  }
 
 			it "return user by email" do
-		  	User.find_by_email("user2@example.com").should eq  user2
+		  	User.find_by_email("ann.abbey@example.com").should eq  user2
 	    end
 
 	    it "empty email should not return a user" do
@@ -106,19 +106,19 @@ describe User do
 	  end
 
 	  context "#search_ordered" do
-	  	fred = john = sally = nil
+	  	john = roger = ann = nil
 
 	 		before(:all) do
-	 			john = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "John", last_name: "Smith"))
-		  	sally = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Sally", last_name: "Jones"))
-	  		fred = FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, first_name: "Fred", last_name: "Jone"))
+	 			john = FactoryGirl.create(:user, :client_j)
+		  	roger = FactoryGirl.create(:user, :client_r)
+	  		ann = FactoryGirl.create(:user, :client_a)
 
-	 			User.all.should eq [john,sally,fred]
+	 			User.all.should eq [john,roger,ann]
 	 		end
 	    after(:all) { User.destroy_all}
 
 	    it "empty search should return users" do
-		    User.search_ordered.should eq [fred, john, sally]
+		    User.search_ordered.should eq [ann, john, roger]
 	    end
 
 	    it "unique name match" do
@@ -126,11 +126,11 @@ describe User do
 	    end
 
 	    it "match multiple" do
-		    User.search_ordered("Jon").should eq [fred, sally]
+		    User.search_ordered("Smi").should eq [john, roger]
 	    end
 
 	    it "case insenstive" do
-		    User.search_ordered("s").should eq [john, sally]
+		    User.search_ordered("s").should eq [john, roger]
 	    end
 
 	    it "should match full name" do

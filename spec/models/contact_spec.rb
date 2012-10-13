@@ -19,12 +19,12 @@
 require 'spec_helper'
 
 describe Contact do
-	subject(:contact) { FactoryGirl.build(:contact, first_name: "Roger", last_name: "Smith") }
+	subject(:contact) { FactoryGirl.build(:contact, :client_r) }
 
 	include_examples "All Built Objects", Contact
 
 	it "has a valid factory" do
-    FactoryGirl.create(:contact).should be_valid
+    FactoryGirl.create(:contact, :client_r).should be_valid
   end
 
 	context "Accessable" do
@@ -77,9 +77,9 @@ describe Contact do
 			contact1_app1 = contact1_app2 = contact1_app3 = nil
 			before do
 
-				contact1_app2 = FactoryGirl.create(:appointment, :two_days_time, contact: contact)
-				contact1_app3 = FactoryGirl.create(:appointment, :three_days_time, contact: contact)
-				contact1_app1 = FactoryGirl.create(:appointment, :tomorrow, contact: contact)
+				contact1_app2 = FactoryGirl.create(:appointment, :gardener_a, :two_days_time, contact: contact)
+				contact1_app3 = FactoryGirl.create(:appointment, :gardener_a, :three_days_time, contact: contact)
+				contact1_app1 = FactoryGirl.create(:appointment, :gardener_a, :tomorrow, contact: contact)
 
 				Appointment.all.should eq [contact1_app2,contact1_app3, contact1_app1]
 			end
@@ -94,9 +94,9 @@ describe Contact do
     	contact1_app1 = contact2_app2 = nil
 
       before do
-	  		contact_2  = FactoryGirl.create(:contact, first_name: "Simon")
-	      contact1_app1 = FactoryGirl.create(:appointment, :tomorrow, contact: contact)
-				contact2_app2 = FactoryGirl.create(:appointment, :two_days_time, contact: contact_2)
+	  		contact_2  = FactoryGirl.create(:contact, :client_a)
+	      contact1_app1 = FactoryGirl.create(:appointment, :gardener_a, :tomorrow, contact: contact)
+				contact2_app2 = FactoryGirl.create(:appointment, :gardener_a, :two_days_time, contact: contact_2)
 				Appointment.all.should eq [contact1_app1,contact2_app2]
 			end
 
@@ -106,15 +106,36 @@ describe Contact do
 		end
   end
 
+  context "#visits" do
+  	context "returns expected visits ordered by date" do
+
+      gardener_a = nil
+			contact1_app1 = contact1_app2 = contact1_app3 = nil
+			before do
+				gardener_a = FactoryGirl.create(:contact, :gardener_a)
+				contact1_app2 = FactoryGirl.create(:appointment, :two_days_time, contact: contact, appointee: gardener_a)
+				contact1_app3 = FactoryGirl.create(:appointment, :three_days_time, contact: contact, appointee: gardener_a)
+				contact1_app1 = FactoryGirl.create(:appointment, :gardener_p, :tomorrow, contact: contact )
+
+				Appointment.all.should eq [contact1_app2,contact1_app3, contact1_app1]
+			end
+
+			it "true" do
+		  	gardener_a.visits.should eq [contact1_app2, contact1_app3]
+		  end
+    end
+
+  end
+
   context "Custom finders" do
 
     context "#gardeners" do
 	  	percy = allan = roger = nil
 
 	 		before do
-	 			percy = FactoryGirl.create(:contact, first_name: "Percy", last_name: "Thrower", role: :gardener)
-		  	allan = FactoryGirl.create(:contact, first_name: "Alan",  last_name: "Titmarsh", role: :gardener)
-	  		roger = FactoryGirl.create(:contact, first_name: "Roger", last_name: "Smith", role: :client)
+	 			percy = FactoryGirl.create(:contact, :gardener_p)
+		  	allan = FactoryGirl.create(:contact, :gardener_a)
+	  		roger = FactoryGirl.create(:contact, :client_r)
 
 	 			Contact.all.should eq [percy,allan,roger]
 	 		end
@@ -128,9 +149,9 @@ describe Contact do
 	  	roger = ann = alan = nil
 
 	 		before(:all) do
-	 			roger = FactoryGirl.create(:contact, first_name: "Roger", last_name: "Smith", role: :client)
-		  	ann   = FactoryGirl.create(:contact, first_name: "Ann",  last_name: "Abbey", role: :client)
-	  		alan  = FactoryGirl.create(:contact, first_name: "Alan", last_name: "Titmarsh", role: :gardener)
+	 			roger = FactoryGirl.create(:contact, :client_r)
+		  	ann   = FactoryGirl.create(:contact, :client_a)
+	  		alan  = FactoryGirl.create(:contact, :gardener_a)
 
 	 			Contact.all.should eq [roger,ann,alan]
 	 		end
@@ -141,14 +162,14 @@ describe Contact do
 	    end
 
       context "case insenstive" do
-      	bob = nil
+      	john = nil
       	before do
-      	 bob  = FactoryGirl.create(:contact, first_name: "bob",  last_name: "Abbey", role: :client)
-      	 Contact.all.should eq [roger,ann,alan,bob]
+      	 john  = FactoryGirl.create(:contact, :client_j, first_name: "john")
+      	 Contact.all.should eq [roger,ann,alan,john]
       	end
 
 	      it "ordering of clients" do
-	        Contact.contacts_by_role("client").should eq [ann, bob, roger]
+	        Contact.contacts_by_role("client").should eq [ann, john, roger]
 	      end
 
 	    end
@@ -187,6 +208,7 @@ describe Contact do
 	  it { should have_one(:address).dependent(:destroy) }
 	  it { should have_many(:gardens).dependent(:destroy)}
 	  it { should have_many(:appointments).dependent(:destroy) }
+	  #it { should have_many(:visits).dependent(:destroy) }
 
 	end
 

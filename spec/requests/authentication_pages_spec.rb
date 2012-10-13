@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe "Authentication" do
 
-  let(:user) { FactoryGirl.create(:user, :client) }
+  let(:user) { FactoryGirl.create(:user, :client_j) }
   let(:gardener) { FactoryGirl.create(:user, :gardener) }
   let(:admin) { FactoryGirl.create(:user, :admin) }
   subject { page }

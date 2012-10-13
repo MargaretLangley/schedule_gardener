@@ -85,7 +85,7 @@ describe "authorization" do
 
   describe "in appointments controller" do
 
-    let!(:appointment) { FactoryGirl.create(:appointment, :today, contact: user.contact) }
+    let!(:appointment) { FactoryGirl.create(:appointment, :gardener_a, :today, contact: user.contact ) }
 
     context "client user" do
       before do

@@ -11,8 +11,8 @@ describe "abilities" do
   let(:admin_ability)    { Ability.new(admin) }
 
   let(:admin)          { FactoryGirl.create(:user, :admin) }
-  let(:another_client) { FactoryGirl.create(:user, :client) }
-  let(:client)         { FactoryGirl.create(:user, :client) }
+  let(:another_client) { FactoryGirl.create(:user, :client_a) }
+  let(:client)         { FactoryGirl.create(:user, :client_j) }
   let(:gardener)       { FactoryGirl.create(:user, :gardener) }
 
 shared_examples_for "can_manage_user" do |ability, user|

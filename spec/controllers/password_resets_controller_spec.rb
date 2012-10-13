@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe PasswordResetsController do
 
-  before(:all) { @client = FactoryGirl.create(:user, :client) }
+  before(:all) { @client = FactoryGirl.create(:user, :client_a) }
   after(:all)  { @client.destroy }
 
   describe "#create" do
@@ -27,7 +27,7 @@ describe PasswordResetsController do
 
   describe "#update" do
     it "should redirect a put with an expired token" do
-      client_with_expired_token = FactoryGirl.create(:user, :client, :expired_reset_password)
+      client_with_expired_token = FactoryGirl.create(:user, :client_a, :expired_reset_password)
       post :update, id: client_with_expired_token.password_reset_token
       response.should redirect_to new_password_reset_path
     end
