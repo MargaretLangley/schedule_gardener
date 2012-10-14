@@ -1,5 +1,3 @@
-# to make the HTML more bootstrap twittery... follow this link
-# http://stackoverflow.com/questions/11279394/fullcalendar-with-twitter-bootstrap
 
 class EventsController < ApplicationController
   before_filter :guest_redirect_to_signin_path
@@ -8,16 +6,13 @@ class EventsController < ApplicationController
 
   def index
 
-    if params.has_key?(:start)
-      # FullCalendar calls its events source (/calendars url) with  start and end UNIX time stamp.
-      @appointments = @appointments.in_time_range(Time.at(params[:start].to_i) .. Time.at(params[:end].to_i))
-    end
+    @appointments_by_date = @appointments.group_by {|appointment| appointment.starts_at.to_date}
+    @date = params[:date] ? Date.parse(params[:date]) : Date.today
 
-    @events = @appointments.map {|appointment| appointment.to_event}
+    # # FullCalendar calls its events source (/calendars url) with  start and end UNIX time stamp.
+    # @appointments = @appointments.in_time_range(Time.at(params[:start].to_i) .. Time.at(params[:end].to_i)) if params.has_key?(:start)
 
-    respond_to do |format|
-       format.html # index.html.erb
-       format.json { render json: @events }
-     end
+    # @events = @appointments.map {|appointment| appointment.to_event}
+
   end
 end

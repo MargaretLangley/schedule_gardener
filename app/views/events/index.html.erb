@@ -1,7 +1,23 @@
 <% provide(:title, "Calendar of Appointments") %>
 <h1>Calendar of Appointments</h1>
 
-<div id='calendar'></div>
+<div id="appointments">
+  <h2 id="month">
+    <%= link_to "<", date: @date.prev_month %>
+    <%= @date.strftime("%B %Y") %>
+    <%= link_to ">", date: @date.next_month %>
+  </h2>
+  <%= calendar @date do |date| %>
+    <%= date.day %>
+    <% if @appointments_by_date[date] %>
+      <ul>
+        <% @appointments_by_date[date].each do |appointment| %>
+          <li><%= link_to appointment.title, appointment %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+</div>
 
 <%= link_to 'List Appointments', appointments_path %>&nbsp;&nbsp;&nbsp;
 <%= link_to 'Create Appointment', new_appointment_path %>

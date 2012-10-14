@@ -19,5 +19,4 @@
 //= require jquery.ui.datepicker
 //= require jquery-ui-timepicker-addon.js
 //= require jquery.rest
-//= require fullcalendar
 //= require_tree .

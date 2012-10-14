@@ -27,21 +27,4 @@ class Event
   validates :starts_at, :title, presence: true
   validates :title, length: { maximum: 50 }
 
-  # as_json - returns a hash representing the model
-  # need to override the json view to return what full_calendar is expecting.
-  # http://arshaw.com/fullcalendar/docs/event_data/Event_Object/
-  def as_json(options = {})
-    {
-      id: self.id,
-      title: self.title,
-      description: self.description + " aj " || "",
-      start: starts_at.rfc822,
-      end: ends_at && ends_at.rfc822,
-      allDay: self.all_day,
-      recurring: false,
-      url: Rails.application.routes.url_helpers.edit_appointment_path(id),
-      #:color => "red"
-    }
-  end
-
 end
