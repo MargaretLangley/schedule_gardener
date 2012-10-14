@@ -3,9 +3,17 @@ class AppointmentsController < ApplicationController
   check_authorization
   load_and_authorize_resource
 
+
   def index
+
     @appointments = current_user.visits if current_user.role == "gardener"
-    @appointments = @appointments.after_now()
+
+    if params.has_key?(:begin) && params.has_key?(:end)
+      @appointments = @appointments.in_time_range(Time.parse(params[:begin]) .. Time.parse(params[:end])).order('starts_at ASC')
+    else
+      @appointments = @appointments.after_now()
+    end
+
   end
 
 

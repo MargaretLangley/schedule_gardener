@@ -29,7 +29,7 @@
         <tr>
           <td><%= appointment.title %></td>
           <td><%= appointment.appointee.full_name %></td>
-          <td><%= appointment.starts_at %></td>
+          <td><%= l appointment.starts_at, format: :short  %></td>
           <td><%= link_to 'Edit', edit_appointment_path(appointment), class: 'btn btn-mini' %></td>
           <td><%= link_to 'Delete', appointment_path(appointment), confirm: 'You sure?' , method: 'delete', class: 'btn btn-mini btn-danger' %></td>
         </tr>

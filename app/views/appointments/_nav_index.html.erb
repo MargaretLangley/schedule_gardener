@@ -1,12 +1,13 @@
 <div class="well sidebar-nav">
   <ul class="nav nav-list">
     <li class="nav-header">Appointments for</li>
-    <li><a href="#">This Week</a></li>
-    <li><a href="#">Next 30 days</a></li>
-    <li><a href="#">Last Month</a></li>
+    <li><%= link_to 'This Week', appointments_path(begin: DateTime.now.beginning_of_week, end: DateTime.now.end_of_week ) %> </li>
+    <li><%= link_to 'Next Week', appointments_path(begin: DateTime.now.next_week.beginning_of_week, end: DateTime.now.next_week.end_of_week ) %> </li>
+    <li><%= link_to 'This Month', appointments_path(begin: DateTime.now.beginning_of_month, end: DateTime.now.end_of_month ) %> </li>
+    <li><%= link_to 'Next Month', appointments_path(begin: DateTime.now.next_month.beginning_of_month, end: DateTime.now.next_month.end_of_month ) %> </li>
     <li class="nav-header">Analytical</li>
-    <li><a href="#">Last Saw Client</a></li>
-    <li><a href="#">Book from</a></li>
-    <li><a href="#">Book next week</a></li>
+    <li><a href="#">ToDo Last Saw Client</a></li>
+    <li><a href="#">ToDo Book from</a></li>
+    <li><a href="#">ToDo Book next week</a></li>
   </ul>
 </div><!--/.well -->
