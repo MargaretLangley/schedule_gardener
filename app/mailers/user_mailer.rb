@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: ENV['GMAIL_USERNAME']
+  default from: ENV['DOMAIN']
 
   def password_reset(user)
     @user=  user

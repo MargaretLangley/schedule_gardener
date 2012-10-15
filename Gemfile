@@ -15,6 +15,8 @@ gem 'squeel'
 gem 'cancan'
 gem 'active_attr'
 gem 'rails_admin'
+gem 'figaro'
+gem 'heroku'
 
 
 group :development do

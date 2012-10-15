@@ -4,6 +4,7 @@ require 'spec_helper'
 describe "PasswordReset" do
   subject { page }
 
+
   before(:all) { @client = FactoryGirl.create(:user, :client, :resetting_password) }
 
   after(:all) { @client.destroy }
@@ -19,13 +20,16 @@ describe "PasswordReset" do
     end
 
     context "with valid email" do
+      before do
+        FactoryGirl.create(:user, :email_tester)
+      end
       context "in database" do
         before do
-          fill_in "email",       with: "john.smith@example.com"
+          fill_in "email",       with: "richard.wigley@gmail.com"
           click_button "Email me password reset instructions"
         end
 
-        xit "open password resent" do
+        it "open password resent" do
           current_path.should eq password_reset_sent_path
         end
 

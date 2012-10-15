@@ -16,7 +16,7 @@ describe UserMailer do
     end
 
     it "sent from" do
-      mail.from.should eq(["Garden.Care.Mail.Server@gmail.com"])
+      mail.from.should eq(["mail@suton.gardencare.com"])
     end
 
     it "renders the body" do

@@ -30,6 +30,10 @@ FactoryGirl.define do
       association :contact, :gardener_a, strategy: :build
     end
 
+    trait :email_tester do
+      association :contact, :client_a, email: 'richard.wigley@gmail.com', strategy: :create
+    end
+
     trait :unexpected do
       association :contact, :client_a, role: "unexpected", strategy: :build
     end
@@ -43,6 +47,7 @@ FactoryGirl.define do
       password_reset_token "expiredTimedOutXXXXXXg"
       password_reset_sent_at {Time.zone.now - 2.hours - 5.minutes}
     end
+
   end
 
 

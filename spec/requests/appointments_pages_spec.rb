@@ -35,7 +35,7 @@ describe "Appointments" do
       should have_selector('td', text: "appointment pages spec test")
     end
 
-    it "displays appointmee" do
+    it "displays appointee" do
       should have_selector('td', text: "Alan Titmarsh")
     end
     it "edits appointments" do

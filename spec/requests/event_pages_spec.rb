@@ -5,12 +5,16 @@ describe "event" do
   subject { page }
 
   context "#index" do
-    let!(:admin)  do
-      FactoryGirl.create(:user, :admin)
+    let!(:appointment) do
+      FactoryGirl.create(:appointment, :client, :gardener_a, :tomorrow, title: "weeding")
+    end
+    let!(:gardener)  do
+      FactoryGirl.create(:user, :gardener)
     end
 
+
     before do
-      visit_signin_and_login admin
+      visit_signin_and_login gardener
       visit events_path
     end
 
@@ -19,6 +23,10 @@ describe "event" do
     end
 
     context "links" do
+
+      it "should have appointment link" do
+        should have_link('weeding', href: edit_appointment_path(appointment))
+      end
 
       it "navigate to appointments path" do
         should have_link('List Appointments', href: appointments_path)
