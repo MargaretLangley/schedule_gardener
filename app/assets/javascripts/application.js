@@ -13,10 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
-//= require jquery-ui
-//= require jquery.ui.slider
-//= require jquery-ui-sliderAccess.js
-//= require jquery.ui.datepicker
-//= require jquery-ui-timepicker-addon.js
-//= require jquery.rest
+//= require bootstrap-datepicker
 //= require_tree .
+//= require_self
+
+$(function() {
+   $('#appointment_starts_at').datepicker({"format": "dd-mm-yyyy", "weekStart": 1, "autoclose": true})
+ });

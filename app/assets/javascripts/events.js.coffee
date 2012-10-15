@@ -2,10 +2,4 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-jQuery ->
-  $('#appointment_starts_at').datetimepicker
-    dateFormat: 'yy-mm-dd'
 
-jQuery ->
-  $('#appointment_ends_at').datetimepicker
-    dateFormat: 'yy-mm-dd'

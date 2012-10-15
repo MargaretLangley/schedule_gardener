@@ -17,6 +17,8 @@ gem 'active_attr'
 gem 'rails_admin'
 gem 'figaro'
 gem 'heroku'
+gem 'bootstrap-datepicker-rails'
+gem 'rails-i18n'
 
 
 group :development do

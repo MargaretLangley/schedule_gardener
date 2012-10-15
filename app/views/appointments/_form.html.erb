@@ -6,10 +6,9 @@
     <% if current_user.role == "gardener" %>
       <%= f.association :contact, label: "Client", collection: Contact.contacts_by_role("client"), label_method: "first_name", include_blank: false %>
     <% end %>
-    <%= f.input :title %>
-    <%= f.input :starts_at, as: :string, input_html: { class: 'date_picker' } %>
-    <%= f.input :ends_at,   as: :string, input_html: { class: 'date_picker' } %>
-    <%= f.input :all_day %>
+    <%= f.input :starts_at, as: :string, default: DateTime.now, input_html: { class: 'date_picker' } %>
+    <%= f.input :time_at, as: :select, include_blank: false, collection: [['Early Morning', '9.30'], ['Late Morning', '11.30'], ['Early Afternoon', '1.30'], ['Late Afternoon','3.30']] %>
+    <%= f.input :ends_at, label: 'Lasts for',  as: :select, include_blank: false, collection: [['1hr 30min', 90],['3hrs',180] ]    %>
     <%= f.input :description %>
   </div>
   <div class="form-actions">
