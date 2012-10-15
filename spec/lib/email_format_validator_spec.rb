@@ -47,3 +47,4 @@ describe EmailFormatValidator do
   end
 
 end
+

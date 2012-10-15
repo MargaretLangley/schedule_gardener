@@ -12,7 +12,7 @@
     <% if @appointments_by_date[date] %>
       <ul>
         <% @appointments_by_date[date].each do |appointment| %>
-          <li><%= link_to appointment.title, appointment %></li>
+          <li><%= link_to appointment.title, edit_appointment_path(appointment) %></li>
         <% end %>
       </ul>
     <% end %>
