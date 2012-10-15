@@ -4,9 +4,7 @@ require 'spec_helper'
 describe "PasswordReset" do
   subject { page }
 
-
   before(:all) { @client = FactoryGirl.create(:user, :client, :resetting_password) }
-
   after(:all) { @client.destroy }
 
 
