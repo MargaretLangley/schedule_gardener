@@ -128,41 +128,45 @@ FactoryGirl.define do
       association :appointee, factory: :contact, first_name: "Percy", last_name: "Thrower", role: "gardener"
     end
 
-
-    title "Appointment"
-    all_day false
     description "I am describing a new example event. For testing only."
 
-    trait :today do
-      title "created by appointment today"
-      starts_at {Time.now.utc.beginning_of_day + 9.hours }
+    trait :today_first_slot do
+      starts_at "2012-09-02 08:30:00 UTC"
+      ends_at "2012-09-02 10:00:00 UTC"
     end
-    trait :tomorrow do
-      title "created by appointment tomorrow"
-      starts_at {Time.now.utc.beginning_of_day + 9.hours + 1.days }
-    end
-
-    trait :two_days_time do
-      title "created by appointment two_days_time"
-      starts_at {Time.now.utc.beginning_of_day + 9.hours + 2.days }
-    end
-    trait :three_days_time do
-      title "created by appointment two_days_time"
-      starts_at {Time.now.utc.beginning_of_day + 9.hours + 3.days }
+    trait :today_second_slot do
+      starts_at "01 Sept 2012 10:30:00 UTC"
+      ends_at "2012-09-02 12:00:00 UTC"
     end
 
-    ends_at { starts_at + 3.hours }
+    trait :today_third_slot do
+      starts_at "2012-09-02 12:30:00 UTC"
+      ends_at "2012-09-02 14:00:00 UTC"
+    end
+    trait :today_fourth_slot do
+      starts_at "2012-09-02 14:30:00 UTC"
+      ends_at "2012-09-02 16:00:00 UTC"
+    end
 
-  end
+    trait :tomorrow_first_slot do
+      starts_at "2012-09-03 8:30:00 UTC"
+      ends_at "2012-09-03 10:00:00 UTC"
+    end
 
-  factory :message, class: Mail::Message do
-    #multipart false
-    from 'from@example.com'
-    to  'john.smith@example.com'
-    subject 'Password Reset'
+    length_of_appointment 90
+
+    # factory girl does not follow pattern of rails creation.
+    # FG creates an opbect and then assigns values and then saves
+    # This causes FG to not use the initialize hook for appointment correctly
+    # by nilling out these values I allow the appointment to initialize
+    # itself properly in model_synchronise_accessors.
+    after(:build) do |appointment|
+      appointment.starts_at_date = nil
+      appointment.starts_at_time = nil
+      appointment.length_of_appointment = nil
+      appointment.model_synchronise_accessors
+    end
   end
 
 end
-
-#<Mail::Message:89263770, Multipart: false, Headers: <From: from@example.com>, <To: john.smith@example.com>, <Subject: Password Reset>, <Mime-Version: 1.0>, <Content-Type: text/plain>>
 

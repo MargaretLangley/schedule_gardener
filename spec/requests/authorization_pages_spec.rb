@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "authorization" do
 
+  before { Timecop.freeze(Time.zone.parse('1/9/2012 8:00')) }
   let(:user) { FactoryGirl.create(:user, :client) }
   let!(:wrong_user) { FactoryGirl.create(:user, :client) }
 
@@ -85,7 +86,7 @@ describe "authorization" do
 
   describe "in appointments controller" do
 
-    let!(:appointment) { FactoryGirl.create(:appointment, :gardener_a, :today, contact: user.contact ) }
+    let!(:appointment) { FactoryGirl.create(:appointment, :gardener_a, :today_first_slot, contact: user.contact ) }
 
     context "client user" do
       before do

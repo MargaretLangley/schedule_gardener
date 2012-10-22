@@ -19,6 +19,7 @@
 require 'spec_helper'
 
 describe Contact do
+  before { Timecop.freeze(Time.zone.parse('1/9/2012 8:00')) }
 	subject(:contact) { FactoryGirl.build(:contact, :client_r) }
 
 	include_examples "All Built Objects", Contact
@@ -74,18 +75,18 @@ describe Contact do
 
     context "returns expected appointments ordered by date" do
 
-			contact1_app1 = contact1_app2 = contact1_app3 = nil
+			app1 = app2 = app3 = nil
 			before do
 
-				contact1_app2 = FactoryGirl.create(:appointment, :gardener_a, :two_days_time, contact: contact)
-				contact1_app3 = FactoryGirl.create(:appointment, :gardener_a, :three_days_time, contact: contact)
-				contact1_app1 = FactoryGirl.create(:appointment, :gardener_a, :tomorrow, contact: contact)
+				(app2 = FactoryGirl.build(:appointment, :gardener_a, :today_fourth_slot, contact: contact)).save!
+				(app3 = FactoryGirl.build(:appointment, :gardener_a, :tomorrow_first_slot, contact: contact)).save!
+				(app1 = FactoryGirl.build(:appointment, :gardener_a, :today_first_slot, contact: contact)).save!
 
-				Appointment.all.should eq [contact1_app2,contact1_app3, contact1_app1]
+				Appointment.all.should eq [app2,app3, app1]
 			end
 
 			it "true" do
-		  	contact.appointments.should eq [contact1_app1, contact1_app2, contact1_app3]
+		  	contact.appointments.should eq [app1, app2, app3]
 		  end
     end
 
@@ -95,8 +96,8 @@ describe Contact do
 
       before do
 	  		contact_2  = FactoryGirl.create(:contact, :client_a)
-	      contact1_app1 = FactoryGirl.create(:appointment, :gardener_a, :tomorrow, contact: contact)
-				contact2_app2 = FactoryGirl.create(:appointment, :gardener_a, :two_days_time, contact: contact_2)
+	      contact1_app1 = FactoryGirl.create(:appointment, :gardener_a, :today_first_slot, contact: contact)
+				contact2_app2 = FactoryGirl.create(:appointment, :gardener_a, :today_second_slot, contact: contact_2)
 				Appointment.all.should eq [contact1_app1,contact2_app2]
 			end
 
@@ -107,15 +108,15 @@ describe Contact do
   end
 
   context "#visits" do
-  	context "returns expected visits ordered by date" do
+  	context "returns expected visits ordered by date and time" do
 
       gardener_a = nil
 			contact1_app1 = contact1_app2 = contact1_app3 = nil
 			before do
 				gardener_a = FactoryGirl.create(:contact, :gardener_a)
-				contact1_app2 = FactoryGirl.create(:appointment, :two_days_time, contact: contact, appointee: gardener_a)
-				contact1_app3 = FactoryGirl.create(:appointment, :three_days_time, contact: contact, appointee: gardener_a)
-				contact1_app1 = FactoryGirl.create(:appointment, :gardener_p, :tomorrow, contact: contact )
+				(contact1_app2 = FactoryGirl.create(:appointment, :today_fourth_slot, contact: contact, appointee: gardener_a)).save!
+				(contact1_app3 = FactoryGirl.create(:appointment, :tomorrow_first_slot, contact: contact, appointee: gardener_a)).save!
+				(contact1_app1 = FactoryGirl.create(:appointment, :gardener_p, :today_first_slot, contact: contact )).save!
 
 				Appointment.all.should eq [contact1_app2,contact1_app3, contact1_app1]
 			end

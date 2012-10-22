@@ -4,12 +4,14 @@ require 'spec_helper'
 describe "Appointments" do
 
   before(:all) do
-    @user        = FactoryGirl.create(:user, :client_r)
-    @gardener        = FactoryGirl.create(:user, :gardener)
+    @admin        = FactoryGirl.create(:user, :admin)
+    @user         = FactoryGirl.create(:user, :client_r)
+    @gardener     = FactoryGirl.create(:user, :gardener)
   end
 
   before(:each) do
-    @appointment = FactoryGirl.create(:appointment, :gardener_a, :tomorrow, contact: @user.contact, title: 'appointment pages spec test')
+    Timecop.freeze(Time.zone.parse('1/9/2012 5:00'))
+    (@appointment = FactoryGirl.create(:appointment, :gardener_a, :tomorrow_first_slot, contact: @user.contact)).save!
   end
 
   after(:all) do
@@ -29,10 +31,6 @@ describe "Appointments" do
 
     it "open page" do
       current_path.should eq appointments_path
-    end
-
-    it "displays title" do
-      should have_selector('td', text: "appointment pages spec test")
     end
 
     it "displays appointee" do
@@ -62,8 +60,6 @@ describe "Appointments" do
       context "with valid information" do
         before do
           select 'Alan', from: 'appointment_appointee_id'
-          fill_in "Title", with: "Weeding appointment pages spec test"
-          fill_in "Starts at", with: "2012-09-24 00:00"
         end
         it "has client missing" do
           should_not have_selector('#appointment_contact_id')
@@ -84,17 +80,20 @@ describe "Appointments" do
 
       end
 
-      context "with invalid information" do
-        it "does not add an appointment" do
-          expect { click_on("Create Appointment") }.to change(Appointment, :count).by(0)
-        end
+      # can't generate error wihout using selnium or equiv
+      # context "with invalid information" do
+      #   it "does not add an appointment" do
+      #     #fill_in 'Date', with: '1 Aug 2012'
+      #     click_on("Create Appointment")
+      #     expect { click_on("Create Appointment") }.to change(Appointment, :count).by(0)
+      #   end
 
-        it "has error banner" do
-          click_on("Create Appointment")
-          should have_content('error')
-        end
+      #   it "has error banner" do
+      #     click_on("Create Appointment")
+      #     should have_content('error')
+      #   end
 
-      end
+      # end
 
     end
 
@@ -116,8 +115,6 @@ describe "Appointments" do
         before do
           select 'Alan', from: 'appointment_appointee_id'
           select 'Roger', from: 'appointment_contact_id'
-          fill_in "Title", with: "Weeding appointment pages spec test"
-          fill_in "Starts at", with: "2012-09-24 00:00"
         end
 
         it "add one appointment" do
@@ -128,18 +125,13 @@ describe "Appointments" do
     end
 
     context "admin" do
-
       before do
-        #@admin = FactoryGirl.create(:user, :admin)
-
-        # visit_signin_and_login @admin
-        # select 'Rodger', from: 'appointment_contact_id'
-        # select 'Alan', from: 'appointment_appointee_id'
-        # fill_in "Title", with: "Weeding appointment pages spec test"
-        # fill_in "Starts at", with: "2012-09-24 00:00"
+        visit_signin_and_login @admin
+        visit new_appointment_path
       end
-      it "add one appointment" do
-        pending #expect { click_on("Create Appointment") }.to change(Appointment, :count).by(1)
+
+      it "open page" do
+        current_path.should eq new_appointment_path
       end
     end
 
@@ -152,13 +144,6 @@ describe "Appointments" do
     it "open page" do
        current_path.should eq edit_appointment_path(@appointment)
     end
-
-    context "verify appointment content" do
-
-      it "have expected title" do
-        should have_field 'Title', text: "appointment pages spec test"
-      end
-    end
   end
 
   context "#update" do
@@ -169,8 +154,6 @@ describe "Appointments" do
 
     context "with valid information" do
       before do
-        fill_in "Title", with: "Weeding update appointment - appointmentpages spec"
-        fill_in "Starts at", with: "2012-09-30 00:00"
         click_on("Update Appointment")
       end
       context "after update" do
@@ -185,7 +168,7 @@ describe "Appointments" do
 
     context "with invalid information" do
       before do
-        fill_in "Title", with: ""
+        fill_in 'appointment_starts_at_date', with: '02 Aug 2012'
         click_on("Update Appointment")
       end
       context "after update" do
@@ -201,3 +184,8 @@ describe "Appointments" do
 
 
 end
+
+
+
+
+

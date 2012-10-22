@@ -19,6 +19,7 @@ gem 'figaro'
 gem 'heroku'
 gem 'bootstrap-datepicker-rails'
 gem 'rails-i18n'
+gem 'validates_timeliness', '~> 3.0'
 
 
 group :development do
@@ -30,7 +31,7 @@ group :development do
   gem 'sqlite3'
   gem 'quiet_assets'
   gem "rails-erd"
-
+  gem 'guard'
 end
 
 group :development, :test do
@@ -38,6 +39,7 @@ group :development, :test do
   gem 'spork'
   gem 'rb-inotify'
   gem 'libnotify'
+  gem 'debugger'
  end
 
  group :test do
@@ -47,6 +49,7 @@ group :development, :test do
   gem "shoulda-matchers"
   gem 'launchy'
   gem 'simplecov', require: false
+  gem 'timecop'
  end
 
 # Gems used only for assets and not required

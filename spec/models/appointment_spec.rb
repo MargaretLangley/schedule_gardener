@@ -5,177 +5,224 @@
 #  id           :integer          not null, primary key
 #  contact_id   :integer
 #  appointee_id :integer
-#  title        :string(255)      not null
 #  starts_at    :datetime         not null
-#  ends_at      :datetime
-#  all_day      :boolean          default(FALSE)
+#  ends_at      :datetime         not null
 #  description  :text
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
 
-
 require 'spec_helper'
 
+class Helper
+  def self.create_appointment(contact, start_time, end_time)
+    (app = FactoryGirl.build(:appointment, :gardener_a, contact: contact, starts_at: start_time, ends_at: end_time)).save!
+    app
+  end
+end
 
 describe Appointment do
-	 before(:all) do
-	 	@contact = FactoryGirl.create(:contact, :client_r)
-	 end
+  before(:all) { @contact = FactoryGirl.create(:contact, :client_r) }
+  before { Timecop.freeze(Time.zone.parse('1/9/2012 8:00')) }
 
-	 after(:all) do
-     Contact.delete_all; Address.delete_all;
-	 end
+  after(:all) { Contact.delete_all; Address.delete_all; }
 
-	subject(:appointment) { FactoryGirl.create(:appointment, :gardener_a, :tomorrow, contact: @contact)}
+  subject(:appointment) do
+    (app = FactoryGirl.build(:appointment, :client, :gardener_a, :today_first_slot)).save!
+    app
+  end
 
- 	include_examples "All Built Objects", Appointment
+  include_examples "All Built Objects", Appointment
 
   context "Accessable" do
 
-		[:created_at, :updated_at].each do |validate_attr|
-			it { should_not allow_mass_assignment_of(validate_attr) }
-		end
+    it "basic test" do
+      appointment.starts_at.should eq "Sun, 2012-09-02 09:30:00 BST +01:00"
+    end
 
-	  [:appointee,:all_day, :contact,:description, :ends_at, :starts_at, :title ].each do |expected_attr|
-			it { should respond_to expected_attr }
-		end
-	end
+    [:created_at, :updated_at].each do |validate_attr|
+      it { should_not allow_mass_assignment_of(validate_attr) }
+    end
+
+    [:appointee, :contact,:description, :ends_at, :starts_at, :title ].each do |expected_attr|
+      it { should respond_to expected_attr }
+    end
+  end
 
 
   context "Validations" do
 
-	  [:contact, :appointee, :starts_at, :title].each do |validate_attr|
-			it { should validate_presence_of(validate_attr) }
-		end
-
-		[:title ].each do |validate_attr|
-			it { should ensure_length_of(validate_attr).is_at_most(50) }
-		end
-
-
-	end
-
-	context "#<<" do
-		it "<< an appointment" do
-    	expect { @contact.appointments << appointment }.to change(@contact.appointments, :count).by(1)
+    [:contact, :appointee ].each do |validate_attr|
+      it { should validate_presence_of(validate_attr) }
     end
-	end
 
-	context "#delete - " do
-		before do
-		  @contact.appointments << appointment
-		end
-		it "removes an appointment" do
-    	expect { @contact.appointments.delete(appointment) }.to change(@contact.appointments, :count).by(-1)
+  end
+
+  context "new record" do
+    subject(:new_appointment) do
+      Appointment.new(contact: @contact, appointee: FactoryGirl.create(:contact, :gardener_a))
     end
-	end
 
+    context "starts_at" do
+
+      it ("has") { new_appointment.starts_at.should eq "Sun, 02 Sep 2012 00:00:00 BST +01:00" }
+      it ("date: today") { new_appointment.starts_at_date.should eq "02 Sep 2012" }
+      it ("time: beginning of day")  { new_appointment.starts_at_time.should eq "00:00" }
+
+      context "after setting accessors and validating" do
+
+        before do
+          new_appointment.starts_at_date = "02 Sep 2012"
+          new_appointment.starts_at_time = "12:30"
+          new_appointment.valid?
+        end
+
+        it "have no errors" do
+          new_appointment.errors[:starts_at].should be_empty
+        end
+
+        it "changed time" do
+          new_appointment.starts_at.should eq "Sun, 02 Sep 2012 12:30:00 BST +01:00"
+        end
+
+        it "start eq end" do
+          new_appointment.ends_at.should eq "Sun, 02 Sep 2012 12:30:00 BST +01:00"
+        end
+      end
+    end
+
+    context "end at" do
+
+      it ("date: beginning of today") { appointment.ends_at.should eq "02 Sep 2012 00:00:00 BST" }
+      it "length of 0"  do
+         appointment.length_of_appointment.should == 0
+       end
+
+      it "as exptected" do
+        appointment.length_of_appointment = 180
+        appointment.valid?
+        appointment.ends_at.should eq "Mon, 03 Sep 2012 03:00:00 BST"
+      end
+
+      it "invalid" do
+        appointment.length_of_appointment = -60
+        appointment.valid?
+        appointment.errors[:ends_at].should include("The appointment can not finish before it begins.")
+      end
+
+    end
+  end
+
+  context "Created Record" do
+    context "Starts at" do
+      it "matches expected time" do
+        appointment.starts_at.should eq "Sat, 2012-09-02 09:30:00 BST +01:00"
+      end
+      it "access matches expected date" do
+        appointment.starts_at_date.should eq "02 Sep 2012"
+      end
+      it "access matches expected local time" do
+        appointment.starts_at_time.should eq "09:30"
+      end
+
+    end
+  end
 
 	context "Custom finders" do
 
     context "#after_now" do
 
       context "before boundary" do
-        e1 = e2 = e3 = e4 = nil
+        e1 = e2 = nil
         before do
-          puts Time.now.utc
-          e1 = FactoryGirl.create(:appointment, :gardener_a, contact:  @contact, title: "e1 just before boundary", starts_at: Time.now.utc.advance(minutes: -10))
-          e2 = FactoryGirl.create(:appointment, :gardener_a, contact:  @contact, title: "e2 just after boundary",  starts_at: Time.now.utc.advance(minutes: 5))
-          e3 = FactoryGirl.create(:appointment, :gardener_a, contact:  @contact, title: "e3 well after_boundary",  starts_at: Time.now.utc.end_of_month)
-          Appointment.all.should eq [e1, e2, e3]
+          e1 = Helper.create_appointment(@contact, '01/09/2012 08:30', '01/09/2012 10:00')
+          e2 = Helper.create_appointment(@contact, '01/09/2012 10:30','01/09/2012 11:00')
+          Appointment.all.should eq [e1, e2]
         end
 
         it "are not included" do
-          @contact.appointments.after_now().should eq [e2,e3]
+          Timecop.travel(Time.zone.parse('1/9/2012 10:00'))
+          @contact.appointments.after_now().should eq [e2]
         end
       end
     end
 
 	  context "#in_time_range" do
 
-	 		context "on boundary" do
-	 		  e1 = e2 = e3 = e4 = nil
+	 		context "on start boundary" do
+	 		  e1 = nil
 	 		  before do
-		 			e1 = FactoryGirl.create(:appointment, :gardener_a, contact: 	@contact, title: "e1_on_boundary", starts_at: Time.now.utc.beginning_of_month.advance(hours: -4))
-		 			e2 = FactoryGirl.create(:appointment, :gardener_a, contact: 	@contact, title: "e2_on_boundary", starts_at: Time.now.utc.beginning_of_month.advance(hours: 1))
-		 			e3 = FactoryGirl.create(:appointment, :gardener_a, contact: 	@contact, title: "e3_on_boundary", starts_at: Time.now.utc.end_of_month.advance(hours: -4))
-		 			e4 = FactoryGirl.create(:appointment, :gardener_a, contact: 	@contact, title: "e4_on_boundary", starts_at: Time.now.utc.end_of_month.advance(hours: 4))
-		 			Appointment.all.should eq [e1, e2,e3,e4]
+          Timecop.travel(Time.zone.parse('1/8/2012 10:00'))
+          e1 = Helper.create_appointment(@contact, '31/08/2012 22:00', '31/08/2012 23:59')
+		 			Appointment.all.should eq [e1]
 		 		end
 
-		    it "suceeds" do
-			    @contact.appointments.in_time_range(Time.now.utc.beginning_of_month..
-			    	                 			Time.now.utc.end_of_month,
-			    	                 			).should eq [e2,e3]
+		    it "fails" do
+			    @contact.appointments.in_time_range('2012/09/01 00:00'..'2012/09/30 23:59').should eq []
 		    end
 		  end
+
+      context "on start boundary" do
+        e1 = nil
+        before do
+          Timecop.travel(Time.zone.parse('1/8/2012 10:00'))
+          e1 = Helper.create_appointment(@contact, '31/08/2012 22:00', '01/09/2012 00:00')
+          Appointment.all.should eq [e1]
+        end
+
+        it "suceeds" do
+          @contact.appointments.in_time_range('2012/09/01 00:00'..'2012/09/30 23:59').should eq  [e1]
+        end
+      end
+
+
+      context "on end boundary" do
+        e1 = e2 = nil
+        before do
+          e1 = Helper.create_appointment(@contact, '30/09/2012 22:00', '30/09/2012 23:59')
+          e2 = Helper.create_appointment(@contact, '01/10/2012 00:00', '01/10/2012 01:30')
+          Appointment.all.should eq [e1, e2]
+        end
+
+        it "suceeds" do
+          @contact.appointments.in_time_range('2012/09/01 00:00'..'2012/09/30 23:59').should eq [e1]
+        end
+      end
+
 
 		  context "accross boundary" do
 			  e1 = e2 = nil
 	 		  before do
-	 		  	e1 = FactoryGirl.create(:appointment, :gardener_a, contact: 	@contact, title: "e1_accross_boundary", starts_at: Time.now.utc.beginning_of_month.advance(hours: -2))
-	 			  e2 = FactoryGirl.create(:appointment, :gardener_a, contact: 	@contact, title: "e2_accross_boundary", starts_at: Time.now.utc.end_of_month.advance(hours: - 1))
+          Timecop.travel(Time.zone.parse('1/8/2012 10:00'))
+          e1 = Helper.create_appointment(@contact, '31/08/2012 23:00', '01/09/2012 01:00')
+          e2 = Helper.create_appointment(@contact, '30/09/2012 22:30', '01/10/2012 01:30')
+          Timecop.travel(Time.zone.parse('1/9/2012 10:00'))
 		 			Appointment.all.should eq [e1, e2]
 		 		end
 
 		    it "suceeds" do
-			    @contact.appointments.in_time_range(Time.now.utc.beginning_of_month..
-			    	                 		 Time.now.utc.end_of_month,
-			    	                 		 ).should eq [e1,e2]
-		    end
-      end
-
-		  context "nil end" do
-			  e1 = e2 = nil
-	 		  before do
-	 		  	e1 = FactoryGirl.create(:appointment, :gardener_a, contact: 	@contact, title: "e1_nil_end", ends_at: nil, starts_at: Time.now.utc.beginning_of_month.advance(hours: + 10))
-		 			Appointment.all.should eq [e1]
-		 		end
-
-		    it "suceeds" do
-			    appointments = @contact.appointments
-			    appointments.in_time_range(Time.now.utc.beginning_of_month..
-			    	              	  	 Time.now.utc.end_of_month,
-			    	                	 	 ).should eq [e1]
+			    @contact.appointments.in_time_range('2012/09/01 00:00'..'2012/09/30 23:59').should eq [e1,e2]
 		    end
       end
 
       context "doesn't pick up other contacts appointments" do
         e1 = e2 = nil
         before do
-        	e1 = FactoryGirl.create(:appointment, :gardener_a, :client, title: "e2_on_boundary", starts_at: Time.now.utc.beginning_of_month.advance(hours: 1))
-		 			e2 = FactoryGirl.create(:appointment, :gardener_a, contact: 	@contact, title: "e3_on_boundary", starts_at: Time.now.utc.end_of_month.advance(hours: -4))
+          Timecop.travel(Time.zone.parse('1/8/2012 08:00'))
+          e1 = Helper.create_appointment(FactoryGirl.create(:contact , :client_a), '01/09/2012 01:00', '01/09/2012 02:00')
+          e2 = Helper.create_appointment(@contact, '02/09/2012 01:00', '02/09/2012 02:00')
         	Appointment.all.should eq [e1,e2]
         end
 
 		    it "suceeds" do
-			    @contact.appointments.in_time_range(Time.now.utc.beginning_of_month..
-			    	                 			Time.now.utc.end_of_month,
-			    	                 			).should eq [e2]
+			    @contact.appointments.in_time_range('2012/09/01 00:00'..'2012/09/30 23:59').should eq [e2]
 		    end
-
 
       end
 
     end
 
 	end
-
-	describe "to_event" do
-    let(:event) { appointment.to_event }
-    it "title output" do
-			event.title.should eq "created by appointment tomorrow"
-    end
-
-    it "can serialize" do
-    	event = Event.new()
-    	event.attributes = {"title"=>"Weeding", "starts_at"=>"Mon Oct 22 2012 00:00:00 GMT+0100 (BST)", "description"=>" aj "}
-			event.should be_valid
-    end
-	end
-
-
 
  	describe "Association" do
  	  it { should belong_to(:contact) }
