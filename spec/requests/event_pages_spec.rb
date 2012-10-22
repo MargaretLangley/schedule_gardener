@@ -1,12 +1,13 @@
 require 'spec_helper'
 
 describe "event" do
+  before { Timecop.freeze(Time.zone.parse('1/9/2012 8:00')) }
 
   subject { page }
 
   context "#index" do
     let!(:appointment) do
-      FactoryGirl.create(:appointment, :client, :gardener_a, :tomorrow, title: "weeding")
+      FactoryGirl.create(:appointment, :client, :gardener_a, :today_first_slot)
     end
     let!(:gardener)  do
       FactoryGirl.create(:user, :gardener)
@@ -23,10 +24,6 @@ describe "event" do
     end
 
     context "links" do
-
-      it "should have appointment link" do
-        should have_link('weeding', href: edit_appointment_path(appointment))
-      end
 
       it "navigate to appointments path" do
         should have_link('List Appointments', href: appointments_path)

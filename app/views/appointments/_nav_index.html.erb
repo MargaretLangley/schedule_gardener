@@ -1,10 +1,10 @@
 <div class="well sidebar-nav">
   <ul class="nav nav-list">
     <li class="nav-header">Appointments for</li>
-    <li><%= link_to 'This Week', appointments_path(begin: DateTime.now.beginning_of_week, end: DateTime.now.end_of_week ) %> </li>
-    <li><%= link_to 'Next Week', appointments_path(begin: DateTime.now.next_week.beginning_of_week, end: DateTime.now.next_week.end_of_week ) %> </li>
-    <li><%= link_to 'This Month', appointments_path(begin: DateTime.now.beginning_of_month, end: DateTime.now.end_of_month ) %> </li>
-    <li><%= link_to 'Next Month', appointments_path(begin: DateTime.now.next_month.beginning_of_month, end: DateTime.now.next_month.end_of_month ) %> </li>
+    <li><%= link_to 'This Week', appointments_path(begin: Time.zone.now.beginning_of_week, end: Time.zone.now.end_of_week ) %> </li>
+    <li><%= link_to 'Next Week', appointments_path(begin: Time.zone.now.next_week.beginning_of_week, end: Time.zone.now.next_week.end_of_week ) %> </li>
+    <li><%= link_to 'This Month', appointments_path(begin: Time.zone.now.beginning_of_month, end: Time.zone.now.end_of_month ) %> </li>
+    <li><%= link_to 'Next Month', appointments_path(begin: Time.zone.now.next_month.beginning_of_month, end: Time.zone.now.next_month.end_of_month ) %> </li>
     <li class="nav-header">Analytical</li>
     <li><a href="#">ToDo Last Saw Client</a></li>
     <li><a href="#">ToDo Book from</a></li>

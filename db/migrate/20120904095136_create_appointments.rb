@@ -3,10 +3,8 @@ class CreateAppointments < ActiveRecord::Migration
     create_table :appointments do |t|
       t.references :contact
       t.references :appointee
-      t.string :title, null: false
       t.datetime :starts_at, null: false
-      t.datetime :ends_at
-      t.boolean :all_day, default: false
+      t.datetime :ends_at, null: false
       t.text :description
 
       t.timestamps

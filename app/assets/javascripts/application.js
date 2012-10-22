@@ -18,5 +18,6 @@
 //= require_self
 
 $(function() {
-   $('#appointment_starts_at').datepicker({"format": "dd-mm-yyyy", "weekStart": 1, "autoclose": true})
+   $('#appointment_starts_at_date').datepicker({"format": "dd M yyyy", "weekStart": 1, "autoclose": true})
  });
+

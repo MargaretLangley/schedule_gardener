@@ -1,8 +1,19 @@
-en:
+'en-GB':
   activerecord:
     attributes:
       user:
         password_digest: "Password"
+    errors:
+      models:
+        appointment:
+          attributes:
+            starts_at:
+              invalid_date: "Dates need to be a standard format. For example: 12 Oct 2012 "
+              after:  "You can only book appointments in the future."
+              before: "You cannot book more than a year in advance."
+            ends_at:
+              on_or_after: "The appointment can not finish before it begins."
+
   time:
     am: am
     formats:
