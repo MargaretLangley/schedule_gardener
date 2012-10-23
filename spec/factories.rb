@@ -131,26 +131,26 @@ FactoryGirl.define do
     description "I am describing a new example event. For testing only."
 
     trait :today_first_slot do
-      starts_at "2012-09-02 08:30:00 UTC"
-      ends_at "2012-09-02 10:00:00 UTC"
+      starts_at "2012-09-01 09:30:00"
+      ends_at   "2012-09-01 11:00:00"
     end
     trait :today_second_slot do
-      starts_at "01 Sept 2012 10:30:00 UTC"
-      ends_at "2012-09-02 12:00:00 UTC"
+      starts_at "2012-09-01 11:30:00"
+      ends_at "2012-09-01 13:00:00"
     end
 
     trait :today_third_slot do
-      starts_at "2012-09-02 12:30:00 UTC"
-      ends_at "2012-09-02 14:00:00 UTC"
+      starts_at "2012-09-01 13:30:00"
+      ends_at "2012-09-01 15:00:00"
     end
     trait :today_fourth_slot do
-      starts_at "2012-09-02 14:30:00 UTC"
-      ends_at "2012-09-02 16:00:00 UTC"
+      starts_at "2012-09-01 15:30:00"
+      ends_at "2012-09-01 17:00:00"
     end
 
     trait :tomorrow_first_slot do
-      starts_at "2012-09-03 8:30:00 UTC"
-      ends_at "2012-09-03 10:00:00 UTC"
+      starts_at "2012-09-02 9:30:00"
+      ends_at "2012-09-02 11:00:00"
     end
 
     length_of_appointment 90

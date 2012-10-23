@@ -39,34 +39,41 @@ class Appointment < ActiveRecord::Base
   end
 
   def model_synchronise_accessors
-    self.starts_at_date ||= self.starts_at.strftime('%d %b %Y')
-    self.starts_at_time ||= self.starts_at.strftime'%H:%M'
+    self.starts_at_date ||= starts_at_return_date
+    self.starts_at_time ||= starts_at_return_time
     self.length_of_appointment ||=  start_end_difference_in_minutes
+  end
+
+  def starts_at_return_date
+    self.starts_at.strftime('%d %b %Y')
+  end
+
+  def starts_at_return_time
+    self.starts_at.strftime'%H:%M'
   end
 
   def start_end_difference_in_minutes
     self.ends_at - self.starts_at == 0 ? 0 : ((self.ends_at - self.starts_at) /60).floor
   end
 
-
   def accessors_synchronise_model
-    self.starts_at = format_datetime_for_database
+    self.starts_at = format_date_and_time_accessors_for_database
     self.ends_at = calculate_ends_at
     rescue ArgumentError
      errors.add(:starts_at, 'must be a valid datetime')
   end
 
-  def format_datetime_for_database
-    "#{date_string_to_db} #{utc_time_string_to_db}"
+  def format_date_and_time_accessors_for_database
+    "#{starts_at_date_to_db_format} #{starts_at_time_string}"
   end
 
-  def date_string_to_db
+  def starts_at_date_to_db_format
     DateTime.strptime(self.starts_at_date,'%d %b %Y').strftime('%F')
   end
 
 
-  def utc_time_string_to_db
-    Time.zone.parse(self.starts_at_time + ":00").utc.strftime'%H:%M:%S'
+  def starts_at_time_string
+    Time.zone.parse(self.starts_at_time + ":00").strftime'%H:%M:%S'
   end
 
   def calculate_ends_at

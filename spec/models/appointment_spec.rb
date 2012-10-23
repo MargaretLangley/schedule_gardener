@@ -34,11 +34,17 @@ describe Appointment do
 
   include_examples "All Built Objects", Appointment
 
-  context "Accessable" do
 
-    it "basic test" do
-      appointment.starts_at.should eq "Sun, 2012-09-02 09:30:00 BST +01:00"
+  context "Time Zones" do
+    it "expected" do
+      Time.zone.to_s.should == '(GMT+00:00) London'
     end
+    it "time correct" do
+      Time.zone.now.should == "Sat, 01 Sep 2012 08:00:00 BST +01:00"
+    end
+  end
+
+  context "Accessable" do
 
     [:created_at, :updated_at].each do |validate_attr|
       it { should_not allow_mass_assignment_of(validate_attr) }
@@ -73,7 +79,7 @@ describe Appointment do
 
         before do
           new_appointment.starts_at_date = "02 Sep 2012"
-          new_appointment.starts_at_time = "12:30"
+          new_appointment.starts_at_time = "9:30"
           new_appointment.valid?
         end
 
@@ -82,26 +88,53 @@ describe Appointment do
         end
 
         it "changed time" do
-          new_appointment.starts_at.should eq "Sun, 02 Sep 2012 12:30:00 BST +01:00"
+          new_appointment.starts_at.should eq "Sun, 02 Sep 2012 09:30:00 BST +00:00"
+        end
+
+        it "expected date accessor" do
+          new_appointment.starts_at_date.should == "02 Sep 2012"
+        end
+
+        it "expected time accessor" do
+          new_appointment.starts_at_time.should == "9:30"
         end
 
         it "start eq end" do
-          new_appointment.ends_at.should eq "Sun, 02 Sep 2012 12:30:00 BST +01:00"
+          new_appointment.ends_at.should eq "Sun, 02 Sep 2012 09:30:00 BST +01:00"
         end
+        context "Conversion" do
+          it "converts into local string time" do
+            new_appointment.starts_at_date.should == "02 Sep 2012"
+          end
+
+          it "converts into local string time" do
+            new_appointment.starts_at_time.should == "9:30"
+          end
+        end
+        context "after save" do
+          before do
+            appointment = Appointment.last
+          end
+          it "should have expected starts_at" do
+            appointment.starts_at.should == "Sun, 02 Sep 2012 09:30:00 BST +01:00"
+          end
+        end
+
       end
     end
 
     context "end at" do
 
-      it ("date: beginning of today") { appointment.ends_at.should eq "02 Sep 2012 00:00:00 BST" }
+      it ("date: beginning of today") { appointment.ends_at.should eq "02 Sep 2012 00:00:00 BST +01:00" }
       it "length of 0"  do
          appointment.length_of_appointment.should == 0
        end
 
       it "as exptected" do
+        #debugger
         appointment.length_of_appointment = 180
         appointment.valid?
-        appointment.ends_at.should eq "Mon, 03 Sep 2012 03:00:00 BST"
+        appointment.ends_at.should eq "Sun, 02 Sep 2012 03:00:00 BST +01:00"
       end
 
       it "invalid" do
@@ -116,15 +149,20 @@ describe Appointment do
   context "Created Record" do
     context "Starts at" do
       it "matches expected time" do
-        appointment.starts_at.should eq "Sat, 2012-09-02 09:30:00 BST +01:00"
+        appointment.starts_at.should eq "Sat, 2012-09-01 08:30:00 UTC +00:00"
       end
       it "access matches expected date" do
-        appointment.starts_at_date.should eq "02 Sep 2012"
+        appointment.starts_at_date.should eq "01 Sep 2012"
       end
       it "access matches expected local time" do
         appointment.starts_at_time.should eq "09:30"
       end
+    end
 
+    context "Ends at" do
+      it "matches expected time" do
+        appointment.ends_at.should eq "Sat, 01 Sep 2012 10:00:00 UTC +00:00"
+      end
     end
   end
 
@@ -171,7 +209,7 @@ describe Appointment do
         end
 
         it "suceeds" do
-          @contact.appointments.in_time_range('2012/09/01 00:00'..'2012/09/30 23:59').should eq  [e1]
+          @contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq  [e1]
         end
       end
 
@@ -185,7 +223,7 @@ describe Appointment do
         end
 
         it "suceeds" do
-          @contact.appointments.in_time_range('2012/09/01 00:00'..'2012/09/30 23:59').should eq [e1]
+          @contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e1]
         end
       end
 
@@ -201,7 +239,7 @@ describe Appointment do
 		 		end
 
 		    it "suceeds" do
-			    @contact.appointments.in_time_range('2012/09/01 00:00'..'2012/09/30 23:59').should eq [e1,e2]
+			    @contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e1,e2]
 		    end
       end
 
@@ -215,7 +253,7 @@ describe Appointment do
         end
 
 		    it "suceeds" do
-			    @contact.appointments.in_time_range('2012/09/01 00:00'..'2012/09/30 23:59').should eq [e2]
+			    @contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e2]
 		    end
 
       end
