@@ -7,7 +7,7 @@
       <%= f.association :contact, label: "Client", collection: Contact.contacts_by_role("client"), label_method: "first_name", include_blank: false %>
     <% end %>
     <%= f.input :starts_at_date, label: 'Date', readonly: true %>
-    <%= f.input :starts_at_time, label: 'Time', include_blank: false, collection: [['Early Morning - (9.30 am)', '9:30'], ['Late Morning - (11.30 am)', '11:30'], ['Early Afternoon - (1.30pm)', '1:30'], ['Late Afternoon - (3.30 pm)','3:30']] %>
+    <%= f.input :starts_at_time, label: 'Time' , include_blank: false, collection: [['Early Morning - (9.30 am)', '9:30'], ['Late Morning - (11.30 am)', '11:30'], ['Early Afternoon - (1.30pm)', '13:30'], ['Late Afternoon - (3.30 pm)','15:30']] %>
     <%= f.input :length_of_appointment, required: true, label: 'Length',  include_blank: false, collection: [['1hr 30min', 90],['3hrs',180] ]    %>
 
     <%= f.input :description %>
