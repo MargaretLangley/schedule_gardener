@@ -153,6 +153,11 @@ FactoryGirl.define do
       ends_at "2012-09-02 11:00:00"
     end
 
+    trait :next_week_first_slot do
+      starts_at "2012-09-08 9:30:00"
+      ends_at "2012-09-08 11:00:00"
+    end
+
     length_of_appointment 90
 
     # factory girl does not follow pattern of rails creation.

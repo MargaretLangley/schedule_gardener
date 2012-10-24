@@ -31,7 +31,7 @@ describe "PasswordReset" do
           current_path.should eq password_reset_sent_path
         end
 
-        xit "Notice set" do
+        it "Notice set" do
           should have_flash_notice('Email sent with password reset instructions.')
         end
 

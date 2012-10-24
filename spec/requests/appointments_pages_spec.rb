@@ -12,6 +12,9 @@ describe "Appointments" do
   before(:each) do
     Timecop.freeze(Time.zone.parse('1/9/2012 5:00'))
     (@appointment = FactoryGirl.create(:appointment, :gardener_a, :tomorrow_first_slot, contact: @user.contact)).save!
+    (FactoryGirl.create(:appointment, :gardener_p, :next_week_first_slot, contact: @user.contact)).save!
+    Capybara.reset_sessions!
+    visit_signin_and_login @user
   end
 
   after(:all) do
@@ -20,14 +23,12 @@ describe "Appointments" do
     User.delete_all;
   end
 
-  before(:each) do
-    visit_signin_and_login @user
-  end
-
   subject { page }
 
   context "#index" do
-    before(:each) { visit appointments_path }
+    before(:each) do
+      visit appointments_path
+    end
 
     it "open page" do
       current_path.should eq appointments_path
@@ -47,6 +48,23 @@ describe "Appointments" do
       click_on('Calendar')
       current_path.should eq events_path
     end
+    context "this week" do
+      before do
+        click_on('This Week')
+      end
+      it "displays appointee" do
+        should have_selector('td', text: "Alan Titmarsh")
+      end
+    end
+    context "next week" do
+      before do
+        click_on('Next Week')
+      end
+      it "displays appointee" do
+        should have_selector('td', text: "Percy Thrower")
+      end
+    end
+
   end
 
   context "#new" do
@@ -80,20 +98,20 @@ describe "Appointments" do
 
       end
 
-      # can't generate error wihout using selnium or equiv
-      # context "with invalid information" do
-      #   it "does not add an appointment" do
-      #     #fill_in 'Date', with: '1 Aug 2012'
-      #     click_on("Create Appointment")
-      #     expect { click_on("Create Appointment") }.to change(Appointment, :count).by(0)
-      #   end
+      context "with invalid information" do
+        before "does not add an appointment" do
+          fill_in 'Date', with: '1 Aug 2012'
+        end
 
-      #   it "has error banner" do
-      #     click_on("Create Appointment")
-      #     should have_content('error')
-      #   end
+        it "fails" do
+          expect { click_on("Create Appointment") }.to change(Appointment, :count).by(0)
+        end
 
-      # end
+        it "has error banner" do
+          click_on("Create Appointment")
+          should have_content('error')
+        end
+      end
 
     end
 

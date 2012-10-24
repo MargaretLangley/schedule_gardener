@@ -7,14 +7,37 @@ class AppointmentsController < ApplicationController
   def index
 
     @appointments = current_user.visits if current_user.role == "gardener"
-
-    if params.has_key?(:begin) && params.has_key?(:end)
-      @appointments = @appointments.in_time_range(Time.zone.parse(params[:begin]) .. Time.zone.parse(params[:end])).order('starts_at ASC')
-    else
-      @appointments = @appointments.after_now()
-    end
+    @appointments = @appointments.in_time_range(time_range_from_params_or_session).order('starts_at ASC')
 
   end
+
+  def time_range_from_params_or_session
+
+    initialize_nil_time_params_from_session
+    initialize_session_from_time_params
+
+    if missing_time_range
+      Time.zone.now .. Time.zone.today + 1.year
+    else
+      Time.zone.parse(params[:begin]) .. Time.zone.parse(params[:end])
+    end
+  end
+
+  def initialize_nil_time_params_from_session
+    params[:begin] ||= session[:begin]
+    params[:end]   ||= session[:end]
+  end
+
+  def initialize_session_from_time_params
+    session[:begin] = params[:begin]
+    session[:end]   = params[:end]
+  end
+
+  def missing_time_range
+    params[:begin].blank? && params[:end].blank?
+  end
+
+
 
   def create
     @appointment.save!
