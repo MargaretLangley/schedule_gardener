@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  helper_method :current_user, :signed_in?, :current_user?
+  helper_method :current_user, :signed_in?, :current_user?, :current_gardener?
   include PersistPath
 
 
@@ -24,6 +24,11 @@ class ApplicationController < ActionController::Base
   def current_admin?
     current_user && current_user.role == "admin"
   end
+
+  def current_gardener?
+    current_user && current_user.role == "gardener"
+  end
+
 
   def current_user=(user)
     @current_user = user

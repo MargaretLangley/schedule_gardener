@@ -1,6 +1,7 @@
 
 class AppointmentsController < ApplicationController
   before_filter :guest_redirect_to_signin_path
+  helper_method :active_nav?
   check_authorization
   load_and_authorize_resource
 
@@ -13,8 +14,8 @@ class AppointmentsController < ApplicationController
 
   def time_range_from_params_or_session
 
-    initialize_nil_time_params_from_session
-    initialize_session_from_time_params
+    initialize_nil_params_from_session
+    initialize_session_from_params
 
     if missing_time_range
       Time.zone.now .. Time.zone.today + 1.year
@@ -23,18 +24,24 @@ class AppointmentsController < ApplicationController
     end
   end
 
-  def initialize_nil_time_params_from_session
+  def initialize_nil_params_from_session
+    params[:nav]   ||= session[:nav]
     params[:begin] ||= session[:begin]
     params[:end]   ||= session[:end]
   end
 
-  def initialize_session_from_time_params
+  def initialize_session_from_params
+    session[:nav]   = params[:nav]
     session[:begin] = params[:begin]
     session[:end]   = params[:end]
   end
 
   def missing_time_range
     params[:begin].blank? && params[:end].blank?
+  end
+
+  def active_nav?(link)
+    params[:nav] == link
   end
 
 

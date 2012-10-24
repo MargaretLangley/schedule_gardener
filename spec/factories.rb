@@ -63,12 +63,14 @@ FactoryGirl.define do
       first_name 'Ann'
       last_name  'Abbey'
       role 'client'
+      home_phone "0181-100-1001"
     end
 
     trait :client_j do
       first_name 'John'
       last_name  'Smith'
       role 'client'
+      home_phone "0181-100-2002"
     end
 
 
@@ -76,22 +78,25 @@ FactoryGirl.define do
       first_name 'Roger'
       last_name  'Smith'
       role 'client'
+      home_phone "0181-100-3003"
     end
 
     trait :gardener_a do
       first_name 'Alan'
       last_name  'Titmarsh'
       role 'gardener'
+      home_phone "0181-200-1001"
     end
 
     trait :gardener_p do
       first_name 'Percy'
       last_name  'Thrower'
       role 'gardener'
+      home_phone "0181-200-2002"
     end
 
-    email                 { "#{first_name}.#{last_name}@example.com".downcase }
-    sequence(:home_phone) { |n| "0181-100-100#{n}" }
+    email  { "#{first_name}.#{last_name}@example.com".downcase }
+    home_phone "0181-100-1001"
     mobile '0701-200-2007'
     association :address, strategy: :build
 
