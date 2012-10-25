@@ -178,5 +178,14 @@ FactoryGirl.define do
     end
   end
 
+
+  factory :touch do
+
+    trait :client_r do
+      association :contact, :client_r
+    end
+
+  end
+
 end
 

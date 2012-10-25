@@ -131,7 +131,6 @@ describe Appointment do
        end
 
       it "as exptected" do
-        #debugger
         appointment.length_of_appointment = 180
         appointment.valid?
         appointment.ends_at.should eq "Sun, 02 Sep 2012 03:00:00 BST +01:00"

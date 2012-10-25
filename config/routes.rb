@@ -22,8 +22,8 @@ ScheduleGardener::Application.routes.draw do
 
   resources :appointments, only: [:new, :create, :edit, :update, :destroy, :index]
   resources :events , only: [:index]
-
-  resources :password_resets
+  resources :password_resets, only: [:new, :create, :edit, :update]
+  resources :touches, only: [:index, :new, :create, :edit, :update]
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 end

@@ -29,6 +29,7 @@ class Contact < ActiveRecord::Base
   has_one     :address,  autosave: true, dependent: :destroy, as: :addressable
   has_many    :gardens, dependent: :destroy
   has_many    :appointments, dependent: :destroy, order: 'appointments.starts_at ASC'
+  has_many    :touches
   has_many    :visits, class_name: 'Appointment', foreign_key: 'appointee_id', dependent: :destroy, order: 'appointments.starts_at ASC'
 
 

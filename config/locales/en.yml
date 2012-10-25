@@ -13,6 +13,24 @@
               before: "You cannot book more than a year in advance."
             ends_at:
               on_or_after: "The appointment can not finish before it begins."
+        touch:
+          attributes:
+            between_start:
+              on_or_after:  'You asked for a range of appointment dates than begins before today. Please choose a start date from today.'
+              on_or_before: 'You asked for a range of appointment dates that starts in more than a year. Please choose an start date within a year.'
+            between_end:
+              on_or_after:  'You asked for a range of appointments that end before they begin. Please choose an end date after the start date.'
+              on_or_before: 'You asked for a range of appointment dates that ends in more than a year. Please choose an end date within a year.'
+            touch_from:
+              on_or_after:  'We can call you from today. Please choose a date today or in the future.'
+              on_or_before: 'We can call you within a year. Please choose a date within a year from today.'
+            visit_at:
+              on_or_after:  'A visit must be from today. Please choose a date which is today or later.'
+              on_or_before: 'A visit must be arranged within a year. Please choose a date from within a year of todays date.'
+
+
+
+
 
   time:
     am: am
