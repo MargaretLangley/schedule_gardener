@@ -22,20 +22,19 @@
               on_or_after:  'You asked for a range of appointments that end before they begin. Please choose an end date after the start date.'
               on_or_before: 'You asked for a range of appointment dates that ends in more than a year. Please choose an end date within a year.'
             touch_from:
-              on_or_after:  'We can call you from today. Please choose a date today or in the future.'
-              on_or_before: 'We can call you within a year. Please choose a date within a year from today.'
-            visit_at:
-              on_or_after:  'A visit must be from today. Please choose a date which is today or later.'
-              on_or_before: 'A visit must be arranged within a year. Please choose a date from within a year of todays date.'
+              on_or_after:  'We can contact you from today. Please choose a date which can be today or in the future.'
+              on_or_before: 'We can contact you within a year. Please choose a date within a year from today.'
 
 
-
-
+  date:
+    formats:
+      default: ! '%d %b %Y'
 
   time:
     am: am
     formats:
-      default: ! '%a, %d %b %Y %H:%M:%S %z'
+      default: ! '%d %b %Y'
+      very_long: ! '%a, %d %b %Y %H:%M:%S %z'
       long: ! '%B %d, %Y %H:%M'
       short: ! '%d %b %H:%M'
     pm: pm

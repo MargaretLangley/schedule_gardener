@@ -73,17 +73,15 @@ ActiveRecord::Schema.define(:version => 20121025093826) do
 
   create_table "touches", :force => true do |t|
     t.integer  "contact_id"
-    t.boolean  "by_email"
     t.boolean  "by_phone"
     t.boolean  "by_visit"
-    t.datetime "visit_at"
     t.datetime "touch_from"
     t.datetime "between_start"
     t.datetime "between_end"
     t.boolean  "completed"
-    t.text     "description"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.text     "additional_information"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
   end
 
   add_index "touches", ["contact_id"], :name => "index_touches_on_contact_id"

@@ -181,11 +181,32 @@ FactoryGirl.define do
 
   factory :touch do
 
+    by_phone true
+
+    trait :client_a do
+      association :contact, :client_a
+    end
+
+    trait :client_j do
+      association :contact, :client_j
+    end
+
     trait :client_r do
       association :contact, :client_r
+    end
+
+    trait :today do
+      touch_from "2012-09-01"
+    end
+
+    trait :tomorrow do
+      touch_from "2012-09-02"
+    end
+
+    trait :next_week do
+      touch_from "2012-09-08"
     end
 
   end
 
 end
-

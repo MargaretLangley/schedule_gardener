@@ -116,6 +116,7 @@ describe "authorization" do
     end
 
 
+
     context "guests visiting protected page -> signin" do
 
       it "#index" do
@@ -155,6 +156,79 @@ describe "authorization" do
       end
       it "#delete" do
         delete appointment_path(appointment)
+        response.should redirect_to(root_path)
+      end
+    end
+  end
+
+  describe "in touch controller" do
+
+    let!(:touch) { FactoryGirl.create(:touch, :client_r) }
+
+    context "client user" do
+      before do
+       visit_signin_and_login user
+      end
+
+      it "#index" do
+        get touches_path
+        response.code.should == '200'
+      end
+
+      it "#edit"  do
+         get edit_touch_path(touch)
+         response.code.should == '200'
+      end
+
+      it "#update" do
+         put touch_path(touch)
+         response.should redirect_to touches_path
+      end
+
+      it "#delete" do
+        delete touch_path(touch)
+        response.should redirect_to touches_path
+      end
+    end
+
+     context "guests visiting protected page -> signin" do
+
+      it "#index" do
+        get touches_path
+        response.should redirect_to(signin_path)
+      end
+
+      it "#edit"  do
+        get edit_touch_path(touch)
+        response.should redirect_to(signin_path)
+      end
+
+      it "#update" do
+        put touch_path(touch)
+        response.should redirect_to(signin_path)
+      end
+
+      it "#delete" do
+        delete touch_path(touch)
+        response.should redirect_to(signin_path)
+      end
+    end
+
+     context "wrong user action redirect to root" do
+      before do
+       visit_signin_and_login wrong_user
+      end
+
+      it "#edit" do
+        get edit_touch_path(touch)
+        response.should redirect_to(root_path)
+      end
+      it "#update" do
+        put touch_path(touch)
+        response.should redirect_to(root_path)
+      end
+      it "#delete" do
+        delete touch_path(touch)
         response.should redirect_to(root_path)
       end
     end

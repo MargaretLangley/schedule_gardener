@@ -40,13 +40,13 @@ class Ability
       Rails.logger.debug "user role is:" + user.role.to_s
 
       can [:show, :create, :update ], User, id: user.id
-      can [:manage],                  Appointment, contact_id: user.contact.id
+      can [:manage], [Appointment, Touch] , contact_id: user.contact.id
       # Different Roles
       case user.role
       when "client"
         # nothing more to do
       when "gardener"
-          can :manage, Appointment
+          can :manage, [Appointment, Touch]
           can [:read, :create, :update ], User
       when "admin"
           can :manage, :all

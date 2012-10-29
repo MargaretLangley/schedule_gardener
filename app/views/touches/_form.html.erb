@@ -1,0 +1,27 @@
+<%= simple_form_for @touch, :html => { :class => 'span6 form-horizontal' } do |f| %>
+  <%= render 'shared/error_messages', object: f.object  %>
+
+
+    <% if current_user.role == "gardener" %>
+      <%= f.association :contact, label: "Client", :input_html => { :class => "span6" }, collection: Contact.contacts_by_role("client"), label_method: "first_name", include_blank: false %>
+      <%= f.input :by_phone, as: :boolean %>
+      <%= f.input :by_visit, as: :boolean %>
+    <% else %>
+     <%= f.hidden_field :by_phone, value: true %>
+    <% end %>
+
+    <%= f.input :touch_from,  as: :date_picker, label: 'Contact from', hint: "Earliest date you want to be contacted?" %>
+
+    <%= f.input :additional_information, :input_html => { :class => "span6" } %>
+    <% if current_user.role == "gardener" %>
+      <%= f.input :completed, :as => :boolean %>
+    <% end %>
+
+  <div class="form-actions">
+    <%= f.button :submit, class: 'primary_action_button', value: 'Contact Me' %>
+  </div>
+<% end %>
+
+<%= debug "touch" + @touch.inspect %>
+<%= debug "role is:" + current_user.role %>
+

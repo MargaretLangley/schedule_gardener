@@ -152,6 +152,17 @@ end
       end
     end
 
+    context "gardener role" do
+      subject { gardener_ability }
+
+      it "can manage own appointments" do
+        should be_able_to(:manage, Appointment.new(contact: gardener.contact))
+       end
+      it "can manage appointment owned by another user" do
+        should be_able_to(:manage, Appointment.new(contact: another_client.contact))
+      end
+    end
+
     context "admin role" do
       subject { admin_ability }
 
@@ -162,7 +173,43 @@ end
         should be_able_to(:manage, Appointment.new(contact: another_client.contact))
       end
     end
+  end
 
+
+  describe "Touch" do
+
+    context "client role" do
+      subject { client_ability }
+
+      it "can manage own touch" do
+        should be_able_to(:manage, Touch.new(contact: client.contact))
+      end
+      it "cannot manage appointment owned by another user" do
+        should_not be_able_to(:manage, Touch.new(contact: another_client.contact))
+      end
+    end
+
+    context "gardener role" do
+      subject { gardener_ability }
+
+      it "can manage own appointments" do
+        should be_able_to(:manage, Touch.new(contact: gardener.contact))
+       end
+      it "can manage appointment owned by another user" do
+        should be_able_to(:manage, Touch.new(contact: another_client.contact))
+      end
+    end
+
+    context "admin role" do
+      subject { admin_ability }
+
+      it "can manage own appointments" do
+        should be_able_to(:manage, Touch.new(contact: admin.contact))
+       end
+      it "can manage appointment owned by another user" do
+        should be_able_to(:manage, Touch.new(contact: another_client.contact))
+      end
+    end
   end
 
 end
