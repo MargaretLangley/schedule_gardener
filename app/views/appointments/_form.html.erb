@@ -13,9 +13,9 @@
     <%= f.input :description %>
   </div>
   <div class="form-actions">
-    <%= f.button :submit, class: 'primary_action_button' %>
+    <%= f.submit class: 'primary_action_button' %>
   </div>
 <% end %>
 
-<%= debug "starts" + @appointment.inspect %>
+<%= debug ("starts" + @appointment.inspect) unless Rails.env.production? %>
 

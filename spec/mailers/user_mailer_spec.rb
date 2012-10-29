@@ -3,7 +3,7 @@ require "spec_helper"
 describe UserMailer do
 
   describe "password_reset" do
-    let!(:mail) { UserMailer.password_reset(FactoryGirl.create(:user, :client, :resetting_password)) }
+    let!(:mail) { UserMailer.password_reset(FactoryGirl.create(:user, :client_j, :resetting_password)) }
 
 
     it "renders the headers" do

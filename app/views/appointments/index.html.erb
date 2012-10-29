@@ -9,7 +9,9 @@
   <div class="row-fluid">
 
     <div class="span3">
-      <%= render 'nav_index' %>
+      <% if current_gardener? %>
+        <%= render 'nav_index' %>
+      <% end %>
     </div><!--/span-->
 
     <div class="span9">
@@ -52,4 +54,4 @@
 </div><!--/row-->
 
 
-<%= debug(@appointments) unless (Rails.env.production? || true) %>
+<%= debug(@appointments) unless (Rails.env.production? ) %>

@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "authorization" do
 
   before { Timecop.freeze(Time.zone.parse('1/9/2012 8:00')) }
-  let(:user) { FactoryGirl.create(:user, :client) }
-  let!(:wrong_user) { FactoryGirl.create(:user, :client) }
+  let(:user_j) { FactoryGirl.create(:user, :client_j) }
+  let!(:wrong_user) { FactoryGirl.create(:user, :client_j) }
 
 
 
@@ -12,7 +12,7 @@ describe "authorization" do
 
     context "client user" do
       before do
-       visit_signin_and_login user
+       visit_signin_and_login user_j
       end
 
       it "#index" do
@@ -21,17 +21,17 @@ describe "authorization" do
       end
 
       it "#edit"  do
-         get edit_profile_path(user)
+         get edit_profile_path(user_j)
          response.should render_template('edit')
       end
 
       it "#update" do
-         put update_profile_path(user)
+         put update_profile_path(user_j)
          response.code.should == '200'
       end
 
       it "#delete" do
-        delete user_path(user)
+        delete user_path(user_j)
         response.should redirect_to(root_path)
       end
 
@@ -45,17 +45,17 @@ describe "authorization" do
       end
 
       it "#edit"  do
-         get edit_profile_path(user)
+         get edit_profile_path(user_j)
          response.should redirect_to(signin_path)
       end
 
       it "#update" do
-         put update_profile_path(user)
+         put update_profile_path(user_j)
          response.should redirect_to(signin_path)
       end
 
       it "#delete" do
-        delete user_path(user)
+        delete user_path(user_j)
         response.should redirect_to(signin_path)
       end
 
@@ -66,19 +66,19 @@ describe "authorization" do
        visit_signin_and_login wrong_user
       end
       it "#show" do
-        get user_path(user)
+        get user_path(user_j)
         response.should redirect_to(root_path)
       end
       it "#edit" do
-        get edit_profile_path(user)
+        get edit_profile_path(user_j)
         response.should redirect_to(root_path)
       end
       it "#update" do
-        put update_profile_path(user)
+        put update_profile_path(user_j)
         response.should redirect_to(root_path)
       end
       it "#delete" do
-        delete user_path(user)
+        delete user_path(user_j)
         response.should redirect_to(root_path)
       end
     end
@@ -86,11 +86,11 @@ describe "authorization" do
 
   describe "in appointments controller" do
 
-    let!(:appointment) { FactoryGirl.create(:appointment, :gardener_a, :today_first_slot, contact: user.contact ) }
+    let!(:appointment) { FactoryGirl.create(:appointment, :gardener_a, :today_first_slot, contact: user_j.contact ) }
 
     context "client user" do
       before do
-       visit_signin_and_login user
+       visit_signin_and_login user_j
       end
 
       it "#index" do
@@ -163,11 +163,11 @@ describe "authorization" do
 
   describe "in touch controller" do
 
-    let!(:touch) { FactoryGirl.create(:touch, :client_r) }
+    let!(:touch) { FactoryGirl.create(:touch, contact: user_j.contact) }
 
-    context "client user" do
+    context "client user with own resources" do
       before do
-       visit_signin_and_login user
+       visit_signin_and_login user_j
       end
 
       it "#index" do
@@ -237,7 +237,7 @@ describe "authorization" do
   describe "events controller" do
     context "client user" do
       before do
-       visit_signin_and_login user
+       visit_signin_and_login user_j
       end
 
       it "#index" do

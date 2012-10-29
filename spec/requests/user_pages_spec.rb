@@ -19,7 +19,7 @@ describe "users" do
     end
 
     let!(:standard_user)  do
-       FactoryGirl.create(:user, :client, contact: FactoryGirl.create(:contact, first_name: user_first_name, home_phone: user_home_phone))
+       FactoryGirl.create(:user, :client_j, contact: FactoryGirl.create(:contact, first_name: user_first_name, home_phone: user_home_phone))
     end
 
     before do
@@ -30,7 +30,7 @@ describe "users" do
 
     describe "pagination" do
 
-      before(:all)  { 30.times { FactoryGirl.create(:user,:client) } }
+      before(:all)  { 30.times { FactoryGirl.create(:user,:client_j) } }
       after(:all)   { User.delete_all; Contact.delete_all; Address.delete_all; }
 
       it "present" do
@@ -137,7 +137,7 @@ describe "users" do
   end # index
 
   describe "#show " do
-  	let(:standard_user) { FactoryGirl.create(:user, :client) }
+  	let(:standard_user) { FactoryGirl.create(:user, :client_j) }
 
     it "user profile" do
       visit_signin_and_login (standard_user)
@@ -209,7 +209,7 @@ describe "users" do
   end
 
   context "#edit" do
-    let(:standard_user) { FactoryGirl.create(:user, :client) }
+    let(:standard_user) { FactoryGirl.create(:user, :client_j) }
     before do
       visit_signin_and_login (standard_user)
       visit edit_profile_path (standard_user)

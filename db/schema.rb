@@ -72,12 +72,10 @@ ActiveRecord::Schema.define(:version => 20121025093826) do
   add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
 
   create_table "touches", :force => true do |t|
-    t.integer  "contact_id"
+    t.integer  "contact_id",             :null => false
     t.boolean  "by_phone"
     t.boolean  "by_visit"
-    t.datetime "touch_from"
-    t.datetime "between_start"
-    t.datetime "between_end"
+    t.datetime "touch_from",             :null => false
     t.boolean  "completed"
     t.text     "additional_information"
     t.datetime "created_at",             :null => false

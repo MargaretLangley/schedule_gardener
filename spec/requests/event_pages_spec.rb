@@ -7,7 +7,7 @@ describe "event" do
 
   context "#index" do
     let!(:appointment) do
-      FactoryGirl.create(:appointment, :client, :gardener_a, :today_first_slot)
+      FactoryGirl.create(:appointment, :client_r, :gardener_a, :today_first_slot)
     end
     let!(:gardener)  do
       FactoryGirl.create(:user, :gardener)

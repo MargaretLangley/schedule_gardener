@@ -1,5 +1,7 @@
 'en-GB':
   activerecord:
+    models:
+      touch: Contact Me
     attributes:
       user:
         password_digest: "Password"
@@ -15,15 +17,9 @@
               on_or_after: "The appointment can not finish before it begins."
         touch:
           attributes:
-            between_start:
-              on_or_after:  'You asked for a range of appointment dates than begins before today. Please choose a start date from today.'
-              on_or_before: 'You asked for a range of appointment dates that starts in more than a year. Please choose an start date within a year.'
-            between_end:
-              on_or_after:  'You asked for a range of appointments that end before they begin. Please choose an end date after the start date.'
-              on_or_before: 'You asked for a range of appointment dates that ends in more than a year. Please choose an end date within a year.'
             touch_from:
               on_or_after:  'We can contact you from today. Please choose a date which can be today or in the future.'
-              on_or_before: 'We can contact you within a year. Please choose a date within a year from today.'
+              before: 'We can contact you within a year. Please choose a date within a year from today.'
 
 
   date:

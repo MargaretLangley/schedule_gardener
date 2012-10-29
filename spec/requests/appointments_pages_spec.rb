@@ -10,7 +10,6 @@ describe "Appointments" do
     @user         = FactoryGirl.create(:user, :client_r)
     @gardener_a     = FactoryGirl.create(:user, :gardener)
     (@appointment = FactoryGirl.create(:appointment, :tomorrow_first_slot, appointee: @gardener_a.contact , contact: @user.contact)).save!
-    (FactoryGirl.create(:appointment, :gardener_p, :next_week_first_slot, contact: @user.contact)).save!
     Capybara.reset_sessions!
     visit_signin_and_login @user
   end
@@ -25,21 +24,39 @@ describe "Appointments" do
       it ("displayed") { current_path.should eq appointments_path }
       it ("has appointee") { should have_selector('td', text: "Alan Titmarsh") }
 
+      context "nav links" do
+        it ("not displayed") { should_not have_link('This Week') }
+      end
+
       it "edits appointment" do
         click_on('Edit')
         current_path.should eq edit_appointment_path(@appointment)
       end
       it ("deletes appointment") { expect { click_on('Delete')}.to change(Appointment, :count).by(-1) }
 
+    end
+
+    context "gardener" do
+      before do
+        (FactoryGirl.create(:appointment, :next_week_first_slot, :client_a, appointee: @gardener_a.contact )).save!
+        visit_signin_and_login @gardener_a
+        visit appointments_path
+      end
+
+      it ("displayed") { current_path.should eq appointments_path }
+      it ("displays phone") { should have_content('0181-100-3003')}
+
       context "nav links" do
         context "this week" do
           before { click_on('This Week') }
-          it ("displays appointee") { should have_selector('td', text: "Alan Titmarsh") }
+          it ("displays appointee") { should have_selector('td', text: "Roger") }
+          it ("not displays next week") { should_not have_selector('td', text: "Ann") }
         end
 
         context "next week" do
           before { click_on('Next Week') }
-          it ("displays appointee") { should have_selector('td', text: "Percy Thrower") }
+          it ("displays appointee") { should have_selector('td', text: "Ann") }
+          it ("not displays last week") { should_not have_selector('td', text: "Roger") }
         end
       end
 
@@ -47,16 +64,6 @@ describe "Appointments" do
         click_on('Calendar')
         current_path.should eq events_path
       end
-    end
-
-    context "gardener" do
-      before do
-        visit_signin_and_login @gardener_a
-        visit appointments_path
-      end
-
-      it ("displayed") { current_path.should eq appointments_path }
-      it ("displays phone") { should have_content('0181-100-3003')}
 
     end
   end

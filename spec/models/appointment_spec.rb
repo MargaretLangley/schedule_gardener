@@ -28,7 +28,7 @@ describe Appointment do
   after(:all) { Contact.delete_all; Address.delete_all; }
 
   subject(:appointment) do
-    (app = FactoryGirl.build(:appointment, :client, :gardener_a, :today_first_slot)).save!
+    (app = FactoryGirl.build(:appointment, :client_r, :gardener_a, :today_first_slot)).save!
     app
   end
 

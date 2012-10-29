@@ -8,11 +8,6 @@ FactoryGirl.define do
       association :contact, :admin, strategy: :build
     end
 
-    trait :client do
-      association :contact, :client_j, strategy: :build
-    end
-
-
     trait :client_a do
       association :contact, :client_a, strategy: :create
     end
@@ -121,7 +116,11 @@ FactoryGirl.define do
 
   factory :appointment do
 
-    trait :client do
+    trait :client_a do
+      association :contact, :client_a
+    end
+
+    trait :client_r do
       association :contact, :client_r
     end
 

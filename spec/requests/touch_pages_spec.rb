@@ -1,33 +1,29 @@
 require 'spec_helper'
 
 describe "Touches" do
+  let(:user_r) { FactoryGirl.create(:user, :client_r) }
+  let(:touch_r) { FactoryGirl.create(:touch, :tomorrow, contact: user_r.contact) }
   let(:gardener_a) { FactoryGirl.create(:user, :gardener) }
   before(:each) do
     Timecop.freeze(Time.zone.parse('1/9/2012 5:00'))
-    @user = FactoryGirl.create(:user, :client_r)
+
     Capybara.reset_sessions!
-    visit_signin_and_login @user
+    visit_signin_and_login user_r
   end
 
   subject { page }
 
   context "#index" do
-    context "standard user" do
-      before(:each) { visit touches_path }
-      it ("displayed") { current_path.should eq touches_path }
+    before(:each) do
+      FactoryGirl.create(:touch, :client_j, :today, by_phone: true)
+      FactoryGirl.create(:touch, :tomorrow, by_phone: true, contact: user_r.contact)
     end
-  end
-
-  context "#index" do
-    before(:each) {  visit touches_path }
 
     context "standard user" do
+      before { visit touches_path }
       it ("displayed") { current_path.should eq touches_path }
-      context "Other users" do
-        before { FactoryGirl.create(:touch, :client_r, by_phone: true) }
-        xit "are not listed" do
-        end
-      end
+      it ("own listed") { should have_content 'Roger Smith' }
+      it ("others not listed") { should_not have_content 'John Smith' }
     end
 
     context "Gardenerr" do
@@ -37,6 +33,9 @@ describe "Touches" do
       end
 
       it ("displayed") { current_path.should eq touches_path }
+      it ("both listed") { should have_content 'Roger Smith' }
+      it ("both listed") { should have_content 'John Smith' }
+
     end
   end
 
@@ -96,6 +95,28 @@ describe "Touches" do
         it ("adds touch") { expect { click_on("Contact Me") }.to change(Touch, :count).by(1) }
       end
     end
+  end
 
+  context "#edit" do
+    before(:each) {  visit edit_touch_path(touch_r) }
+    it ("displays") { current_path.should eq edit_touch_path(touch_r) }
+
+  end
+
+  context "#update" do
+    before { visit edit_touch_path(touch_r) }
+
+    context "with valid information" do
+      before { click_on("Update Contact Me") }
+
+      context "on update" do
+        it ("displays #update") { current_path.should eq touches_path }
+        it ("flash success") { should have_flash_success('Contact me was successfully updated.') }
+      end
+    end
+
+  end
+
+  context "#delete" do
   end
 end
