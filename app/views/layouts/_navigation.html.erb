@@ -1,11 +1,14 @@
-<a href="<%= root_path %>" id="logo">Garden Care <%= raw("<i class=\"icon-leaf icon-white\"></i>")  %></a>
-<nav>
-  <ul class="nav pull-right">
-    <li>
-      <a href="<%= help_path %>"><%= raw("<i class=\"icon-question-sign icon-white\"></i>") %>Help</a>
-    </li>
+<div class="container-fluid">
+  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </a>
+  <a id="logo" class="brand" href="<%= root_path %>">Garden Care <%= raw("<i class=\"icon-leaf icon-white\"></i>") %></a>
+
+  <div class="nav-collapse collapse">
+    <ul class="nav pull-right">
     <% if signed_in? %>
-      <li><%= link_to 'Users', users_path if can? :index, current_user %></li>
       <li id="fat-menu" class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <%= raw("<i class=\"icon-user icon-white\"></i>") + current_user.full_name %><b class="caret"></b>
@@ -21,5 +24,7 @@
     <% else %>
       <li><%= link_to 'Sign in', signin_path %></li>
     <% end %>
-  </ul>
-</nav>
+  </ul>  </div><!--/.nav-collapse -->
+</div>
+
+

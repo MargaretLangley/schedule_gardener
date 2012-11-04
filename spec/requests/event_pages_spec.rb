@@ -22,15 +22,5 @@ describe "event" do
     it "should reach events" do
       current_path.should eq events_path
     end
-
-    context "links" do
-
-      it "navigate to appointments path" do
-        should have_link('List Appointments', href: appointments_path)
-      end
-      it "navigate to create appointment path" do
-        should have_link('Create Appointment', href: new_appointment_path)
-      end
-    end
   end
 end

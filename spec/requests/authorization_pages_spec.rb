@@ -116,7 +116,6 @@ describe "authorization" do
     end
 
 
-
     context "guests visiting protected page -> signin" do
 
       it "#index" do
@@ -233,6 +232,45 @@ describe "authorization" do
       end
     end
   end
+
+
+  describe "in dashboard controller" do
+
+    context "client user" do
+      before do
+       visit_signin_and_login user_j
+      end
+
+      it "#show" do
+        get dashboard_path(user_j)
+        response.code.should == '200'
+      end
+
+    end
+
+
+    context "guests visiting protected page -> signin" do
+
+      it "#show" do
+        get dashboard_path(user_j)
+        response.should redirect_to(signin_path)
+      end
+
+    end
+
+    context "wrong user action redirect to root" do
+      before do
+       visit_signin_and_login wrong_user
+      end
+
+      it "#show" do
+        get dashboard_path(user_j)
+        response.should redirect_to(root_path)
+      end
+    end
+  end
+
+
 
   describe "events controller" do
     context "client user" do

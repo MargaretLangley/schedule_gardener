@@ -9,16 +9,18 @@
     <%= favicon_link_tag "icons/spade.png"  unless Rails.env.production?  %>
     <%= favicon_link_tag "icons/favicon.png" if Rails.env.production?  %>
   </head>
-  <body class="container">
-    <header class="navbar navbar-fixed-top">
-      <nav class="navbar-inner">
+  <body>
+
+  <header class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
         <%= render 'layouts/navigation' %>
-      </nav>
+      </div>
     </header>
-    <%= render 'layouts/messages' %>
+
+  <%= render 'layouts/messages' %>
     <%= yield %>
     <%= render 'layouts/footer' %>
-    <%= debug(params) unless Rails.env.production? %>
-    <%= debug(Rails.env) unless Rails.env.production?  %>
+    <%= debug(params) unless Rails.env.production? | true %>
+    <%= debug(Rails.env) unless Rails.env.production? | true %>
   </body>
 </html>

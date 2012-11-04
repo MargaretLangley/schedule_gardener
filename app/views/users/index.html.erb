@@ -1,31 +1,48 @@
 <% provide(:title, 'Users') %>
-<h1>Users</h1>
 
-<%= form_tag users_path, :method => 'get'  do %>
-  <%= hidden_field_tag :direction, params[:direction] %>
-  <%= hidden_field_tag :sort, params[:sort] %>
-  <div class="search">
-      <%= text_field_tag :search, params[:search], placeholder: "Search" %><button id="go_search" type="submit" value="search" ><i class="icon-search"></i></button>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1>Users</h1>
+    </div>
+  <div>
+
+  <div class="row-fluid">
+    <div class="span12">
+    <%= render 'shared/main_navigation' %>
+    </div
   </div>
-<% end %>
 
-<%= will_paginate %>
+  <div class="row-fluid">
+    <div class="span12">
+      <%= form_tag users_path, :method => 'get'  do %>
+        <%= hidden_field_tag :direction, params[:direction] %>
+        <%= hidden_field_tag :sort, params[:sort] %>
+        <div class="search">
+          <%= text_field_tag :search, params[:search], placeholder: "Search" %><button id="go_search" type="submit" value="search" ><i class="icon-search"></i></button>
+        </div>
+      <% end %>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>Phone</th>
-      <th>Edit</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-<tbody>
-  <% @users.each do |user| %>
-  <tr>
-    <%= render user  %>
-  </tr>
-  <% end %>
-</tbody>
-</table>
-<%= will_paginate %>
+      <%= will_paginate %>
+
+      <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Edit</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+      <tbody>
+        <% @users.each do |user| %>
+        <tr>
+          <%= render user  %>
+        </tr>
+        <% end %>
+      </tbody>
+      </table>
+      <%= will_paginate %>
+    </div><!-- span  -->
+  </div><!-- row fluid -->
+</div>

@@ -8,4 +8,5 @@ module ApplicationHelper
       "#{application_title} | #{page_title}"
     end
   end
+
 end

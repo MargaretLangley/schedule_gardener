@@ -1,6 +1,8 @@
 ScheduleGardener::Application.routes.draw do
 
 
+
+
   root                            to: 'static_pages#home'
   match '/help',                  to: 'static_pages#help'
   match '/about',                 to: 'static_pages#about'
@@ -20,6 +22,7 @@ ScheduleGardener::Application.routes.draw do
   match '/signout',               to: 'sessions#destroy', via: :delete
 
 
+  resources :dashboard, only: [:show]
   resources :appointments, only: [:new, :create, :edit, :update, :destroy, :index]
   resources :events , only: [:index]
   resources :password_resets, only: [:new, :create, :edit, :update]

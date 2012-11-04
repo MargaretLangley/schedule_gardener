@@ -30,8 +30,7 @@ describe "Authentication" do
         context "for standard user" do
           before { login_user(user) }
 
-          it ("opens protected page")      { current_path.should eq user_path(user) }
-          it ("has no 'users' link")       { should_not have_link('Users',     href: users_path) }
+          it ("opens protected page")      { current_path.should eq dashboard_path(user) }
           it ("has 'full name' link")      { should have_link("John Smith",  href: "#") }
           it ("has 'Update Profile' link") { should have_link('Update Profile',href: edit_profile_path(user)) }
           it ("has 'Sign out' link ")      { should have_link('Sign out',      href: signout_path) }
@@ -40,8 +39,7 @@ describe "Authentication" do
         context "for gardener" do
           before { login_user(gardener) }
 
-          it ("opens protected page")      { current_path.should eq user_path(gardener) }
-          it ("has 'users' link")          { should have_link('Users',         href: users_path) }
+          it ("opens protected page")      { current_path.should eq dashboard_path(gardener) }
           it ("has 'full name' link")      { should have_link("Alan Titmarsh", href: "#") }
           it ("has 'Update Profile' link") { should have_link('Update Profile',href: edit_profile_path(gardener)) }
           it ("has 'Sign out' link ")      { should have_link('Sign out',      href: signout_path) }
@@ -51,7 +49,7 @@ describe "Authentication" do
         context "for admin user" do
           before { login_user(admin) }
 
-          it ("opens protected page")      { current_path.should eq user_path(admin) }
+          it ("opens protected page")      { current_path.should eq dashboard_path(admin) }
         end
       end
 
@@ -62,7 +60,6 @@ describe "Authentication" do
 
         it ("remains on signin page")       { current_path.should eq signin_path }
         it ("has error banner")             { should have_flash_error('Invalid') }
-        it ("has no 'users' link")          { should_not have_link('Users',          href: users_path) }
         it ("has no 'full name' link")      { should_not have_link(user.full_name,   href: "#") }
         it ("has no 'Update Profile' link") { should_not have_link('Update Profile', href: edit_profile_path(user)) }
         it ("has no 'Sign out' link")       { should_not have_link('Sign out',       href: signout_path) }

@@ -9,7 +9,7 @@ describe "Static pages" do
     it "redirect signed in users to a user specific page" do
       visit_signin_and_login user
       visit root_path
-      current_path.should eq user_path(user)
+      current_path.should eq dashboard_path(user)
     end
 
   end
@@ -40,11 +40,6 @@ describe "Static pages" do
     end
 
     context "header" do
-
-      it "links to help" do
-        click_link "Help"
-        current_path.should eq help_path
-      end
 
       it "links to logo" do
         click_link "logo"

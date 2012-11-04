@@ -1,0 +1,36 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <% if current_gardener? %>
+        <th>Phone</th>
+      <% else %>
+        <th>With</th>
+      <% end %>
+
+      <th>Starts at</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if object.count > 0 %>
+      <% object.each do |appointment| %>
+        <tr>
+          <td><%= appointment.title %></td>
+          <% if current_gardener? %>
+          <td><%= number_to_phone(appointment.contact.home_phone) %></td>
+          <% else %>
+          <td><%= appointment.appointee.full_name %></td>
+          <% end %>
+
+          <td><%= l appointment.starts_at, format: :short  %></td>
+          <td><%= link_to 'Edit', edit_appointment_path(appointment), class: 'btn btn-mini' %></td>
+          <td><%= link_to 'Delete', appointment_path(appointment), confirm: 'You sure?' , method: 'delete', class: 'btn btn-mini btn-danger' %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr><td colspan="5"><h2>No Appointments</h2></td></tr>
+    <% end %>
+  </tbody>
+</table>
