@@ -31,13 +31,17 @@
         </tr>
       </thead>
     <tbody>
-      <% @users.each do |user| %>
-      <tr>
-        <%= render user  %>
-      </tr>
+      <% if @users.count > 0 %>
+        <% @users.each do |user| %>
+        <tr>
+          <%= render user  %>
+        </tr>
+        <% end %>
+      </tbody>
+      </table>
+      <% else %>
+        <tr><td colspan="4"><h2>No Matching Users</h2></td></tr>
       <% end %>
-    </tbody>
-    </table>
     <%= will_paginate %>
   </div><!-- span  -->
 </div><!-- row fluid -->
