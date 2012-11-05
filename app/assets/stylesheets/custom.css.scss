@@ -51,6 +51,12 @@ h2 {
   color: $grayLight;
 }
 
+
+h3 {
+  @extend h2;
+  font-size: 1.4em;
+}
+
 p {
   font-size: 1.1em;
   line-height: 1.7em;
@@ -58,26 +64,27 @@ p {
 
 
 /* Nav bar  see also colour overrides at the top of scss*/
-
-.icon-question-sign.icon-white, .icon-user.icon-white {
- vertical-align: 0px;
-}
 .icon-leaf.icon-white { vertical-align: 5px; }
 
 
 /* Flash Messages - to correspond to bootstrap styling */
 
-
 /* :alert styled as bootstrap alert */
 div.alert.alert-alert {
-   @extend .alert-error
+   @extend .alert-error;
  }
 
 /* :notice styled as bootstrap notice */
 div.alert.alert-notice {
-  @extend .alert-info
+  @extend .alert-info;
 }
 
+
+/*  sidebar */
+
+.sidebar-nav ul li {
+  @extend .span12;
+}
 
 
 /* footer */
@@ -115,28 +122,10 @@ footer {
   margin-top: 3%;
 }
 
-/* sidebar */
+/* tables  */
 
-aside {
-  section {
-    padding: 10px 0;
-    border-top: 1px solid $grayLighter;
-    &:first-child {
-      border: 0;
-      padding-top: 0;
-    }
-    span {
-      display: block;
-      margin-bottom: 3px;
-      line-height: 1;
-    }
-    h1 {
-      font-size: 1.6em;
-      text-align: left;
-      letter-spacing: -1px;
-      margin-bottom: 3px;
-    }
-  }
+table {
+  table-layout: fixed;  /* makes columns line up with and without data */
 }
 
 
@@ -145,9 +134,7 @@ aside {
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
-  padding: 10px;
   height: auto;
-  margin-bottom: 15px;
 }
 
 #error_explanation {
@@ -174,16 +161,11 @@ input, textarea, select, .uneditable-input {
 
 /* search box on index page  */
 
-.well.form-search {
-    position: relative;
+.form-search {
+    @extend .well;
 }
 
-.well.form-search .search-query {
-    padding-left: 29px;
-}
-
-.well.form-search .icon-search {
-    position: absolute;
-    top: 25px;
-    left: 30px;
+.input-query {
+  @extend .search-query;
+  @extend .span3;
 }

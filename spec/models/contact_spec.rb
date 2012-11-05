@@ -184,7 +184,6 @@ describe Contact do
     its(:full_name) { should eq "Roger Smith"}
 	end
 
-
 	context "#home_phone" do
 
 		it "only save numerics" do
@@ -193,6 +192,28 @@ describe Contact do
 		end
 
 	end
+
+  context "formatted home phone without area code" do
+    it "none brum" do
+      contact.formatted_home_phone_without_area_code.should eq "0181-100-3003"
+    end
+    it "Brum" do
+      contact.home_phone = "0121-333-1234"
+      contact.formatted_home_phone_without_area_code.should eq "333-1234"
+    end
+  end
+
+  context "#formatted full name plus contact" do
+    it "none brum" do
+      contact.formatted_full_name_plus_contact.should eq "Roger Smith / 0181-100-3003"
+    end
+    it "Brum" do
+      contact.home_phone = "0121-333-1234"
+      contact.formatted_full_name_plus_contact.should eq "Roger Smith / 333-1234"
+    end
+
+  end
+
 
 	context "#mobile" do
 

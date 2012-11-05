@@ -4,7 +4,7 @@
     <%= f.association :appointee, label: "Gardener", collection: Contact.contacts_by_role("gardener"), label_method: "first_name", include_blank: false %>
 
     <% if current_user.role == "gardener" %>
-      <%= f.association :contact, label: "Client", collection: Contact.contacts_by_role("client"), label_method: "first_name", include_blank: false %>
+      <%= f.association :contact, label: "Client", collection: Contact.contacts_by_role("client"), label_method: "formatted_full_name_plus_contact", include_blank: false %>
     <% end %>
     <%= f.input :starts_at_date, label: 'Date', readonly: true %>
     <%= f.input :starts_at_time, label: 'Time' , include_blank: false, collection: [['Early Morning - (9.30 am)', '9:30'], ['Late Morning - (11.30 am)', '11:30'], ['Early Afternoon - (1.30pm)', '13:30'], ['Late Afternoon - (3.30 pm)','15:30']] %>

@@ -1,23 +1,30 @@
 <table class="table table-striped">
-  <tr>
-    <th>Name</th>
-    <th>Phone</th>
-    <th>Visit</th>
-    <th>Contact From</th>
-    <th>Phone No</th>
-    <th>Edit</th>
-    <th>Delete</th>
-  </tr>
-
-<% object.each do |touch| %>
-  <tr>
-    <td><%= touch.contact.full_name %></td>
-    <td><%= touch.by_phone? ? 'Yes' : 'No' %></td>
-    <td><%= touch.by_visit? ? 'Yes' : 'No' %></td>
-    <td><%= l touch.touch_from  %></td>
-    <td><%= number_to_phone(touch.contact.home_phone) %></td>
-    <td><%= link_to 'Edit', edit_touch_path(touch), class: 'btn btn-mini' %></td>
-    <td><%= link_to 'Delete', touch_path(touch), confirm: 'You sure?' , method: 'delete', class: 'btn btn-mini btn-danger'%></td>
-  </tr>
-<% end %>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>Visit</th>
+      <th>Contact From</th>
+      <th>Phone No</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if object.count > 0 %>
+      <% object.each do |touch| %>
+        <tr>
+          <td><%= touch.contact.full_name %></td>
+          <td><%= touch.by_phone? ? 'Yes' : 'No' %></td>
+          <td><%= touch.by_visit? ? 'Yes' : 'No' %></td>
+          <td><%= l touch.touch_from  %></td>
+          <td><%= touch.contact.formatted_home_phone_without_area_code %></td>
+          <td><%= link_to 'Edit', edit_touch_path(touch), class: 'btn btn-mini' %></td>
+          <td><%= link_to 'Delete', touch_path(touch), confirm: 'You sure?' , method: 'delete', class: 'btn btn-mini btn-danger'%></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr><td colspan="7"><h3>Nobody to contact</h3></td></tr>
+    <% end %>
+  </tbody>
 </table>

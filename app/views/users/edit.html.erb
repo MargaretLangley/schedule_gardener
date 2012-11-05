@@ -1,7 +1,11 @@
 <% provide(:title, "Update Profile") %>
-<h1>Update Profile</h1>
+<div class="row-fluid">
+  <div class="span12">
+    <h1>Update Profile</h1>
+  </div>
+<div>
 
-<div class="row">
+<div class="row-fluid">
   <div class="span6 offset3">
   <%= simple_form_for(@user, html: { class: 'form-vertical'}, url: edit_profile_path(@user)) do |f| %>
     <%= render 'shared/error_messages', object: f.object  %>
@@ -16,5 +20,5 @@
     <% end %>
     <%= f.button :submit, value: "Update Profile", class: 'primary_action_button' %>
   <% end %>
-  </div>
-</div>
+  </div> <!-- span -->
+</div> <!-- row fluid -->

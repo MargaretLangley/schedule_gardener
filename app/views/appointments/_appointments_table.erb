@@ -19,7 +19,7 @@
         <tr>
           <td><%= appointment.title %></td>
           <% if current_gardener? %>
-          <td><%= number_to_phone(appointment.contact.home_phone) %></td>
+          <td><%= appointment.contact.formatted_home_phone_without_area_code %></td>
           <% else %>
           <td><%= appointment.appointee.full_name %></td>
           <% end %>
