@@ -46,7 +46,12 @@ describe "Touches" do
 
       it ("displayed") { current_path.should eq new_touch_path }
       it ("has client missing") { should_not have_selector('#touch_contact_id') }
-      context "hides gardener only contnet" do
+      it "can cancel" do
+        click_on("Cancel")
+        current_path.should eq touches_path
+      end
+
+      context "hides gardener only content" do
         it ("by phone")  { should_not have_content'By phone' }
         it ("by visit")  { should_not have_content'By visit' }
         it ("completed")  { should_not have_content'Completed' }

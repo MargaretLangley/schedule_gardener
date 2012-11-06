@@ -75,6 +75,10 @@ describe "Appointments" do
 
       it ("displayed") { current_path.should eq new_appointment_path }
       it ("has client missing") { should_not have_selector('#appointment_contact_id') }
+      it "can cancel" do
+        click_on("Cancel")
+        current_path.should eq appointments_path
+      end
 
       context "with valid information" do
         before { select 'Alan', from: 'appointment_appointee_id' }

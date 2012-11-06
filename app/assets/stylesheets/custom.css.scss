@@ -159,6 +159,12 @@ input, textarea, select, .uneditable-input {
    @extend .btn-primary;
  }
 
+ .cancel_button {
+   @extend .btn;
+   @extend .btn-danger;
+   @extend .btn-large;
+ }
+
 /* search box on index page  */
 
 .form-search {
