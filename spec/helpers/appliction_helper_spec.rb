@@ -16,15 +16,4 @@ describe ApplicationHelper do
     end
   end
 
-  context "format_phone" do
-    it "handles none Brum" do
-      format_phone!("01813331234").should =~ /0181-333-1234/
-    end
-
-    it "removes brum" do
-      format_phone!("01213331234").should =~ /333-1234/
-    end
-
-  end
-
 end
