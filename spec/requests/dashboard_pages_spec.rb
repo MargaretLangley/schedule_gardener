@@ -12,7 +12,7 @@ describe "Dashboard#show" do
     end
 
     context "Gardenerr" do
-      let(:gardener_a) { FactoryGirl.create(:user, :gardener) }
+      let(:gardener_a) { FactoryGirl.create(:user, :gardener_a) }
       before do
         visit_signin_and_login gardener_a
         visit dashboard_path(gardener_a)

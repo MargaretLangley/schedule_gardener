@@ -13,7 +13,7 @@ describe "abilities" do
   let(:admin)          { FactoryGirl.create(:user, :admin) }
   let(:another_client) { FactoryGirl.create(:user, :client_a) }
   let(:client)         { FactoryGirl.create(:user, :client_j) }
-  let(:gardener)       { FactoryGirl.create(:user, :gardener) }
+  let(:gardener)       { FactoryGirl.create(:user, :gardener_a) }
 
 shared_examples_for "can_manage_user" do |ability, user|
     it ("can show")     { ability.should     be_able_to(:show, user) }

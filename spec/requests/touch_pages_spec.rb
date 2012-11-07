@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Touches" do
   let(:user_r) { FactoryGirl.create(:user, :client_r) }
   let(:touch_r) { FactoryGirl.create(:touch, :tomorrow, contact: user_r.contact) }
-  let(:gardener_a) { FactoryGirl.create(:user, :gardener) }
+  let(:gardener_a) { FactoryGirl.create(:user, :gardener_a) }
   before(:each) do
     Timecop.freeze(Time.zone.parse('1/9/2012 5:00'))
 

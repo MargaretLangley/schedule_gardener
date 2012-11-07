@@ -8,7 +8,7 @@ describe "Appointments" do
 
     @admin        = FactoryGirl.create(:user, :admin)
     @user         = FactoryGirl.create(:user, :client_r)
-    @gardener_a     = FactoryGirl.create(:user, :gardener)
+    @gardener_a     = FactoryGirl.create(:user, :gardener_a)
     (@appointment = FactoryGirl.create(:appointment, :tomorrow_first_slot, appointee: @gardener_a.contact , contact: @user.contact)).save!
     Capybara.reset_sessions!
     visit_signin_and_login @user

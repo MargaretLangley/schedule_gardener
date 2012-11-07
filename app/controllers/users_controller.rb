@@ -21,12 +21,20 @@ class UsersController < ApplicationController
 
 
   def create
-    if @user.save
-      sign_in_remember_session @user
-      redirect_to @user, flash: { success: "Welcome to Garden Care!" }
-    else
-      render 'new'
-    end
+    (@user = User.new(params[:user])).save!
+    signed_in? ? create_another_user : new_user_signed_up
+    rescue ActiveRecord::RecordInvalid
+      render :new
+  end
+
+  def create_another_user
+    redirect_to users_path, flash: { success: "New User Created" }
+  end
+
+
+  def new_user_signed_up
+    sign_in_remember_session @user
+    redirect_to @user, flash: { success: "Welcome to Garden Care!" }
   end
 
 
@@ -35,14 +43,22 @@ class UsersController < ApplicationController
 
 
   def update
-    if @user.update_attributes(params[:user])
+    @user.update_attributes!(params[:user])
+    if editing_self
       flash[:success] = "Profile updated"
-
       # if the account we are using changes, The remember token changes
       # we then need to re-signin
-      sign_in_remember_session @user if current_user?(@user)
+      sign_in_remember_session @user
+      render 'edit'
+    else
+      redirect_to users_path, flash: { success: "Updated User" }
     end
-    render 'edit'
+    rescue ActiveRecord::RecordInvalid
+      render :edit
+  end
+
+  def editing_self
+    current_user?(@user)
   end
 
 

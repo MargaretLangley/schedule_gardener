@@ -21,8 +21,8 @@ FactoryGirl.define do
     end
 
 
-    trait :gardener do
-      association :contact, :gardener_a, strategy: :build
+    trait :gardener_a do
+      association :contact, :gardener_a, strategy: :create
     end
 
     trait :email_tester do

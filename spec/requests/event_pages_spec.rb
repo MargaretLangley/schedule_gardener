@@ -10,7 +10,7 @@ describe "event" do
       FactoryGirl.create(:appointment, :client_r, :gardener_a, :today_first_slot)
     end
     let!(:gardener)  do
-      FactoryGirl.create(:user, :gardener)
+      FactoryGirl.create(:user, :gardener_a)
     end
 
 
