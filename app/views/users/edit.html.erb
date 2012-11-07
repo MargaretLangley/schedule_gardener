@@ -7,7 +7,7 @@
 
 <div class="row-fluid">
   <div class="span6 offset3">
-  <%= simple_form_for(@user, html: { class: 'form-vertical'}, url: edit_profile_path(@user)) do |f| %>
+  <%= simple_form_for(@user, html: { class: 'form-horizontal'}, url: edit_profile_path(@user)) do |f| %>
     <%= render 'shared/error_messages', object: f.object  %>
     <%= f.simple_fields_for :contact do |c| %>
       <%= c.input :first_name %>
@@ -18,7 +18,11 @@
       <% end %>
       <%= c.input :home_phone %>
     <% end %>
-    <%= f.button :submit, value: "Update Profile", class: 'primary_action_button' %>
+    <div class="form-buttons">
+      <%= f.button :submit, value: "Update Profile", class: 'primary_action_button' %>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <%= link_to 'Cancel', users_path, class: 'cancel_button' %>
+    </div>
   <% end %>
   </div> <!-- span -->
 </div> <!-- row fluid -->

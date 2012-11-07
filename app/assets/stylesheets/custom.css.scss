@@ -189,3 +189,9 @@ input, textarea, select, .uneditable-input {
   @extend .search-query;
   @extend .span3;
 }
+
+.form-buttons {
+  @extend .form-actions;
+  background-color: white;
+  border-top: none;
+}
