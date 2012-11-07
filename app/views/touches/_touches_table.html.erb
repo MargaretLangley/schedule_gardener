@@ -19,8 +19,8 @@
           <td><%= touch.by_visit? ? 'Yes' : 'No' %></td>
           <td><%= l touch.touch_from  %></td>
           <td><%= touch.contact.formatted_home_phone_without_area_code %></td>
-          <td><%= link_to 'Edit', edit_touch_path(touch), class: 'btn btn-mini' %></td>
-          <td><%= link_to 'Delete', touch_path(touch), confirm: 'You sure?' , method: 'delete', class: 'btn btn-mini btn-danger'%></td>
+          <td><%= link_to 'Edit', edit_touch_path(touch), class: 'tenerary_action_button' %></td>
+          <td><%= link_to 'Delete', touch_path(touch), confirm: 'You sure?' , method: 'delete', class: 'tenerary_action_button_warn'%></td>
         </tr>
       <% end %>
     <% else %>

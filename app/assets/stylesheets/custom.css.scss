@@ -161,8 +161,22 @@ input, textarea, select, .uneditable-input {
 
  .cancel_button {
    @extend .btn;
-   @extend .btn-danger;
    @extend .btn-large;
+   @extend .btn-danger;
+ }
+
+.tenerary_action_button  {
+   @extend .btn;
+   @extend .btn-mini;
+ }
+
+ .tenerary_action_button_warn  {
+   @extend .tenerary_action_button;
+   @extend .btn-danger;
+ }
+
+ .standard_button {
+  @extend .btn;
  }
 
 /* search box on index page  */

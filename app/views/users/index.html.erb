@@ -20,7 +20,7 @@
   <div class="span9">
     <%= form_tag users_path, :method => 'get', class: "form-search"  do %>
     <%= text_field_tag :search, params[:search], placeholder: "Search", class: "input-query" %>
-    <button id="go_search" type="submit" value="search", class: "btn" ><i class="icon-search"></i></button>
+    <button id="go_search" type="submit" value="search", class: 'standard_button' ><i class="icon-search"></i></button>
     <% end %>
 
     <%= will_paginate %>
@@ -47,7 +47,7 @@
         <tr><td colspan="4"><h2>No Matching Users</h2></td></tr>
       <% end %>
     <%= will_paginate %>
-    <%= link_to 'Create User', signup_path, class: 'btn btn-primary' %>
+    <%= link_to 'Create User', signup_path, class: 'primary_action_button' %>
   </div><!--/span-->
 </div><!--/row-->
 
