@@ -34,7 +34,7 @@ class UsersController < ApplicationController
 
   def new_user_signed_up
     sign_in_remember_session @user
-    redirect_to @user, flash: { success: "Welcome to Garden Care!" }
+    redirect_to dashboard_path(@user), flash: { success: "Welcome to Garden Care!" }
   end
 
 

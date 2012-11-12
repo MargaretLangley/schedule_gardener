@@ -20,13 +20,19 @@
     </h2>
     <%= calendar @date do |date| %>
       <%= date.day %>
-      <% if @appointments_by_date[date] %>
-        <ul>
-          <% @appointments_by_date[date].each do |appointment| %>
-            <li><%= link_to appointment.title, edit_appointment_path(appointment) %></li>
-          <% end %>
-        </ul>
+      <% 1.upto(4) do |i| %>
+      <ul>
+        <% if @appointments_by_date[date] && @appointments_by_date[date].any? { |appointment| appointment.include_slot_number?(i) }
+              appointment =  @appointments_by_date[date].find { |appointment| appointment.include_slot_number?(i) } %>
+             <li>
+                <%= link_to appointment.title, edit_appointment_path(appointment) %>
+             </li>
+        <% else %>
+          <li> <%= link_to "Slot #{i}", new_appointment_path(starts_at: Appointment.starts_at_from_date_and_slot(date,i)) %> </li>
+        <% end %>
+      </ul>
       <% end %>
+
     <% end %>
   </div> <!-- span12 -->
 </div> <!-- row-fluid appointments -->

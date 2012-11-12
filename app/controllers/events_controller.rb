@@ -5,14 +5,19 @@ class EventsController < ApplicationController
   load_and_authorize_resource :appointment, parent: false
 
   def index
+    @date = blank_param_date? ? default_date : param_date
+    @appointments_by_date = @appointments.in_time_range(@date..@date.end_of_month()).group_by {|appointment| appointment.starts_at.to_date}
+  end
 
-    @appointments_by_date = @appointments.group_by {|appointment| appointment.starts_at.to_date}
-    @date = params[:date] ? Date.parse(params[:date]) : Time.zone.today
+  def blank_param_date?
+    params[:date].blank?
+  end
 
-    # # FullCalendar calls its events source (/calendars url) with  start and end UNIX time stamp.
-    # @appointments = @appointments.in_time_range(Time.zone.at(params[:start].to_i) .. Time.zone.at(params[:end].to_i)) if params.has_key?(:start)
+  def param_date
+    Date.parse(params[:date])
+  end
 
-    # @events = @appointments.map {|appointment| appointment.to_event}
-
+  def default_date
+    Date.current.beginning_of_month()
   end
 end

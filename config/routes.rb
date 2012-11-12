@@ -14,7 +14,7 @@ ScheduleGardener::Application.routes.draw do
   match '/signup',                to: 'users#create', via: :post
   match '/settings/profile/:id',  to: 'users#edit',   via: :get, as: :edit_profile
   match '/settings/profile/:id',  to: 'users#update', via: :put, as: :update_profile
-  resources :users, only: [:index,:show,:destroy]
+  resources :users, only: [:index,:destroy]
 
 
   match '/signin',                to: 'sessions#new',     via: :get

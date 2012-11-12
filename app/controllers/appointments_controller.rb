@@ -44,7 +44,9 @@ class AppointmentsController < ApplicationController
     params[:nav] == link
   end
 
-
+  def new
+    @appointment = Appointment.new(starts_at: params[:starts_at])
+  end
 
   def create
     @appointment.save!

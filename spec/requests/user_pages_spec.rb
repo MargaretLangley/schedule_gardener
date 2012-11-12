@@ -118,16 +118,6 @@ describe "users" do
 
   end # index
 
-  describe "#show " do
-    let(:standard_user) { FactoryGirl.create(:user, :client_j) }
-
-    it "user profile" do
-      visit_signin_and_login (standard_user)
-      visit user_path(standard_user)
-      current_path.should eq user_path(standard_user)
-    end
-  end
-
   describe "#new (custom route signup) " do
     context "standard user" do
       before do
@@ -159,7 +149,7 @@ describe "users" do
           let(:user) { User.find_by_email('user@example.com') }
 
           it "displays new profile " do
-            current_path.should eq user_path(user)
+            current_path.should eq dashboard_path(user)
           end
           it  { should have_flash_success('Welcome') }
 
