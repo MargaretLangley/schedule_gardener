@@ -43,11 +43,7 @@ class Contact < ActiveRecord::Base
   end
 
   def formatted_full_name_plus_contact
-    full_name + " / " + formatted_home_phone_without_area_code
-  end
-
-  def formatted_home_phone_without_area_code
-    ActionController::Base.helpers.number_to_phone(home_phone.sub(/^0121/,''))
+    full_name + " / " + ActionController::Base.helpers.number_to_phone_without_area_code(home_phone)
   end
 
   def home_phone

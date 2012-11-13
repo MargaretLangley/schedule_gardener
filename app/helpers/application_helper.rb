@@ -9,4 +9,9 @@ module ApplicationHelper
     end
   end
 
+  def number_to_phone_without_area_code(phone_number)
+    number_to_phone(phone_number.sub(/^0121/,''))
+  end
+
+
 end

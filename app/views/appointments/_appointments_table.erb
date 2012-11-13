@@ -19,9 +19,9 @@
         <tr>
           <td><%= appointment.title %></td>
           <% if current_gardener? %>
-          <td><%= appointment.contact.formatted_home_phone_without_area_code %></td>
+          <td><%= appointment_client_home_phone_without_area_code(appointment) %></td>
           <% else %>
-          <td><%= appointment.appointee.full_name %></td>
+          <td><%= appointment_gardener_full_name(appointment) %></td>
           <% end %>
 
           <td><%= l appointment.starts_at, format: :short  %></td>
