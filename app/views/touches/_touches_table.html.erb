@@ -19,8 +19,8 @@
           <td><%= touch.by_visit? ? 'Yes' : 'No' %></td>
           <td><%= l touch.touch_from  %></td>
           <td><%= number_to_phone_without_area_code(touch.home_phone) %></td>
-          <td><%= link_to 'Edit', edit_touch_path(touch), class: 'tenerary_action_button' %></td>
-          <td><%= link_to 'Delete', touch_path(touch), confirm: 'You sure?' , method: 'delete', class: 'tenerary_action_button_warn'%></td>
+          <td><%= link_to_edit(edit_touch_path(touch)) %></td>
+          <td><%= link_to_delete(touch) %></td>
         </tr>
       <% end %>
     <% else %>

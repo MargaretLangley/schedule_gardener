@@ -1,13 +1,13 @@
 <td><%= link_to user.full_name, user %></td>
 <td><%= link_to number_to_phone(user.home_phone), user %></td>
 <td>
-  <%= if can? :edit, user
-        link_to 'Edit', edit_profile_path(user), class: 'tenerary_action_button'
-      end %>
+  <% if can? :edit, user %>
+   <%= link_to_edit(edit_profile_path(user)) %>
+  <% end %>
 </td>
 <td>
-  <%= if  can? :destroy, user
-        link_to  'Delete', user, confirm: 'You sure?', method: 'delete', class: 'tenerary_action_button_warn'
-      end %>
+  <% if  can? :destroy, user %>
+    <%= link_to_delete(user) %>
+  <% end %>
 </td>
 

@@ -193,18 +193,6 @@ describe Contact do
 
 	end
 
-  context "#formatted full name plus contact" do
-    it "none brum" do
-      contact.formatted_full_name_plus_contact.should eq "Roger Smith / 0181-100-3003"
-    end
-    it "Brum" do
-      contact.home_phone = "0121-333-1234"
-      contact.formatted_full_name_plus_contact.should eq "Roger Smith / 333-1234"
-    end
-
-  end
-
-
 	context "#mobile" do
 
 		it "only save numerics" do

@@ -30,6 +30,7 @@ class TouchesController < ApplicationController
   end
 
   def destroy
+     @touch.destroy
     redirect_to touches_path
   end
 end

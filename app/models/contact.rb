@@ -42,10 +42,6 @@ class Contact < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-  def formatted_full_name_plus_contact
-    full_name + " / " + ActionController::Base.helpers.number_to_phone_without_area_code(home_phone)
-  end
-
   def home_phone
     read_attribute(:home_phone)
   end

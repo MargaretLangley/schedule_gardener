@@ -14,4 +14,13 @@ module ApplicationHelper
   end
 
 
+  def link_to_edit(path)
+    link_to 'Edit', path, class: 'tenerary_action_button'
+  end
+
+  def link_to_delete(path)
+    link_to 'Delete', path, confirm: 'Are you sure you want to delete?' , method: 'delete', class: 'tenerary_action_button_warn'
+  end
+
+
 end

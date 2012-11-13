@@ -1,22 +1,23 @@
 require 'spec_helper'
 
 describe "Touches" do
-  let(:user_r) { FactoryGirl.create(:user, :client_r) }
-  let(:touch_r) { FactoryGirl.create(:touch, :tomorrow, contact: user_r.contact) }
-  let(:gardener_a) { FactoryGirl.create(:user, :gardener_a) }
+
   before(:each) do
     Timecop.freeze(Time.zone.parse('1/9/2012 5:00'))
-
     Capybara.reset_sessions!
     visit_signin_and_login user_r
   end
+  let(:user_r) { FactoryGirl.create(:user, :client_r) }
+  let!(:touch_r) { FactoryGirl.create(:touch, :tomorrow, contact: user_r.contact) }
+  let(:gardener_a) { FactoryGirl.create(:user, :gardener_a) }
+
 
   subject { page }
 
   context "#index" do
+    touch_a = nil
     before(:each) do
-      FactoryGirl.create(:touch, :client_j, :today, by_phone: true)
-      FactoryGirl.create(:touch, :tomorrow, by_phone: true, contact: user_r.contact)
+      touch_a = FactoryGirl.create(:touch, :client_j, :today, by_phone: true)
     end
 
     context "standard user" do
@@ -24,9 +25,16 @@ describe "Touches" do
       it ("displayed") { current_path.should eq touches_path }
       it ("own listed") { should have_content 'Roger Smith' }
       it ("others not listed") { should_not have_content 'John Smith' }
+      it "edits touch" do
+        click_on('Edit')
+        current_path.should eq edit_touch_path(touch_r)
+      end
+
+      it ("deletes touch") { expect { click_on('Delete')}.to change(Touch, :count).by(-1) }
+
     end
 
-    context "Gardenerr" do
+    context "Gardener" do
       before do
         visit_signin_and_login gardener_a
         visit touches_path
@@ -35,6 +43,13 @@ describe "Touches" do
       it ("displayed") { current_path.should eq touches_path }
       it ("both listed") { should have_content 'Roger Smith' }
       it ("both listed") { should have_content 'John Smith' }
+
+      it "edits touch" do
+        click_on('Edit')
+        current_path.should eq edit_touch_path(touch_a)
+      end
+
+      it ("deletes touch") { expect { click_on('Delete')}.to change(Touch, :count).by(-1) }
 
     end
   end
@@ -122,6 +137,4 @@ describe "Touches" do
 
   end
 
-  context "#delete" do
-  end
 end
