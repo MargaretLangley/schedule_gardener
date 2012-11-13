@@ -65,10 +65,6 @@ describe "authorization" do
       before do
        visit_signin_and_login wrong_user
       end
-      it "#show" do
-        get user_path(user_j)
-        response.should redirect_to(root_path)
-      end
       it "#edit" do
         get edit_profile_path(user_j)
         response.should redirect_to(root_path)

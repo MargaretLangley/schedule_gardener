@@ -23,31 +23,12 @@ class User < ActiveRecord::Base
   before_save { generate_token(:remember_token) }
 
   has_one :contact, autosave: true, dependent: :destroy, as: :contactable
+  delegate :appointments, :email, :first_name, :full_name, :home_phone, :role, :visits, to: :contact
   # attr_accessible :contact_attributes - adds the attribute writer to the allowed list
   # accepts_nes.... Defines an attributes writer for the specified association
   accepts_nested_attributes_for :contact
 
   Roles = %w[admin client gardner]
-
-  def full_name
-    contact.full_name
-  end
-
-  def email
-    contact.email
-  end
-
-  def role
-    contact.role
-  end
-
-  def appointments
-    contact.appointments
-  end
-
-  def visits
-    contact.visits
-  end
 
   def self.find_by_email(email)
     User.joins{contact}.where{ (contacts.email.eq(email)) }.readonly(false).first

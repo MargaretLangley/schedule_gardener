@@ -36,7 +36,7 @@ describe User do
 			it { should_not allow_mass_assignment_of(validate_attr) }
 		end
 
-		[:admin, :appointments, :authenticate, :email, :full_name, :password, :password_digest, :password_confirmation, :remember_token].each do |expected_attribute|
+		[:admin, :appointments, :authenticate, :email, :full_name, :home_phone, :password, :password_digest, :password_confirmation, :remember_token].each do |expected_attribute|
   		it { should respond_to expected_attribute }
 		end
 

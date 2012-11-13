@@ -1,5 +1,5 @@
 <td><%= link_to user.full_name, user %></td>
-<td><%= link_to number_to_phone(user.contact.home_phone), user %></td>
+<td><%= link_to number_to_phone(user.home_phone), user %></td>
 <td>
   <%= if can? :edit, user
         link_to 'Edit', edit_profile_path(user), class: 'tenerary_action_button'

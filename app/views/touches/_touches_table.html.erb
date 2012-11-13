@@ -14,7 +14,7 @@
     <% if object.count > 0 %>
       <% object.each do |touch| %>
         <tr>
-          <td><%= touch.contact.full_name %></td>
+          <td><%= touch.full_name %></td>
           <td><%= touch.by_phone? ? 'Yes' : 'No' %></td>
           <td><%= touch.by_visit? ? 'Yes' : 'No' %></td>
           <td><%= l touch.touch_from  %></td>

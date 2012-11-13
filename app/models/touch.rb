@@ -15,6 +15,7 @@
 
 class Touch < ActiveRecord::Base
   belongs_to :contact
+  delegate :full_name, to: :contact
   attr_accessible :additional_information, :between_end, :between_start, :completed, :contact, :contact_id, :by_phone, :by_visit, :touch_from, :visit_at
   validates :contact_id, presence: true
   validates_datetime :touch_from, on_or_after: :today, before: :this_date_next_year
