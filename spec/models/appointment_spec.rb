@@ -165,54 +165,23 @@ describe Appointment do
     end
   end
 
-
-
-
-  context "#booked_slots" do
-    context "single booking" do
-      before do
-        e1 = Helper.create_appointment(@contact, '01/09/2012 09:30', '01/09/2012 11:00')
-        Appointment.all.should eq [e1]
-      end
-      it "include expected" do
-        Appointment.first.include_slot_number?(1).should be_true
-      end
-      it "exclude expected" do
-        Appointment.first.include_slot_number?(2).should be_false
-      end
-      it "collection has booked slot" do
-        (Appointment.any? { |appointment| appointment.include_slot_number?(1) }).should be_true
-      end
+context "#booked_slots" do
+  context "single booking" do
+    before do
+      e1 = Helper.create_appointment(@contact, '01/09/2012 09:30', '01/09/2012 11:00')
+      Appointment.all.should eq [e1]
     end
-    context "double session" do
-      before do
-        e1 = Helper.create_appointment(@contact, '01/09/2012 11:30', '01/09/2012 15:00')
-        Appointment.all.should eq [e1]
-      end
-      it "excludes first slot" do
-        Appointment.first.include_slot_number?(1).should be_false
-      end
-
-      it "includes second slot" do
-        Appointment.first.include_slot_number?(2).should be_true
-      end
-       it "includes third booking" do
-        Appointment.first.include_slot_number?(3).should be_true
-      end
-
-      it "excludes fourth booking" do
-        Appointment.first.include_slot_number?(4).should be_false
-      end
-
+    it "include expected" do
+      Appointment.first.include_slot_number?(1).should be_true
     end
-
-  end
-
-  context "starts_at_from_date_and_slot" do
-    it "starts " do
-      Appointment.starts_at_from_date_and_slot(Date.current,2).should eq "Sat, 01 Sep 2012 11:30:00 BST +01:00"
+    it "exclude expected" do
+      Appointment.first.include_slot_number?(2).should be_false
+    end
+    it "collection has booked slot" do
+      (Appointment.any? { |appointment| appointment.include_slot_number?(1) }).should be_true
     end
   end
+end
 
 	context "Custom finders" do
 

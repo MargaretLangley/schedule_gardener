@@ -6,7 +6,7 @@ class EventsController < ApplicationController
 
   def index
     @date = blank_param_date? ? default_date : param_date
-    @appointments_by_date = @appointments.in_time_range(@date..@date.end_of_month()).group_by {|appointment| appointment.starts_at.to_date}
+    @appointments_by_date = @appointments.in_time_range(@date - 7.day..@date.end_of_month()+7.day).group_by {|appointment| appointment.starts_at.to_date}
   end
 
   def blank_param_date?

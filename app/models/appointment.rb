@@ -28,18 +28,6 @@ class Appointment < ActiveRecord::Base
   after_initialize :initialize_datetimes
   before_validation :accessors_synchronise_model
 
-  APPOINTMENT_SLOTS = {
-    '1' =>  '09:30',
-    '2' =>  '11:30',
-    '3' =>  '13:30',
-    '4' =>  '15:30'
-  }
-
-  APPOINTMENT_LENGTH = {
-    single: 90,
-    double: 210
-  }
-
   def initialize_datetimes
     nil_datetimes_initialised
     model_synchronise_accessors
@@ -97,47 +85,7 @@ class Appointment < ActiveRecord::Base
   end
 
   def include_slot_number?(slot_number)
-    booked_slots.include? slot_number
-  end
-
-  def booked_slots
-    start_slot = start_at_to_slot_number
-    appointment_length_to_slot_number == 1 ? [ start_slot ] : [ start_slot, start_slot + 1]
-  end
-
-  def start_at_to_slot_number
-      start_slot = case starts_at_return_time
-      when APPOINTMENT_SLOTS['1'] then 1
-      when APPOINTMENT_SLOTS['2'] then 2
-      when APPOINTMENT_SLOTS['3'] then 3
-      when APPOINTMENT_SLOTS['4'] then 4
-      else
-        raise "Unexpected Starts_at: #{starts_at_return_time} in Appointment#start_slot"
-      end
-  end
-
-  def appointment_length_to_slot_number
-    number_of_slots = case length_of_appointment
-    when APPOINTMENT_LENGTH[:single] then 1
-    when APPOINTMENT_LENGTH[:double] then 2
-    else
-      raise "Unexpected length of appointment: #{length_of_appointment} in Appointment#start_slot"
-    end
-  end
-
-  def self.starts_at_from_date_and_slot(date,slot_number)
-    date + slot_number_to_hours_and_minutes(slot_number)
-  end
-
-  def self.slot_number_to_hours_and_minutes(slot_number)
-      case slot_number
-      when 1 then 9.hours  + 30.minutes
-      when 2 then 11.hours + 30.minutes
-      when 3 then 13.hours + 30.minutes
-      when 4 then 15.hours + 30.minutes
-      else
-        raise "Unexpected Starts_at: #{starts_at_return_time} in Appointment#start_slot"
-      end
+    AppointmentSlot.booked(starts_at_return_time, length_of_appointment).include? slot_number
   end
 
   def self.in_time_range(time_range)
