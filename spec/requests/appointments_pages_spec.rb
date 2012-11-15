@@ -155,7 +155,7 @@ describe "Appointments" do
 
     context "with invalid information" do
       before do
-        fill_in 'appointment_starts_at_date', with: '02 Aug 2012'
+        fill_in 'Date', with: '02 Aug 2012'
         click_on("Update Appointment")
       end
       context "on update" do

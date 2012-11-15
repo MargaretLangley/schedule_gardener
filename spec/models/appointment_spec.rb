@@ -64,97 +64,10 @@ describe Appointment do
 
   end
 
-  context "new record" do
-    subject(:new_appointment) do
-      Appointment.new(contact: @contact, appointee: FactoryGirl.create(:contact, :gardener_a))
-    end
-
-    context "starts_at" do
-
-      it ("has") { new_appointment.starts_at.should eq "Sun, 02 Sep 2012 00:00:00 BST +01:00" }
-      it ("date: today") { new_appointment.starts_at_date.should eq "02 Sep 2012" }
-      it ("time: beginning of day")  { new_appointment.starts_at_time.should eq "00:00" }
-
-      context "after setting accessors and validating" do
-
-        before do
-          new_appointment.starts_at_date = "02 Sep 2012"
-          new_appointment.starts_at_time = "9:30"
-          new_appointment.valid?
-        end
-
-        it "have no errors" do
-          new_appointment.errors[:starts_at].should be_empty
-        end
-
-        it "changed time" do
-          new_appointment.starts_at.should eq "Sun, 02 Sep 2012 09:30:00 BST +00:00"
-        end
-
-        it "expected date accessor" do
-          new_appointment.starts_at_date.should == "02 Sep 2012"
-        end
-
-        it "expected time accessor" do
-          new_appointment.starts_at_time.should == "9:30"
-        end
-
-        it "start eq end" do
-          new_appointment.ends_at.should eq "Sun, 02 Sep 2012 09:30:00 BST +01:00"
-        end
-        context "Conversion" do
-          it "converts into local string time" do
-            new_appointment.starts_at_date.should == "02 Sep 2012"
-          end
-
-          it "converts into local string time" do
-            new_appointment.starts_at_time.should == "9:30"
-          end
-        end
-        context "after save" do
-          before do
-            appointment = Appointment.last
-          end
-          it "should have expected starts_at" do
-            appointment.starts_at.should == "Sun, 02 Sep 2012 09:30:00 BST +01:00"
-          end
-        end
-
-      end
-    end
-
-    context "end at" do
-
-      it ("date: beginning of today") { appointment.ends_at.should eq "02 Sep 2012 00:00:00 BST +01:00" }
-      it "length of 0"  do
-         appointment.length_of_appointment.should == 0
-       end
-
-      it "as exptected" do
-        appointment.length_of_appointment = 180
-        appointment.valid?
-        appointment.ends_at.should eq "Sun, 02 Sep 2012 03:00:00 BST +01:00"
-      end
-
-      it "invalid" do
-        appointment.length_of_appointment = -60
-        appointment.valid?
-        appointment.errors[:ends_at].should include("The appointment can not finish before it begins.")
-      end
-
-    end
-  end
-
   context "Created Record" do
     context "Starts at" do
       it "matches expected time" do
         appointment.starts_at.should eq "Sat, 2012-09-01 08:30:00 UTC +00:00"
-      end
-      it "access matches expected date" do
-        appointment.starts_at_date.should eq "01 Sep 2012"
-      end
-      it "access matches expected local time" do
-        appointment.starts_at_time.should eq "09:30"
       end
     end
 

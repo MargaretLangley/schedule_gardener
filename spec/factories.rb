@@ -161,20 +161,6 @@ FactoryGirl.define do
       starts_at "2012-09-08 9:30:00"
       ends_at "2012-09-08 11:00:00"
     end
-
-    length_of_appointment 90
-
-    # factory girl does not follow pattern of rails creation.
-    # FG creates an opbect and then assigns values and then saves
-    # This causes FG to not use the initialize hook for appointment correctly
-    # by nilling out these values I allow the appointment to initialize
-    # itself properly in model_synchronise_accessors.
-    after(:build) do |appointment|
-      appointment.starts_at_date = nil
-      appointment.starts_at_time = nil
-      appointment.length_of_appointment = nil
-      appointment.model_synchronise_accessors
-    end
   end
 
 
