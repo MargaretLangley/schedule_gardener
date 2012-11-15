@@ -85,7 +85,7 @@ class Appointment < ActiveRecord::Base
   end
 
   def include_slot_number?(slot_number)
-    AppointmentSlot.booked(starts_at_return_time, length_of_appointment).include? slot_number
+    AppointmentSlot.slots_covered_by_time(starts_at_return_time, length_of_appointment).include? slot_number
   end
 
   def self.in_time_range(time_range)

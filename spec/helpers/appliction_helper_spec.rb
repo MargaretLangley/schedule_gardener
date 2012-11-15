@@ -16,6 +16,15 @@ describe ApplicationHelper do
     end
   end
 
+  context "minutes to formatted hours and minutes" do
+    it "hours and 0 mins as hours" do
+      distance_time_to_hours_and_minutes(120).should == "2hrs"
+    end
+    it "hours and non zero mins as hours and mins" do
+      distance_time_to_hours_and_minutes(150).should == "2hrs 30mins"
+    end
+  end
+
   context "number to phone without area code" do
     it "none local" do
       number_to_phone_without_area_code("0181-100-3003").should eq "0181-100-3003"
