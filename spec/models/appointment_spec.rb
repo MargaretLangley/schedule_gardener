@@ -16,8 +16,7 @@ require 'spec_helper'
 
 class Helper
   def self.create_appointment(contact, start_time, end_time)
-    (app = FactoryGirl.build(:appointment, :gardener_a, contact: contact, starts_at: start_time, ends_at: end_time)).save!
-    app
+    FactoryGirl.create(:appointment, :gardener_a, contact: contact, starts_at: start_time, ends_at: end_time)
   end
 end
 
@@ -27,13 +26,9 @@ describe Appointment do
 
   after(:all) { Contact.delete_all; Address.delete_all; }
 
-  subject(:appointment) do
-    (app = FactoryGirl.build(:appointment, :client_r, :gardener_a, :today_first_slot)).save!
-    app
-  end
+  subject(:appointment) { FactoryGirl.create(:appointment, :client_r, :gardener_a, :today_first_slot) }
 
   include_examples "All Built Objects", Appointment
-
 
   context "Time Zones" do
     it "expected" do
