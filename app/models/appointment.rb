@@ -86,7 +86,7 @@ class Appointment < ActiveRecord::Base
   end
 
   def self.in_time_range(time_range)
-      where { (starts_at.in time_range) | (ends_at.in time_range) }
+    where { (starts_at.in time_range) | (ends_at.in time_range) }
   end
 
 end

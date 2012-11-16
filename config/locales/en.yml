@@ -29,7 +29,8 @@
     am: am
     formats:
       default: ! '%d %b %Y'
-      very_long: ! '%a, %d %b %Y %H:%M:%S %z'
-      long: ! '%B %d, %Y %H:%M'
-      short: ! '%d %b %H:%M'
+      hm: ! '%H:%M'
     pm: pm
+
+
+#, :input_html => { value: l(t.object.time, format: :hm) }

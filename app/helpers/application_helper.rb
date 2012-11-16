@@ -9,6 +9,16 @@ module ApplicationHelper
     end
   end
 
+  def localize_datetime(dt)
+    # quick-and-dirty demo... doesn't accept different format options and stuff...
+    dt.strftime(I18n.t(:"datetime.formats.default", {:locale => I18n.locale }))
+  end
+
+  def ld(dt)
+    localize_datetime(dt)
+  end
+
+
   def format_minutes_as_hrs_mins(minutes)
     hours = minutes / 60
     remainder_minutes = minutes % 60
