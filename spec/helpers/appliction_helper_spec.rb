@@ -16,22 +16,26 @@ describe ApplicationHelper do
     end
   end
 
-  context "minutes to formatted hours and minutes" do
-    it "hours and 0 mins as hours" do
-      distance_time_to_hours_and_minutes(120).should == "2hrs"
-    end
-    it "hours and non zero mins as hours and mins" do
-      distance_time_to_hours_and_minutes(150).should == "2hrs 30mins"
-    end
-  end
+  context "view format conversion" do
 
-  context "number to phone without area code" do
-    it "none local" do
-      number_to_phone_without_area_code("0181-100-3003").should eq "0181-100-3003"
+    context "minutes -> hrs & mins" do
+      it "Roundable minutes" do
+        format_minutes_as_hrs_mins(120).should == "2hrs"
+      end
+      it "Unroundable minutes" do
+        format_minutes_as_hrs_mins(150).should == "2hrs 30mins"
+      end
     end
-    it "local" do
-      number_to_phone_without_area_code("0121-333-1234").should eq "333-1234"
+
+    context "phonenumber" do
+      it "outside local area" do
+        number_to_phone_without_area_code("0181-100-3003").should eq "0181-100-3003"
+      end
+      it "with local area" do
+        number_to_phone_without_area_code("0121-333-1234").should eq "333-1234"
+      end
     end
+
   end
 
 end

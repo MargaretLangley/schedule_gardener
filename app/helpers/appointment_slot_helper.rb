@@ -1,7 +1,7 @@
 module AppointmentSlotHelper
 
 def slot_lengths
-  AppointmentSlot.lengths.map {|length| [distance_time_to_hours_and_minutes(length), length]  }
+  AppointmentSlot.lengths.map {|length| [format_minutes_as_hrs_mins(length), length]  }
 end
 
 

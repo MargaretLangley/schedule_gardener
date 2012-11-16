@@ -9,10 +9,10 @@ module ApplicationHelper
     end
   end
 
-  def distance_time_to_hours_and_minutes(total_minutes)
-    hours = total_minutes / 60
-    minutes = total_minutes % 60
-    minutes == 0 ? "#{hours}hrs" : "#{hours}hrs #{minutes}mins"
+  def format_minutes_as_hrs_mins(minutes)
+    hours = minutes / 60
+    remainder_minutes = minutes % 60
+    minutes == 0 ? "#{hours}hrs" : "#{hours}hrs #{remainder_minutes}mins"
   end
 
   def number_to_phone_without_area_code(phone_number)
@@ -26,8 +26,5 @@ module ApplicationHelper
   def link_to_delete(path)
     link_to 'Delete', path, confirm: 'Are you sure you want to delete?' , method: 'delete', class: 'tenerary_action_button_warn'
   end
-
-
-
 
 end
