@@ -22,7 +22,7 @@ module ApplicationHelper
   def format_minutes_as_hrs_mins(minutes)
     hours = minutes / 60
     remainder_minutes = minutes % 60
-    minutes == 0 ? "#{hours}hrs" : "#{hours}hrs #{remainder_minutes}mins"
+    remainder_minutes == 0 ? "#{hours}hrs" : "#{hours}hrs #{remainder_minutes}mins"
   end
 
   def number_to_phone_without_area_code(phone_number)

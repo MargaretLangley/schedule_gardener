@@ -53,7 +53,7 @@ class Appointment < ActiveRecord::Base
   end
 
   def start_end_difference_in_minutes
-    self.ends_at - self.starts_at == 0 ? 0 : ((self.ends_at - self.starts_at) /60).floor
+    ((self.ends_at - self.starts_at) /60).floor
   end
 
   def appointment_time_attributes=(hash)

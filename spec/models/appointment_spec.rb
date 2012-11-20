@@ -30,17 +30,7 @@ describe Appointment do
 
   include_examples "All Built Objects", Appointment
 
-  context "Time Zones" do
-    it "expected" do
-      Time.zone.to_s.should == '(GMT+00:00) London'
-    end
-    it "time correct" do
-      Time.zone.now.should == "Sat, 01 Sep 2012 08:00:00 BST +01:00"
-    end
-  end
-
   context "Accessable" do
-
     [:created_at, :updated_at].each do |validate_attr|
       it { should_not allow_mass_assignment_of(validate_attr) }
     end
@@ -59,35 +49,32 @@ describe Appointment do
 
   end
 
-  context "Created Record" do
-    context "Starts at" do
-      it "matches expected time" do
-        appointment.starts_at.should eq "Sat, 2012-09-01 08:30:00 UTC +00:00"
-      end
+  context "record for" do
+    it "#starts at matches expected time" do
+      appointment.starts_at.should eq "Sat, 2012-09-01 08:30:00 UTC +00:00"
     end
 
-    context "Ends at" do
-      it "matches expected time" do
-        appointment.ends_at.should eq "Sat, 01 Sep 2012 10:00:00 UTC +00:00"
-      end
+    it "#ends at matches expected time" do
+      appointment.ends_at.should eq "Sat, 01 Sep 2012 10:00:00 UTC +00:00"
     end
   end
 
-context "#booked_slots" do
+context "slots" do
   context "single booking" do
     before do
-      e1 = Helper.create_appointment(@contact, '01/09/2012 09:30', '01/09/2012 11:00')
+      e1 = Helper.create_appointment(@contact, '01/09/2012 11:30', '01/09/2012 13:00')
       Appointment.all.should eq [e1]
     end
-    it "include expected" do
-      Appointment.first.include_slot_number?(1).should be_true
+    it "exclude slots before" do
+      Appointment.first.include_slot_number?(1).should be_false
     end
-    it "exclude expected" do
-      Appointment.first.include_slot_number?(2).should be_false
+    it "include slot during" do
+      Appointment.first.include_slot_number?(2).should be_true
     end
-    it "collection has booked slot" do
-      (Appointment.any? { |appointment| appointment.include_slot_number?(1) }).should be_true
+    it "exclude slots after" do
+      Appointment.first.include_slot_number?(3).should be_false
     end
+
   end
 end
 
