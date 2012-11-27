@@ -9,8 +9,8 @@
 
     <% end %>
     <%= f.fields_for :appointment_time do |t| %>
-      <%= t.input :date, label: 'Date', readonly: true, as: :date_picker %>
-      <%= t.input :time, label: 'Time' , include_blank: false, collection: AppointmentSlot.all, label_method: :humanize_time, value_method: :time  %>
+      <%= t.input :start_date, label: 'Date', readonly: true, as: :date_picker %>
+      <%= t.input :start_time, label: 'Time' , include_blank: false, collection: AppointmentSlot.all, label_method: :humanize_time, value_method: :time  %>
       <%= t.input :length, required: true, label: 'Length',  include_blank: false, collection: slot_lengths %>
     <% end %>
 

@@ -12,8 +12,6 @@
 #  updated_at   :datetime         not null
 #
 
-
-
 class Appointment < ActiveRecord::Base
 
   attr_accessible :appointee, :appointee_id, :contact, :contact_id, :description, :ends_at, :starts_at
@@ -32,49 +30,20 @@ class Appointment < ActiveRecord::Base
     self.ends_at ||= Time.zone.now.beginning_of_day + 1.day
   end
 
-  class AppointmentTime
-    attr_accessor :date
-    attr_accessor :time
-    attr_accessor :length
-    def persisted?; false; end
-  end
-
   attr_accessible :appointment_time_attributes
   has_one :appointment_time
   accepts_nested_attributes_for :appointment_time
 
-
   def appointment_time
-    t = AppointmentTime.new
-    t.date = self.starts_at
-    t.time = self.starts_at.strftime'%H:%M'
-    t.length = self.start_end_difference_in_minutes
-    t
-  end
-
-  def start_end_difference_in_minutes
-    ((self.ends_at - self.starts_at) /60).floor
+    DateAndTimeRange.new(start: starts_at, end: ends_at)
   end
 
   def appointment_time_attributes=(hash)
-    self.starts_at = format_date_and_time_accessors_for_database(hash)
-    self.ends_at = calculate_ends_at(hash[:length])
-  end
-
-  def format_date_and_time_accessors_for_database(hash)
-    "#{starts_at_date_to_db_format(hash[:date])} #{starts_at_time_string(hash[:time])}"
-  end
-
-  def starts_at_date_to_db_format(date)
-    DateTime.strptime(date,'%d %b %Y').strftime('%F')
-  end
-
-  def starts_at_time_string(time)
-    Time.zone.parse(time + ":00").strftime'%H:%M:%S'
-  end
-
-  def calculate_ends_at(length_of_appointment)
-    self.starts_at + length_of_appointment.to_i.minutes
+    datr = DateAndTimeRange.new(start_date: hash[:start_date],
+                               start_time: hash[:start_time],
+                               length: hash[:length])
+    self.starts_at = datr.start.datetime
+    self.ends_at = datr.end.datetime
   end
 
   def title
