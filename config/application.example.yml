@@ -1,0 +1,21 @@
+# This file is for entering env information that is too senstive to checkinto source control
+# HOST name is a specific host (server?) in the domain: www.my-domain.com
+# DOMAIN name is the actual domain:  my-domain.com
+
+development:
+  HOST: localhost:3000
+  DOMAIN: "develop.domain.com"
+  EMAIL_USERNAME: "fix application.yml"
+  EMAIL_PASSWORD: EnterPassword
+
+test:
+  HOST: localhost:3000
+  DOMAIN: "test.domain.com"
+  EMAIL_USERNAME: "fix application.yml"
+  EMAIL_PASSWORD: Enter Password
+
+production:
+  HOST: 'www.my-domain.com'
+  DOMAIN: "my-domaain.com"
+  EMAIL_USERNAME: "fix applicaiton.yml"
+  EMAIL_PASSWORD: Enter Password

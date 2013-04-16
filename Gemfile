@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.13'
+gem 'rake'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-rest-rails'
@@ -35,8 +36,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rspec-rails'
-  gem 'spork'
+  gem 'rspec-rails', '2.13.0'
   gem 'rb-inotify'
   gem 'libnotify'
   gem 'debugger'
@@ -44,8 +44,8 @@ group :development, :test do
 
  group :test do
   gem 'factory_girl_rails'
-  gem 'capybara'
-  gem 'guard-rspec'
+  gem 'capybara', '2.1.0'
+  gem 'guard-rspec', '1.2.1'
   gem "shoulda-matchers"
   gem 'launchy'
   gem 'simplecov', require: false

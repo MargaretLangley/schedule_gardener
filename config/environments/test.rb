@@ -33,10 +33,11 @@ ScheduleGardener::Application.configure do
     # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = true
 
-  config.action_mailer.default_url_options = {
-    :host => '127.0.0.1',
-    :port => 3000
-  }
+  # Set in config/application.example.yml
+  # config.action_mailer.default_url_options = {
+  #   :host => 'test.domain.com',
+  #   :port => 3000
+  # }
 
   # Raise exception on mass assignment protection for Active Record models
   config.active_record.mass_assignment_sanitizer = :strict

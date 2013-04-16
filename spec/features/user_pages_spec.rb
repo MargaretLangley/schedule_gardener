@@ -46,9 +46,9 @@ describe "users" do
       end
 
       it "should list each user" do
-        User.search_ordered.all[0..3].each do |user|
-          page.should have_selector('td', text: user.full_name)
-        end
+        page.has_link?('alice user')
+        page.has_link?('bob_admin')
+        page.has_link?('John_Smith')
       end
     end
 
@@ -87,7 +87,7 @@ describe "users" do
         context "a standard user" do
           it ("present") { should have_link('Edit', href: edit_profile_path(standard_user)) }
           it "edits" do
-            click_on 'Edit'
+            first(:link, 'Edit').click
             current_path.should eq edit_profile_path(standard_user)
           end
         end
@@ -105,7 +105,7 @@ describe "users" do
 
         context "a standard user" do
           it ("present") { should have_link('Delete', href: user_path(standard_user)) }
-          it ("deletes") { expect { click_link('Delete') }.to change(User, :count).by(-1) }
+          it ("deletes") { expect { first(:link, 'Delete').click }.to change(User, :count).by(-1) }
         end
 
         context "an admin user" do

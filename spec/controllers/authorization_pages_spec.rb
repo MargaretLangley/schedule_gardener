@@ -10,13 +10,15 @@ describe "authorization" do
 
   context "in Users controller" do
 
+
     context "client user" do
       before do
+       @controller = UsersController.new
        visit_signin_and_login user_j
       end
 
       it "#index" do
-        get users_path
+        get :index
         response.should redirect_to(root_path)
       end
 
@@ -38,6 +40,7 @@ describe "authorization" do
     end
 
     context "guests visiting protected page -> signin" do
+
 
       it "#index" do
         get users_path
@@ -90,6 +93,7 @@ describe "authorization" do
       end
 
       it "#index" do
+        @controller = AppointmentsController.new
         get appointments_path
         response.code.should == '200'
       end

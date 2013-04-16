@@ -45,11 +45,11 @@ describe "Touches" do
       it ("both listed") { should have_content 'John Smith' }
 
       it "edits touch" do
-        click_on('Edit')
+        first(:link, 'Edit').click
         current_path.should eq edit_touch_path(touch_a)
       end
 
-      it ("deletes touch") { expect { click_on('Delete')}.to change(Touch, :count).by(-1) }
+      it ("deletes touch") { expect { first(:link, 'Delete').click }.to change(Touch, :count).by(-1) }
 
     end
   end
