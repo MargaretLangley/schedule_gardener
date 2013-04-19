@@ -32,7 +32,7 @@ group :development do
   gem 'sqlite3'
   gem 'quiet_assets'
   gem "rails-erd"
-  gem 'guard'
+  gem 'guard', '~>1.7.0'
 end
 
 group :development, :test do
@@ -45,11 +45,11 @@ group :development, :test do
  group :test do
   gem 'factory_girl_rails'
   gem 'capybara', '2.1.0'
-  gem 'guard-rspec', '1.2.1'
+  gem 'guard-rspec', '~>2.5.3'
   gem "shoulda-matchers"
   gem 'launchy'
   gem 'simplecov', require: false
-  gem 'timecop'
+  gem 'timecop', '~>0.6.1'
  end
 
 # Gems used only for assets and not required
