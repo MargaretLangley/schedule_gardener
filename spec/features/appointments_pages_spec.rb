@@ -91,17 +91,6 @@ describe "Appointments" do
 
       end
 
-      context "with invalid information" do
-        before { fill_in 'Date', with: '1 Aug 2012' }
-
-        it ("fails") { expect { click_on("Create Appointment") }.to change(Appointment, :count).by(0) }
-
-        it "flash error" do
-          click_on("Create Appointment")
-          should have_content('error')
-        end
-      end
-
     end
 
     context "gardener" do
@@ -149,17 +138,6 @@ describe "Appointments" do
       context "on update" do
         it ("displays #update") { current_path.should eq appointments_path }
         it ("flash success") { should have_flash_success('appointment was successfully updated.') }
-      end
-    end
-
-    context "with invalid information" do
-      before do
-        fill_in 'Date', with: '02 Aug 2012'
-        click_on("Update Appointment")
-      end
-      context "on update" do
-        it ("displays #update") { current_path.should eq appointment_path(appointment) }
-        it ("flash error" ) { should have_content('error') }
       end
     end
   end
