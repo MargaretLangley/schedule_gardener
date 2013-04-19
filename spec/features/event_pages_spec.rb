@@ -1,8 +1,9 @@
 require 'spec_helper'
 
-describe "event" do
-  before { Timecop.freeze(Time.zone.parse('1/9/2012 8:00')) }
 
+describe "event" do
+
+  before { Timecop.freeze(Time.zone.parse('1/9/2012 8:00')) }
   subject { page }
 
   context "#index" do

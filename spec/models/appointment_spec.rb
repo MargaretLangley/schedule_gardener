@@ -21,11 +21,8 @@ class Helper
 end
 
 describe Appointment do
-  before(:all) { @contact = FactoryGirl.create(:contact, :client_r) }
+  let!(:contact) { FactoryGirl.create(:contact, :client_r) }
   before { Timecop.freeze(Time.zone.parse('1/9/2012 8:00')) }
-
-  after(:all) { Contact.delete_all; Address.delete_all; }
-
   subject(:appointment) { FactoryGirl.create(:appointment, :client_r, :gardener_a, :today_first_slot) }
 
   include_examples "All Built Objects", Appointment
@@ -62,7 +59,7 @@ describe Appointment do
 context "slots" do
   context "single booking" do
     before do
-      e1 = Helper.create_appointment(@contact, '01/09/2012 11:30', '01/09/2012 13:00')
+      e1 = Helper.create_appointment(contact, '01/09/2012 11:30', '01/09/2012 13:00')
       Appointment.all.should eq [e1]
     end
     it "exclude slots before" do
@@ -86,12 +83,12 @@ end
 	 		  e1 = nil
 	 		  before do
           Timecop.travel(Time.zone.parse('1/8/2012 10:00'))
-          e1 = Helper.create_appointment(@contact, '31/08/2012 22:00', '31/08/2012 23:59')
+          e1 = Helper.create_appointment(contact, '31/08/2012 22:00', '31/08/2012 23:59')
 		 			Appointment.all.should eq [e1]
 		 		end
 
 		    it "fails" do
-			    @contact.appointments.in_time_range('2012/09/01 00:00'..'2012/09/30 23:59').should eq []
+			    contact.appointments.in_time_range('2012/09/01 00:00'..'2012/09/30 23:59').should eq []
 		    end
 		  end
 
@@ -99,12 +96,12 @@ end
         e1 = nil
         before do
           Timecop.travel(Time.zone.parse('1/8/2012 10:00'))
-          e1 = Helper.create_appointment(@contact, '31/08/2012 22:00', '01/09/2012 00:00')
+          e1 = Helper.create_appointment(contact, '31/08/2012 22:00', '01/09/2012 00:00')
           Appointment.all.should eq [e1]
         end
 
         it "suceeds" do
-          @contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq  [e1]
+          contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq  [e1]
         end
       end
 
@@ -112,13 +109,13 @@ end
       context "on end boundary" do
         e1 = e2 = nil
         before do
-          e1 = Helper.create_appointment(@contact, '30/09/2012 22:00', '30/09/2012 23:59')
-          e2 = Helper.create_appointment(@contact, '01/10/2012 00:00', '01/10/2012 01:30')
+          e1 = Helper.create_appointment(contact, '30/09/2012 22:00', '30/09/2012 23:59')
+          e2 = Helper.create_appointment(contact, '01/10/2012 00:00', '01/10/2012 01:30')
           Appointment.all.should eq [e1, e2]
         end
 
         it "suceeds" do
-          @contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e1]
+          contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e1]
         end
       end
 
@@ -127,14 +124,14 @@ end
 			  e1 = e2 = nil
 	 		  before do
           Timecop.travel(Time.zone.parse('1/8/2012 10:00'))
-          e1 = Helper.create_appointment(@contact, '31/08/2012 23:00', '01/09/2012 01:00')
-          e2 = Helper.create_appointment(@contact, '30/09/2012 22:30', '01/10/2012 01:30')
+          e1 = Helper.create_appointment(contact, '31/08/2012 23:00', '01/09/2012 01:00')
+          e2 = Helper.create_appointment(contact, '30/09/2012 22:30', '01/10/2012 01:30')
           Timecop.travel(Time.zone.parse('1/9/2012 10:00'))
 		 			Appointment.all.should eq [e1, e2]
 		 		end
 
 		    it "suceeds" do
-			    @contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e1,e2]
+			    contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e1,e2]
 		    end
       end
 
@@ -143,12 +140,12 @@ end
         before do
           Timecop.travel(Time.zone.parse('1/8/2012 08:00'))
           e1 = Helper.create_appointment(FactoryGirl.create(:contact , :client_a), '01/09/2012 01:00', '01/09/2012 02:00')
-          e2 = Helper.create_appointment(@contact, '02/09/2012 01:00', '02/09/2012 02:00')
+          e2 = Helper.create_appointment(contact, '02/09/2012 01:00', '02/09/2012 02:00')
         	Appointment.all.should eq [e1,e2]
         end
 
 		    it "suceeds" do
-			    @contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e2]
+			    contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e2]
 		    end
 
       end

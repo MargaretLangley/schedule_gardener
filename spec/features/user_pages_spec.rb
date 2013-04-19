@@ -2,13 +2,13 @@ require 'spec_helper'
 
 describe "users" do
 
-  subject { page }
-
   let(:update_profile)      { "Update Profile" }
   let(:admin_first_name)    { "bob_admin" }
   let(:user_first_name)     { "alice_user" }
   let(:user_home_phone)   { "0123456789" }
   let(:admin_home_phone)   { "44884488" }
+
+  subject { page }
 
   context "#index as admin" do
     # Need constants but don't know which is best way in RSpec

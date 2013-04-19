@@ -2,15 +2,14 @@ require 'spec_helper'
 
 describe PasswordResetsController do
 
-  before(:all) { @client = FactoryGirl.create(:user, :client_a) }
-  after(:all)  { @client.destroy }
+  let(:client) { FactoryGirl.create(:user, :client_a)  }
 
   describe "#create" do
 
     # getting smtp error in test but works in dev (ERR CONN 2)
     xit "should receive an known email to send" do
       mail = FactoryGirl.build(:message)
-      UserMailer.should_receive(:password_reset).with(@client).and_return(mail)
+      UserMailer.should_receive(:password_reset).with(client).and_return(mail)
       post :create, password_reset: { email: "john.smith@example.com"}
     end
 

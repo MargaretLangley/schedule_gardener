@@ -1,28 +1,17 @@
-
 require 'spec_helper'
-
-def visit_signin_and_login(user)
-  visit signin_path
-  fill_in "Email",    with: user.email
-  fill_in "Password", with: user.password
-  click_button "Sign in"
-  # Sign in when not using Capybara as well.
-  # cookies[:remember_token] = user.remember_token
-end
 
 
 describe "Appointments" do
 
   before(:each) do
     Timecop.freeze(Time.zone.parse('1/9/2012 5:00'))
-
-    @admin        = FactoryGirl.create(:user, :admin)
-    @user         = FactoryGirl.create(:user, :client_r)
-    @gardener_a     = FactoryGirl.create(:user, :gardener_a)
-    (@appointment = FactoryGirl.create(:appointment, :tomorrow_first_slot, appointee: @gardener_a.contact , contact: @user.contact)).save!
-    Capybara.reset_sessions!
-    visit_signin_and_login @user
+    visit_signin_and_login user
   end
+
+  let!(:admin)        { FactoryGirl.create(:user, :admin) }
+  let!(:user)         { FactoryGirl.create(:user, :client_r) }
+  let!(:gardener_a)   { FactoryGirl.create(:user, :gardener_a) }
+  let!(:appointment)  { FactoryGirl.create(:appointment, :tomorrow_first_slot, appointee: gardener_a.contact , contact: user.contact) }
 
   subject { page }
 
@@ -40,7 +29,7 @@ describe "Appointments" do
 
       it "edits appointment" do
         click_on('Edit')
-        current_path.should eq edit_appointment_path(@appointment)
+        current_path.should eq edit_appointment_path(appointment)
       end
       it ("deletes appointment") { expect { click_on('Delete')}.to change(Appointment, :count).by(-1) }
 
@@ -48,8 +37,8 @@ describe "Appointments" do
 
     context "gardener" do
       before do
-        (FactoryGirl.create(:appointment, :next_week_first_slot, :client_a, appointee: @gardener_a.contact )).save!
-        visit_signin_and_login @gardener_a
+        (FactoryGirl.create(:appointment, :next_week_first_slot, :client_a, appointee: gardener_a.contact )).save!
+        visit_signin_and_login gardener_a
         visit appointments_path
       end
 
@@ -117,7 +106,7 @@ describe "Appointments" do
 
     context "gardener" do
       before do
-        visit_signin_and_login @gardener_a
+        visit_signin_and_login gardener_a
         visit new_appointment_path
       end
 
@@ -137,7 +126,7 @@ describe "Appointments" do
 
     context "admin" do
       before do
-        visit_signin_and_login @admin
+        visit_signin_and_login admin
         visit new_appointment_path
       end
       it ("displays") { current_path.should eq new_appointment_path }
@@ -147,12 +136,12 @@ describe "Appointments" do
 
 
   context "#edit" do
-    before(:each) {  visit edit_appointment_path(@appointment) }
-    it ("displays") { current_path.should eq edit_appointment_path(@appointment) }
+    before(:each) {  visit edit_appointment_path(appointment) }
+    it ("displays") { current_path.should eq edit_appointment_path(appointment) }
   end
 
   context "#update" do
-    before { visit edit_appointment_path(@appointment) }
+    before { visit edit_appointment_path(appointment) }
 
     context "with valid information" do
       before { click_on("Update Appointment") }
@@ -169,7 +158,7 @@ describe "Appointments" do
         click_on("Update Appointment")
       end
       context "on update" do
-        it ("displays #update") { current_path.should eq appointment_path(@appointment) }
+        it ("displays #update") { current_path.should eq appointment_path(appointment) }
         it ("flash error" ) { should have_content('error') }
       end
     end

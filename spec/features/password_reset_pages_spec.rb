@@ -1,12 +1,11 @@
 
 require 'spec_helper'
 
+
 describe "PasswordReset" do
   subject { page }
 
-  before(:all) { @client = FactoryGirl.create(:user, :client_j, :resetting_password) }
-  after(:all) { @client.destroy }
-
+  let(:client) { FactoryGirl.create(:user, :client_j, :resetting_password) }
 
   context "#new" do
     before do
@@ -75,11 +74,11 @@ describe "PasswordReset" do
 
   context "#edit" do
     before do
-      visit edit_password_reset_path( @client.password_reset_token)
+      visit edit_password_reset_path( client.password_reset_token)
     end
     context "within time" do
       it "opens page" do
-        current_path.should eq edit_password_reset_path(@client.password_reset_token)
+        current_path.should eq edit_password_reset_path(client.password_reset_token)
       end
       context "good input" do
         before do

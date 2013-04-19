@@ -6,6 +6,7 @@ describe "Authentication" do
   let(:user) { FactoryGirl.create(:user, :client_j) }
   let(:gardener) { FactoryGirl.create(:user, :gardener_a) }
   let(:admin) { FactoryGirl.create(:user, :admin) }
+
   subject { page }
 
 
@@ -74,7 +75,7 @@ describe "Authentication" do
 
         describe "after visiting another page" do
           before { click_link "logo" }
-          it ("has no error banner") { should_not have_flash_error("error banner") }
+          it ("has no error banner") { should_not have_content("Invalid") }
         end
       end
 
