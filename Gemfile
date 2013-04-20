@@ -75,7 +75,9 @@ end
 # gem 'unicorn'
 
 # Deploy with Capistrano
-gem 'capistrano'
+gem 'capistrano', '~> 2.14.2'
+gem 'capistrano-rbenv'
+
 
 # To use debugger
 # gem 'debugger'
