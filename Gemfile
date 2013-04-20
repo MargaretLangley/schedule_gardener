@@ -17,7 +17,6 @@ gem 'cancan'
 gem 'active_attr'
 gem 'rails_admin'
 gem 'figaro'
-gem 'heroku'
 gem 'bootstrap-datepicker-rails'
 gem 'rails-i18n'
 gem 'validates_timeliness', '~> 3.0'
@@ -27,9 +26,6 @@ group :development do
   gem 'annotate', '2.5.0'
   # use require:false when you need to run something from
   # command line but not don't need in code.
-  gem 'taps', require: false
-  # Dependency between taps and sqlite3
-  gem 'sqlite3'
   gem 'quiet_assets'
   gem "rails-erd"
   gem 'guard', '~>1.7.0'
@@ -72,10 +68,12 @@ end
 # gem 'jbuilder'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
-gem 'capistrano'
+gem 'capistrano', '~> 2.14.2'
+gem 'capistrano-rbenv'
+
 
 # To use debugger
 # gem 'debugger'
