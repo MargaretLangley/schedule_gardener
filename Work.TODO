@@ -1,0 +1,25 @@
+Schedule Gardener
+
+Unicorn
+ ✔ listen 80 no default @done (13-04-21 11:37)
+ ✔ Server name set to domain and www.domain @done (13-04-21 11:38)
+ ✔ schedule_gardener_unicorn_worker_0 @done (13-04-21 15:27)
+ ✔ removed maintenance from nginx_unicorn.erb @done (13-04-21 15:27)
+
+
+
+Test:
+
+ ☐ ssh arran
+ ☐ Code deployed: cd ~/apps/schedule_gardener/current
+ ☐ NGINX
+   ☐ Nginx started: sudo service nginx status
+   ☐ Nginx site enabled: sudo nano /etc/nginx/sites-enabled/schedule_gardener
+ ☐ PSQL
+   ☐ psql schedule_gardener_production -U schedule_gardener
+   ☐ \d
+ ☐ No migrations waiting: rake db:migrate
+ ☐ MONIT
+   ☐ sudo service monit status
+   ☐ monit shows schedule_gardener
+   ☐ monit shows unicorn_workers

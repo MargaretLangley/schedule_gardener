@@ -29,3 +29,7 @@ Procfile
 
 # Ignore application configuration
 /config/application.yml
+
+# posgres db dump
+schedule_gardener_development.dump
+pdrestore.dump
