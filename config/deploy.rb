@@ -11,7 +11,7 @@ load "config/recipes/monit"
 set  :host, "193.183.99.251"
 server "#{host}", :web, :app, :db, primary: true
 # set :server_name, "draca.co.uk www.draca.co.uk"
-set :server_name, "bcs.io www.bcs.io"
+set :server_name, "business-consolidating-services.com  www.business-consolidating-services.com"
 
 set :user, "deployer"
 set :application, "schedule_gardener"  #change
