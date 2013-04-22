@@ -17,9 +17,13 @@ Test:
    ☐ Nginx site enabled: sudo nano /etc/nginx/sites-enabled/schedule_gardener
  ☐ PSQL
    ☐ psql schedule_gardener_production -U schedule_gardener
-   ☐ \d
+   ☐ Tables in db: \d
+         ☐ bad: No relations found
+         ☐ good: A list of relations
  ☐ No migrations waiting: rake db:migrate
  ☐ MONIT
    ☐ sudo service monit status
+      ☐ bad: could not access PID file for monit
+      ☐ good: monit is running
    ☐ monit shows schedule_gardener
    ☐ monit shows unicorn_workers
