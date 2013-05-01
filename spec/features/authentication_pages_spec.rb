@@ -58,7 +58,7 @@ describe "Authentication" do
         context "for admin user" do
           before { login_user(admin) }
 
-          it ("opens start page")      { current_path.should eq dashboard_path(admin) }
+          xit ("opens start page")      { current_path.should eq dashboard_path(admin) }
         end
       end
 

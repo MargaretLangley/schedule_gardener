@@ -2,12 +2,14 @@ language: ruby
 
 rvm:
 - 1.9.3
-
 env:
-  - DB=postgresql
+  - DB=postgresql HOST=localhost:3000  DOMAIN="mail@suton.gardencare.com" EMAIL_USERNAME="richardwigley"
+secure: "Q8cv+DN2oTMbWjZtBCkzrftLaIcJrD3TgSpFGwQREc38cMtie52bSDylty6l\n/Ug2oU/Bz0yVnox9zu0tVv1bCVb4U3N2HlHSvepvp/Cez11Fu3m7WRyVgH7m\nGZ4tYSd/h1KlaMv95MfgM8IWV/8ashzQ7cHtEi0QIBCAFiiPvtE="
 
-script: bundle exec rspec spec
+script:
+ - bundle exec rspec spec
 
-# .travis.yml
 before_script:
-  - psql -c 'create database schedule_gardener_test;' -U richard
+  - psql -c 'CREATE DATABASE schedule_gardener_test;' -U postgres
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake db:test:prepare
