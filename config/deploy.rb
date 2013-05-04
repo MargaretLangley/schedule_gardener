@@ -22,7 +22,7 @@ set :use_sudo, false
 set :scm, "git"
 set :repository, "git@github.com:#{owner}/#{application}.git"
 set :branch, "master"
-set :rbenv_ruby_version, "1.9.3-p392"
+set :rbenv_ruby_version, "2.0.0-p0"
 
 set :maintenance_template_path, File.expand_path("../recipes/templates/maintenance.html.erb", __FILE__)
 
