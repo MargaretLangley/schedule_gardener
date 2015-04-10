@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.15'
+gem 'rails', '3.2.16'
 gem 'rake'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
@@ -58,10 +58,6 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 
@@ -71,7 +67,3 @@ gem 'unicorn'
 # Deploy with Capistrano
 gem 'capistrano', '~> 2.14.2'
 gem 'capistrano-rbenv'
-
-
-# To use debugger
-# gem 'debugger'
