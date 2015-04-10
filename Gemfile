@@ -31,10 +31,11 @@ group :development do
 end
 
 group :development, :test do
+  gem 'debugger'
   gem 'rspec-rails', '2.13.0'
   gem 'rb-inotify'
   gem 'libnotify'
-  gem 'debugger'
+  gem 'rb-readline'
  end
 
  group :test do
