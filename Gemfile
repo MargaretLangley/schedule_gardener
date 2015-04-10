@@ -26,7 +26,7 @@ group :development do
   # use require:false when you need to run something from
   # command line but not don't need in code.
   gem 'quiet_assets'
-  gem "rails-erd"
+  gem 'rails-erd'
 end
 
 group :development, :test do
@@ -40,8 +40,8 @@ group :development, :test do
  group :test do
   gem 'factory_girl_rails'
   gem 'capybara', '~> 2.4.0'
-  gem "shoulda-matchers"
-  gem 'launchy'
+  gem 'capybara-screenshot'
+  gem 'shoulda-matchers'
   gem 'coveralls', '~>0.7.0', require: false
   gem 'timecop', '~>0.7.0'
  end
