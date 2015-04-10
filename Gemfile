@@ -43,7 +43,7 @@ group :development, :test do
   gem "shoulda-matchers"
   gem 'launchy'
   gem 'coveralls', '~>0.7.0', require: false
-  gem 'timecop', '~>0.6.1'
+  gem 'timecop', '~>0.7.0'
  end
 
 # Gems used only for assets and not required
