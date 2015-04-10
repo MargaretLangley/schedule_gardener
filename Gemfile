@@ -27,12 +27,11 @@ group :development do
   # command line but not don't need in code.
   gem 'quiet_assets'
   gem "rails-erd"
-  gem 'guard', '~>1.7.0'
 end
 
 group :development, :test do
   gem 'debugger'
-  gem 'rspec-rails', '2.13.0'
+  gem 'rspec-rails', '2.14.0'
   gem 'rb-inotify'
   gem 'libnotify'
   gem 'rb-readline'
@@ -41,7 +40,6 @@ group :development, :test do
  group :test do
   gem 'factory_girl_rails'
   gem 'capybara', '2.1.0'
-  gem 'guard-rspec', '~>2.5.3'
   gem "shoulda-matchers"
   gem 'launchy'
   gem 'coveralls', '~>0.7.0', require: false
