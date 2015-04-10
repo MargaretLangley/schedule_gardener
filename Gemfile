@@ -39,7 +39,7 @@ group :development, :test do
 
  group :test do
   gem 'factory_girl_rails'
-  gem 'capybara', '2.1.0'
+  gem 'capybara', '~> 2.4.0'
   gem "shoulda-matchers"
   gem 'launchy'
   gem 'coveralls', '~>0.7.0', require: false

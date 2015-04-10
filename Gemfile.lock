@@ -55,7 +55,7 @@ GEM
     capistrano-rbenv (1.0.3)
       capistrano
       capistrano-platform-resources (>= 0.1.0)
-    capybara (2.1.0)
+    capybara (2.4.4)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
@@ -272,7 +272,7 @@ DEPENDENCIES
   cancan
   capistrano (~> 2.14.2)
   capistrano-rbenv
-  capybara (= 2.1.0)
+  capybara (~> 2.4.0)
   coffee-rails (~> 3.2.1)
   coveralls (~> 0.7.0)
   debugger
