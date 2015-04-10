@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: ENV['DOMAIN']
+  default from: "robot.gardener@#{ENV['DOMAIN']}"
 
   def password_reset(user)
     @user=  user
