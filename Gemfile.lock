@@ -150,7 +150,7 @@ GEM
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     nokogiri (1.5.9)
-    pg (0.15.1)
+    pg (0.18.1)
     polyamorous (0.5.0)
       activerecord (~> 3.0)
     polyglot (0.3.3)
@@ -309,7 +309,7 @@ DEPENDENCIES
   jquery-ui-rails
   launchy
   libnotify
-  pg
+  pg (~> 0.18.0)
   quiet_assets
   rails (= 3.2.13)
   rails-erd
