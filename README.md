@@ -1,6 +1,7 @@
 ## Schedule Gardener
 [![Code Climate](https://codeclimate.com/github/BCS-io/schedule_gardener.png)](https://codeclimate.com/github/BCS-io/schedule_gardener)
 [![Build Status](https://travis-ci.org/BCS-io/schedule_gardener.png)](https://travis-ci.org/BCS-io/schedule_gardener)
+[![Coverage Status](https://coveralls.io/repos/BCS-io/schedule_gardener/badge.png)](https://coveralls.io/r/BCS-io/schedule_gardener)
 [![Dependency Status](https://gemnasium.com/BCS-io/schedule_gardener.png)](https://gemnasium.com/BCS-io/schedule_gardener)
 
 Application for scheduling a gardener to come to a premise and garden.

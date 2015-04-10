@@ -44,7 +44,7 @@ group :development, :test do
   gem 'guard-rspec', '~>2.5.3'
   gem "shoulda-matchers"
   gem 'launchy'
-  gem 'simplecov', require: false
+  gem 'coveralls', '~>0.7.0', require: false
   gem 'timecop', '~>0.6.1'
  end
 
