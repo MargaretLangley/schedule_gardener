@@ -24,6 +24,13 @@
 #
 # :manage = :create + :read + :update + :destroy
 
+#
+# TODO: remove this disable
+# rubocop: disable Metrics/MethodLength:
+
+# TODO: remove this
+# rubocop: disable Style/UnlessElse
+
 class Ability
   include CanCan::Ability
 

@@ -18,4 +18,4 @@ module PersistPath
   def stored_path?
     session[:return_to_path].present?
   end
- end
+end

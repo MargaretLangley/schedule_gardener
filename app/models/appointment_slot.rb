@@ -1,4 +1,6 @@
 
+# rubocop: disable Lint/UselessAssignment
+
 class AppointmentSlot < ActiveRecord::Base
   attr_accessible :humanize_time, :time, :value
 

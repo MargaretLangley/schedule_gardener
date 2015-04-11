@@ -36,7 +36,11 @@ describe 'users' do
 
     describe 'pagination' do
       before(:all)  { 20.times { FactoryGirl.create(:user, :client_j) } }
-      after(:all)   { User.delete_all; Contact.delete_all; Address.delete_all; }
+      after(:all)   do
+        User.delete_all
+        Contact.delete_all
+        Address.delete_all
+      end
 
       it 'present' do
         should have_selector('div.pagination')

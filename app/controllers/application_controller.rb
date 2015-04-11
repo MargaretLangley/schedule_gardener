@@ -30,10 +30,10 @@ class ApplicationController < ActionController::Base
 
   #  only people who are signed in can access users pages
   def guest_redirect_to_signin_path
-    unless signed_in?
-      store_path
-      redirect_to signin_path, notice: 'Please sign in.'
-    end
+    return if signed_in?
+
+    store_path
+    redirect_to signin_path, notice: 'Please sign in.'
   end
 
   def signed_in?

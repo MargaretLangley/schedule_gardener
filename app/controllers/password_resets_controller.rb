@@ -1,3 +1,6 @@
+# TODO: remove this disable
+# rubocop:  disable  Metrics/MethodLength
+
 class PasswordResetsController < ApplicationController
   def new
     @password_reset = PasswordReset.new

@@ -1,3 +1,6 @@
+# TODO: remove this
+# rubocop: disable Style/StructInheritance
+
 module CalendarHelper
   def calendar(date = Time.zone.today, &block)
     Calendar.new(self, date, block).table

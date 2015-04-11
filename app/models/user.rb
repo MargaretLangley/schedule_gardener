@@ -15,6 +15,12 @@
 #  updated_at             :datetime         not null
 #
 
+# TODO: remove Roles - does not look attached to anything. Does not break a test
+# rubocop: disable Style/ConstantName
+
+# TODO: maybe remove not that important
+# rubocop: disable Style/MultilineBlockChain
+
 class User < ActiveRecord::Base
   has_secure_password
   attr_accessible :contact_attributes, :password, :password_confirmation

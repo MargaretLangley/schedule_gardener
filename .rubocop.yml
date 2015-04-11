@@ -1,0 +1,49 @@
+#
+# Rubocop Configuration
+#
+# Configuration dictates which files are parsed and which rules are used.
+#
+# The configuration template is generated with: `rubocop --auto-gen-config`
+# RuboCop version 0.24.1.
+#
+
+# Ignored Files
+
+AllCops:
+  RunRailsCops: false
+  Exclude:
+    - db/**/*
+    - bin/**/*
+    - tmp/**/*
+    - config/initializers/rails_admin.rb
+    - config/application.rb
+    - config/recipes/postgresql.rb
+
+#
+# Ignored Styles
+# These styles will not be modelled in our code.
+#
+Lint/AmbiguousRegexpLiteral:
+  Enabled: false
+Style/MethodDefParentheses:
+  Enabled: false
+Metrics/LineLength:
+  Max: 190
+Style/TrailingComma:
+  Enabled: false
+Style/UnneededPercentQ:
+  Enabled: false
+
+
+#
+# Ignored
+# We want this to be removed
+Lint/ParenthesesAsGroupedExpression:
+  Enabled: false
+Metrics/MethodLength:
+  # as low as possible at least <= 10
+  Max: 11
+Metrics/AbcSize:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
