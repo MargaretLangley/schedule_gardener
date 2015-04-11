@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :user do
-    password "foobar"
-    password_confirmation "foobar"
+    password 'foobar'
+    password_confirmation 'foobar'
 
     trait :admin do
       admin true
@@ -20,7 +20,6 @@ FactoryGirl.define do
       association :contact, :client_r, strategy: :create
     end
 
-
     trait :gardener_a do
       association :contact, :gardener_a, strategy: :create
     end
@@ -30,24 +29,21 @@ FactoryGirl.define do
     end
 
     trait :unexpected do
-      association :contact, :client_a, role: "unexpected", strategy: :build
+      association :contact, :client_a, role: 'unexpected', strategy: :build
     end
 
     trait :resetting_password do
-      password_reset_token "i8pCKXq7UArg164qUXfJXg"
-      password_reset_sent_at {Time.zone.now}
+      password_reset_token 'i8pCKXq7UArg164qUXfJXg'
+      password_reset_sent_at { Time.zone.now }
     end
 
     trait :expired_reset_password do
-      password_reset_token "expiredTimedOutXXXXXXg"
-      password_reset_sent_at {Time.zone.now - 2.hours - 5.minutes}
+      password_reset_token 'expiredTimedOutXXXXXXg'
+      password_reset_sent_at { Time.zone.now - 2.hours - 5.minutes }
     end
-
   end
 
-
   factory :contact do
-
     trait :admin do
       first_name 'Alice'
       last_name 'Springs'
@@ -56,66 +52,62 @@ FactoryGirl.define do
 
     trait :client_a do
       first_name 'Ann'
-      last_name  'Abbey'
+      last_name 'Abbey'
       role 'client'
-      home_phone "0181-100-1001"
+      home_phone '0181-100-1001'
     end
 
     trait :client_j do
       first_name 'John'
-      last_name  'Smith'
+      last_name 'Smith'
       role 'client'
-      home_phone "0181-100-2002"
+      home_phone '0181-100-2002'
     end
-
 
     trait :client_r do
       first_name 'Roger'
-      last_name  'Smith'
+      last_name 'Smith'
       role 'client'
-      home_phone "0181-100-3003"
+      home_phone '0181-100-3003'
     end
 
     trait :gardener_a do
       first_name 'Alan'
-      last_name  'Titmarsh'
+      last_name 'Titmarsh'
       role 'gardener'
-      home_phone "0181-200-1001"
+      home_phone '0181-200-1001'
     end
 
     trait :gardener_p do
       first_name 'Percy'
-      last_name  'Thrower'
+      last_name 'Thrower'
       role 'gardener'
-      home_phone "0181-200-2002"
+      home_phone '0181-200-2002'
     end
 
     email  { "#{first_name}.#{last_name}@example.com".downcase }
-    home_phone "0181-100-1001"
+    home_phone '0181-100-1001'
     mobile '0701-200-2007'
     association :address, strategy: :build
-
   end
 
   factory :garden do
   end
 
-  factory :garden_own_address, parent: :garden, class:"Garden"  do
-    association :address, street_number: "16", street_name: "Garden Avenue"
+  factory :garden_own_address, parent: :garden, class: 'Garden'  do
+    association :address, street_number: '16', street_name: 'Garden Avenue'
   end
 
   factory :address do
-    house_name ""
-    street_number "15"
-    street_name "High Street"
-    address_line_2 "Stratford"
-    town "London"
-    post_code "NE12 3ST"
+    house_name ''
+    street_number '15'
+    street_name 'High Street'
+    address_line_2 'Stratford'
+    town 'London'
+    post_code 'NE12 3ST'
   end
 
-
   factory :appointment do
-
     trait :client_a do
       association :contact, :client_a
     end
@@ -125,47 +117,45 @@ FactoryGirl.define do
     end
 
     trait :gardener_a do
-      association :appointee, factory: :contact, first_name: "Alan", last_name: "Titmarsh", role: "gardener"
+      association :appointee, factory: :contact, first_name: 'Alan', last_name: 'Titmarsh', role: 'gardener'
     end
 
     trait :gardener_p do
-      association :appointee, factory: :contact, first_name: "Percy", last_name: "Thrower", role: "gardener"
+      association :appointee, factory: :contact, first_name: 'Percy', last_name: 'Thrower', role: 'gardener'
     end
 
-    description "I am describing a new example event. For testing only."
+    description 'I am describing a new example event. For testing only.'
 
     trait :today_first_slot do
-      starts_at "2012-09-01 09:30:00"
-      ends_at   "2012-09-01 11:00:00"
+      starts_at '2012-09-01 09:30:00'
+      ends_at '2012-09-01 11:00:00'
     end
     trait :today_second_slot do
-      starts_at "2012-09-01 11:30:00"
-      ends_at "2012-09-01 13:00:00"
+      starts_at '2012-09-01 11:30:00'
+      ends_at '2012-09-01 13:00:00'
     end
 
     trait :today_third_slot do
-      starts_at "2012-09-01 13:30:00"
-      ends_at "2012-09-01 15:00:00"
+      starts_at '2012-09-01 13:30:00'
+      ends_at '2012-09-01 15:00:00'
     end
     trait :today_fourth_slot do
-      starts_at "2012-09-01 15:30:00"
-      ends_at "2012-09-01 17:00:00"
+      starts_at '2012-09-01 15:30:00'
+      ends_at '2012-09-01 17:00:00'
     end
 
     trait :tomorrow_first_slot do
-      starts_at "2012-09-02 9:30:00"
-      ends_at "2012-09-02 11:00:00"
+      starts_at '2012-09-02 9:30:00'
+      ends_at '2012-09-02 11:00:00'
     end
 
     trait :next_week_first_slot do
-      starts_at "2012-09-08 9:30:00"
-      ends_at "2012-09-08 11:00:00"
+      starts_at '2012-09-08 9:30:00'
+      ends_at '2012-09-08 11:00:00'
     end
   end
 
-
   factory :touch do
-
     by_phone true
 
     trait :client_a do
@@ -181,17 +171,15 @@ FactoryGirl.define do
     end
 
     trait :today do
-      touch_from "2012-09-01"
+      touch_from '2012-09-01'
     end
 
     trait :tomorrow do
-      touch_from "2012-09-02"
+      touch_from '2012-09-02'
     end
 
     trait :next_week do
-      touch_from "2012-09-08"
+      touch_from '2012-09-08'
     end
-
   end
-
 end

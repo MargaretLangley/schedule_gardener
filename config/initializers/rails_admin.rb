@@ -2,17 +2,16 @@
 # See github.com/sferik/rails_admin for more informations
 
 RailsAdmin.config do |config|
-
   config.authenticate_with {} # leave it to authorize
   config.authorize_with do
     if current_user.present?
       unless current_admin?
-        clear_path()
+        clear_path
         sign_out_forget_session
         redirect_to main_app.root_path
       end
     else
-      store_path()
+      store_path
       redirect_to main_app.signin_path
     end
   end
@@ -48,7 +47,6 @@ RailsAdmin.config do |config|
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
 
-
   ################  Model configuration  ################
 
   # Each model configuration can alternatively:
@@ -59,11 +57,8 @@ RailsAdmin.config do |config|
   #   - This initializer is loaded once at startup (modifications will show up when restarting the application) but all RailsAdmin configuration would stay in one place.
   #   - Models are reloaded at each request in development mode (when modified), which may smooth your RailsAdmin development workflow.
 
-
   # Now you probably need to tour the wiki a bit: https://github.com/sferik/rails_admin/wiki
   # Anyway, here is how RailsAdmin saw your application's models when you ran the initializer:
-
-
 
   ###  Address  ###
 
@@ -114,7 +109,6 @@ RailsAdmin.config do |config|
   #     # using `field` instead of `configure` will exclude all other fields and force the ordering
   # end
 
-
   ###  Appointment  ###
 
   # config.model 'Appointment' do
@@ -163,7 +157,6 @@ RailsAdmin.config do |config|
   #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
   #     # using `field` instead of `configure` will exclude all other fields and force the ordering
   # end
-
 
   ###  Contact  ###
 
@@ -217,7 +210,6 @@ RailsAdmin.config do |config|
   #     # using `field` instead of `configure` will exclude all other fields and force the ordering
   # end
 
-
   ###  Garden  ###
 
   # config.model 'Garden' do
@@ -260,5 +252,4 @@ RailsAdmin.config do |config|
   #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
   #     # using `field` instead of `configure` will exclude all other fields and force the ordering
   # end
-
 end

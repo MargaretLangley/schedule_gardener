@@ -26,5 +26,4 @@ class Event
 
   validates :starts_at, :title, presence: true
   validates :title, length: { maximum: 50 }
-
 end

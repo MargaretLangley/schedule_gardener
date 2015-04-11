@@ -28,10 +28,10 @@ class User < ActiveRecord::Base
   # accepts_nes.... Defines an attributes writer for the specified association
   accepts_nested_attributes_for :contact
 
-  Roles = %w[admin client gardner]
+  Roles = %w(admin client gardner)
 
   def self.find_by_email(email)
-    User.joins{contact}.where{ (contacts.email.eq(email)) }.readonly(false).first
+    User.joins { contact }.where { (contacts.email.eq(email)) }.readonly(false).first
   end
 
   def password_reset_token_and_password_sent_at_saved
@@ -43,20 +43,19 @@ class User < ActiveRecord::Base
   def self.search_ordered(search = nil)
     if search
       like_search =  "%#{search}%"
-      User.joins{contact}.where{(contacts.first_name =~ like_search) |
-                               (contacts.last_name =~ like_search)   |
-                               (contacts.first_name.op('||', ' ').op('||', contacts.last_name) =~ like_search) |
-                               (contacts.home_phone =~ like_search)
-                                }.order{"contacts.first_name ASC"}
+      User.joins { contact }.where do
+        (contacts.first_name =~ like_search) |
+          (contacts.last_name =~ like_search) | (contacts.first_name.op('||', ' ').op('||', contacts.last_name) =~ like_search) |
+          (contacts.home_phone =~ like_search)
+      end.order { 'contacts.first_name ASC' }
     else
-      User.joins{contact}.order('contacts.first_name ASC')
+      User.joins { contact }.order('contacts.first_name ASC')
     end
   end
 
   private
 
-    def generate_token(column)
-      self[column] = SecureRandom.urlsafe_base64
-    end
-
+  def generate_token(column)
+    self[column] = SecureRandom.urlsafe_base64
+  end
 end

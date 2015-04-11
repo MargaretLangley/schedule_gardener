@@ -7,9 +7,9 @@ class AppointmentSlot < ActiveRecord::Base
   end
 
   def self.start_slot_from_time(time)
-    slot = find_by_time(time.strftime'%H:%M')
+    slot = find_by_time(time.strftime '%H:%M')
     unless slot
-      raise "Unexpected time: #{time.strftime'%H:%M'} in AppointmentSlot.start_slot_from_time"
+      fail "Unexpected time: #{time.strftime '%H:%M'} in AppointmentSlot.start_slot_from_time"
     end
     slot.id
   end
@@ -19,11 +19,10 @@ class AppointmentSlot < ActiveRecord::Base
   end
 
   def self.lengths
-    [90,180]
+    [90, 180]
   end
 
   def self.time_to_start_of_slot(slot_number)
-      (find(slot_number)).value
+    (find(slot_number)).value
   end
-
 end

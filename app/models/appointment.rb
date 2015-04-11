@@ -13,15 +13,14 @@
 #
 
 class Appointment < ActiveRecord::Base
-
   attr_accessible :appointee, :appointee_id, :contact, :contact_id, :description, :ends_at, :starts_at
 
   validates :appointee, :contact, :starts_at, presence: true
   validates_datetime :starts_at, after: :now, before: :this_date_next_year
   validates_datetime :ends_at, on_or_after: :starts_at
 
-  belongs_to :contact, class_name: "Contact", foreign_key: 'contact_id'
-  belongs_to :appointee, class_name: "Contact", foreign_key: 'appointee_id'
+  belongs_to :contact, class_name: 'Contact', foreign_key: 'contact_id'
+  belongs_to :appointee, class_name: 'Contact', foreign_key: 'appointee_id'
 
   after_initialize :initialize_datetimes
 
@@ -40,8 +39,8 @@ class Appointment < ActiveRecord::Base
 
   def appointment_time_attributes=(hash)
     datr = DateAndTimeRange.new(start_date: hash[:start_date],
-                               start_time: hash[:start_time],
-                               length: hash[:length])
+                                start_time: hash[:start_time],
+                                length: hash[:length])
     self.starts_at = datr.start.datetime
     self.ends_at = datr.end.datetime
   end
@@ -57,5 +56,4 @@ class Appointment < ActiveRecord::Base
   def self.in_time_range(time_range)
     where { (starts_at.in time_range) | (ends_at.in time_range) }
   end
-
 end

@@ -11,100 +11,98 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121114133600) do
-
-  create_table "addresses", :force => true do |t|
-    t.integer  "addressable_id"
-    t.string   "addressable_type"
-    t.string   "house_name"
-    t.string   "street_number",    :null => false
-    t.string   "street_name",      :null => false
-    t.string   "address_line_2"
-    t.string   "town",             :null => false
-    t.string   "post_code"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+ActiveRecord::Schema.define(version: 20_121_114_133_600) do
+  create_table 'addresses', force: true do |t|
+    t.integer 'addressable_id'
+    t.string 'addressable_type'
+    t.string 'house_name'
+    t.string 'street_number',    null: false
+    t.string 'street_name',      null: false
+    t.string 'address_line_2'
+    t.string 'town',             null: false
+    t.string 'post_code'
+    t.datetime 'created_at',       null: false
+    t.datetime 'updated_at',       null: false
   end
 
-  create_table "appointment_slots", :force => true do |t|
-    t.string   "time",          :null => false
-    t.string   "humanize_time", :null => false
-    t.integer  "value",         :null => false
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+  create_table 'appointment_slots', force: true do |t|
+    t.string 'time',          null: false
+    t.string 'humanize_time', null: false
+    t.integer 'value',         null: false
+    t.datetime 'created_at',    null: false
+    t.datetime 'updated_at',    null: false
   end
 
-  create_table "appointments", :force => true do |t|
-    t.integer  "contact_id"
-    t.integer  "appointee_id"
-    t.datetime "starts_at",    :null => false
-    t.datetime "ends_at",      :null => false
-    t.text     "description"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+  create_table 'appointments', force: true do |t|
+    t.integer 'contact_id'
+    t.integer 'appointee_id'
+    t.datetime 'starts_at',    null: false
+    t.datetime 'ends_at',      null: false
+    t.text 'description'
+    t.datetime 'created_at',   null: false
+    t.datetime 'updated_at',   null: false
   end
 
-  add_index "appointments", ["appointee_id"], :name => "index_appointments_on_appointee_id"
-  add_index "appointments", ["contact_id"], :name => "index_appointments_on_contact_id"
+  add_index 'appointments', ['appointee_id'], name: 'index_appointments_on_appointee_id'
+  add_index 'appointments', ['contact_id'], name: 'index_appointments_on_contact_id'
 
-  create_table "contacts", :force => true do |t|
-    t.integer  "contactable_id"
-    t.string   "contactable_type"
-    t.string   "first_name",       :null => false
-    t.string   "last_name"
-    t.string   "email"
-    t.string   "home_phone",       :null => false
-    t.string   "mobile"
-    t.string   "role",             :null => false
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+  create_table 'contacts', force: true do |t|
+    t.integer 'contactable_id'
+    t.string 'contactable_type'
+    t.string 'first_name',       null: false
+    t.string 'last_name'
+    t.string 'email'
+    t.string 'home_phone',       null: false
+    t.string 'mobile'
+    t.string 'role',             null: false
+    t.datetime 'created_at',       null: false
+    t.datetime 'updated_at',       null: false
   end
 
-  create_table "gardens", :force => true do |t|
-    t.integer  "contact_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table 'gardens', force: true do |t|
+    t.integer 'contact_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "rails_admin_histories", :force => true do |t|
-    t.text     "message"
-    t.string   "username"
-    t.integer  "item"
-    t.string   "table"
-    t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 8
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
+  create_table 'rails_admin_histories', force: true do |t|
+    t.text 'message'
+    t.string 'username'
+    t.integer 'item'
+    t.string 'table'
+    t.integer 'month',      limit: 2
+    t.integer 'year',       limit: 8
+    t.datetime 'created_at',              null: false
+    t.datetime 'updated_at',              null: false
   end
 
-  add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
+  add_index 'rails_admin_histories', %w(item table month year), name: 'index_rails_admin_histories'
 
-  create_table "touches", :force => true do |t|
-    t.integer  "contact_id",             :null => false
-    t.boolean  "by_phone"
-    t.boolean  "by_visit"
-    t.datetime "touch_from",             :null => false
-    t.boolean  "completed"
-    t.text     "additional_information"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
+  create_table 'touches', force: true do |t|
+    t.integer 'contact_id',             null: false
+    t.boolean 'by_phone'
+    t.boolean 'by_visit'
+    t.datetime 'touch_from',             null: false
+    t.boolean 'completed'
+    t.text 'additional_information'
+    t.datetime 'created_at',             null: false
+    t.datetime 'updated_at',             null: false
   end
 
-  add_index "touches", ["contact_id"], :name => "index_touches_on_contact_id"
+  add_index 'touches', ['contact_id'], name: 'index_touches_on_contact_id'
 
-  create_table "users", :force => true do |t|
-    t.string   "password_digest",                           :null => false
-    t.string   "remember_token"
-    t.boolean  "admin",                  :default => false
-    t.string   "password_reset_token"
-    t.datetime "password_reset_sent_at"
-    t.boolean  "email_verified",         :default => false
-    t.string   "verify_email_token"
-    t.datetime "verify_email_sent_at"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+  create_table 'users', force: true do |t|
+    t.string 'password_digest',                           null: false
+    t.string 'remember_token'
+    t.boolean 'admin',                  default: false
+    t.string 'password_reset_token'
+    t.datetime 'password_reset_sent_at'
+    t.boolean 'email_verified',         default: false
+    t.string 'verify_email_token'
+    t.datetime 'verify_email_sent_at'
+    t.datetime 'created_at',                                null: false
+    t.datetime 'updated_at',                                null: false
   end
 
-  add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
-
+  add_index 'users', ['remember_token'], name: 'index_users_on_remember_token'
 end

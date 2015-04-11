@@ -16,7 +16,7 @@
 #
 
 class Address < ActiveRecord::Base
-  attr_accessible :house_name,:street_number, :street_name, :address_line_2, :town, :post_code
+  attr_accessible :house_name, :street_number, :street_name, :address_line_2, :town, :post_code
 
   # Does not allow you to validate id and type, probably a bug
   # validates  :addressable_id, :addressable_type, presence: true
@@ -26,5 +26,4 @@ class Address < ActiveRecord::Base
   validates :town, presence: true, length: { maximum: 50 }
 
   belongs_to :addressable, polymorphic: true
-
 end

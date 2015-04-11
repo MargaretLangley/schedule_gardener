@@ -25,74 +25,68 @@ describe Appointment do
   before { Timecop.freeze(Time.zone.parse('1/9/2012 8:00')) }
   subject(:appointment) { FactoryGirl.create(:appointment, :client_r, :gardener_a, :today_first_slot) }
 
-  include_examples "All Built Objects", Appointment
+  include_examples 'All Built Objects', Appointment
 
-  context "Accessable" do
+  context 'Accessable' do
     [:created_at, :updated_at].each do |validate_attr|
       it { should_not allow_mass_assignment_of(validate_attr) }
     end
 
-    [:appointee, :contact,:description, :ends_at, :starts_at, :title ].each do |expected_attr|
+    [:appointee, :contact, :description, :ends_at, :starts_at, :title].each do |expected_attr|
       it { should respond_to expected_attr }
     end
   end
 
-
-  context "Validations" do
-
-    [:contact, :appointee ].each do |validate_attr|
+  context 'Validations' do
+    [:contact, :appointee].each do |validate_attr|
       it { should validate_presence_of(validate_attr) }
     end
-
   end
 
-  context "record for" do
-    it "#starts at matches expected time" do
-      appointment.starts_at.should eq "Sat, 2012-09-01 08:30:00 UTC +00:00"
+  context 'record for' do
+    it '#starts at matches expected time' do
+      appointment.starts_at.should eq 'Sat, 2012-09-01 08:30:00 UTC +00:00'
     end
 
-    it "#ends at matches expected time" do
-      appointment.ends_at.should eq "Sat, 01 Sep 2012 10:00:00 UTC +00:00"
+    it '#ends at matches expected time' do
+      appointment.ends_at.should eq 'Sat, 01 Sep 2012 10:00:00 UTC +00:00'
     end
   end
 
-context "slots" do
-  context "single booking" do
-    before do
-      e1 = Helper.create_appointment(contact, '01/09/2012 11:30', '01/09/2012 13:00')
-      Appointment.all.should eq [e1]
+  context 'slots' do
+    context 'single booking' do
+      before do
+        e1 = Helper.create_appointment(contact, '01/09/2012 11:30', '01/09/2012 13:00')
+        Appointment.all.should eq [e1]
+      end
+      it 'exclude slots before' do
+        Appointment.first.include_slot_number?(1).should be_false
+      end
+      it 'include slot during' do
+        Appointment.first.include_slot_number?(2).should be_true
+      end
+      it 'exclude slots after' do
+        Appointment.first.include_slot_number?(3).should be_false
+      end
     end
-    it "exclude slots before" do
-      Appointment.first.include_slot_number?(1).should be_false
-    end
-    it "include slot during" do
-      Appointment.first.include_slot_number?(2).should be_true
-    end
-    it "exclude slots after" do
-      Appointment.first.include_slot_number?(3).should be_false
-    end
-
   end
-end
 
-	context "Custom finders" do
-
-	  context "#in_time_range" do
-
-	 		context "on start boundary" do
-	 		  e1 = nil
-	 		  before do
+  context 'Custom finders' do
+    context '#in_time_range' do
+      context 'on start boundary' do
+        e1 = nil
+        before do
           Timecop.travel(Time.zone.parse('1/8/2012 10:00'))
           e1 = Helper.create_appointment(contact, '31/08/2012 22:00', '31/08/2012 23:59')
-		 			Appointment.all.should eq [e1]
-		 		end
+          Appointment.all.should eq [e1]
+        end
 
-		    it "fails" do
-			    contact.appointments.in_time_range('2012/09/01 00:00'..'2012/09/30 23:59').should eq []
-		    end
-		  end
+        it 'fails' do
+          contact.appointments.in_time_range('2012/09/01 00:00'..'2012/09/30 23:59').should eq []
+        end
+      end
 
-      context "on start boundary" do
+      context 'on start boundary' do
         e1 = nil
         before do
           Timecop.travel(Time.zone.parse('1/8/2012 10:00'))
@@ -100,13 +94,12 @@ end
           Appointment.all.should eq [e1]
         end
 
-        it "suceeds" do
-          contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq  [e1]
+        it 'suceeds' do
+          contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e1]
         end
       end
 
-
-      context "on end boundary" do
+      context 'on end boundary' do
         e1 = e2 = nil
         before do
           e1 = Helper.create_appointment(contact, '30/09/2012 22:00', '30/09/2012 23:59')
@@ -114,49 +107,43 @@ end
           Appointment.all.should eq [e1, e2]
         end
 
-        it "suceeds" do
+        it 'suceeds' do
           contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e1]
         end
       end
 
-
-		  context "accross boundary" do
-			  e1 = e2 = nil
-	 		  before do
+      context 'accross boundary' do
+        e1 = e2 = nil
+        before do
           Timecop.travel(Time.zone.parse('1/8/2012 10:00'))
           e1 = Helper.create_appointment(contact, '31/08/2012 23:00', '01/09/2012 01:00')
           e2 = Helper.create_appointment(contact, '30/09/2012 22:30', '01/10/2012 01:30')
           Timecop.travel(Time.zone.parse('1/9/2012 10:00'))
-		 			Appointment.all.should eq [e1, e2]
-		 		end
-
-		    it "suceeds" do
-			    contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e1,e2]
-		    end
+          Appointment.all.should eq [e1, e2]
+        end
+        it 'suceeds' do
+          contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e1, e2]
+        end
       end
 
       context "doesn't pick up other contacts appointments" do
         e1 = e2 = nil
         before do
           Timecop.travel(Time.zone.parse('1/8/2012 08:00'))
-          e1 = Helper.create_appointment(FactoryGirl.create(:contact , :client_a), '01/09/2012 01:00', '01/09/2012 02:00')
+          e1 = Helper.create_appointment(FactoryGirl.create(:contact, :client_a), '01/09/2012 01:00', '01/09/2012 02:00')
           e2 = Helper.create_appointment(contact, '02/09/2012 01:00', '02/09/2012 02:00')
-        	Appointment.all.should eq [e1,e2]
+          Appointment.all.should eq [e1, e2]
         end
 
-		    it "suceeds" do
-			    contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e2]
-		    end
-
+        it 'suceeds' do
+          contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e2]
+        end
       end
-
     end
+  end
 
-	end
-
- 	describe "Association" do
- 	  it { should belong_to(:contact) }
- 	  it { should belong_to(:appointee) }
-	end
-
+  describe 'Association' do
+    it { should belong_to(:contact) }
+    it { should belong_to(:appointee) }
+  end
 end

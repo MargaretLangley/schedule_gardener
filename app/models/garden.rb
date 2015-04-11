@@ -12,9 +12,9 @@ class Garden < ActiveRecord::Base
   attr_accessible :address_attributes
 
   # NOT SURE... look at this
-  #validates  :contact_id, presence: true
+  # validates  :contact_id, presence: true
 
-  has_one    :address,  autosave: true, dependent: :destroy, as: :addressable
+  has_one :address,  autosave: true, dependent: :destroy, as: :addressable
   belongs_to :contact
 
   # attr_accessible :address_attributes - adds the attribute writer to the allowed list
@@ -24,7 +24,6 @@ class Garden < ActiveRecord::Base
   alias_method :garden_address, :address
   def address
     #      owned address       || parent address
-    return self.garden_address || contact.address
+    garden_address || contact.address
   end
-
 end

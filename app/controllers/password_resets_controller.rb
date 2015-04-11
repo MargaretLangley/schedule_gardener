@@ -23,38 +23,33 @@ class PasswordResetsController < ApplicationController
     UserMailer.password_reset(user).deliver
   end
 
-  def log_unknown_email(email)
+  def log_unknown_email(_email)
     logger.info "unknown email requested for password reset: #{@password_reset.email}"
   end
 
   def redirect_to_password_reset_sent
-    redirect_to password_reset_sent_path, notice: "Email sent with password reset instructions."
+    redirect_to password_reset_sent_path, notice: 'Email sent with password reset instructions.'
   end
-
-
 
   def edit
     @user = User.find_by_password_reset_token!(params[:id])
-    redirect_to new_password_reset_path, alert: "Password reset has expired." unless reset_token_valid(@user)
+    redirect_to new_password_reset_path, alert: 'Password reset has expired.' unless reset_token_valid(@user)
   end
 
   def reset_token_valid(user)
     (Time.zone.now - user.password_reset_sent_at) < 2.hours
   end
 
-
   def update
     @user = User.find_by_password_reset_token!(params[:id])
     if reset_token_valid(@user)
       if @user.update_attributes(params[:user])
-        redirect_to root_url, notice: "Password has been reset"
+        redirect_to root_url, notice: 'Password has been reset'
       else
         render :edit
       end
     else
-      redirect_to new_password_reset_path, alert: "Password reset has expired."
+      redirect_to new_password_reset_path, alert: 'Password reset has expired.'
     end
   end
-
 end
-

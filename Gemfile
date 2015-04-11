@@ -30,7 +30,6 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-
 #
 # Capistrano deployment
 #
@@ -39,9 +38,9 @@ group :development do
   gem 'capistrano-rbenv'
 end
 
-
 group :development do
   gem 'annotate', '2.5.0'
+  gem 'rubocop', '~> 0.29.0', require: false
   gem 'quiet_assets'
   gem 'rails-erd'
 end
@@ -52,13 +51,13 @@ group :development, :test do
   gem 'rb-inotify'
   gem 'libnotify'
   gem 'rb-readline'
- end
+end
 
- group :test do
+group :test do
   gem 'factory_girl_rails'
   gem 'capybara', '~> 2.4.0'
   gem 'capybara-screenshot'
   gem 'shoulda-matchers'
   gem 'coveralls', '~>0.7.0', require: false
   gem 'timecop', '~>0.7.0'
- end
+end

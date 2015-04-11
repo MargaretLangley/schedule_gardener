@@ -20,7 +20,7 @@ if %w(development test).include? Rails.env
   # rspec spec => standard user
   # rake  spec => standard user
   #
-  ENV['SKIP_RAILS_ADMIN_INITIALIZER']='false'
+  ENV['SKIP_RAILS_ADMIN_INITIALIZER'] = 'false'
 
   task default: ['spec']
 end

@@ -6,28 +6,25 @@ class AppointmentsController < ApplicationController
   load_and_authorize_resource
 
   def index
-
-    @appointments = current_user.visits if current_user.role == "gardener"
+    @appointments = current_user.visits if current_user.role == 'gardener'
     @appointments = @appointments.in_time_range(time_range_from_params_or_session).order('starts_at ASC')
-
   end
 
   def time_range_from_params_or_session
-
     initialize_nil_params_from_session
     initialize_session_from_params
 
     if missing_time_range
-      Time.zone.now .. Time.zone.today + 1.year
+      Time.zone.now..Time.zone.today + 1.year
     else
-      Time.zone.parse(params[:begin]) .. Time.zone.parse(params[:end])
+      Time.zone.parse(params[:begin])..Time.zone.parse(params[:end])
     end
   end
 
   def initialize_nil_params_from_session
-    params[:nav]   ||= session[:nav]
+    params[:nav] ||= session[:nav]
     params[:begin] ||= session[:begin]
-    params[:end]   ||= session[:end]
+    params[:end] ||= session[:end]
   end
 
   def initialize_session_from_params
@@ -62,10 +59,8 @@ class AppointmentsController < ApplicationController
       render :edit
   end
 
-
   def destroy
     @appointment.destroy
     redirect_to appointments_path
   end
-
 end

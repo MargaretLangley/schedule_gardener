@@ -16,23 +16,21 @@
 #
 
 class Contact < ActiveRecord::Base
-  attr_accessible :address_attributes,:email, :first_name, :home_phone, :last_name, :mobile
+  attr_accessible :address_attributes, :email, :first_name, :home_phone, :last_name, :mobile
 
   validates :email, :first_name, :home_phone, :role, presence: true
   validates :first_name, :last_name, length: { maximum: 50 }
   validates :email, allow_blank: true, email_format: true
 
   before_validation :set_default
-  before_save       :before_save
+  before_save :before_save
 
-  belongs_to  :contactable, polymorphic: true
-  has_one     :address,  autosave: true, dependent: :destroy, as: :addressable
-  has_many    :gardens, dependent: :destroy
-  has_many    :appointments, dependent: :destroy, order: 'appointments.starts_at ASC'
-  has_many    :touches
-  has_many    :visits, class_name: 'Appointment', foreign_key: 'appointee_id', dependent: :destroy, order: 'appointments.starts_at ASC'
-
-
+  belongs_to :contactable, polymorphic: true
+  has_one :address,  autosave: true, dependent: :destroy, as: :addressable
+  has_many :gardens, dependent: :destroy
+  has_many :appointments, dependent: :destroy, order: 'appointments.starts_at ASC'
+  has_many :touches
+  has_many :visits, class_name: 'Appointment', foreign_key: 'appointee_id', dependent: :destroy, order: 'appointments.starts_at ASC'
 
   # attr_accessible :address_attributes - adds the attribute writer to the allowed list
   # accepts_nes.... Defines an attributes writer for the specified association
@@ -47,7 +45,7 @@ class Contact < ActiveRecord::Base
   end
 
   def home_phone=(num)
-    write_attribute(:home_phone,num ? strip_none_numeric(num) : nil)
+    write_attribute(:home_phone, num ? strip_none_numeric(num) : nil)
   end
 
   def mobile
@@ -55,25 +53,24 @@ class Contact < ActiveRecord::Base
   end
 
   def mobile=(num)
-    write_attribute(:mobile,num ? strip_none_numeric(num) : nil)
+    write_attribute(:mobile, num ? strip_none_numeric(num) : nil)
   end
 
   def self.contacts_by_role(role)
-    Contact.where{ contacts.role == role}.order{'contacts.first_name ASC'}
+    Contact.where { contacts.role == role }.order { 'contacts.first_name ASC' }
   end
 
   private
 
-    def strip_none_numeric(phone_number_string)
-      phone_number_string.gsub(/\D/, '')
-    end
+  def strip_none_numeric(phone_number_string)
+    phone_number_string.gsub(/\D/, '')
+  end
 
-    def set_default
-       self.role ||= 'client'
-    end
+  def set_default
+    self.role ||= 'client'
+  end
 
-    def before_save
-       self.email = email.downcase
-    end
-
+  def before_save
+    self.email = email.downcase
+  end
 end

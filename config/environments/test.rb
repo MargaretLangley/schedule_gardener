@@ -10,7 +10,7 @@ ScheduleGardener::Application.configure do
 
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_assets = true
-  config.static_cache_control = "public, max-age=3600"
+  config.static_cache_control = 'public, max-age=3600'
 
   # Log error messages when you accidentally call methods on nil
   config.whiny_nils = true
@@ -30,7 +30,7 @@ ScheduleGardener::Application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-    # Don't care if the mailer can't send
+  # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = true
 
   # Set in config/application.example.yml
@@ -45,7 +45,7 @@ ScheduleGardener::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
-  #speed up tests by lowering BCrypt's cost function
+  # speed up tests by lowering BCrypt's cost function
   require 'bcrypt'
   silence_warnings do
     BCrypt::Engine::DEFAULT_COST = BCrypt::Engine::MIN_COST

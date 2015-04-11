@@ -31,22 +31,19 @@ class Touch < ActiveRecord::Base
     self.completed ||= false
   end
 
-  def self.all_ordered()
-    Touch.joins{contact}.order{'touches.touch_from ASC, contacts.first_name ASC'}
+  def self.all_ordered
+    Touch.joins { contact }.order { 'touches.touch_from ASC, contacts.first_name ASC' }
   end
 
-  def self.outstanding()
-    Touch.joins{contact}.where{ touches.completed == false}.order{'touches.touch_from ASC, contacts.first_name ASC'}
+  def self.outstanding
+    Touch.joins { contact }.where { touches.completed == false }.order { 'touches.touch_from ASC, contacts.first_name ASC' }
   end
 
   def self.outstanding_by_contact(by_contact)
-    Touch.joins{contact}.where{ (touches.completed == false) & (touches.contact_id == by_contact.id)}.order{'touches.touch_from ASC, contacts.first_name ASC'}
+    Touch.joins { contact }.where { (touches.completed == false) & (touches.contact_id == by_contact.id) }.order { 'touches.touch_from ASC, contacts.first_name ASC' }
   end
-
-
 
   def touch_by_method_must_be_selected
-    errors.add(:by_phone, 'You have to select a way to contact us. Either choose by phone or by visit.')  unless (self.by_phone? || self.by_visit?)
+    errors.add(:by_phone, 'You have to select a way to contact us. Either choose by phone or by visit.')  unless self.by_phone? || self.by_visit?
   end
-
 end

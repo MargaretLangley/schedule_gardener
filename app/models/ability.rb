@@ -24,35 +24,33 @@
 #
 # :manage = :create + :read + :update + :destroy
 
-
 class Ability
   include CanCan::Ability
 
   def initialize(user)
-
     unless user
       # Guest
-      Rails.logger.debug  "user role is guest"
+      Rails.logger.debug 'user role is guest'
       can [:create], [User]
 
     else
       # All Registered users
-      Rails.logger.debug "user role is:" + user.role.to_s
+      Rails.logger.debug 'user role is:' + user.role.to_s
 
-      can [:show, :create, :update ], User, id: user.id
-      can [:manage], [Appointment, Touch] , contact_id: user.contact.id
+      can [:show, :create, :update], User, id: user.id
+      can [:manage], [Appointment, Touch], contact_id: user.contact.id
       # Different Roles
       case user.role
-      when "client"
+      when 'client'
         # nothing more to do
-      when "gardener"
-          can :manage, [Appointment, Touch]
-          can [:read, :create, :update ], User
-      when "admin"
-          can :manage, :all
-          cannot :destroy, user, id: user.id
+      when 'gardener'
+        can :manage, [Appointment, Touch]
+        can [:read, :create, :update], User
+      when 'admin'
+        can :manage, :all
+        cannot :destroy, user, id: user.id
       else
-        raise "Missing Role: #{user.role} in Ability#initialize"
+        fail "Missing Role: #{user.role} in Ability#initialize"
       end
     end
   end

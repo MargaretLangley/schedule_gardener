@@ -10,7 +10,6 @@ RSpec::Matchers.define :have_flash_error do |expected|
   failure_message_for_should_not do |actual|
     "expected that #{actual} would not have the banner #{expected}"
   end
-
 end
 
 RSpec::Matchers.define :have_flash_notice do |expected|
@@ -25,9 +24,7 @@ RSpec::Matchers.define :have_flash_notice do |expected|
   failure_message_for_should_not do |actual|
     "expected that #{actual} would not have the banner #{expected}"
   end
-
 end
-
 
 RSpec::Matchers.define :have_flash_success do |expected|
   match do |actual|
@@ -41,5 +38,4 @@ RSpec::Matchers.define :have_flash_success do |expected|
   failure_message_for_should_not do |actual|
     "expected that #{actual} would not have the banner #{expected}"
   end
-
 end
