@@ -90,21 +90,22 @@ gem 'active_attr'
 gem 'bootstrap-sass'
 gem 'bootstrap-datepicker-rails'
 gem 'bcrypt-ruby', '3.0.1'
-gem 'bootstrap-will_paginate'
+gem 'bootstrap-will_paginate', '~> 0.0.0'
 gem 'cancancan', '~> 1.10'
 gem 'figaro'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-rest-rails'
+gem 'lograge', '~> 0.3.0'
 gem 'pg', '~>0.18.0'
 gem 'simple_form', '2.0.2'
 gem 'rails_admin'
 gem 'rails-i18n'
 gem 'rake'
-gem 'squeel'
-gem 'unicorn'
+gem 'squeel', '~> 1.2.0'
+gem 'unicorn', '~> 4.8.0'
 gem 'validates_timeliness', '~> 3.0'
-gem 'will_paginate'
+gem 'will_paginate', '~> 3.0.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -123,10 +124,9 @@ group :development do
 end
 
 group :development do
-  gem 'annotate', '2.5.0'
+  gem 'annotate', '2.6.0'
   gem 'rubocop', '~> 0.29.0', require: false
-  gem 'quiet_assets'
-  gem 'rails-erd'
+  gem 'rails-erd', '~> 1.3.0'
 end
 
 group :development, :test do
@@ -142,7 +142,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', '~> 4.5.0'
   gem 'capybara', '~> 2.4.0'
   gem 'capybara-screenshot'
   gem 'shoulda-matchers'
