@@ -45,7 +45,7 @@ describe User do
     end
 
     [:password].each do |validate_attr|
-      it { should ensure_length_of(validate_attr).is_at_least(6) }
+      it { should validate_length_of(validate_attr).is_at_least(6) }
     end
 
     it 'invalid with different password and confirmation' do
@@ -61,17 +61,19 @@ describe User do
 
   context '#authenticate' do
     it 'with valid password succeeds' do
-      user.authenticate(user.password).should be_true
+      expect(user.authenticate(user.password)).to be_truthy
     end
 
     it 'with invalid password fails' do
-      user.authenticate('InvalidPassword').should be_false
+      expect(user.authenticate('InvalidPassword')).to be false
     end
   end
 
   describe 'remember token' do
     before { user.save }
-    its(:remember_token) { should_not be_blank }
+    it 'has remember_token which is not blank' do
+      expect(user.remember_token).to_not be_blank
+    end
   end
 
   context 'Custom finders' do
@@ -83,17 +85,17 @@ describe User do
         user2 =	FactoryGirl.create(:user, :client_a)
         user3 =	FactoryGirl.create(:user, :client_r)
 
-        User.all.should eq [user1, user2, user3]
+        expect(User.all).to match [user1, user2, user3]
       end
 
       after(:all) { User.destroy_all;  }
 
       it 'return user by email' do
-        User.find_by_email('ann.abbey@example.com').should eq user2
+        expect(User.find_by_email('ann.abbey@example.com')).to eq user2
       end
 
       it 'empty email should not return a user' do
-        User.find_by_email('').should eq nil
+        expect(User.find_by_email('')).to eq nil
       end
     end
 
@@ -105,28 +107,28 @@ describe User do
         roger = FactoryGirl.create(:user, :client_r)
         ann = FactoryGirl.create(:user, :client_a)
 
-        User.all.should eq [john, roger, ann]
+        expect(User.all).to match [john, roger, ann]
       end
       after(:all) { User.destroy_all }
 
       it 'empty search should return users' do
-        User.search_ordered.should eq [ann, john, roger]
+        expect(User.search_ordered).to eq [ann, john, roger]
       end
 
       it 'unique name match' do
-        User.search_ordered('John').should eq [john]
+        expect(User.search_ordered('John')).to eq [john]
       end
 
       it 'match multiple' do
-        User.search_ordered('Smi').should eq [john, roger]
+        expect(User.search_ordered('Smi')).to eq [john, roger]
       end
 
       it 'case insenstive' do
-        User.search_ordered('s').should eq [john, roger]
+        expect(User.search_ordered('s')).to eq [john, roger]
       end
 
       it 'should match full name' do
-        User.search_ordered('John Smith').should eq [john]
+        expect(User.search_ordered('John Smith')).to eq [john]
       end
     end
   end

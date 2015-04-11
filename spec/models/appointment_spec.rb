@@ -45,11 +45,11 @@ describe Appointment do
 
   context 'record for' do
     it '#starts at matches expected time' do
-      appointment.starts_at.should eq 'Sat, 2012-09-01 08:30:00 UTC +00:00'
+      expect(appointment.starts_at).to eq 'Sat, 2012-09-01 08:30:00 UTC +00:00'
     end
 
     it '#ends at matches expected time' do
-      appointment.ends_at.should eq 'Sat, 01 Sep 2012 10:00:00 UTC +00:00'
+      expect(appointment.ends_at).to eq 'Sat, 01 Sep 2012 10:00:00 UTC +00:00'
     end
   end
 
@@ -57,16 +57,16 @@ describe Appointment do
     context 'single booking' do
       before do
         e1 = Helper.create_appointment(contact, '01/09/2012 11:30', '01/09/2012 13:00')
-        Appointment.all.should eq [e1]
+        expect(Appointment.all).to eq [e1]
       end
       it 'exclude slots before' do
-        Appointment.first.include_slot_number?(1).should be_false
+        expect(Appointment.first.include_slot_number?(1)).to be false
       end
       it 'include slot during' do
-        Appointment.first.include_slot_number?(2).should be_true
+        expect(Appointment.first.include_slot_number?(2)).to be true
       end
       it 'exclude slots after' do
-        Appointment.first.include_slot_number?(3).should be_false
+        expect(Appointment.first.include_slot_number?(3)).to be false
       end
     end
   end
@@ -78,11 +78,11 @@ describe Appointment do
         before do
           Timecop.travel(Time.zone.parse('1/8/2012 10:00'))
           e1 = Helper.create_appointment(contact, '31/08/2012 22:00', '31/08/2012 23:59')
-          Appointment.all.should eq [e1]
+          expect(Appointment.all).to eq [e1]
         end
 
         it 'fails' do
-          contact.appointments.in_time_range('2012/09/01 00:00'..'2012/09/30 23:59').should eq []
+          expect(contact.appointments.in_time_range('2012/09/01 00:00'..'2012/09/30 23:59')).to eq []
         end
       end
 
@@ -91,11 +91,11 @@ describe Appointment do
         before do
           Timecop.travel(Time.zone.parse('1/8/2012 10:00'))
           e1 = Helper.create_appointment(contact, '31/08/2012 22:00', '01/09/2012 00:00')
-          Appointment.all.should eq [e1]
+          expect(Appointment.all).to eq [e1]
         end
 
         it 'suceeds' do
-          contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e1]
+          expect(contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59'))).to eq [e1]
         end
       end
 
@@ -104,11 +104,11 @@ describe Appointment do
         before do
           e1 = Helper.create_appointment(contact, '30/09/2012 22:00', '30/09/2012 23:59')
           e2 = Helper.create_appointment(contact, '01/10/2012 00:00', '01/10/2012 01:30')
-          Appointment.all.should eq [e1, e2]
+          expect(Appointment.all).to eq [e1, e2]
         end
 
         it 'suceeds' do
-          contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e1]
+          expect(contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59'))).to eq [e1]
         end
       end
 
@@ -119,10 +119,10 @@ describe Appointment do
           e1 = Helper.create_appointment(contact, '31/08/2012 23:00', '01/09/2012 01:00')
           e2 = Helper.create_appointment(contact, '30/09/2012 22:30', '01/10/2012 01:30')
           Timecop.travel(Time.zone.parse('1/9/2012 10:00'))
-          Appointment.all.should eq [e1, e2]
+          expect(Appointment.all).to eq [e1, e2]
         end
         it 'suceeds' do
-          contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e1, e2]
+          expect(contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59'))).to eq [e1, e2]
         end
       end
 
@@ -132,11 +132,11 @@ describe Appointment do
           Timecop.travel(Time.zone.parse('1/8/2012 08:00'))
           e1 = Helper.create_appointment(FactoryGirl.create(:contact, :client_a), '01/09/2012 01:00', '01/09/2012 02:00')
           e2 = Helper.create_appointment(contact, '02/09/2012 01:00', '02/09/2012 02:00')
-          Appointment.all.should eq [e1, e2]
+          expect(Appointment.all).to eq [e1, e2]
         end
 
         it 'suceeds' do
-          contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59')).should eq [e2]
+          expect(contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59'))).to eq [e2]
         end
       end
     end

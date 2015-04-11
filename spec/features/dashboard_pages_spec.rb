@@ -7,7 +7,7 @@ describe 'Dashboard#show' do
       visit_signin_and_login user_r
       visit dashboard_path(user_r)
     end
-    it ('displayed') { current_path.should eq dashboard_path(user_r) }
+    it ('displayed') { expect(current_path).to eq dashboard_path(user_r) }
   end
 
   context 'Gardenerr' do
@@ -17,6 +17,6 @@ describe 'Dashboard#show' do
       visit dashboard_path(gardener_a)
     end
 
-    it ('displayed') { current_path.should eq dashboard_path(gardener_a) }
+    it ('displayed') { expect(current_path).to eq dashboard_path(gardener_a) }
   end
 end

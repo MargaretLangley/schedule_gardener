@@ -13,7 +13,7 @@ describe 'Authentication' do
     end
 
     it 'remains on signin' do
-      current_path.should eq signin_path
+      expect(current_path).to eq signin_path
     end
 
     context 'visible' do
@@ -25,14 +25,14 @@ describe 'Authentication' do
         context 'for standard user' do
           before { login_user(user) }
 
-          it ('opens start page')      { current_path.should eq dashboard_path(user) }
+          it ('opens start page') { expect(current_path).to eq dashboard_path(user) }
           it ("has 'full name' link")      { should have_link('John Smith',  href: '#') }
           it ("has 'Update Profile' link") { should have_link('Update Profile', href: edit_profile_path(user)) }
           it ("has 'Sign out' link ")      { should have_link('Sign out',      href: signout_path) }
 
           context 'can sign out' do
             before { click_link 'Sign out' }
-            it ('redirects to root') { current_path.should eq root_path }
+            it ('redirects to root') { expect(current_path).to eq root_path }
             it ("has no 'full name' link")      { should_not have_link(user.full_name,   href: '#') }
             it ("has no 'Update Profile' link") { should_not have_link('Update Profile', href: edit_profile_path(user)) }
             it ("has no 'Sign out' link")       { should_not have_link('Sign out',       href: signout_path) }
@@ -42,7 +42,7 @@ describe 'Authentication' do
         context 'for gardener' do
           before { login_user(gardener) }
 
-          it ('opens start page')      { current_path.should eq dashboard_path(gardener) }
+          it ('opens start page')      { expect(current_path).to eq dashboard_path(gardener) }
           it ("has 'full name' link")      { should have_link('Alan Titmarsh', href: '#') }
           it ("has 'Update Profile' link") { should have_link('Update Profile', href: edit_profile_path(gardener)) }
           it ("has 'Sign out' link ")      { should have_link('Sign out',      href: signout_path) }
@@ -51,14 +51,14 @@ describe 'Authentication' do
         context 'for admin user' do
           before { login_user(admin) }
 
-          xit ('opens start page')      { current_path.should eq dashboard_path(admin) }
+          xit ('opens start page')      { expect(current_path).to eq dashboard_path(admin) }
         end
       end
 
       context 'fails for all-users' do
         before { click_button 'Sign in' }
 
-        it ('remains on signin page')       { current_path.should eq signin_path }
+        it ('remains on signin page')       { expect(current_path).to eq signin_path }
         it ('has error banner')             { should have_flash_error('Invalid') }
         it ("has no 'full name' link")      { should_not have_link(user.full_name,   href: '#') }
         it ("has no 'Update Profile' link") { should_not have_link('Update Profile', href: edit_profile_path(user)) }
@@ -76,14 +76,14 @@ describe 'Authentication' do
         end
 
         it 'redirected to signin path' do
-          current_path.should eq signin_path
+          expect(current_path).to eq signin_path
         end
 
         context 'for admin user' do
           before { login_user(admin) }
 
           it 'redirected to signin path' do
-            current_path.should eq rails_admin_path + '/'
+            expect(current_path).to eq rails_admin_path + '/'
           end
         end
 
@@ -91,7 +91,7 @@ describe 'Authentication' do
           before { login_user(user) }
 
           it 'redirected to root path' do
-            current_path.should eq root_path
+            expect(current_path).to eq root_path
           end
         end
       end
@@ -104,6 +104,6 @@ describe 'Authentication' do
       visit_signin_and_login(user)
     end
 
-    it ('forwards to the requested (protected) start page') { current_path.should eq edit_profile_path(user) }
+    it ('forwards to the requested (protected) start page') { expect(current_path).to eq edit_profile_path(user) }
   end
 end

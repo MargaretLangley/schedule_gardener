@@ -17,7 +17,9 @@ describe 'Appointments' do
     context 'standard user' do
       before(:each) { visit appointments_path }
 
-      it ('displayed') { current_path.should eq appointments_path }
+      it 'displayed' do
+        expect(current_path).to eq appointments_path
+      end
       it ('has appointee') { should have_selector('td', text: 'Alan Titmarsh') }
 
       context 'nav links' do
@@ -26,7 +28,7 @@ describe 'Appointments' do
 
       it 'edits appointment' do
         click_on('Edit')
-        current_path.should eq edit_appointment_path(appointment)
+        expect(current_path).to eq edit_appointment_path(appointment)
       end
       it ('deletes appointment') { expect { click_on('Delete') }.to change(Appointment, :count).by(-1) }
     end
@@ -38,7 +40,9 @@ describe 'Appointments' do
         visit appointments_path
       end
 
-      it ('displayed') { current_path.should eq appointments_path }
+      it ('displayed') do
+        expect(current_path).to eq appointments_path
+      end
       it ('displays phone') { should have_content('0181-100-3003') }
 
       context 'nav links' do
@@ -57,7 +61,7 @@ describe 'Appointments' do
 
       it 'shows calendar' do
         click_on('Calendar')
-        current_path.should eq events_path
+        expect(current_path).to eq events_path
       end
     end
   end
@@ -66,11 +70,13 @@ describe 'Appointments' do
     before(:each) {  visit new_appointment_path }
 
     context 'standard user' do
-      it ('displayed') { current_path.should eq new_appointment_path }
+      it 'displayed' do
+        expect(current_path).to eq new_appointment_path
+      end
       it ('has client missing') { should_not have_selector('#appointment_contact_id') }
       it 'can cancel' do
         click_on('Cancel')
-        current_path.should eq appointments_path
+        expect(current_path).to eq appointments_path
       end
 
       context 'with valid information' do
@@ -79,7 +85,9 @@ describe 'Appointments' do
 
         context 'on create' do
           before { click_on('Create Appointment') }
-          it ('displays #index') { current_path.should eq appointments_path }
+          it 'displays #index' do
+            expect(current_path).to eq appointments_path
+          end
           it ('flash success') { should have_flash_success ('appointment was successfully created.') }
         end
       end
@@ -91,7 +99,9 @@ describe 'Appointments' do
         visit new_appointment_path
       end
 
-      it ('displayed') { current_path.should eq new_appointment_path }
+      it 'displayed' do
+        expect(current_path).to eq new_appointment_path
+      end
       it ('has client') { should have_selector('#appointment_contact_id', visible: true) }
 
       context 'with valid information' do
@@ -109,13 +119,17 @@ describe 'Appointments' do
         visit_signin_and_login admin
         visit new_appointment_path
       end
-      it ('displays') { current_path.should eq new_appointment_path }
+      it 'displays' do
+        expect(current_path).to eq new_appointment_path
+      end
     end
   end
 
   context '#edit' do
     before(:each) {  visit edit_appointment_path(appointment) }
-    it ('displays') { current_path.should eq edit_appointment_path(appointment) }
+    it 'displays' do
+      expect(current_path).to eq edit_appointment_path(appointment)
+    end
   end
 
   context '#update' do
@@ -125,7 +139,9 @@ describe 'Appointments' do
       before { click_on('Update Appointment') }
 
       context 'on update' do
-        it ('displays #update') { current_path.should eq appointments_path }
+        it 'displays #update' do
+          expect(current_path).to eq appointments_path
+        end
         it ('flash success') { should have_flash_success('appointment was successfully updated.') }
       end
     end

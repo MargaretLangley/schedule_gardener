@@ -7,7 +7,7 @@ gem 'bootstrap-sass'
 gem 'bootstrap-datepicker-rails'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'bootstrap-will_paginate'
-gem 'cancan'
+gem 'cancancan', '~> 1.10'
 gem 'figaro'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
@@ -47,7 +47,7 @@ end
 
 group :development, :test do
   gem 'debugger'
-  gem 'rspec-rails', '2.14.0'
+  gem 'rspec-rails', '~> 3.2.0'
   gem 'rb-inotify'
   gem 'libnotify'
   gem 'rb-readline'

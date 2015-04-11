@@ -49,13 +49,13 @@ describe Garden do
     context 'Address' do
       context 'when from contact' do
         it 'should match contact' do
-          garden.address.should eq garden.contact.address
+          expect(garden.address).to eq garden.contact.address
         end
       end
       context 'when owned' do
         subject { garden_own_address }
         it "can be different from contact's address" do
-          garden_own_address.address.should_not eq garden_own_address.contact.address
+          expect(garden_own_address.address).to_not eq garden_own_address.contact.address
         end
       end
     end

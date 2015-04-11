@@ -18,7 +18,7 @@ describe 'event' do
     end
 
     it 'should reach events' do
-      current_path.should eq events_path
+      expect(current_path).to eq events_path
     end
   end
 end

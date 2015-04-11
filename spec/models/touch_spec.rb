@@ -36,18 +36,18 @@ describe Touch do
     subject(:new_touch) { Touch.new(contact: client_a) }
 
     context 'state' do
-      it ('phone not be nil') { new_touch.by_phone.should_not be_nil  }
-      it ('has no phone')     { new_touch.by_phone.should be_false  }
-      it ('visit not be nil') { new_touch.by_visit.should_not be_nil  }
-      it ('has no visit')     { new_touch.by_visit.should be_false  }
-      it ('has visit at start of day') { new_touch.touch_from.should == 'Sat, 01 Sep 2012 00:00:00 BST +01:00'   }
-      it ('has touch from today') { new_touch.touch_from.should == 'Sat, 01 Sep 2012 00:00:00 BST +01:00'   }
-      it ('has empty information') { new_touch.additional_information.should == ''   }
-      it ('completed not be nil') { new_touch.completed.should_not be_nil  }
-      it ('not comploted')     { new_touch.completed.should be_false  }
+      it ('phone not be nil') { expect(new_touch.by_phone).to_not be_nil  }
+      it ('has no phone')     { expect(new_touch.by_phone).to be false  }
+      it ('visit not be nil') { expect(new_touch.by_visit).to_not be_nil  }
+      it ('has no visit')     { expect(new_touch.by_visit).to be false  }
+      it ('has visit at start of day') { expect(new_touch.touch_from).to eq 'Sat, 01 Sep 2012 00:00:00 BST +01:00'   }
+      it ('has touch from today') { expect(new_touch.touch_from).to eq 'Sat, 01 Sep 2012 00:00:00 BST +01:00'   }
+      it ('has empty information') { expect(new_touch.additional_information).to eq ''   }
+      it ('completed not be nil') { expect(new_touch.completed).to_not be_nil  }
+      it ('not comploted')     { expect(new_touch.completed).to eq false  }
       it ('be valid') do
         new_touch.by_phone = true
-        new_touch.should be_valid
+        expect(new_touch).to be_valid
       end
     end
   end
@@ -59,7 +59,7 @@ describe Touch do
           touch.by_phone = false
           touch.by_visit = false
           touch.valid?
-          touch.errors[:by_phone].should include('You have to select a way to contact us. Either choose by phone or by visit.')
+          expect(touch.errors[:by_phone]).to include('You have to select a way to contact us. Either choose by phone or by visit.')
         end
       end
     end
@@ -67,12 +67,12 @@ describe Touch do
       it 'it is in the future' do
         touch.touch_from = '2012/08/31'
         touch.valid?
-        touch.errors[:touch_from].should include('We can contact you from today. Please choose a date which can be today or in the future.')
+        expect(touch.errors[:touch_from]).to include('We can contact you from today. Please choose a date which can be today or in the future.')
       end
       it 'it is within a year' do
         touch.touch_from = '2013/09/02'
         touch.valid?
-        touch.errors[:touch_from].should include('We can contact you within a year. Please choose a date within a year from today.')
+        expect(touch.errors[:touch_from]).to include('We can contact you within a year. Please choose a date within a year from today.')
       end
     end
   end
@@ -88,15 +88,15 @@ describe Touch do
           john = FactoryGirl.create(:touch, :client_j, :next_week)
           roger = FactoryGirl.create(:touch, :client_r, :today)
 
-          Touch.all.should eq [ann, john, roger]
+          expect(Touch.all).to eq [ann, john, roger]
         end
 
         after(:all) do
         end
 
-        it ('all ordered') { Touch.all_ordered.should eq [roger, ann, john] }
-        it ('outstanding') { Touch.outstanding.should eq [roger, ann, john] }
-        it ('outstanding by contact') { Touch.outstanding_by_contact(client_a).should eq [ann] }
+        it ('all ordered') { expect(Touch.all_ordered).to eq [roger, ann, john] }
+        it ('outstanding') { expect(Touch.outstanding).to eq [roger, ann, john] }
+        it ('outstanding by contact') { expect(Touch.outstanding_by_contact(client_a)).to eq [ann] }
       end
 
       context 'by date then name' do
@@ -107,11 +107,11 @@ describe Touch do
           ann = FactoryGirl.create(:touch, :client_a, :tomorrow)
           roger = FactoryGirl.create(:touch, :client_r, :tomorrow)
 
-          Touch.all.should eq [john, ann, roger]
+          expect(Touch.all).to eq [john, ann, roger]
         end
 
-        it ('all ordered') { Touch.all_ordered.should eq [ann, john, roger] }
-        it ('outstanding') { Touch.outstanding.should eq [ann, john, roger] }
+        it ('all ordered') { expect(Touch.all_ordered).to eq [ann, john, roger] }
+        it ('outstanding') { expect(Touch.outstanding).to eq [ann, john, roger] }
       end
 
       context 'return only outstanding' do
@@ -121,10 +121,10 @@ describe Touch do
           john = FactoryGirl.create(:touch, :client_j, :tomorrow, completed: true)
           ann = FactoryGirl.create(:touch, :client_a, :tomorrow)
 
-          Touch.all.should eq [john, ann]
+          expect(Touch.all).to eq [john, ann]
         end
 
-        it ('outstanding') { Touch.outstanding.should eq [ann] }
+        it ('outstanding') { expect(Touch.outstanding).to eq [ann] }
       end
     end
   end

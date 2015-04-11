@@ -21,7 +21,7 @@ describe EmailFormatValidator do
     %w(usr@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn).each do |valid_email|
       record = SomeRecord.new(email: valid_email)
       email_format_validator.validate(record)
-      record.errors[:email].should be_empty
+      expect(record.errors[:email]).to be_empty
     end
   end
 
@@ -32,7 +32,7 @@ describe EmailFormatValidator do
     email_addresses.each do |invalid_address|
       record = SomeRecord.new(email: invalid_address)
       email_format_validator.validate(record)
-      record.errors[:email].should include('is not formatted properly')
+      expect(record.errors[:email]).to include('is not formatted properly')
     end
   end
 end

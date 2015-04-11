@@ -20,12 +20,12 @@ describe 'Touches' do
 
     context 'standard user' do
       before { visit touches_path }
-      it ('displayed') { current_path.should eq touches_path }
+      it ('displayed') { expect(current_path).to eq touches_path }
       it ('own listed') { should have_content 'Roger Smith' }
       it ('others not listed') { should_not have_content 'John Smith' }
       it 'edits touch' do
         click_on('Edit')
-        current_path.should eq edit_touch_path(touch_r)
+        expect(current_path).to eq edit_touch_path(touch_r)
       end
 
       it ('deletes touch') { expect { click_on('Delete') }.to change(Touch, :count).by(-1) }
@@ -37,13 +37,13 @@ describe 'Touches' do
         visit touches_path
       end
 
-      it ('displayed') { current_path.should eq touches_path }
+      it ('displayed') { expect(current_path).to eq touches_path }
       it ('both listed') { should have_content 'Roger Smith' }
       it ('both listed') { should have_content 'John Smith' }
 
       it 'edits touch' do
         first(:link, 'Edit').click
-        current_path.should eq edit_touch_path(touch_a)
+        expect(current_path).to eq edit_touch_path(touch_a)
       end
 
       it ('deletes touch') { expect { first(:link, 'Delete').click }.to change(Touch, :count).by(-1) }
@@ -54,11 +54,11 @@ describe 'Touches' do
     before(:each) {  visit new_touch_path }
 
     context 'standard user' do
-      it ('displayed') { current_path.should eq new_touch_path }
+      it ('displayed') { expect(current_path).to eq new_touch_path }
       it ('has client missing') { should_not have_selector('#touch_contact_id') }
       it 'can cancel' do
         click_on('Cancel')
-        current_path.should eq touches_path
+        expect(current_path).to eq touches_path
       end
 
       context 'hides gardener only content' do
@@ -72,7 +72,7 @@ describe 'Touches' do
 
         context 'on create' do
           before { click_on('Contact Me') }
-          it ('displays #index') { current_path.should eq touches_path }
+          it ('displays #index') { expect(current_path).to eq touches_path }
           it ('flash success') { should have_flash_success ('Contact me was successfully created.') }
         end
       end
@@ -112,7 +112,7 @@ describe 'Touches' do
 
   context '#edit' do
     before(:each) {  visit edit_touch_path(touch_r) }
-    it ('displays') { current_path.should eq edit_touch_path(touch_r) }
+    it ('displays') { expect(current_path).to eq edit_touch_path(touch_r) }
   end
 
   context '#update' do
@@ -122,7 +122,7 @@ describe 'Touches' do
       before { click_on('Update Contact Me') }
 
       context 'on update' do
-        it ('displays #update') { current_path.should eq touches_path }
+        it ('displays #update') { expect(current_path).to eq touches_path }
         it ('flash success') { should have_flash_success('Contact me was successfully updated.') }
       end
     end

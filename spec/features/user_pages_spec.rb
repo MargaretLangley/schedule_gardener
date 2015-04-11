@@ -24,13 +24,13 @@ describe 'users' do
     before do
       visit_signin_and_login admin
       visit users_path
-      current_path.should eq users_path
+      expect(current_path).to eq users_path
     end
 
     context 'create user' do
       it 'open page' do
         click_on('Create User')
-        current_path.should eq signup_path
+        expect(current_path).to eq signup_path
       end
     end
 
@@ -58,8 +58,8 @@ describe 'users' do
       let(:search_button) { 'go_search' }
 
       before do
-        page.should have_selector('td', text: admin_first_name)
-        page.should have_selector('td', text: user_first_name)
+        expect(page).to have_selector('td', text: admin_first_name)
+        expect(page).to have_selector('td', text: user_first_name)
       end
 
       context 'by name' do
@@ -67,8 +67,8 @@ describe 'users' do
           fill_in(search, with: admin_first_name)
           click_button(search_button)
         end
-        it ('returned matches') { page.should have_selector('td', text: admin_first_name) }
-        it ('left unmatched') { page.should_not have_selector('td', text: user_first_name) }
+        it ('returned matches') { expect(page).to have_selector('td', text: admin_first_name) }
+        it ('left unmatched') { expect(page).to_not  have_selector('td', text: user_first_name) }
       end
 
       context 'by phone number' do
@@ -76,8 +76,8 @@ describe 'users' do
           fill_in(search, with: admin_home_phone[2, 5])
           click_button(search_button)
         end
-        it ('returned matches') { page.should have_selector('td', text: admin_first_name) }
-        it ('left unmatched') { page.should_not have_selector('td', text: user_first_name) }
+        it ('returned matches') { expect(page).to have_selector('td', text: admin_first_name) }
+        it ('left unmatched') { expect(page).to_not  have_selector('td', text: user_first_name) }
       end
     end   # search
 
@@ -87,7 +87,7 @@ describe 'users' do
           it ('present') { should have_link('Edit', href: edit_profile_path(standard_user)) }
           it 'edits' do
             first(:link, 'Edit').click
-            current_path.should eq edit_profile_path(standard_user)
+            expect(current_path).to eq edit_profile_path(standard_user)
           end
         end
 
@@ -120,7 +120,7 @@ describe 'users' do
     context 'standard user' do
       before do
         visit signup_path
-        current_path.should eq signup_path
+        expect(current_path).to eq signup_path
       end
 
       let(:submit) { 'Create account' }
@@ -147,7 +147,7 @@ describe 'users' do
           let(:user) { User.find_by_email('user@example.com') }
 
           it 'displays new profile ' do
-            current_path.should eq dashboard_path(user)
+            expect(current_path).to eq dashboard_path(user)
           end
           it  { should have_flash_success('Welcome') }
 
@@ -170,7 +170,7 @@ describe 'users' do
         describe 'after submission' do
           before { click_button submit }
 
-          it ('remains on signup url') {  current_path.should eq signup_path  }
+          it ('remains on signup url') {  expect(current_path).to eq signup_path  }
           it 'has error banner' do
             should have_content('error')
           end
@@ -205,7 +205,7 @@ describe 'users' do
           before { click_button 'Create account' }
 
           it 'back to users' do
-            current_path.should eq users_path
+            expect(current_path).to eq users_path
           end
           it  { should have_flash_success('New User Created') }
         end
@@ -219,7 +219,7 @@ describe 'users' do
       before do
         visit_signin_and_login (standard_user)
         visit edit_profile_path (standard_user)
-        current_path.should eq edit_profile_path(standard_user)
+        expect(current_path).to eq edit_profile_path(standard_user)
       end
 
       context 'with valid information' do
@@ -241,7 +241,7 @@ describe 'users' do
         end
 
         it 'displays edited profile ' do
-          current_path.should eq edit_profile_path(standard_user)
+          expect(current_path).to eq edit_profile_path(standard_user)
         end
         it 'has success banner' do
           should have_flash_success('Profile update')
@@ -249,8 +249,8 @@ describe 'users' do
         it 'link to sign out' do
           should have_link('Sign out', href: signout_path)
         end
-        it ('has expected full name') { standard_user.reload.full_name.should eq "#{new_first_name} #{new_last_name}" }
-        it ('has expected email') { standard_user.reload.email.should eq new_email }
+        it ('has expected full name') { expect(standard_user.reload.full_name).to eq "#{new_first_name} #{new_last_name}" }
+        it ('has expected email') { expect(standard_user.reload.email).to eq new_email }
       end
 
       context 'with invalid information' do
@@ -278,7 +278,7 @@ describe 'users' do
           click_button update_profile
         end
         it 'displays users' do
-          current_path.should eq users_path
+          expect(current_path).to eq users_path
         end
       end
     end

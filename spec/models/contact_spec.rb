@@ -24,7 +24,7 @@ describe Contact do
   include_examples 'All Built Objects', Contact
 
   it 'has a valid factory' do
-    FactoryGirl.create(:contact, :client_r).should be_valid
+    expect(FactoryGirl.create(:contact, :client_r)).to be_valid
   end
 
   context 'Accessable' do
@@ -44,7 +44,7 @@ describe Contact do
     end
 
     [:first_name, :last_name].each do |validate_attr|
-      it { should ensure_length_of(validate_attr).is_at_most(50) }
+      it { should validate_length_of(validate_attr).is_at_most(50) }
     end
 
     context 'email addresses' do
@@ -57,7 +57,7 @@ describe Contact do
       it 'with upper-case saved as lower-case' do
         contact.email = mixed_case_email
         contact.save
-        contact.reload.email.should eq mixed_case_email.downcase
+        expect(contact.reload.email).to eq mixed_case_email.downcase
       end
 
       it 'with bad format are invalid' do
@@ -74,11 +74,11 @@ describe Contact do
         (app3 = FactoryGirl.build(:appointment, :gardener_a, :tomorrow_first_slot, contact: contact)).save!
         (app1 = FactoryGirl.build(:appointment, :gardener_a, :today_first_slot, contact: contact)).save!
 
-        Appointment.all.should eq [app2, app3, app1]
+        expect(Appointment.all).to eq [app2, app3, app1]
       end
 
       it 'true' do
-        contact.appointments.should eq [app1, app2, app3]
+        expect(contact.appointments).to eq [app1, app2, app3]
       end
     end
 
@@ -89,11 +89,11 @@ describe Contact do
         contact_2  = FactoryGirl.create(:contact, :client_a)
         contact1_app1 = FactoryGirl.create(:appointment, :gardener_a, :today_first_slot, contact: contact)
         contact2_app2 = FactoryGirl.create(:appointment, :gardener_a, :today_second_slot, contact: contact_2)
-        Appointment.all.should eq [contact1_app1, contact2_app2]
+        expect(Appointment.all).to eq [contact1_app1, contact2_app2]
       end
 
       it 'true' do
-        contact.appointments.should eq [contact1_app1]
+        expect(contact.appointments).to eq [contact1_app1]
       end
     end
   end
@@ -108,11 +108,11 @@ describe Contact do
         (contact1_app3 = FactoryGirl.create(:appointment, :tomorrow_first_slot, contact: contact, appointee: gardener_a)).save!
         (contact1_app1 = FactoryGirl.create(:appointment, :gardener_p, :today_first_slot, contact: contact)).save!
 
-        Appointment.all.should eq [contact1_app2, contact1_app3, contact1_app1]
+        expect(Appointment.all).to eq [contact1_app2, contact1_app3, contact1_app1]
       end
 
       it 'true' do
-        gardener_a.visits.should eq [contact1_app2, contact1_app3]
+        expect(gardener_a.visits).to eq [contact1_app2, contact1_app3]
       end
     end
   end
@@ -126,11 +126,11 @@ describe Contact do
         allan = FactoryGirl.create(:contact, :gardener_a)
         roger = FactoryGirl.create(:contact, :client_r)
 
-        Contact.all.should eq [percy, allan, roger]
+        expect(Contact.all).to eq [percy, allan, roger]
       end
 
       it 'return first name ordered gardeners' do
-        Contact.contacts_by_role('gardener').should eq [allan, percy]
+        expect(Contact.contacts_by_role('gardener')).to eq [allan, percy]
       end
     end
 
@@ -142,43 +142,43 @@ describe Contact do
         ann   = FactoryGirl.create(:contact, :client_a)
         alan  = FactoryGirl.create(:contact, :gardener_a)
 
-        Contact.all.should eq [roger, ann, alan]
+        expect(Contact.all).to eq [roger, ann, alan]
       end
       after(:all) { Contact.destroy_all }
 
       it 'return first name ordered clients' do
-        Contact.contacts_by_role('client').should eq [ann, roger]
+        expect(Contact.contacts_by_role('client')).to eq [ann, roger]
       end
 
       context 'case insenstive' do
         john = nil
         before do
           john  = FactoryGirl.create(:contact, :client_j, first_name: 'john')
-          Contact.all.should eq [roger, ann, alan, john]
+          expect(Contact.all).to eq [roger, ann, alan, john]
         end
 
         it 'ordering of clients' do
-          Contact.contacts_by_role('client').should eq [ann, john, roger]
+          expect(Contact.contacts_by_role('client')).to eq [ann, john, roger]
         end
       end
     end
   end
 
-  context 'full_name' do
-    its(:full_name) { should eq 'Roger Smith' }
+  it 'full_name is correct' do
+    expect(contact.full_name).to eq 'Roger Smith'
   end
 
   context '#home_phone' do
     it 'only save numerics' do
       contact.home_phone = '(0181).,;.300-1234'
-      contact.home_phone.should eq '01813001234'
+      expect(contact.home_phone).to eq '01813001234'
     end
   end
 
   context '#mobile' do
     it 'only save numerics' do
       contact.mobile = '(0181).,;.300-1234'
-      contact.mobile.should eq '01813001234'
+      expect(contact.mobile).to eq '01813001234'
     end
   end
 

@@ -13,13 +13,13 @@ describe 'abilities' do
   let(:gardener)       { FactoryGirl.create(:user, :gardener_a) }
 
   shared_examples_for 'can_manage_user' do |ability, user|
-    it ('can show')     { ability.should be_able_to(:show, user) }
-    it ('can new')      { ability.should be_able_to(:new, user) }
-    it ('can create')   { ability.should be_able_to(:create, user) }
-    it ('can edit')     { ability.should be_able_to(:edit, user) }
-    it ('can update')   { ability.should be_able_to(:update, user) }
-    it ('can destroy')  { ability.should be_able_to(:destroy, user) }
-    it ('can manage')   { ability.should be_able_to(:manage, user) }
+    it ('can show')     { expect(ability).to be_able_to(:show, user) }
+    it ('can new')      { expect(ability).to be_able_to(:new, user) }
+    it ('can create')   { expect(ability).to be_able_to(:create, user) }
+    it ('can edit')     { expect(ability).to be_able_to(:edit, user) }
+    it ('can update')   { expect(ability).to be_able_to(:update, user) }
+    it ('can destroy')  { expect(ability).to be_able_to(:destroy, user) }
+    it ('can manage')   { expect(ability).to be_able_to(:manage, user) }
   end
 
   describe 'User' do

@@ -3,11 +3,6 @@ require 'active_attr/rspec'
 require 'spec_helper'
 
 describe PasswordReset do
-  it do
-    should have_attribute(:email)
-      .of_type(String)
-  end
-
   it 'emails are validated' do
     should allow_value('user@foo.COM').for(:email)
   end

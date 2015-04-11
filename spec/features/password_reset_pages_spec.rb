@@ -12,7 +12,7 @@ describe 'PasswordReset' do
     end
 
     it 'should open page' do
-      current_path.should eq new_password_reset_path
+      expect(current_path).to eq new_password_reset_path
     end
 
     context 'with valid email' do
@@ -27,7 +27,7 @@ describe 'PasswordReset' do
 
         # 'not setup for sendgrid - look at options later'
         xit 'open password resent' do
-          current_path.should eq password_reset_sent_path
+          expect(current_path).to eq password_reset_sent_path
         end
 
         # 'not setup for sendgrid - look at options later'
@@ -44,7 +44,7 @@ describe 'PasswordReset' do
           end
 
           it 'open password resent' do
-            current_path.should eq password_reset_sent_path
+            expect(current_path).to eq password_reset_sent_path
           end
 
           it 'Notice set' do
@@ -61,7 +61,7 @@ describe 'PasswordReset' do
       end
 
       it 'waits on the create action' do
-        current_path.should eq password_resets_path
+        expect(current_path).to eq password_resets_path
       end
 
       it 'has error banner' do
@@ -76,7 +76,7 @@ describe 'PasswordReset' do
     end
     context 'within time' do
       it 'opens page' do
-        current_path.should eq edit_password_reset_path(client.password_reset_token)
+        expect(current_path).to eq edit_password_reset_path(client.password_reset_token)
       end
       context 'good input' do
         before do
@@ -85,7 +85,7 @@ describe 'PasswordReset' do
           click_button 'Update Password'
         end
         it 'matching passwords succeed' do
-          current_path.should eq root_path
+          expect(current_path).to eq root_path
         end
         it 'should display notice' do
           should have_flash_notice('Password has been reset')
@@ -109,7 +109,7 @@ describe 'PasswordReset' do
       end
 
       it 'opens new reset page' do
-        current_path.should eq new_password_reset_path
+        expect(current_path).to eq new_password_reset_path
       end
 
       it 'has flash error' do
