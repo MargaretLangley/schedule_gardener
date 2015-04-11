@@ -44,7 +44,7 @@ describe Touch do
       it ('has touch from today') { expect(new_touch.touch_from).to eq 'Sat, 01 Sep 2012 00:00:00 BST +01:00'   }
       it ('has empty information') { expect(new_touch.additional_information).to eq ''   }
       it ('completed not be nil') { expect(new_touch.completed).to_not be_nil  }
-      it ('not comploted')     { expect(new_touch.completed).to eq false  }
+      it ('not completed')     { expect(new_touch.completed).to eq false  }
       it ('be valid') do
         new_touch.by_phone = true
         expect(new_touch).to be_valid

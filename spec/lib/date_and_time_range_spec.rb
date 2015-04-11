@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DateAndTime do
+describe DateAndTimeRange do
   before { Timecop.freeze(Time.zone.parse('1/9/2012 8:00')) }
 
   context 'Initialize' do
