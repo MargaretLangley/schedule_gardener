@@ -68,7 +68,7 @@ describe 'users' do
           click_button(search_button)
         end
         it ('returned matches') { expect(page).to have_selector('td', text: admin_first_name) }
-        it ('left unmatched') { expect(page).to_not  have_selector('td', text: user_first_name) }
+        it ('left unmatched') { expect(page).to_not have_selector('td', text: user_first_name) }
       end
 
       context 'by phone number' do
@@ -77,7 +77,7 @@ describe 'users' do
           click_button(search_button)
         end
         it ('returned matches') { expect(page).to have_selector('td', text: admin_first_name) }
-        it ('left unmatched') { expect(page).to_not  have_selector('td', text: user_first_name) }
+        it ('left unmatched') { expect(page).to_not have_selector('td', text: user_first_name) }
       end
     end   # search
 

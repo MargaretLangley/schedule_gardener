@@ -28,7 +28,7 @@ describe AppointmentSlot do
     context 'double session' do
       it 'books both slots' do
         expect(AppointmentSlot.slots_in_time_range(
-          (Time.zone.parse('2012/09/01 11:30')..Time.zone.parse('2012/09/01 14:30'))
+                 (Time.zone.parse('2012/09/01 11:30')..Time.zone.parse('2012/09/01 14:30'))
         )).to eq [2, 3]
       end
     end

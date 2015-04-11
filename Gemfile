@@ -125,7 +125,7 @@ end
 
 group :development do
   gem 'annotate', '2.6.0'
-  gem 'rubocop', '~> 0.29.0', require: false
+  gem 'rubocop', '~> 0.30.0', require: false
   gem 'rails-erd', '~> 1.3.0'
 end
 
