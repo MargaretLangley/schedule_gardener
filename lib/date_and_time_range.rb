@@ -3,15 +3,15 @@ class DateAndTimeRange
 
   def initialize(args)
     @start = DateTimeWrapper.new(datetime: args.fetch(:start, nil),
-                             date:     args.fetch(:start_date, nil),
-                             time:     args.fetch(:start_time, nil))
+                                 date:     args.fetch(:start_date, nil),
+                                 time:     args.fetch(:start_time, nil))
     if args.fetch(:length, nil)
       @end = DateTimeWrapper.new(datetime: @start.datetime + args.fetch(:length).to_i.minutes)
     else
       @end = DateTimeWrapper.new(datetime: args.fetch(:end, nil),
-                             date:     args.fetch(:end_date, nil),
-                             time:     args.fetch(:end_time, nil)
-                            )
+                                 date:     args.fetch(:end_date, nil),
+                                 time:     args.fetch(:end_time, nil)
+                                )
     end
   end
 
