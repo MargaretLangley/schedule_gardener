@@ -84,7 +84,7 @@ ruby '2.1.2'
 #
 # Production
 #
-gem 'rails', '3.2.21'
+gem 'rails', '4.0.0'
 
 gem 'active_attr'
 gem 'bootstrap-sass'
@@ -92,6 +92,7 @@ gem 'bootstrap-datepicker-rails'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'bootstrap-will_paginate', '~> 0.0.0'
 gem 'cancancan', '~> 1.10'
+gem 'coffee-rails', '~> 4.1.0'
 gem 'figaro'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
@@ -102,18 +103,12 @@ gem 'simple_form', '2.0.2'
 gem 'rails_admin', '~> 0.4.0'
 gem 'rails-i18n'
 gem 'rake'
+gem 'sass-rails',   '~> 4.0.0'
 gem 'squeel', '~> 1.2.0'
+gem 'uglifier', '~> 2.7.0'
 gem 'unicorn', '~> 4.8.0'
 gem 'validates_timeliness', '~> 3.0'
 gem 'will_paginate', '~> 3.0.0'
-
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
-end
 
 #
 # Capistrano deployment
