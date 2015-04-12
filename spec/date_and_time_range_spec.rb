@@ -22,20 +22,14 @@ describe DateAndTimeRange do
         }
       end
 
-      it 'start date' do
-        expect(DateAndTimeRange.new(args).start.date.to_s).to eq '2012-09-01'
+      it 'start datetime' do
+        expect(DateAndTimeRange.new(args).start.datetime)
+          .to eq Time.zone.local(2012, 9, 1, 8, 0)
       end
 
-      it 'start time' do
-        expect(DateAndTimeRange.new(args).start.time.to_s).to eq '08:00'
-      end
-
-      it 'end date' do
-        expect(DateAndTimeRange.new(args).end.date.to_s).to eq '2012-09-01'
-      end
-
-      it 'end time' do
-        expect(DateAndTimeRange.new(args).end.time.to_s).to eq '10:00'
+      it 'end datetime' do
+        expect(DateAndTimeRange.new(args).end.datetime)
+          .to eq Time.zone.local(2012, 9, 1, 10, 0)
       end
     end
 

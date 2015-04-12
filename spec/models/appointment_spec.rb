@@ -23,11 +23,13 @@ end
 describe Appointment do
   let!(:contact) { FactoryGirl.create(:contact, :client_r) }
   before { Timecop.freeze(Time.zone.parse('1/9/2012 8:00')) }
-  subject(:appointment) { FactoryGirl.create(:appointment, :client_r, :gardener_a, :today_first_slot) }
+  subject(:appointment) do
+    FactoryGirl.create(:appointment, :client_r, :gardener_a, :today_first_slot)
+  end
 
   include_examples 'All Built Objects', Appointment
 
-  context 'Accessable' do
+  context 'Accessible' do
     [:created_at, :updated_at].each do |validate_attr|
       it { should_not allow_mass_assignment_of(validate_attr) }
     end
@@ -45,11 +47,13 @@ describe Appointment do
 
   context 'record for' do
     it '#starts at matches expected time' do
-      expect(appointment.starts_at).to eq 'Sat, 2012-09-01 08:30:00 UTC +00:00'
+      expect(appointment.starts_at)
+        .to eq Time.zone.local(2012, 9, 1, 9, 30)
     end
 
     it '#ends at matches expected time' do
-      expect(appointment.ends_at).to eq 'Sat, 01 Sep 2012 10:00:00 UTC +00:00'
+      expect(appointment.ends_at)
+        .to eq Time.zone.local(2012, 9, 1, 11, 0)
     end
   end
 
@@ -94,7 +98,7 @@ describe Appointment do
           expect(Appointment.all).to eq [e1]
         end
 
-        it 'suceeds' do
+        it 'succeeds' do
           expect(contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59'))).to eq [e1]
         end
       end

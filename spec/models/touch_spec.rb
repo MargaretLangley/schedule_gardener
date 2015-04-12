@@ -40,8 +40,9 @@ describe Touch do
       it ('has no phone')     { expect(new_touch.by_phone).to be false  }
       it ('visit not be nil') { expect(new_touch.by_visit).to_not be_nil  }
       it ('has no visit')     { expect(new_touch.by_visit).to be false  }
-      it ('has visit at start of day') { expect(new_touch.touch_from).to eq 'Sat, 01 Sep 2012 00:00:00 BST +01:00'   }
-      it ('has touch from today') { expect(new_touch.touch_from).to eq 'Sat, 01 Sep 2012 00:00:00 BST +01:00'   }
+      it 'has visit at start of day' do
+        expect(new_touch.touch_from).to eq Time.zone.local(2012, 9, 1, 0, 00)
+      end
       it ('has empty information') { expect(new_touch.additional_information).to eq ''   }
       it ('completed not be nil') { expect(new_touch.completed).to_not be_nil  }
       it ('not completed')     { expect(new_touch.completed).to eq false  }

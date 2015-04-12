@@ -111,6 +111,7 @@ gem 'uglifier', '~> 2.7.0'
 gem 'unicorn', '~> 4.8.0'
 gem 'validates_timeliness', '~> 3.0'
 gem 'will_paginate', '~> 3.0.0'
+gem 'zonebie'
 
 #
 # Capistrano deployment

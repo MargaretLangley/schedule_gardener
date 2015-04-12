@@ -18,6 +18,6 @@ class EventsController < ApplicationController
   end
 
   def default_date
-    Date.current.beginning_of_month
+    Time.zone.today.beginning_of_month
   end
 end
