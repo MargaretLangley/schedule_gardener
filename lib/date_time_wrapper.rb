@@ -1,4 +1,7 @@
-class DateAndTime
+#
+# DateTimeWrapper
+#
+class DateTimeWrapper
   attr_accessor :datetime
   def persisted?
     false
