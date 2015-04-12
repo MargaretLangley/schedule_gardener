@@ -4,12 +4,12 @@ require File.expand_path('../boot', __FILE__)
 require 'active_record/railtie'
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
-require 'active_resource/railtie'
+# require 'active_resource/railtie'
 require 'sprockets/railtie'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(:default, Rails.env)
+Bundler.require(*Rails.groups)
 
 module ScheduleGardener
   class Application < Rails::Application
@@ -25,5 +25,12 @@ module ScheduleGardener
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :'en'
+
+    config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**/}'),
+                                 "#{config.root}/lib/**/"]
+
+    # Upgradeing to rails 4 -
+    #
+    config.active_record.whitelist_attributes = false
   end
 end

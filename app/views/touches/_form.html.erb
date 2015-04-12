@@ -10,7 +10,7 @@
      <%= f.hidden_field :by_phone, value: true %>
     <% end %>
 
-    <%= f.input :touch_from,  as: :date_picker, label: 'Contact from', hint: "Earliest date you want to be contacted?" %>
+    <%= f.input(:touch_from,  as: :date_picker, label: 'Contact from', hint: "Earliest date you want to be contacted?") %>
 
     <%= f.input :additional_information, :input_html => { :class => "span6" } %>
     <% if current_user.role == "gardener" %>
