@@ -9,7 +9,7 @@ ScheduleGardener::Application.routes.draw do
   get '/signup',                to: 'users#new'
   post '/signup',                to: 'users#create'
   get '/settings/profile/:id',  to: 'users#edit',  as: :edit_profile
-  put '/settings/profile/:id',  to: 'users#update', as: :update_profile
+  patch '/settings/profile/:id',  to: 'users#update', as: :update_profile
   resources :users, only: [:index, :destroy]
 
   get '/signin',                to: 'sessions#new'
