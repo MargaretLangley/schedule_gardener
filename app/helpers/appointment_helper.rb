@@ -16,6 +16,9 @@ module AppointmentHelper
     appointments.find { |appointment| appointment.include_slot_number?(slot) }
   end
 
+  #
+  # link to appointment with associated start_time
+  #
   def new_appointment_for_date_and_slot_link(date, slot)
     link_to "#{slot}", new_appointment_path(starts_at: date + AppointmentSlot.time_to_start_of_slot(slot)), class: 'btn'
   end
