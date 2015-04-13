@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: appointment_slots
+#
+#  id            :integer          not null, primary key
+#  time          :string(255)      not null
+#  humanize_time :string(255)      not null
+#  value         :integer          not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
 require 'spec_helper'
 
 describe AppointmentSlot do

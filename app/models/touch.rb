@@ -1,3 +1,12 @@
+#
+# Touch
+#
+# A request for work
+#
+#  - TODO: not sure if we are entering a contract to do the work?
+#    - best guess is yes
+#
+
 # == Schema Information
 #
 # Table name: touches
@@ -12,11 +21,11 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
-
 class Touch < ActiveRecord::Base
+  attr_accessible :additional_information, :between_end, :between_start, :completed, :contact, :contact_id, :by_phone, :by_visit, :touch_from, :visit_at
   belongs_to :contact
   delegate :full_name, :home_phone, to: :contact
-  attr_accessible :additional_information, :between_end, :between_start, :completed, :contact, :contact_id, :by_phone, :by_visit, :touch_from, :visit_at
+
   validates :contact_id, presence: true
   #
   # TODO: FIX the validation

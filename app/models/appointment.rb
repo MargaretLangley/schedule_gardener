@@ -1,3 +1,9 @@
+#
+# Appointment
+#
+# Physical appointment - represents the intention to complete a job of work
+#                        between a contact and a gardener within a time range.
+#
 # == Schema Information
 #
 # Table name: appointments
@@ -11,16 +17,22 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
-
 class Appointment < ActiveRecord::Base
   attr_accessible :appointee, :appointee_id, :contact, :contact_id, :description, :ends_at, :starts_at
+  attr_accessible :appointment_time_attributes
+  belongs_to :contact, class_name: 'Contact', foreign_key: 'contact_id'
+  belongs_to :appointee, class_name: 'Contact', foreign_key: 'appointee_id'
+
+  #
+  # TODO: appointment_time is a method to convert from start_at, end_at to
+  #       DateAndTimeRange
+  #
+  has_one :appointment_time
+  accepts_nested_attributes_for :appointment_time
 
   validates :appointee, :contact, :starts_at, presence: true
   validates_datetime :starts_at, after: :now, before: :this_date_next_year
   validates_datetime :ends_at, on_or_after: :starts_at
-
-  belongs_to :contact, class_name: 'Contact', foreign_key: 'contact_id'
-  belongs_to :appointee, class_name: 'Contact', foreign_key: 'appointee_id'
 
   after_initialize :initialize_datetimes
 
@@ -28,10 +40,6 @@ class Appointment < ActiveRecord::Base
     self.starts_at ||= Time.zone.now.beginning_of_day + 1.day
     self.ends_at ||= Time.zone.now.beginning_of_day + 1.day
   end
-
-  attr_accessible :appointment_time_attributes
-  has_one :appointment_time
-  accepts_nested_attributes_for :appointment_time
 
   def appointment_time
     DateAndTimeRange.new(start: starts_at, end: ends_at)

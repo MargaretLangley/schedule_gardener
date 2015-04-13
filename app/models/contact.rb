@@ -1,3 +1,10 @@
+#
+# Contact
+#
+# The person we contact about gardening
+#   - contacts have the information to complete the creation of an appointment
+#
+
 # == Schema Information
 #
 # Table name: contacts
@@ -14,9 +21,16 @@
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #
-
 class Contact < ActiveRecord::Base
   attr_accessible :address_attributes, :email, :first_name, :home_phone, :last_name, :mobile
+
+  belongs_to :contactable, polymorphic: true
+  has_one :address,  autosave: true, dependent: :destroy, as: :addressable
+  accepts_nested_attributes_for :address
+  has_many :gardens, dependent: :destroy
+  has_many :appointments, dependent: :destroy, order: 'appointments.starts_at ASC'
+  has_many :touches
+  has_many :visits, class_name: 'Appointment', foreign_key: 'appointee_id', dependent: :destroy, order: 'appointments.starts_at ASC'
 
   validates :email, :first_name, :home_phone, :role, presence: true
   validates :first_name, :last_name, length: { maximum: 50 }
@@ -24,17 +38,6 @@ class Contact < ActiveRecord::Base
 
   before_validation :set_default
   before_save :before_save
-
-  belongs_to :contactable, polymorphic: true
-  has_one :address,  autosave: true, dependent: :destroy, as: :addressable
-  has_many :gardens, dependent: :destroy
-  has_many :appointments, dependent: :destroy, order: 'appointments.starts_at ASC'
-  has_many :touches
-  has_many :visits, class_name: 'Appointment', foreign_key: 'appointee_id', dependent: :destroy, order: 'appointments.starts_at ASC'
-
-  # attr_accessible :address_attributes - adds the attribute writer to the allowed list
-  # accepts_nes.... Defines an attributes writer for the specified association
-  accepts_nested_attributes_for :address
 
   def full_name
     "#{first_name} #{last_name}"

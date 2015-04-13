@@ -1,6 +1,23 @@
-
+#
+# AppointmentSlot
+#
+# Appointment slot records hold the time when you can get an appointment
+# This object provides methods to query times based on slot number and
+# time we can book for.
+#
 # rubocop: disable Lint/UselessAssignment
-
+#
+# == Schema Information
+#
+# Table name: appointment_slots
+#
+#  id            :integer          not null, primary key
+#  time          :string(255)      not null
+#  humanize_time :string(255)      not null
+#  value         :integer          not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
 class AppointmentSlot < ActiveRecord::Base
   attr_accessible :humanize_time, :time, :value
 
