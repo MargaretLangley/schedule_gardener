@@ -7,6 +7,7 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
 require 'capybara-screenshot/rspec'
+require 'database_cleaner'
 require 'zonebie'
 Capybara::Screenshot.prune_strategy = :keep_last_run
 
