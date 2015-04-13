@@ -34,6 +34,11 @@ class Appointment < ActiveRecord::Base
   validates_datetime :starts_at, after: :now, before: :this_date_next_year
   validates_datetime :ends_at, on_or_after: :starts_at
 
+  # This code could replace the above and then remove validates_timeliness
+  # validates :starts_at, date: { after: proc { Time.zone.now },
+  #                               before: proc { Time.zone.now + 1.year } }
+  # validates :ends_at, date: { after_or_equal_to: :starts_at }
+
   after_initialize :initialize_datetimes
 
   def initialize_datetimes

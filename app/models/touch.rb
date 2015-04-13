@@ -27,9 +27,10 @@ class Touch < ActiveRecord::Base
   delegate :full_name, :home_phone, to: :contact
 
   validates :contact_id, presence: true
-  #
-  # TODO: FIX the validation
-  # validates_datetime :touch_from, on_or_after: :today, before: :this_date_next_year
+  validates :touch_from,
+            date: { after_or_equal_to: proc { Time.zone.now },
+                    before: proc { Time.zone.now + 1.year },
+                    message: 'We can contact you from today. Please choose a date which can be today or in the future.' }
   validate :touch_by_method_must_be_selected
 
   after_initialize :initialize_record
@@ -37,7 +38,7 @@ class Touch < ActiveRecord::Base
   def initialize_record
     self.by_phone ||= false
     self.by_visit ||= false
-    self.touch_from ||= Time.zone.now.beginning_of_day
+    self.touch_from ||= Time.zone.now
     self.additional_information ||= ''
     self.completed ||= false
   end

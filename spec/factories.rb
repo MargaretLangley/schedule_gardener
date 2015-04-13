@@ -181,5 +181,9 @@ FactoryGirl.define do
     trait :next_week do
       touch_from '2012-09-08'
     end
+
+    trait :fortnight do
+      touch_from '2012-09-15'
+    end
   end
 end

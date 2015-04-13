@@ -16,32 +16,23 @@
 require 'spec_helper'
 
 describe Touch do
-  before { Timecop.freeze(Time.zone.parse('1/9/2012 8:00')) }
-  let!(:client_a) {  FactoryGirl.create(:contact, :client_a) }
-  subject(:touch) { FactoryGirl.create(:touch, by_phone: true, contact: client_a) }
+  before { Timecop.freeze(Time.zone.parse('1/9/2012 12:00')) }
 
-  include_examples 'All Built Objects', Touch
-
-  context 'Accessable' do
-    [:created_at, :updated_at].each do |validate_attr|
-      it { should_not allow_mass_assignment_of(validate_attr) }
-    end
-
-    [:additional_information, :by_phone, :by_visit,  :touch_from].each do |expected_attr|
-      it { should respond_to expected_attr }
-    end
+  it 'should be valid' do
+    expect(FactoryGirl.create(:touch, :client_a, :next_week)).to be_valid
   end
 
   context 'new record' do
+    let!(:client_a) {  FactoryGirl.create(:contact, :client_a) }
     subject(:new_touch) { Touch.new(contact: client_a) }
 
-    context 'state' do
+    describe 'state' do
       it ('phone not be nil') { expect(new_touch.by_phone).to_not be_nil  }
       it ('has no phone')     { expect(new_touch.by_phone).to be false  }
       it ('visit not be nil') { expect(new_touch.by_visit).to_not be_nil  }
       it ('has no visit')     { expect(new_touch.by_visit).to be false  }
-      it 'has visit at start of day' do
-        expect(new_touch.touch_from).to eq Time.zone.local(2012, 9, 1, 0, 00)
+      it 'has visit now' do
+        expect(new_touch.touch_from).to eq Time.zone.now
       end
       it ('has empty information') { expect(new_touch.additional_information).to eq ''   }
       it ('completed not be nil') { expect(new_touch.completed).to_not be_nil  }
@@ -54,79 +45,85 @@ describe Touch do
   end
 
   context 'invalid' do
-    context 'when asked to make appointment' do
-      context 'without' do
-        it 'a way to contact' do
-          touch.by_phone = false
-          touch.by_visit = false
-          touch.valid?
-          expect(touch.errors[:by_phone]).to include('You have to select a way to contact us. Either choose by phone or by visit.')
-        end
+    let!(:client_a) {  FactoryGirl.create(:contact, :client_a) }
+    subject(:touch) { FactoryGirl.create(:touch, by_phone: true, contact: client_a) }
+
+    describe 'when asked to make appointment' do
+      it 'without a way to contact' do
+        touch.by_phone = false
+        touch.by_visit = false
+        touch.valid?
+
+        expect(touch.errors[:by_phone]).to include('You have to select a way to contact us. Either choose by phone or by visit.')
       end
     end
-    context 'when arranging to be contacted' do
-      it 'it is in the future' do
+    describe 'when arranging to be contacted' do
+      it 'if arranging for the past' do
         touch.touch_from = '2012/08/31'
         touch.valid?
+
         expect(touch.errors[:touch_from]).to include('We can contact you from today. Please choose a date which can be today or in the future.')
       end
-      it 'it is within a year' do
+      it 'if arranging in the distant future' do
         touch.touch_from = '2013/09/02'
         touch.valid?
+
         expect(touch.errors[:touch_from]).to include('We can contact you within a year. Please choose a date within a year from today.')
       end
     end
   end
 
-  context 'Custom finders' do
-    context 'ordering' do
-      context 'by date order' do
-        client_a = ann = john = roger = nil
+  describe 'Custom finders - ordering' do
+    describe 'by date order' do
+      ann = john = roger = nil
 
-        before do
-          client_a = FactoryGirl.create(:contact, :client_a)
-          (ann =  Touch.new(by_phone: true, contact: client_a, touch_from: '2012-09-02')).save!
-          john = FactoryGirl.create(:touch, :client_j, :next_week)
-          roger = FactoryGirl.create(:touch, :client_r, :today)
+      before do
+        ann = FactoryGirl.create(:touch, :client_a, :next_week)
+        john = FactoryGirl.create(:touch, :client_j, :fortnight)
+        roger = FactoryGirl.create(:touch, :client_r, :tomorrow)
 
-          expect(Touch.all).to eq [ann, john, roger]
-        end
-
-        after(:all) do
-        end
-
-        it ('all ordered') { expect(Touch.all_ordered).to eq [roger, ann, john] }
-        it ('outstanding') { expect(Touch.outstanding).to eq [roger, ann, john] }
-        it ('outstanding by contact') { expect(Touch.outstanding_by_contact(client_a)).to eq [ann] }
+        expect(Touch.all).to eq [ann, john, roger]
       end
 
-      context 'by date then name' do
-        ann = john = roger = nil
+      it 'all ordered' do
+        expect(Touch.all_ordered).to eq [roger, ann, john]
+      end
+      it 'outstanding' do
+        expect(Touch.outstanding).to eq [roger, ann, john]
+      end
+      it 'outstanding by contact' do
+        contact_john = Contact.find_by first_name: 'John'
 
-        before do
-          john = FactoryGirl.create(:touch, :client_j, :tomorrow)
-          ann = FactoryGirl.create(:touch, :client_a, :tomorrow)
-          roger = FactoryGirl.create(:touch, :client_r, :tomorrow)
+        expect(Touch.outstanding_by_contact(contact_john)).to eq [john]
+      end
+    end
 
-          expect(Touch.all).to eq [john, ann, roger]
-        end
+    describe 'by date then name' do
+      ann = john = roger = nil
 
-        it ('all ordered') { expect(Touch.all_ordered).to eq [ann, john, roger] }
-        it ('outstanding') { expect(Touch.outstanding).to eq [ann, john, roger] }
+      before do
+        john = FactoryGirl.create(:touch, :client_j, :tomorrow)
+        ann = FactoryGirl.create(:touch, :client_a, :tomorrow)
+        roger = FactoryGirl.create(:touch, :client_r, :tomorrow)
+
+        expect(Touch.all).to eq [john, ann, roger]
       end
 
-      context 'return only outstanding' do
-        ann = john =  nil
+      it ('all ordered') { expect(Touch.all_ordered).to eq [ann, john, roger] }
+      it ('outstanding') { expect(Touch.outstanding).to eq [ann, john, roger] }
+    end
 
-        before do
-          john = FactoryGirl.create(:touch, :client_j, :tomorrow, completed: true)
-          ann = FactoryGirl.create(:touch, :client_a, :tomorrow)
+    describe 'return only outstanding' do
+      ann = john =  nil
 
-          expect(Touch.all).to eq [john, ann]
-        end
+      before do
+        john = FactoryGirl.create(:touch, :client_j, :tomorrow, completed: true)
+        ann = FactoryGirl.create(:touch, :client_a, :tomorrow)
 
-        it ('outstanding') { expect(Touch.outstanding).to eq [ann] }
+        expect(Touch.all).to eq [john, ann]
       end
+
+      it ('outstanding') { expect(Touch.outstanding).to eq [ann] }
     end
   end
 end

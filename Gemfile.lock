@@ -298,6 +298,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   coveralls (~> 0.7.0)
   database_cleaner (~> 1.4.0)
+  date_validator
   factory_girl_rails (~> 4.5.0)
   figaro
   jquery-rails

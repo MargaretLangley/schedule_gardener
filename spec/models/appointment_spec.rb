@@ -22,7 +22,7 @@ end
 
 describe Appointment do
   let!(:contact) { FactoryGirl.create(:contact, :client_r) }
-  before { Timecop.freeze(Time.zone.parse('1/9/2012 8:00')) }
+  before { Timecop.freeze(Time.zone.parse('2012-9-1 8:00')) }
   subject(:appointment) do
     FactoryGirl.create(:appointment, :client_r, :gardener_a, :today_first_slot)
   end
@@ -80,26 +80,27 @@ describe Appointment do
       context 'on start boundary' do
         e1 = nil
         before do
-          Timecop.travel(Time.zone.parse('1/8/2012 10:00'))
+          Timecop.travel(Time.zone.parse('2012-8-1 10:00'))
           e1 = Helper.create_appointment(contact, '31/08/2012 22:00', '31/08/2012 23:59')
           expect(Appointment.all).to eq [e1]
         end
 
         it 'fails' do
-          expect(contact.appointments.in_time_range('2012/09/01 00:00'..'2012/09/30 23:59')).to eq []
+          expect(contact.appointments.in_time_range(Time.zone.local(2012, 9, 1)..Time.zone.local(2012, 9, 30, 23, 59))).to eq []
         end
       end
 
       context 'on start boundary' do
         e1 = nil
         before do
-          Timecop.travel(Time.zone.parse('1/8/2012 10:00'))
+          Timecop.travel(Time.zone.parse('2012-8-1 10:00'))
           e1 = Helper.create_appointment(contact, '31/08/2012 22:00', '01/09/2012 00:00')
+
           expect(Appointment.all).to eq [e1]
         end
 
         it 'succeeds' do
-          expect(contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59'))).to eq [e1]
+          expect(contact.appointments.in_time_range(Time.zone.local(2012, 9, 1)..Time.zone.local(2012, 9, 30, 23, 59))).to eq [e1]
         end
       end
 
@@ -108,39 +109,42 @@ describe Appointment do
         before do
           e1 = Helper.create_appointment(contact, '30/09/2012 22:00', '30/09/2012 23:59')
           e2 = Helper.create_appointment(contact, '01/10/2012 00:00', '01/10/2012 01:30')
+
           expect(Appointment.all).to eq [e1, e2]
         end
 
-        it 'suceeds' do
-          expect(contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59'))).to eq [e1]
+        it 'succeeds' do
+          expect(contact.appointments.in_time_range(Time.zone.local(2012, 9, 1)..Time.zone.local(2012, 9, 30, 23, 59))).to eq [e1]
         end
       end
 
-      context 'accross boundary' do
+      context 'across boundary' do
         e1 = e2 = nil
         before do
-          Timecop.travel(Time.zone.parse('1/8/2012 10:00'))
+          Timecop.travel(Time.zone.parse('2012-8-1 10:00'))
           e1 = Helper.create_appointment(contact, '31/08/2012 23:00', '01/09/2012 01:00')
           e2 = Helper.create_appointment(contact, '30/09/2012 22:30', '01/10/2012 01:30')
-          Timecop.travel(Time.zone.parse('1/9/2012 10:00'))
+          Timecop.travel(Time.zone.parse('2012-9-1 10:00'))
+
           expect(Appointment.all).to eq [e1, e2]
         end
-        it 'suceeds' do
-          expect(contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59'))).to eq [e1, e2]
+        it 'succeeds' do
+          expect(contact.appointments.in_time_range(Time.zone.local(2012, 9, 1)..Time.zone.local(2012, 9, 30, 23, 59))).to eq [e1, e2]
         end
       end
 
       context "doesn't pick up other contacts appointments" do
         e1 = e2 = nil
         before do
-          Timecop.travel(Time.zone.parse('1/8/2012 08:00'))
+          Timecop.travel(Time.zone.parse('2012-8-1 8:00'))
           e1 = Helper.create_appointment(FactoryGirl.create(:contact, :client_a), '01/09/2012 01:00', '01/09/2012 02:00')
           e2 = Helper.create_appointment(contact, '02/09/2012 01:00', '02/09/2012 02:00')
+
           expect(Appointment.all).to eq [e1, e2]
         end
 
-        it 'suceeds' do
-          expect(contact.appointments.in_time_range(Time.zone.parse('2012/09/01 00:00')..Time.zone.parse('2012/09/30 23:59'))).to eq [e2]
+        it 'succeeds' do
+          expect(contact.appointments.in_time_range(Time.zone.local(2012, 9, 1)..Time.zone.local(2012, 9, 30, 23, 59))).to eq [e2]
         end
       end
     end

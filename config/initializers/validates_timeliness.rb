@@ -19,7 +19,7 @@ ValidatesTimeliness.setup do |config|
   #
   # Shorthand date and time symbols for restrictions
   config.restriction_shorthand_symbols.update(
-    now: -> { Time.zone.today },
+    now: -> { Time.zone.now },
     today: -> { Time.zone.today },
     this_date_next_year: -> { Time.zone.today + 1.year }
   )
