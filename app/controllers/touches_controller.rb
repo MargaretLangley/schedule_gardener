@@ -1,5 +1,5 @@
 class TouchesController < ApplicationController
-  before_filter :guest_redirect_to_signin_path
+  before_action :guest_redirect_to_signin_path
   check_authorization
   load_and_authorize_resource
 

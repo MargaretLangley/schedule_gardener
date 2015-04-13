@@ -41,19 +41,19 @@ class Contact < ActiveRecord::Base
   end
 
   def home_phone
-    read_attribute(:home_phone)
+    self[:home_phone]
   end
 
   def home_phone=(num)
-    write_attribute(:home_phone, num ? strip_none_numeric(num) : nil)
+    self[:home_phone] = num ? strip_none_numeric(num) : nil
   end
 
   def mobile
-    read_attribute(:mobile)
+    self[:mobile]
   end
 
   def mobile=(num)
-    write_attribute(:mobile, num ? strip_none_numeric(num) : nil)
+    self[:mobile] = num ? strip_none_numeric(num) : nil
   end
 
   def self.contacts_by_role(role)

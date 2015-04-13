@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :guest_redirect_to_signin_path,   except: [:new, :create]
+  before_action :guest_redirect_to_signin_path,   except: [:new, :create]
   check_authorization
   load_and_authorize_resource
 

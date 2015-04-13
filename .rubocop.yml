@@ -10,7 +10,7 @@
 # Ignored Files
 
 AllCops:
-  RunRailsCops: false
+  RunRailsCops: true
   Exclude:
     - db/**/*
     - bin/**/*

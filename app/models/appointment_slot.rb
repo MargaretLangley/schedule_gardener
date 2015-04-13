@@ -30,8 +30,6 @@ class AppointmentSlot < ActiveRecord::Base
     (find(slot_number)).value
   end
 
-  private
-
   #
   # How many slots are covered given a time range
   #
@@ -39,9 +37,6 @@ class AppointmentSlot < ActiveRecord::Base
     ((time_range.last - time_range.first) / (60 * 120.0)).round
   end
 
-  #
-  # Length, in minutes, of the slot.
-  #
   def self.lengths
     [90, 180]
   end
