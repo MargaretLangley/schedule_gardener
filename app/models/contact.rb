@@ -28,9 +28,9 @@ class Contact < ActiveRecord::Base
   has_one :address,  autosave: true, dependent: :destroy, as: :addressable
   accepts_nested_attributes_for :address
   has_many :gardens, dependent: :destroy
-  has_many :appointments, dependent: :destroy, order: 'appointments.starts_at ASC'
+  has_many :appointments, -> { order('appointments.starts_at ASC') }, dependent: :destroy
   has_many :touches
-  has_many :visits, class_name: 'Appointment', foreign_key: 'appointee_id', dependent: :destroy, order: 'appointments.starts_at ASC'
+  has_many :visits, -> { order('appointments.starts_at ASC') }, class_name: 'Appointment', foreign_key: 'appointee_id', dependent: :destroy
 
   validates :email, :first_name, :home_phone, :role, presence: true
   validates :first_name, :last_name, length: { maximum: 50 }
