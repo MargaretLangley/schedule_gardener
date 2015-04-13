@@ -122,9 +122,9 @@ group :development do
 end
 
 group :development do
-  gem 'annotate', '2.6.0'
-  gem 'rubocop', '~> 0.30.0', require: false
+  gem 'annotate', '~> 2.6.0'
   gem 'rails-erd', '~> 1.3.0'
+  gem 'rubocop', '~> 0.30.0', require: false
 end
 
 group :development, :test do
@@ -133,15 +133,15 @@ group :development, :test do
   # Throwing exceptions when it hits breakpoints
   #
   gem 'byebug', '3.5.1'
-  gem 'rspec-rails', '~> 3.2.0'
   gem 'rb-readline'
+  gem 'rspec-rails', '~> 3.2.0'
 end
 
 group :test do
-  gem 'factory_girl_rails', '~> 4.5.0'
   gem 'capybara', '~> 2.4.0'
   gem 'capybara-screenshot'
-  gem 'shoulda-matchers'
   gem 'coveralls', '~>0.7.0', require: false
+  gem 'factory_girl_rails', '~> 4.5.0'
+  gem 'shoulda-matchers'
   gem 'timecop', '~>0.7.0'
 end
