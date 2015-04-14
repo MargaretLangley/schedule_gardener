@@ -1,3 +1,11 @@
+
+#
+# User
+#   - The physical account that identifies someone logging in.
+#   - Associated with contact which is the information about the user
+#     - Allows a contact to be present in the system but not accessible until
+#       a user associates with the contact.
+#
 # == Schema Information
 #
 # Table name: users
