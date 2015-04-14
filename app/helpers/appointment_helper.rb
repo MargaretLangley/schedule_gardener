@@ -38,6 +38,6 @@ module AppointmentHelper
   #   - returns a link to a new_appointment at a specific start time
   #
   def new_appointment_link(date, slot)
-    link_to "#{slot}", new_appointment_path(starts_at: date + AppointmentSlot.time_to_start_of_slot(slot)), class: 'btn'
+    link_to "#{slot}", new_appointment_path(starts_at: date + AppointmentSlot.time_to_start_of_slot(slot).minutes), class: 'btn'
   end
 end
