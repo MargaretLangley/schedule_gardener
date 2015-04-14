@@ -3,7 +3,7 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-ScheduleGardener::Application.load_tasks
+Rails.application.load_tasks
 
 if %w(development test).include? Rails.env
   task(:default).clear
@@ -21,5 +21,7 @@ if %w(development test).include? Rails.env
   #
   ENV['SKIP_RAILS_ADMIN_INITIALIZER'] = 'false'
 
-  task default: ['spec']
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new
+  task default: [:rubocop, 'spec:fast', 'spec:features']
 end

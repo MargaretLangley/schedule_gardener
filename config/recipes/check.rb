@@ -1,3 +1,4 @@
+# rubocop: disable Rails/Output
 namespace :check do
   desc 'Make sure local git is in sync with remote.'
   task :revision, roles: :web do
