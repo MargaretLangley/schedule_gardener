@@ -1,4 +1,8 @@
-
+#
+# AppointmentsController
+#   - Management of appointments
+#     - Where an appointment is a client arranging a time, slot, with a gardener
+#
 class AppointmentsController < ApplicationController
   before_action :guest_redirect_to_signin_path
   helper_method :active_nav?
@@ -41,6 +45,10 @@ class AppointmentsController < ApplicationController
     params[:nav] == link
   end
 
+  #
+  # new appointment
+  #   - start_at: the time an appointment begins.
+  #
   def new
     @appointment = Appointment.new(starts_at: params[:starts_at])
   end

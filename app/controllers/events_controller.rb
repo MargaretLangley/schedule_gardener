@@ -1,20 +1,18 @@
-
+#
+# EventsController
+#   - Displays the calendar view
+#
 class EventsController < ApplicationController
   before_action :guest_redirect_to_signin_path
   check_authorization
   load_and_authorize_resource :appointment, parent: false
 
+  #
+  # Calendar View
+  #
   def index
-    @date = blank_param_date? ? default_date : param_date
+    @date = params[:date].blank? ? default_date : Date.parse(params[:date])
     @appointments_by_date = @appointments.in_time_range(@date - 7.day..@date.end_of_month + 7.day).group_by { |appointment| appointment.starts_at.to_date }
-  end
-
-  def blank_param_date?
-    params[:date].blank?
-  end
-
-  def param_date
-    Date.parse(params[:date])
   end
 
   def default_date
