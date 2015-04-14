@@ -126,6 +126,7 @@ group :development do
   gem 'annotate', '~> 2.6.0'
   gem 'rails-erd', '~> 1.3.0'
   gem 'rubocop', '~> 0.30.0', require: false
+  gem 'scss-lint'
 end
 
 group :development, :test do

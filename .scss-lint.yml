@@ -1,0 +1,49 @@
+scss_files: 'app/assets/stylesheets/**/*.css.scss'
+
+exclude:
+  - 'app/assets/stylesheets/generic.normalize.css'
+  - 'tmp/rubycritic/assets/stylesheets/*.css'
+  # - 'app/assets/stylesheets/custom.css.scss'
+  - 'app/assets/stylesheets/events.css.scss'
+
+#
+# Disable Linters
+#
+
+linters:
+  # Use // everywhere
+  Comment:
+    enabled: false
+
+  # write white as #FFF etc
+  ColorKeyword:
+    enabled: false
+
+  # ButtonIcon => .button-icon
+  SelectorFormat:
+    enabled: false
+
+  # Could not disable this on per file basis
+  # rgba( 65, 255, 255, 1)
+  #      ^
+  SpaceBetweenParens:
+    enabled: false
+
+
+#
+# Linters we want to Enable
+#
+  ColorVariable:
+    enabled: false
+  HexNotation:
+    enabled: false
+  IdSelector:
+    enabled: false
+  SelectorDepth:
+    enabled: false
+  NameFormat:
+    enabled: false
+  PlaceholderInExtend:
+    enabled: false
+  QualifyingElement:
+    enabled: false

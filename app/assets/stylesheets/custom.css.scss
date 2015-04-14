@@ -5,9 +5,9 @@ $navbarText: #46a546;
 $navbarLinkColor: #fff;
 $navbarLinkColorHover: #000;
 
-@import "bootstrap";
+@import 'bootstrap';
 body {  padding-top: 60px; }
-@import "bootstrap-responsive";
+@import 'bootstrap-responsive';
 
 
 /* mixins, variables, etc. */
@@ -31,24 +31,29 @@ textarea {
 
 /* typography */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1;
 }
 
 h1 {
   font-size: 3em;
   letter-spacing: -2px;
-  margin-bottom: 0.5em;
+  margin-bottom: .5em;
   text-align: center;
 }
 
 h2 {
-  font-size: 1.7em;
-  letter-spacing: -1px;
-  margin-bottom: 0.3em;
-  text-align: center;
-  font-weight: normal;
   color: $grayLight;
+  font-size: 1.7em;
+  font-weight: normal;
+  letter-spacing: -1px;
+  margin-bottom: .3em;
+  text-align: center;
 }
 
 
@@ -62,7 +67,6 @@ p {
   line-height: 1.7em;
 }
 
-
 /* Nav bar  see also colour overrides at the top of scss*/
 .icon-leaf.icon-white { vertical-align: 5px; }
 
@@ -71,14 +75,13 @@ p {
 
 /* :alert styled as bootstrap alert */
 div.alert.alert-alert {
-   @extend .alert-error;
- }
+  @extend .alert-error;
+}
 
 /* :notice styled as bootstrap notice */
 div.alert.alert-notice {
   @extend .alert-info;
 }
-
 
 /*  sidebar */
 
@@ -86,26 +89,30 @@ div.alert.alert-notice {
   @extend .span12;
 }
 
-
 /* footer */
 
 footer {
-  margin-top: 3%;
-  padding-top: 5px;
   border-top: 1px solid $grayMediumLight;
   color: $grayLight;
+  margin-top: 3%;
+  padding-top: 5px;
+
   a {
     color: $gray;
+
     &:hover {
       color: $grayDarker;
     }
   }
+
   small {
     float: left;
   }
+
   ul {
     float: right;
     list-style: none;
+
     li {
       float: left;
       margin-left: 1em;
@@ -118,8 +125,8 @@ footer {
 .debug_dump {
   clear: both;
   float: left;
-  width: 100%;
   margin-top: 3%;
+  width: 100%;
 }
 
 /* tables  */
@@ -128,20 +135,23 @@ table {
   table-layout: fixed;  /* makes columns line up with and without data */
 }
 
-
 /* forms */
 
-input, textarea, select, .uneditable-input {
+input,
+textarea,
+select,
+.uneditable-input {
   border: 1px solid #bbb;
-  width: 100%;
   height: auto;
+  width: 100%;
 }
 
 #error_explanation {
   color: #f00;
+
   ul {
     list-style: none;
-    margin: 0 0 18px 0;
+    margin: 0 0 18px;
   }
 }
 
@@ -153,36 +163,36 @@ input, textarea, select, .uneditable-input {
 
  /* this is the default action for that form */
 
- .primary_action_button  {
-   @extend .btn;
-   @extend .btn-large;
-   @extend .btn-primary;
- }
-
- .cancel_button {
-   @extend .btn;
-   @extend .btn-large;
-   @extend .btn-danger;
- }
-
-.tenerary_action_button  {
-   @extend .btn;
-   @extend .btn-mini;
- }
-
- .tenerary_action_button_warn  {
-   @extend .tenerary_action_button;
-   @extend .btn-danger;
- }
-
- .standard_button {
+.primary_action_button {
   @extend .btn;
- }
+  @extend .btn-large;
+  @extend .btn-primary;
+}
+
+.cancel_button {
+  @extend .btn;
+  @extend .btn-large;
+  @extend .btn-danger;
+}
+
+.tenerary_action_button {
+  @extend .btn;
+  @extend .btn-mini;
+}
+
+.tenerary_action_button_warn {
+  @extend .tenerary_action_button;
+  @extend .btn-danger;
+}
+
+.standard_button {
+  @extend .btn;
+}
 
 /* search box on index page  */
 
 .form-search {
-    @extend .well;
+  @extend .well;
 }
 
 .input-query {
@@ -193,5 +203,5 @@ input, textarea, select, .uneditable-input {
 .form-buttons {
   @extend .form-actions;
   background-color: white;
-  border-top: none;
+  border-top: 0;
 }

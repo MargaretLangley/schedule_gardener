@@ -79,6 +79,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1)
+    colorize (0.7.5)
     columnize (0.9.0)
     coveralls (0.7.2)
       multi_json (~> 1.3)
@@ -230,6 +231,9 @@ GEM
       sass (~> 3.2.2)
       sprockets (~> 2.8, < 3.0)
       sprockets-rails (~> 2.0)
+    scss-lint (0.7.0)
+      colorize
+      sass
     shoulda-matchers (2.8.0)
       activesupport (>= 3.0.0)
     simple_form (3.1.0)
@@ -316,6 +320,7 @@ DEPENDENCIES
   rspec-rails (~> 3.2.0)
   rubocop (~> 0.30.0)
   sass-rails (~> 4.0.0)
+  scss-lint
   shoulda-matchers
   simple_form (~> 3.1.0)
   squeel (~> 1.2.0)
