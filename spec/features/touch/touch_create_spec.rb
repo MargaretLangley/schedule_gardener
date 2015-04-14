@@ -12,13 +12,13 @@ describe 'Touches#create' do
     end
 
     it ('displayed') { expect(current_path).to eq new_touch_path }
-    it ('has client missing') { should_not have_selector('#touch_contact_id') }
     it 'can cancel' do
       click_on('Cancel')
       expect(current_path).to eq touches_path
     end
 
-    context 'hides gardener only content' do
+    describe 'hides gardener only content' do
+      it ('has client missing') { should_not have_content('Client') }
       it ('by phone')  { should_not have_content 'By phone' }
       it ('by visit')  { should_not have_content 'By visit' }
       it ('completed') { should_not have_content 'Completed' }
@@ -64,24 +64,27 @@ describe 'Touches#create' do
 
   context 'gardener' do
     let(:gardener_a) { FactoryGirl.create(:user, :gardener_a) }
-    before do
-      visit_signin_and_login gardener_a
-      visit new_touch_path
-    end
 
     describe 'has gardener only content' do
+      before do
+        visit_signin_and_login gardener_a
+        visit new_touch_path
+      end
+      it ('has client') { should have_content('Client') }
       it ('by phone')  { should have_content 'By phone' }
       it ('by visit')  { should have_content 'By visit' }
       it ('completed') { should have_content 'Completed' }
     end
 
-    context 'with valid information' do
-      it 'adds touch' do
-        fill_in 'Contact from', with: '1 Oct 2012'
-        check 'By phone'
+    it 'with valid informcation it adds touch' do
+      FactoryGirl.create(:contact, :client_a)
+      visit_signin_and_login gardener_a
+      visit new_touch_path
 
-        expect { click_on('Contact Me') }.to change(Touch, :count).by(1)
-      end
+      select('Ann', from: 'Client') # Explicit but works anyway
+      fill_in 'Contact from', with: '1 Oct 2012'
+      check 'By phone'
+      expect { click_on('Contact Me') }.to change(Touch, :count).by(1)
     end
   end
 end

@@ -22,7 +22,6 @@
 #  updated_at             :datetime         not null
 #
 class Touch < ActiveRecord::Base
-  attr_accessible :additional_information, :between_end, :between_start, :completed, :contact, :contact_id, :by_phone, :by_visit, :touch_from, :visit_at
   belongs_to :contact
   delegate :full_name, :home_phone, to: :contact
 

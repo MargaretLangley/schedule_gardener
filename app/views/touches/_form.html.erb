@@ -7,7 +7,8 @@
       <%= f.input :by_phone, as: :boolean %>
       <%= f.input :by_visit, as: :boolean %>
     <% else %>
-     <%= f.hidden_field :by_phone, value: true %>
+      <%= f.hidden_field :contact_id %>
+      <%= f.hidden_field :by_phone, value: true %>
     <% end %>
 
     <%= f.input(:touch_from,  as: :date_picker, label: 'Contact from', hint: "Earliest date you want to be contacted?") %>

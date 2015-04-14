@@ -12,6 +12,7 @@ class TouchesController < ApplicationController
   end
 
   def create
+    @touch = Touch.new touches_params
     @touch.save!
     redirect_to touches_path, flash: { success: 'Contact me was successfully created.' }
    rescue ActiveRecord::RecordInvalid
@@ -22,7 +23,7 @@ class TouchesController < ApplicationController
   end
 
   def update
-    @touch.update_attributes!(params[:touch])
+    @touch.update touches_params
     redirect_to touches_path, flash: { success: 'Contact me was successfully updated.' }
     rescue ActiveRecord::RecordInvalid
       render :edit
@@ -31,5 +32,20 @@ class TouchesController < ApplicationController
   def destroy
     @touch.destroy
     redirect_to touches_path
+  end
+
+  private
+
+  def touches_params
+    params.require(:touch)
+      .permit :additional_information,
+              :between_end,
+              :between_start,
+              :completed,
+              :contact_id,
+              :by_phone,
+              :by_visit,
+              :touch_from,
+              :visit_at
   end
 end
