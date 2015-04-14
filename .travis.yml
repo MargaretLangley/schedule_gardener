@@ -1,15 +1,27 @@
 language: ruby
 
-rvm:
-- 1.9.3
-env:
-  - DB=postgresql HOST=localhost:3000  DOMAIN="mail@suton.gardencare.com" EMAIL_USERNAME="richardwigley"
-secure: "Q8cv+DN2oTMbWjZtBCkzrftLaIcJrD3TgSpFGwQREc38cMtie52bSDylty6l\n/Ug2oU/Bz0yVnox9zu0tVv1bCVb4U3N2HlHSvepvp/Cez11Fu3m7WRyVgH7m\nGZ4tYSd/h1KlaMv95MfgM8IWV/8ashzQ7cHtEi0QIBCAFiiPvtE="
+sudo: false
 
-script:
- - bundle exec rspec spec
+rvm:
+  - "2.1.2"
+
+env:
+  - DB=postgresql HOST=localhost:3000 DOMAIN=test.domain.com
+
+addons:
+  postgresql: 9.3
 
 before_script:
-  - psql -c 'CREATE DATABASE schedule_gardener_test;' -U postgres
-  - RAILS_ENV=test bundle exec rake db:migrate --trace
-  - bundle exec rake db:test:prepare
+  - bundle exec rake db:create RAILS_ENV=test
+
+script:
+  - bundle exec rake db:migrate
+  - bundle exec xvfb-run rspec
+  - bundle exec rake db:seed RAILS_ENV=test
+
+notifications:
+  email: true
+  slack: bcs-io:j4u422myY0CcryFquMCAOi45
+  webhooks:
+    on_success: change
+    on_failure: always

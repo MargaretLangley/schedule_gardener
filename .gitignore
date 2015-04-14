@@ -7,11 +7,6 @@
 # Ignore bundler config.
 /.bundle
 
-# DB
-# I don't want a situation where it could possibly affect the production
-# generated database.yml
-config/database.yml
-
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp

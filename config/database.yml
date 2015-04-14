@@ -1,0 +1,20 @@
+# PostgreSQL. Versions 8.2 and up are supported.
+#
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: schedule_gardener_development
+
+test:
+  <<: *default
+  database: schedule_gardener_test
+
+production:
+  <<: *default
+  database: schedule_gardener_production
+  username: letting
+  password: ENTER_PASSWORD
