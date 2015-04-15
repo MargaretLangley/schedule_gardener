@@ -1,8 +1,12 @@
 <% provide(:title, 'Sign up') %>
 <h1>Sign up</h1>
 
-<div class="row-fluid">
-  <div class="offset3 span6 ">
+
+
+
+
+<div class='row-fluid'>
+  <div class='span6  offset3'>
   <%= simple_form_for @user, html: { class: 'form-horizontal'}, url: :signup, method: :post do |f| %>
     <%= render 'shared/error_messages', object: f.object  %>
 
@@ -10,16 +14,16 @@
       <%= c.input :first_name %>
       <%= c.input :last_name %>
       <%= f.input :password  %>
-      <%= f.input :password_confirmation, label: "Confirm password" %>
+      <%= f.input :password_confirmation, label: 'Confirm password' %>
       <%= c.input :email %>
       <%= c.simple_fields_for :address do |address| %>
         <%= render :partial => 'shared/address', :locals => {:f => address} %>
       <% end %>
       <%= c.input :home_phone %>
     <% end %>
-    <div class="form-buttons">
-      <%= f.button :submit,value: "Create account", class: 'primary_action_button' %>
-      <% if current_user && current_user.role == "gardener" %>
+    <div class='form-buttons'>
+      <%= f.button :submit, value: 'Create account', class: 'primary_action_button' %>
+      <% if current_user && current_user.role == 'gardener' %>
         &nbsp;&nbsp;&nbsp;&nbsp;
       <%= link_to 'Cancel', appointments_path, class: 'cancel_button' %>
       <% end %>

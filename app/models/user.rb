@@ -31,8 +31,6 @@
 
 class User < ActiveRecord::Base
   has_secure_password
-  attr_accessible :contact_attributes, :password, :password_confirmation
-
   validates :password, presence: true, length: { minimum: 6 }, on: :create, confirmation: true
   before_save { generate_token(:remember_token) }
 

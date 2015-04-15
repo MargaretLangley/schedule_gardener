@@ -27,16 +27,6 @@ describe Contact do
     expect(FactoryGirl.create(:contact, :client_r)).to be_valid
   end
 
-  context 'Accessable' do
-    [:contactable_id, :contactable_type].each do |validate_attr|
-      it { should_not allow_mass_assignment_of(validate_attr) }
-    end
-
-    [:address, :email, :first_name, :full_name, :home_phone, :last_name, :mobile].each do |expected_attr|
-      it { should respond_to expected_attr }
-    end
-  end
-
   context 'Validations' do
     # role can't be validated in the same way because of the before validation
     [:email, :first_name, :home_phone].each do |validate_attr|

@@ -22,8 +22,6 @@
 #  updated_at       :datetime         not null
 #
 class Contact < ActiveRecord::Base
-  attr_accessible :address_attributes, :email, :first_name, :home_phone, :last_name, :mobile
-
   belongs_to :contactable, polymorphic: true
   has_one :address,  autosave: true, dependent: :destroy, as: :addressable
   accepts_nested_attributes_for :address

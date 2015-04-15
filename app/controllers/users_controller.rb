@@ -16,7 +16,8 @@ class UsersController < ApplicationController
   end
 
   def create
-    (@user = User.new(params[:user])).save!
+    @user = User.new users_params
+    @user.save!
     signed_in? ? create_another_user : new_user_signed_up
     rescue ActiveRecord::RecordInvalid
       render :new
@@ -35,7 +36,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update_attributes!(params[:user])
+    @user.update users_params
     if editing_self
       flash[:success] = 'Profile updated'
       # if the account we are using changes, The remember token changes
@@ -56,5 +57,23 @@ class UsersController < ApplicationController
   def destroy
     User.find(params[:id]).destroy
     redirect_to users_path, flash: { success: 'user destroyed.' }
+  end
+
+  private
+
+  def users_params
+    params.require(:user)
+      .permit :password,
+              :password_confirmation,
+              contact_attributes: contact_params
+  end
+
+  def contact_params
+    %i(email first_name home_phone last_name mobile) +
+      [address_attributes: address_params]
+  end
+
+  def address_params
+    %i(house_name street_number street_name address_line_2 town post_code)
   end
 end

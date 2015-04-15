@@ -29,16 +29,6 @@ describe User do
     it { should_not be_admin }
   end
 
-  context 'Accessable' do
-    [:admin].each do |validate_attr|
-      it { should_not allow_mass_assignment_of(validate_attr) }
-    end
-
-    [:admin, :appointments, :authenticate, :email, :full_name, :home_phone, :password, :password_digest, :password_confirmation, :remember_token].each do |expected_attribute|
-      it { should respond_to expected_attribute }
-    end
-  end
-
   context 'validations' do
     [:password].each do |validate_attr|
       it { should validate_length_of(validate_attr).is_at_least(6) }
