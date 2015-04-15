@@ -19,8 +19,6 @@
 #  updated_at    :datetime         not null
 #
 class AppointmentSlot < ActiveRecord::Base
-  attr_accessible :humanize_time, :time, :value
-
   def self.slots_in_time_range(time_range)
     slots = Array.new(slots_covered_by_range(time_range)) do |i|
       start_slot_from_time(time_range.first) + i

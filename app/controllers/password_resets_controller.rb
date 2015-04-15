@@ -7,7 +7,7 @@ class PasswordResetsController < ApplicationController
   end
 
   def create
-    @password_reset = PasswordReset.new(params[:password_reset])
+    @password_reset = PasswordReset.new(create_params)
     if @password_reset.valid?
       user = User.find_by_email(@password_reset.email)
       if user
@@ -46,7 +46,7 @@ class PasswordResetsController < ApplicationController
   def update
     @user = User.find_by_password_reset_token!(params[:id])
     if reset_token_valid(@user)
-      if @user.update_attributes(params[:user])
+      if @user.update_attributes(user_params)
         redirect_to root_url, notice: 'Password has been reset'
       else
         render :edit
@@ -54,5 +54,17 @@ class PasswordResetsController < ApplicationController
     else
       redirect_to new_password_reset_path, alert: 'Password reset has expired.'
     end
+  end
+
+  private
+
+  def create_params
+    params.require(:password_reset).permit :email
+  end
+
+  def user_params
+    params.require(:user)
+      .permit :password,
+              :password_confirmation
   end
 end

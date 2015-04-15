@@ -12,7 +12,7 @@ class TouchesController < ApplicationController
   end
 
   def create
-    @touch = Touch.new touches_params
+    @touch = Touch.new touch_params
     @touch.save!
     redirect_to touches_path, flash: { success: 'Contact me was successfully created.' }
    rescue ActiveRecord::RecordInvalid
@@ -23,7 +23,7 @@ class TouchesController < ApplicationController
   end
 
   def update
-    @touch.update touches_params
+    @touch.update touch_params
     redirect_to touches_path, flash: { success: 'Contact me was successfully updated.' }
     rescue ActiveRecord::RecordInvalid
       render :edit
@@ -36,7 +36,7 @@ class TouchesController < ApplicationController
 
   private
 
-  def touches_params
+  def touch_params
     params.require(:touch)
       .permit :additional_information,
               :between_end,

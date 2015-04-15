@@ -29,8 +29,8 @@ module ScheduleGardener
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**/}'),
                                  "#{config.root}/lib/**/"]
 
-    # Upgradeing to rails 4 -
+    # Upgrading to rails 4 -
     #
-    config.active_record.whitelist_attributes = false
+    # config.active_record.whitelist_attributes = false
   end
 end

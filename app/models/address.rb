@@ -16,8 +16,6 @@
 #
 
 class Address < ActiveRecord::Base
-  attr_accessible :house_name, :street_number, :street_name, :address_line_2, :town, :post_code
-
   # Does not allow you to validate id and type, probably a bug
   # validates  :addressable_id, :addressable_type, presence: true
 

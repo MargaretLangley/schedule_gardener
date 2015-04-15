@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new users_params
+    @user = User.new user_params
     @user.save!
     signed_in? ? create_another_user : new_user_signed_up
     rescue ActiveRecord::RecordInvalid
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update users_params
+    @user.update user_params
     if editing_self
       flash[:success] = 'Profile updated'
       # if the account we are using changes, The remember token changes
@@ -61,7 +61,7 @@ class UsersController < ApplicationController
 
   private
 
-  def users_params
+  def user_params
     params.require(:user)
       .permit :password,
               :password_confirmation,

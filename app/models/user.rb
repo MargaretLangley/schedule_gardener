@@ -36,8 +36,6 @@ class User < ActiveRecord::Base
 
   has_one :contact, autosave: true, dependent: :destroy, as: :contactable
   delegate :appointments, :email, :first_name, :full_name, :home_phone, :role, :visits, to: :contact
-  # attr_accessible :contact_attributes - adds the attribute writer to the allowed list
-  # accepts_nes.... Defines an attributes writer for the specified association
   accepts_nested_attributes_for :contact
 
   Roles = %w(admin client gardner)

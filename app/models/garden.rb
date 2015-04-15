@@ -15,7 +15,6 @@
 #  updated_at :datetime         not null
 #
 class Garden < ActiveRecord::Base
-  attr_accessible :address_attributes
   belongs_to :contact
   has_one :address, autosave: true, dependent: :destroy, as: :addressable
   accepts_nested_attributes_for :address

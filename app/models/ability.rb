@@ -6,6 +6,8 @@
 # Community follow on from RyanBate's original cancan
 # https://github.com/CanCanCommunity/cancancan
 #
+# See also:
+# GoRails Video: 20-authorization-with-cancancan
 #
 # TODO: remove these
 # rubocop: disable Metrics/MethodLength, disable Style/UnlessElse
@@ -13,6 +15,9 @@
 class Ability
   include CanCan::Ability
 
+  #
+  # user - the current_user
+  #
   def initialize(user)
     unless user
       # Guest

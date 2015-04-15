@@ -24,17 +24,6 @@ describe Address do
 
   include_examples 'All Built Objects', Address
 
-  context 'Accessable' do
-    it { should_not allow_mass_assignment_of(:addressable_id) }
-    it { should_not allow_mass_assignment_of(:addressable_type) }
-
-    [:addressable, :addressable_id, :addressable_type,
-     :house_name, :street_number, :street_name, :address_line_2, :town, :post_code]
-      .each do |expected_attribute|
-      it { should respond_to expected_attribute }
-    end
-  end
-
   context 'validations' do
     # :addressable_id, :addressable_type should be validated but validates doesn't
     # work with the create it says they are blank but the parent pointed variables
