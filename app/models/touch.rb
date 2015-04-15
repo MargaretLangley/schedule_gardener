@@ -25,7 +25,7 @@ class Touch < ActiveRecord::Base
   belongs_to :contact
   delegate :full_name, :home_phone, to: :contact
 
-  validates :contact_id, presence: true
+  validates :contact, presence: true
   validates :touch_from,
             date: { after_or_equal_to: proc { Time.zone.now },
                     before: proc { Time.zone.now + 1.year },
