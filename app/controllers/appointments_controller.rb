@@ -54,6 +54,7 @@ class AppointmentsController < ApplicationController
   end
 
   def create
+    @appointment = Appointment.new appointment_params
     @appointment.save!
     redirect_to appointments_path, flash: { success: 'appointment was successfully created.' }
    rescue ActiveRecord::RecordInvalid
@@ -61,7 +62,7 @@ class AppointmentsController < ApplicationController
   end
 
   def update
-    @appointment.update_attributes!(params[:appointment])
+    @appointment.update appointment_params
     redirect_to appointments_path, flash: { success: 'appointment was successfully updated.' }
     rescue ActiveRecord::RecordInvalid
       render :edit
@@ -70,5 +71,18 @@ class AppointmentsController < ApplicationController
   def destroy
     @appointment.destroy
     redirect_to appointments_path
+  end
+
+  private
+
+  def appointment_params
+    params.require(:appointment)
+      .permit :appointee,
+              :appointee_id,
+              :contact_id,
+              :description,
+              :ends_at,
+              :starts_at,
+              :appointment_time_attributes
   end
 end

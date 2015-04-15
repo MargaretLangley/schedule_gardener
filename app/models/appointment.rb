@@ -18,8 +18,6 @@
 #  updated_at   :datetime         not null
 #
 class Appointment < ActiveRecord::Base
-  attr_accessible :appointee, :appointee_id, :contact, :contact_id, :description, :ends_at, :starts_at
-  attr_accessible :appointment_time_attributes
   belongs_to :contact, class_name: 'Contact', foreign_key: 'contact_id'
   belongs_to :appointee, class_name: 'Contact', foreign_key: 'appointee_id'
 

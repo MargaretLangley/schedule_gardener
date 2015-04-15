@@ -16,7 +16,9 @@ describe 'Appointments#create' do
     it 'displayed' do
       expect(current_path).to eq new_appointment_path
     end
-    it ('has client missing') { should_not have_selector('#appointment_contact_id') }
+    it 'keeps client choice confidential' do
+      should_not have_content('Client')
+    end
 
     context 'with valid information' do
       it 'adds appointment' do
@@ -54,7 +56,7 @@ describe 'Appointments#create' do
     it 'displayed' do
       expect(current_path).to eq new_appointment_path
     end
-    it ('has client') { should have_selector('#appointment_contact_id', visible: true) }
+    it ('has client') { should have_content('Client') }
 
     context 'with valid information' do
       before do

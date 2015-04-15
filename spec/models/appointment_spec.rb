@@ -29,16 +29,6 @@ describe Appointment do
 
   include_examples 'All Built Objects', Appointment
 
-  context 'Accessible' do
-    [:created_at, :updated_at].each do |validate_attr|
-      it { should_not allow_mass_assignment_of(validate_attr) }
-    end
-
-    [:appointee, :contact, :description, :ends_at, :starts_at, :title].each do |expected_attr|
-      it { should respond_to expected_attr }
-    end
-  end
-
   context 'Validations' do
     [:contact, :appointee].each do |validate_attr|
       it { should validate_presence_of(validate_attr) }
