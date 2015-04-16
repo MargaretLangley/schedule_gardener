@@ -84,7 +84,7 @@ ruby '2.1.2'
 #
 # Production
 #
-gem 'rails', '~> 4.0.0'
+gem 'rails', '~> 4.1.0'
 
 gem 'active_attr', '~> 0.8.0'
 gem 'bootstrap-sass', '~> 3.3.4'
@@ -105,6 +105,8 @@ gem 'rails_admin', '~> 0.6.0'
 gem 'rails-i18n', '~> 0.7.0'
 gem 'rake', '~> 10.4.0'
 gem 'sass-rails',   '~> 4.0.0'
+gem 'sdoc', '~> 0.4.0',          group: :doc
+gem 'spring',        group: :development
 gem 'squeel', '~> 1.2.0'
 gem 'turbolinks', '~> 2.5.0'
 gem 'uglifier', '~> 2.7.0'

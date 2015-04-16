@@ -2,7 +2,7 @@
 require File.expand_path('../application', __FILE__)
 
 # Initialize the rails application.
-ScheduleGardener::Application.initialize!
+Rails.application.initialize!
 
 # Configuration for using SendGrid on Heroku
 ActionMailer::Base.delivery_method = :smtp
