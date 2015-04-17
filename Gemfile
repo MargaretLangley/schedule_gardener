@@ -88,7 +88,7 @@ gem 'rails', '~> 4.0.0'
 
 gem 'active_attr', '~> 0.8.0'
 gem 'bootstrap-sass', '2.3.2.2'
-gem 'bootstrap-datepicker-rails', '1.0.0.3'
+gem 'bootstrap-datepicker-rails', '~> 1.4.0'
 gem 'bcrypt-ruby', '~> 3.1.0'
 gem 'bootstrap-will_paginate', '~> 0.0.0'
 gem 'cancancan', '~> 1.10'

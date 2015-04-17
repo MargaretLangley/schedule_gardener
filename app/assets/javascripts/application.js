@@ -17,7 +17,3 @@
 //= require bootstrap-datepicker
 //= require_tree .
 //= require_self
-
-$(function() {
-   $('input.date_picker').datepicker({"format": "dd M yyyy", "weekStart": 1, "autoclose": true})
- });
