@@ -17,6 +17,9 @@ erd.pdf
 # SimpleCov
 coverage
 
+# Ignore import_data as going to github public
+/import_data
+
 .env
 
 Procfile
