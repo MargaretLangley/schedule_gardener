@@ -7,9 +7,9 @@
 Application for scheduling a gardener to come to a premise and garden.
 
 
-### Kickstart Project in:
+## Application Setup
 
-#### Development:
+### 1. Development:
 
 1. git clone
 2. rename config/database.example.yml -> config/database.yml
@@ -22,8 +22,11 @@ Application for scheduling a gardener to come to a premise and garden.
    pg_restore --verbose --clean --no-acl --no-owner -d schedule_gardener_development --role richard  -U postgres schedule_gardener_development.dump
    ````
 
-#### Production:
+### 2. Production:
 
-1. `cap deploy:setup` (requires postgresql password)
-2. `cap deploy`
-3. (if dev is up to date) cap postgresql:pdrestore
+#### Code Setup
+1. `cap <environment> setup`
+2. `cap <environment> deploy`
+
+#### Database Setup
+3. `cap production db:push`

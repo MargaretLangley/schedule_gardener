@@ -1,33 +1,58 @@
-require 'bundler/capistrano'
-require 'capistrano-rbenv'
+lock '3.4.0'
 
-load 'config/recipes/base'
-load 'config/recipes/nginx'
-load 'config/recipes/unicorn'
-load 'config/recipes/postgresql'
-load 'config/recipes/check'
-load 'config/recipes/monit'
-
-set :host, '193.183.99.251'
-server "#{host}", :web, :app, :db, primary: true
-set :server_name, 'business-consolidating-services.com  www.business-consolidating-services.com'
-
+#
+# Application variables
+#
+set :application, 'schedule_gardener'
 set :user, 'deployer'
-set :application, 'schedule_gardener'  # change
-set :deploy_to, "/home/#{user}/apps/#{application}"
-set :deploy_via, :remote_cache
-set :use_sudo, false
 
-set :scm, 'git'
-set :repository_owner, 'BCS-io' # change
-set :repository, "git@github.com:#{repository_owner}/#{application}.git"
-set :branch, 'master'
-set :rbenv_ruby_version, '2.0.0-p0'
+set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
+set :deploy_to, "/home/#{fetch(:user)}/apps/#{fetch(:full_app_name)}"
 
-set :maintenance_template_path, File.expand_path('../recipes/templates/maintenance.html.erb', __FILE__)
+# SCM
+set :scm, :git
+set :repo_url, 'git@github.com:BCS-io/schedule_gardener.git'
+set :branch, ENV['REVISION'] || ENV['BRANCH_NAME']
 
-default_run_options[:pty] = true
-ssh_options[:forward_agent] = true
-# ssh_options[:keys] = [File.join(ENV["HOME"], ".vagrant.d", "insecure_rivate_key")]
+# rbenv
+set :rbenv_type, :system
+set :rbenv_ruby, '2.1.2'
+set :rbenv_custom_path, '/opt/rbenv'
 
-after 'deploy', 'deploy:cleanup' # keep only the last 5 releases
+set :unicorn_workers, 2
+
+set :tests, ['spec']
+
+# house keeping
+set :keep_releases, 3
+
+set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
+
+#
+# db-tasks (and assets)
+# sgruhier/capistrano-db-tasks
+#
+
+# if you want to remove the local dump file after loading
+set :db_local_clean, true
+
+# if you want to remove the dump file from the server after downloading
+set :db_remote_clean, true
+
+# If you want to import assets, you can change
+# default asset dir (default = system)
+# This directory must be in your shared directory on the server
+set :assets_dir, %w(public/assets public/att)
+set :local_assets_dir, %w(public/assets public/att)
+# Whenever a cron scheduler
+
+desc 'Invoke a rake command on the remote server'
+task :invoke, [:command] => 'deploy:set_rails_env' do |_task, args|
+  on primary(:app) do
+    within current_path do
+      with rails_env: fetch(:rails_env) do
+        rake args[:command]
+      end
+    end
+  end
+end
