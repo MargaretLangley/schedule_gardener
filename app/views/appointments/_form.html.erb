@@ -1,10 +1,10 @@
 <%= simple_form_for @appointment, :html => { :class => 'form-horizontal' } do |f| %>
   <%= render 'shared/error_messages', object: f.object  %>
-  <div class="form-inputs">
-    <%= f.association :appointee, label: "Gardener", collection: Contact.contacts_by_role("gardener"), label_method: "first_name", include_blank: false %>
+  <div class='form-inputs'>
+    <%= f.association :appointee, label: 'Gardener', collection: Contact.contacts_by_role('gardener'), label_method: 'first_name', include_blank: false %>
 
-    <% if current_user.role == "gardener" %>
-      <%= f.association :contact, label: "Client", collection: Contact.contacts_by_role("client"),
+    <% if current_user.role == 'gardener' %>
+      <%= f.association :contact, label: 'Client', collection: Contact.contacts_by_role('client'),
       label_method: lambda { |contact| "#{contact.full_name} / #{number_to_phone_without_area_code(contact.home_phone)}" }, include_blank: false %>
     <% else %>
       <%= f.hidden_field :contact_id, value: current_user.contact.id %>
@@ -23,5 +23,5 @@
   </div>
 <% end %>
 
-<%= debug ("starts" + @appointment.inspect) unless Rails.env.production? %>
+<%= debug ('starts' + @appointment.inspect) unless Rails.env.production? %>
 

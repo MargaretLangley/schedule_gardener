@@ -2,23 +2,23 @@
 <html>
   <head>
     <title><%= application_title_pipe_page_title(yield(:title)) %></title>
-    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>
-    <%= favicon_link_tag "icons/spade.png"  unless Rails.env.production?  %>
-    <%= favicon_link_tag "icons/favicon.png" if Rails.env.production?  %>
+    <%= favicon_link_tag 'icons/spade.png'  unless Rails.env.production?  %>
+    <%= favicon_link_tag 'icons/favicon.png' if Rails.env.production?  %>
   </head>
   <body>
 
-  <header class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <%= render 'layouts/navigation' %>
-      </div>
-    </header>
+  <header class='navbar navbar-fixed-top'>
+    <div class='navbar-inner'>
+      <%= render 'layouts/navigation' %>
+    </div>
+  </header>
 
   <%= render 'layouts/messages' %>
-    <div class="container-fluid">
+    <div class='container-fluid'>
       <%= yield %>
       <%= render 'layouts/footer' %>
       <%= debug(params) unless Rails.env.production?  %>
