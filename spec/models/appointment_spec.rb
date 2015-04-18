@@ -8,8 +8,8 @@
 #  starts_at    :datetime         not null
 #  ends_at      :datetime         not null
 #  description  :text
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  created_at   :datetime
+#  updated_at   :datetime
 #
 
 require 'spec_helper'
@@ -138,10 +138,5 @@ describe Appointment do
         end
       end
     end
-  end
-
-  describe 'Association' do
-    it { should belong_to(:contact) }
-    it { should belong_to(:appointee) }
   end
 end

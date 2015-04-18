@@ -19,8 +19,8 @@
 #  email_verified         :boolean          default(FALSE)
 #  verify_email_token     :string(255)
 #  verify_email_sent_at   :datetime
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
+#  created_at             :datetime
+#  updated_at             :datetime
 #
 
 # TODO: remove Roles - does not look attached to anything. Does not break a test
@@ -30,11 +30,11 @@
 # rubocop: disable Style/MultilineBlockChain
 
 class User < ActiveRecord::Base
+  has_one :contact, autosave: true, dependent: :destroy, inverse_of: :user
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, on: :create, confirmation: true
   before_save { generate_token(:remember_token) }
 
-  has_one :contact, autosave: true, dependent: :destroy, as: :contactable
   delegate :appointments, :email, :first_name, :full_name, :home_phone, :role, :visits, to: :contact
   accepts_nested_attributes_for :contact
 

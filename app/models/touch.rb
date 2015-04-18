@@ -6,7 +6,6 @@
 #  - TODO: not sure if we are entering a contract to do the work?
 #    - best guess is yes
 #
-
 # == Schema Information
 #
 # Table name: touches
@@ -18,9 +17,10 @@
 #  touch_from             :datetime         not null
 #  completed              :boolean
 #  additional_information :text
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
+#  created_at             :datetime
+#  updated_at             :datetime
 #
+
 class Touch < ActiveRecord::Base
   belongs_to :contact
   delegate :full_name, :home_phone, to: :contact

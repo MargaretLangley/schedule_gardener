@@ -9,18 +9,14 @@
 #  touch_from             :datetime         not null
 #  completed              :boolean
 #  additional_information :text
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
+#  created_at             :datetime
+#  updated_at             :datetime
 #
 
 require 'spec_helper'
 
 describe Touch do
   before { Timecop.freeze(Time.zone.parse('1/9/2012 12:00')) }
-
-  it 'should be valid' do
-    expect(FactoryGirl.create(:touch, :client_a, :next_week)).to be_valid
-  end
 
   context 'new record' do
     let!(:client_a) {  FactoryGirl.create(:contact, :client_a) }

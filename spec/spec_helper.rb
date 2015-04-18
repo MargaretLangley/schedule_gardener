@@ -17,6 +17,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
+  config.filter_run_excluding disabled: true
   Zonebie.set_random_timezone
 
   config.mock_with :rspec

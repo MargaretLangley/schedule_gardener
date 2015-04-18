@@ -2,17 +2,16 @@
 #
 # Table name: contacts
 #
-#  id               :integer          not null, primary key
-#  contactable_id   :integer
-#  contactable_type :string(255)
-#  first_name       :string(255)      not null
-#  last_name        :string(255)
-#  email            :string(255)
-#  home_phone       :string(255)      not null
-#  mobile           :string(255)
-#  role             :string(255)      not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id         :integer          not null, primary key
+#  user_id    :integer          not null
+#  first_name :string(255)      not null
+#  last_name  :string(255)
+#  email      :string(255)
+#  home_phone :string(255)      not null
+#  mobile     :string(255)
+#  role       :string(255)      not null
+#  created_at :datetime
+#  updated_at :datetime
 #
 
 require 'spec_helper'
@@ -27,7 +26,7 @@ describe Contact do
     expect(FactoryGirl.create(:contact, :client_r)).to be_valid
   end
 
-  context 'Validations' do
+  describe 'Validations' do
     # role can't be validated in the same way because of the before validation
     [:email, :first_name, :home_phone].each do |validate_attr|
       it { should validate_presence_of(validate_attr) }
@@ -56,7 +55,7 @@ describe Contact do
     end
   end
 
-  context '#appointments' do
+  describe '#appointments' do
     context 'returns expected appointments ordered by date' do
       app1 = app2 = app3 = nil
       before do
@@ -88,7 +87,7 @@ describe Contact do
     end
   end
 
-  context '#visits' do
+  describe '#visits' do
     context 'returns expected visits ordered by date and time' do
       gardener_a = nil
       contact1_app1 = contact1_app2 = contact1_app3 = nil
@@ -107,7 +106,7 @@ describe Contact do
     end
   end
 
-  context 'Custom finders' do
+  describe 'Custom finders' do
     context '#gardeners' do
       percy = allan = roger = nil
 
@@ -125,31 +124,25 @@ describe Contact do
     end
 
     context '#clients' do
-      roger = ann = alan = nil
-
-      before(:all) do
+      it 'return first name ordered clients' do
         roger = FactoryGirl.create(:contact, :client_r)
         ann   = FactoryGirl.create(:contact, :client_a)
         alan  = FactoryGirl.create(:contact, :gardener_a)
 
         expect(Contact.all).to eq [roger, ann, alan]
-      end
-      after(:all) { Contact.destroy_all }
 
-      it 'return first name ordered clients' do
         expect(Contact.contacts_by_role('client')).to eq [ann, roger]
       end
 
-      context 'case insenstive' do
-        john = nil
-        before do
-          john  = FactoryGirl.create(:contact, :client_j, first_name: 'john')
-          expect(Contact.all).to eq [roger, ann, alan, john]
-        end
+      it 'returns case insenstitive ordering of clients' do
+        roger = FactoryGirl.create(:contact, :client_r)
+        ann   = FactoryGirl.create(:contact, :client_a)
+        alan  = FactoryGirl.create(:contact, :gardener_a)
+        john  = FactoryGirl.create(:contact, :client_j, first_name: 'john')
 
-        it 'ordering of clients' do
-          expect(Contact.contacts_by_role('client')).to eq [ann, john, roger]
-        end
+        expect(Contact.all).to eq [roger, ann, alan, john]
+
+        expect(Contact.contacts_by_role('client')).to eq [ann, john, roger]
       end
     end
   end
@@ -170,13 +163,5 @@ describe Contact do
       contact.mobile = '(0181).,;.300-1234'
       expect(contact.mobile).to eq '01813001234'
     end
-  end
-
-  describe 'Association' do
-    it { should belong_to(:contactable) }
-    it { should have_one(:address).dependent(:destroy) }
-    it { should have_many(:gardens).dependent(:destroy) }
-    it { should have_many(:appointments).dependent(:destroy) }
-    # it { should have_many(:visits).dependent(:destroy) }
   end
 end

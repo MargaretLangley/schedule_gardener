@@ -11,8 +11,8 @@
 #  address_line_2   :string(255)
 #  town             :string(255)      not null
 #  post_code        :string(255)
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  created_at       :datetime
+#  updated_at       :datetime
 #
 
 # Address.new(street_number: "15", street_name: "High Street", address_line_2: "Stratford", town: "London", post_code: "NE12 3ST")
@@ -34,9 +34,5 @@ describe Address do
     end
 
     it { should validate_length_of(:town).is_at_most(50) }
-  end
-
-  context 'Association' do
-    it { should belong_to(:addressable) }
   end
 end

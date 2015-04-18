@@ -11,8 +11,8 @@
 #  address_line_2   :string(255)
 #  town             :string(255)      not null
 #  post_code        :string(255)
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  created_at       :datetime
+#  updated_at       :datetime
 #
 
 class Address < ActiveRecord::Base

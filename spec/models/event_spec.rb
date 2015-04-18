@@ -13,10 +13,7 @@
 #
 
 require 'spec_helper'
-include ActionView::Helpers::DateHelper
-require 'active_support/core_ext/time/calculations'
 
 describe Event do
-  # subject(:event) { FactoryGirl.build(:event, :tomorrow, title: "event_spec_subject") }
-  # include_examples "All Built Objects", Event
+  # TODO: Do we need this and if so what tests?
 end

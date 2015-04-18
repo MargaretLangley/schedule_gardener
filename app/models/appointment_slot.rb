@@ -15,9 +15,10 @@
 #  time          :string(255)      not null
 #  humanize_time :string(255)      not null
 #  value         :integer          not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  created_at    :datetime
+#  updated_at    :datetime
 #
+
 class AppointmentSlot < ActiveRecord::Base
   def self.slots_in_time_range(time_range)
     slots = Array.new(slots_covered_by_range(time_range)) do |i|

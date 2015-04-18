@@ -11,12 +11,9 @@
 #  email_verified         :boolean          default(FALSE)
 #  verify_email_token     :string(255)
 #  verify_email_sent_at   :datetime
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
+#  created_at             :datetime
+#  updated_at             :datetime
 #
-
-# cut and paste into terminal
-# User.new(first_name: "Example", last_name: "User", email: "user@example.com", password: "foobar", password_confirmation: "foobar", home_phone: "0121-308-1439")
 
 require 'spec_helper'
 
@@ -62,40 +59,45 @@ describe User do
     end
   end
 
-  context 'Custom finders' do
-    context '#find_by_email' do
-      user1 = user2 = user3 = nil
-
-      before(:all) do
-        user1 =	FactoryGirl.create(:user, :client_j)
-        user2 =	FactoryGirl.create(:user, :client_a)
-        user3 =	FactoryGirl.create(:user, :client_r)
+  describe 'Custom finders' do
+    describe '#find_by_email' do
+      it 'should create in order' do
+        user1 = FactoryGirl.create(:contact, :client_j).user
+        user2 = FactoryGirl.create(:contact, :client_a).user
+        user3 = FactoryGirl.create(:contact, :client_r).user
 
         expect(User.all).to match [user1, user2, user3]
       end
 
-      after(:all) { User.destroy_all;  }
-
       it 'return user by email' do
+        FactoryGirl.create(:contact, :client_j)
+        user2 = FactoryGirl.create(:contact, :client_a).user
+        FactoryGirl.create(:contact, :client_r)
+
         expect(User.find_by_email('ann.abbey@example.com')).to eq user2
       end
 
       it 'empty email should not return a user' do
+        FactoryGirl.create(:contact, :client_j)
+        FactoryGirl.create(:contact, :client_a)
+        FactoryGirl.create(:contact, :client_r)
+
         expect(User.find_by_email('')).to eq nil
       end
     end
 
-    context '#search_ordered' do
+    describe '#search_ordered' do
       john = roger = ann = nil
 
-      before(:all) do
-        john = FactoryGirl.create(:user, :client_j)
-        roger = FactoryGirl.create(:user, :client_r)
-        ann = FactoryGirl.create(:user, :client_a)
+      before(:each) do
+        john = FactoryGirl.create(:contact, :client_j).user
+        roger = FactoryGirl.create(:contact, :client_r).user
+        ann = FactoryGirl.create(:contact, :client_a).user
+      end
 
+      it 'should create in order' do
         expect(User.all).to match [john, roger, ann]
       end
-      after(:all) { User.destroy_all }
 
       it 'empty search should return users' do
         expect(User.search_ordered).to eq [ann, john, roger]
@@ -117,9 +119,5 @@ describe User do
         expect(User.search_ordered('John Smith')).to eq [john]
       end
     end
-  end
-
-  describe 'Association' do
-    it { should have_one(:contact).dependent(:destroy) }
   end
 end

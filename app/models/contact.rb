@@ -4,25 +4,24 @@
 # The person we contact about gardening
 #   - contacts have the information to complete the creation of an appointment
 #
-
 # == Schema Information
 #
 # Table name: contacts
 #
-#  id               :integer          not null, primary key
-#  contactable_id   :integer
-#  contactable_type :string(255)
-#  first_name       :string(255)      not null
-#  last_name        :string(255)
-#  email            :string(255)
-#  home_phone       :string(255)      not null
-#  mobile           :string(255)
-#  role             :string(255)      not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id         :integer          not null, primary key
+#  user_id    :integer          not null
+#  first_name :string(255)      not null
+#  last_name  :string(255)
+#  email      :string(255)
+#  home_phone :string(255)      not null
+#  mobile     :string(255)
+#  role       :string(255)      not null
+#  created_at :datetime
+#  updated_at :datetime
 #
+
 class Contact < ActiveRecord::Base
-  belongs_to :contactable, polymorphic: true
+  belongs_to :user, inverse_of: :contact
   has_one :address,  autosave: true, dependent: :destroy, as: :addressable
   accepts_nested_attributes_for :address
   has_many :gardens, dependent: :destroy

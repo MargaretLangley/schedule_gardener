@@ -14,9 +14,10 @@
 #  starts_at    :datetime         not null
 #  ends_at      :datetime         not null
 #  description  :text
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  created_at   :datetime
+#  updated_at   :datetime
 #
+
 class Appointment < ActiveRecord::Base
   belongs_to :contact, class_name: 'Contact', foreign_key: 'contact_id'
   belongs_to :appointee, class_name: 'Contact', foreign_key: 'appointee_id'
