@@ -29,7 +29,7 @@ class Contact < ActiveRecord::Base
   has_many :touches
   has_many :visits, -> { order('appointments.starts_at ASC') }, class_name: 'Appointment', foreign_key: 'appointee_id', dependent: :destroy
 
-  validates :email, :first_name, :home_phone, :role, presence: true
+  validates :first_name, :home_phone, :role, presence: true
   validates :first_name, :last_name, length: { maximum: 50 }
   validates :email, allow_blank: true, email_format: true
 
@@ -71,6 +71,6 @@ class Contact < ActiveRecord::Base
   end
 
   def before_save
-    self.email = email.downcase
+    self.email = email.downcase if email.present?
   end
 end

@@ -28,7 +28,7 @@ describe Contact do
 
   describe 'Validations' do
     # role can't be validated in the same way because of the before validation
-    [:email, :first_name, :home_phone].each do |validate_attr|
+    [:first_name, :home_phone].each do |validate_attr|
       it { should validate_presence_of(validate_attr) }
     end
 
