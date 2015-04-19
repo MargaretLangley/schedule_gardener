@@ -18,9 +18,9 @@
   </div> <!-- col-md-3 -->
 
   <div class='col-md-9'>
-    <%= form_tag users_path, :method => 'get', class: 'form-search'  do %>
+    <%= form_tag users_path, :method => 'get', class: 'form-inline'  do %>
     <%= text_field_tag :search, params[:search], placeholder: 'Search', class: 'input-query' %>
-    <button id='go_search' type='submit' value='search', class: 'standard_button' ><i class='icon-search'></i></button>
+    <button id='go_search' type='submit' value='search', class: 'standard_button' ><span class='glyphicon glyphicon-search'></span></button>
     <% end %>
 
     <%= will_paginate %>
