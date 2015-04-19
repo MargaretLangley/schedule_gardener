@@ -6,7 +6,7 @@
 
 
 <div class='row'>
-  <div class='col-md-6  offset3'>
+  <div class='col-md-6  col-md-offset-3'>
   <%= simple_form_for @user, html: { class: 'form-horizontal'}, url: :signup, method: :post do |f| %>
     <%= render 'shared/error_messages', object: f.object  %>
 
