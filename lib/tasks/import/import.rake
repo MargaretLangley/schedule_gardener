@@ -31,6 +31,9 @@ task :import, [:test] => :environment do |_task, args|
   Rails.logger.info 'import:appointment_slots'
   Rake::Task['import:appointment_slots'].invoke(options[:test])
 
+  Rails.logger.info 'import:appointments'
+  Rake::Task['import:appointments'].invoke(options[:test])
+
   Rails.logger.info 'import:reset_autoincrement'
   Rake::Task['import:reset_autoincrement'].invoke
   exit 0
