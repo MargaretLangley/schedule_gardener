@@ -3,7 +3,7 @@
 
 
     <% if current_user.role == 'gardener' %>
-      <%= f.association :contact, label: 'Client', :input_html => { :class => 'span6' }, collection: Contact.contacts_by_role('client'), label_method: 'first_name', include_blank: false %>
+      <%= f.association :contact, label: 'Client', :input_html => { :class => 'col-md-6' }, collection: Contact.contacts_by_role('client'), label_method: 'first_name', include_blank: false %>
       <%= f.input :by_phone, as: :boolean %>
       <%= f.input :by_visit, as: :boolean %>
     <% else %>
@@ -13,7 +13,7 @@
 
     <%= f.input(:touch_from,  as: :date_picker, label: 'Contact from', hint: 'Earliest date you want to be contacted?') %>
 
-    <%= f.input :additional_information, :input_html => { :class => 'span6' } %>
+    <%= f.input :additional_information, :input_html => { :class => 'col-md-6' } %>
     <% if current_user.role == 'gardener' %>
       <%= f.input :completed, :as => :boolean %>
     <% end %>
