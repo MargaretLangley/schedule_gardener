@@ -7,8 +7,9 @@ $navbarLinkColorHover: #000;
 
 @import 'bootstrap';
 body {  padding-top: 60px; }
-@import 'bootstrap-responsive';
 
+$grayLight: purple;
+$grayDarker: green;
 
 /* mixins, variables, etc. */
 
