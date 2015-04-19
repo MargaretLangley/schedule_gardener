@@ -14,11 +14,11 @@
 
   <%= render 'layouts/navigation' %>
   <%= render 'layouts/messages' %>
-    <div class='container-fluid'>
+    <div class='container'>
       <%= yield %>
       <%= render 'layouts/footer' %>
       <%= debug(params) unless Rails.env.production?  %>
       <%= debug(Rails.env) unless Rails.env.production? | true %>
-    </div><!--</container-fluid>-->
+    </div><!--</container>-->
   </body>
 </html>
