@@ -169,22 +169,20 @@ select,
 
 .primary_action_button {
   @extend .btn;
-  @extend .btn-default;
-  @extend .btn-large;
+  @extend .btn-lg;
   @extend .btn-primary;
 }
 
 .cancel_button {
   @extend .btn;
-  @extend .btn-default;
-  @extend .btn-large;
+  @extend .btn-lg;
   @extend .btn-danger;
 }
 
 .tenerary_action_button {
   @extend .btn;
   @extend .btn-default;
-  @extend .btn-mini;
+  @extend .btn-xs;
 }
 
 .tenerary_action_button_warn {
