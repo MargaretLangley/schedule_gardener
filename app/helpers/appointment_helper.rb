@@ -15,8 +15,9 @@ module AppointmentHelper
   #  - returns true if filled, false if unfilled
   #
   def appointment_filled?(appointments, slot)
-    appointments &&
-      appointments.any? { |appointment| appointment.include_slot_number?(slot) }
+    return appointments unless appointments
+
+    appointments.any? { |appointment| appointment.include_slot_number?(slot) }
   end
 
   #

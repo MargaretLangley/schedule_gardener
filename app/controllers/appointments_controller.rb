@@ -83,6 +83,10 @@ class AppointmentsController < ApplicationController
               :description,
               :ends_at,
               :starts_at,
-              :appointment_time_attributes
+              appointment_time_attributes: appointment_time_params
+  end
+
+  def appointment_time_params
+    %i(start_date start_time length)
   end
 end
