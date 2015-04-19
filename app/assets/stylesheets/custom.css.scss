@@ -90,7 +90,7 @@ div.alert.alert-notice {
 /*  sidebar */
 
 .sidebar-nav ul li {
-  @extend .span12;
+  @extend .col-md-12;
 }
 
 /* footer */
@@ -201,7 +201,7 @@ select,
 
 .input-query {
   @extend .search-query;
-  @extend .span3;
+  @extend .col-md-3;
 }
 
 .form-buttons {
