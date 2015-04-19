@@ -160,7 +160,7 @@ select,
 }
 
 .field_with_errors {
-  @extend .control-group;
+  @extend .form-group;
   @extend .error;
  }
 
@@ -169,18 +169,21 @@ select,
 
 .primary_action_button {
   @extend .btn;
+  @extend .btn-default;
   @extend .btn-large;
   @extend .btn-primary;
 }
 
 .cancel_button {
   @extend .btn;
+  @extend .btn-default;
   @extend .btn-large;
   @extend .btn-danger;
 }
 
 .tenerary_action_button {
   @extend .btn;
+  @extend .btn-default;
   @extend .btn-mini;
 }
 
@@ -191,11 +194,12 @@ select,
 
 .standard_button {
   @extend .btn;
+  @extend .btn-default;
 }
 
 /* search box on index page  */
 
-.form-search {
+.form-inline {
   @extend .well;
 }
 
