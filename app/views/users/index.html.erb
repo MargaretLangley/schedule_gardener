@@ -8,22 +8,26 @@
 
 <div class='row'>
   <div class='col-md-12'>
-  <%= render 'shared/main_navigation' %>
+    <%= render 'shared/main_navigation' %>
   </div
 </div>
 
 <div class='row'>
+  <div class='col-md-12'>
+    <%= form_tag users_path, method: 'get', class: 'form-inline'  do %>
 
-  <div class='col-md-3'>
-  </div> <!-- col-md-3 -->
+    <div class='row'>
+      <div class='col-md-offset-3  col-md-12'>
+        <%= text_field_tag :search, params[:search], placeholder: 'Search', class: 'input-query' %>
+          <button id='go_search' type='submit' value='search', class: 'standard_button' ><span class='glyphicon glyphicon-search'></span></button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <div class='col-md-9'>
-    <%= form_tag users_path, :method => 'get', class: 'form-inline'  do %>
-    <%= text_field_tag :search, params[:search], placeholder: 'Search', class: 'input-query' %>
-    <button id='go_search' type='submit' value='search', class: 'standard_button' ><span class='glyphicon glyphicon-search'></span></button>
-    <% end %>
-
-    <%= will_paginate %>
+<div class='row'>
+  <div class='col-md-offset-3  col-md-9'>
 
     <table class='table table-striped'>
         <thead>
@@ -47,7 +51,9 @@
         <tr><td colspan='4'><h2>No Matching Users</h2></td></tr>
       <% end %>
     <%= will_paginate %>
-    <%= link_to 'Create User', signup_path, class: 'primary_action_button' %>
+    <div class='clear-fix  form-group'>
+      <%= link_to 'Create User', signup_path, class: 'primary_action_button' %>
+    </div>
   </div><!-- col-md-9 -->
 </div><!--/row-->
 
