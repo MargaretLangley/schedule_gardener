@@ -40,7 +40,7 @@ module AppointmentHelper
   #
   def new_appointment_link(date, slot)
     link_to "#{slot}",
-    new_appointment_path(starts_at: date + AppointmentSlot.time_to_start_of_slot(slot).minutes),
-    class: 'btn  btn-default'
+            new_appointment_path(starts_at: date + AppointmentSlot.time_to_start_of_slot(slot).minutes),
+            class: 'btn  btn-default'
   end
 end
