@@ -28,10 +28,13 @@ module ApplicationHelper
   end
 
   def link_to_edit(path)
-    link_to 'Edit', path, class: 'tenerary_action_button'
+    link_to 'Edit', path, class: 'btn btn-default btn-xs'
   end
 
   def link_to_delete(path)
-    link_to 'Delete', path, data: { confirm: 'Are you sure you want to delete?' }, method: 'delete', class: 'tenerary_action_button_warn'
+    link_to 'Delete', path,
+            data: { confirm: 'Are you sure you want to delete?' },
+            method: 'delete',
+            class: 'btn btn-danger btn-xs'
   end
 end
