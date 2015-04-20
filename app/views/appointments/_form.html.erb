@@ -1,27 +1,45 @@
-<%= simple_form_for @appointment, :html => { :class => 'form-horizontal' } do |f| %>
-  <%= render 'shared/error_messages', object: f.object  %>
-  <div class='form-inputs'>
-    <%= f.association :appointee, label: 'Gardener', collection: Contact.contacts_by_role('gardener'), label_method: 'first_name', include_blank: false %>
+<div class='row'>
+  <div class='col-md-6 col-md-offset-3'>
+    <%= simple_form_for @appointment, html: { class: 'form-horizontal' } do |f| %>
+      <%= render 'shared/error_messages', object: f.object  %>
+      <div class='form-group'>
+        <%= f.association :appointee, label: 'Gardener', collection: Contact.contacts_by_role('gardener'), label_method: 'first_name', include_blank: false %>
+      </div>
 
-    <% if current_user.role == 'gardener' %>
-      <%= f.association :contact, label: 'Client', collection: Contact.contacts_by_role('client'),
-      label_method: lambda { |contact| "#{contact.full_name} / #{number_to_phone_without_area_code(contact.home_phone)}" }, include_blank: false %>
-    <% else %>
-      <%= f.hidden_field :contact_id, value: current_user.contact.id %>
+      <% if current_user.role == 'gardener' %>
+        <div class='form-group'>
+          <%= f.association :contact, label: 'Client', collection: Contact.contacts_by_role('client'),
+          label_method: lambda { |contact| "#{contact.full_name} / #{number_to_phone_without_area_code(contact.home_phone)}" }, include_blank: false %>
+        </div>
+      <% else %>
+        <%= f.hidden_field :contact_id, value: current_user.contact.id %>
+      <% end %>
+      <%= f.fields_for :appointment_time do |t| %>
+        <div class='form-group'>
+          <%= t.input :start_date, label: 'Date', as: :date_picker %>
+        </div>
+        <div class='form-group'>
+          <%= t.input :start_time, label: 'Time' , include_blank: false, collection: AppointmentSlot.all, label_method: :humanize_time, value_method: :time  %>
+        </div>
+        <div class='form-group'>
+          <%= t.input :length, required: true, label: 'Length',  include_blank: false, collection: slot_lengths %>
+        </div>
+      <% end %>
+      <div class='form-group'>
+        <%= f.input :description %>
+      </div>
+      <div class='form-group'>
+        <div class='row'>
+          <div class='col-xs-5  col-sm-3  col-md-5'>
+            <%= f.button :submit, class: 'btn  btn-primary' %>
+          </div>
+          <div class='col-xs-5  col-sm-3  col-md-3'>
+          <%= link_to 'Cancel', appointments_path, class: 'btn  btn-danger' %>
+          </div>
+        </div>
+      </div>
     <% end %>
-    <%= f.fields_for :appointment_time do |t| %>
-      <%= t.input :start_date, label: 'Date', as: :date_picker %>
-      <%= t.input :start_time, label: 'Time' , include_blank: false, collection: AppointmentSlot.all, label_method: :humanize_time, value_method: :time  %>
-      <%= t.input :length, required: true, label: 'Length',  include_blank: false, collection: slot_lengths %>
-    <% end %>
-
-    <%= f.input :description %>
-  </div>
-  <div class="form-buttons">
-    <%= f.submit class: 'primary_action_button' %>&nbsp;&nbsp;&nbsp;&nbsp;
-    <%= link_to 'Cancel', appointments_path, class: 'cancel_button' %>
-  </div>
-<% end %>
-
+  </div>  <!-- col-md-6 col-md-offset-3 -->
+</div>  <!-- row -->
 <%= debug ('starts' + @appointment.inspect) unless Rails.env.production? %>
 
