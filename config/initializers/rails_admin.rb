@@ -6,7 +6,7 @@ RailsAdmin.config do |config|
   config.authorize_with do
     if current_user.present?
       unless current_admin?
-        clear_path
+        clear_store_path
         sign_out_forget_session
         redirect_to main_app.root_path
       end

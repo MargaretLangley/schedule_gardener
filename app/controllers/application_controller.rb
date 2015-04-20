@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   helper_method :current_user, :signed_in?, :current_user?, :current_gardener?
-  include PersistPath
+  include StorePath
 
   def sign_in_remember_session(user)
     # remember_token is a unique identifier
@@ -40,11 +40,6 @@ class ApplicationController < ActionController::Base
 
   def signed_in?
     current_user.present?
-  end
-
-  def redirect_back_or(default_path)
-    redirect_to_stored_path_else_default_path(default_path)
-    clear_path
   end
 
   def current_user?(user)

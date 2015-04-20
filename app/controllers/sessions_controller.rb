@@ -18,4 +18,15 @@ class SessionsController < ApplicationController
     sign_out_forget_session
     redirect_to root_path
   end
+
+  private
+
+  def redirect_back_or(default_path)
+    if store_path?
+      redirect_to_store_path
+    else
+      redirect_to default_path
+    end
+    clear_store_path
+  end
 end
