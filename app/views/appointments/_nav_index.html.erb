@@ -6,10 +6,6 @@
     <li class='<%= 'active' if active_nav? 'next_week' %>'><%= link_to 'Next Week', appointments_path(nav: 'next_week', begin: Time.zone.now.next_week.beginning_of_week, end: Time.zone.now.next_week.end_of_week ) %> </li>
     <li class='<%= 'active' if active_nav? 'this_month' %>'><%= link_to 'This Month', appointments_path(nav: 'this_month', begin: Time.zone.now.beginning_of_month, end: Time.zone.now.end_of_month ) %> </li>
     <li class='<%= 'active' if active_nav? 'next_month' %>'><%= link_to 'Next Month', appointments_path(nav: 'next_month', begin: Time.zone.now.next_month.beginning_of_month, end: Time.zone.now.next_month.end_of_month ) %> </li>
-    <li class='nav-header'>Analytical</li>
-    <li><a href='#'>ToDo Last Saw Client</a></li>
-    <li><a href='#'>ToDo Book from</a></li>
-    <li><a href='#'>ToDo Book next week</a></li>
   </ul>
 </div><!--/.well -->
 
