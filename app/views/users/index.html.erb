@@ -14,11 +14,11 @@
 
 <div class='row'>
   <div class='col-md-12'>
-    <%= form_tag users_path, method: 'get', class: 'form-inline'  do %>
+    <%= form_tag users_path, method: 'get', class: 'form-inline  well'  do %>
 
     <div class='row'>
       <div class='col-md-offset-3  col-md-12'>
-        <%= text_field_tag :search, params[:search], placeholder: 'Search', class: 'input-query' %>
+        <%= text_field_tag :search, params[:search], placeholder: 'Search', class: 'input-query  col-md-3' %>
           <button id='go_search' type='submit' value='search', class: 'standard_button' ><span class='glyphicon glyphicon-search'></span></button>
         <% end %>
       </div>
@@ -52,7 +52,7 @@
       <% end %>
     <%= will_paginate %>
     <div class='clear-fix  form-group'>
-      <%= link_to 'Create User', signup_path, class: 'primary_action_button' %>
+      <%= link_to 'Create User', signup_path, class: 'btn btn-primary btn-lg' %>
     </div>
   </div><!-- col-md-9 -->
 </div><!--/row-->

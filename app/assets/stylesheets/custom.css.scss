@@ -165,58 +165,9 @@ select,
  }
 
 
- /* this is the default action for that form */
-
-.primary_action_button {
-  @extend .btn;
-  @extend .btn-lg;
-  @extend .btn-primary;
-}
-
-.cancel_button {
-  @extend .btn;
-  @extend .btn-lg;
-  @extend .btn-danger;
-}
-
-.tenerary_action_button {
-  @extend .btn;
-  @extend .btn-default;
-  @extend .btn-xs;
-}
-
-.tenerary_action_button_warn {
-  @extend .tenerary_action_button;
-  @extend .btn-danger;
-}
-
-.standard_button {
-  @extend .btn;
-  @extend .btn-default;
-}
-
-/* search box on index page  */
-
-.form-inline {
-  @extend .well;
-}
-
-.input-query {
-  @extend .search-query;
-  @extend .col-md-3;
-}
-
-.form-buttons {
-  @extend .form-actions;
-  background-color: white;
-  border-top: 0;
-}
-
-
 //
 // spacing elements
 //
-
 
 .spacer-1-24 {
   margin-left: 4.1666667%;
