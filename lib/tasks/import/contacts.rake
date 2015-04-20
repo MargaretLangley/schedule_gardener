@@ -5,6 +5,7 @@ namespace :import do
     Rails.logger.error "Missing contacts: #{contacts_file}" unless contacts_file
 
     CSV.foreach(contacts_file, headers: true) do |row|
+      next if row.empty?
       Contact.create!(row.to_hash)
     end
   end

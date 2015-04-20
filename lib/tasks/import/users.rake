@@ -5,6 +5,7 @@ namespace :import do
     Rails.logger.error "Missing users: #{filename}" unless filename
 
     CSV.foreach(filename, headers: true) do |row|
+      next if row.empty?
       #
       # Bypass null password so that I don't have to store password
       # in plain text.
