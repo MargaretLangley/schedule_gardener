@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe 'Appointments#create' do
-  let!(:user)         { FactoryGirl.create(:user, :client_r) }
+  let!(:user) do
+    FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
+  end
   let!(:gardener_alan) { FactoryGirl.create(:user, :gardener_a) }
 
   subject { page }

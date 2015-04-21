@@ -3,23 +3,25 @@ require 'spec_helper'
 describe 'Touches#update' do
   before(:each) do
     Timecop.freeze(Time.zone.parse('2012-9-1 5:00'))
-    visit_signin_and_login user_r
+    visit_signin_and_login user
   end
-  let(:user_r) { FactoryGirl.create(:user, :client_r) }
+  let(:user) do
+    FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
+  end
 
   subject { page }
 
   it 'displays' do
-    touch_r = FactoryGirl.create(:touch, :tomorrow, contact: user_r.contact)
-    visit edit_touch_path(touch_r)
+    touch = FactoryGirl.create(:touch, :tomorrow, contact: user.contact)
+    visit edit_touch_path(touch)
 
-    expect(current_path).to eq edit_touch_path(touch_r)
+    expect(current_path).to eq edit_touch_path(touch)
   end
 
   context 'with valid information' do
     before do
-      touch_r = FactoryGirl.create(:touch, :tomorrow, contact: user_r.contact)
-      visit edit_touch_path(touch_r)
+      touch = FactoryGirl.create(:touch, :tomorrow, contact: user.contact)
+      visit edit_touch_path(touch)
       click_on('Update Contact Me')
     end
 

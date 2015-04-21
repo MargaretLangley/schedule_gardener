@@ -17,8 +17,8 @@ require 'spec_helper'
 describe Appointment do
   before { Timecop.freeze(Time.zone.parse('2012-9-1 8:00')) }
 
-  def create_appointment(contact: FactoryGirl.create(:user, :client_r).contact,
-                         appointee: FactoryGirl.create(:user, :gardener_a).contact,
+  def create_appointment(contact: FactoryGirl.create(:contact, :client_r),
+                         appointee: FactoryGirl.create(:contact, :gardener_a),
                          starts_at:, ends_at:)
 
     Appointment.create!(contact: contact, appointee: appointee, starts_at: starts_at, ends_at: ends_at)

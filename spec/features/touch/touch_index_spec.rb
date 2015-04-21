@@ -7,21 +7,21 @@ describe 'Touches#index' do
   context 'standard user' do
     context 'displays' do
       before do
-        visit_signin_and_login FactoryGirl.create(:user, :client_r)
+        visit_signin_and_login FactoryGirl.create(:user, :client)
 
         FactoryGirl.create(:touch, :client_j, :tomorrow, by_phone: true)
         visit touches_path
       end
       it ('is on page') { expect(page.title).to eq 'Garden Care | Contact Me' }
-      it ('own listed') { should have_content 'Roger Smith' }
+      it ('own listed') { should have_content 'Ann Abbey' }
       it ('others not listed') { should_not have_content 'John Smith' }
     end
 
     it 'deletes touch' do
-      user_r = FactoryGirl.create(:user, :client_r)
-      FactoryGirl.create(:touch, :tomorrow, contact: user_r.contact)
+      user = FactoryGirl.create(:user, :client)
+      FactoryGirl.create(:touch, :tomorrow, contact: user.contact)
 
-      visit_signin_and_login user_r
+      visit_signin_and_login user
       visit touches_path
 
       expect { click_on('Delete') }.to change(Touch, :count).by(-1)

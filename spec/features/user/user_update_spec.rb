@@ -4,7 +4,9 @@ describe 'users#update' do
   let(:update_profile)      { 'Update Profile' }
   subject { page }
 
-  let(:standard_user) { FactoryGirl.create(:user, :client_j) }
+  let(:standard_user) do
+    FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_j))
+  end
   context 'standard user' do
     before do
       visit_signin_and_login (standard_user)

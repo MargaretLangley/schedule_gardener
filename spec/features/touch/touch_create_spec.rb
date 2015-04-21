@@ -5,7 +5,9 @@ describe 'Touches#create' do
   subject { page }
 
   context 'standard user' do
-    let(:user_r) { FactoryGirl.create(:user, :client_r) }
+    let(:user_r) do
+      FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
+    end
     before(:each) do
       visit_signin_and_login user_r
       visit new_touch_path

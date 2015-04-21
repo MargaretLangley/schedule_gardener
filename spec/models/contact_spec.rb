@@ -18,7 +18,7 @@ require 'spec_helper'
 
 describe Contact do
   before { Timecop.freeze(Time.zone.parse('1/9/2012 8:00')) }
-  subject(:contact) { FactoryGirl.build(:user, :client_r).contact }
+  subject(:contact) { FactoryGirl.build(:contact, :client_r) }
 
   include_examples 'All Built Objects', Contact
 
@@ -53,8 +53,8 @@ describe Contact do
 
   describe 'ordering' do
     def create_appointment(date:, contact: nil, gardener: nil)
-      contact = FactoryGirl.build(:user, :client_r).contact unless contact
-      gardener = FactoryGirl.build(:user, :gardener_a).contact unless gardener
+      contact = FactoryGirl.build(:contact, :client_r) unless contact
+      gardener = FactoryGirl.build(:contact, :gardener_a) unless gardener
       FactoryGirl.create(:appointment,
                          date,
                          contact: contact,
@@ -88,9 +88,9 @@ describe Contact do
   describe 'Custom finders' do
     context '#gardeners' do
       it 'return first name ordered gardeners' do
-        percy = FactoryGirl.create(:user, :gardener_p).contact
-        allan = FactoryGirl.create(:user, :gardener_a).contact
-        roger = FactoryGirl.create(:user, :client_r).contact
+        percy = FactoryGirl.create(:contact, :gardener_p)
+        allan = FactoryGirl.create(:contact, :gardener_a)
+        roger = FactoryGirl.create(:contact, :client_r)
         expect(Contact.all).to eq [percy, allan, roger]
 
         expect(Contact.contacts_by_role('gardener')).to eq [allan, percy]
@@ -99,9 +99,9 @@ describe Contact do
 
     context '#clients' do
       it 'return first name ordered clients' do
-        roger = FactoryGirl.create(:user, :client_r).contact
-        ann   = FactoryGirl.create(:user, :client_a).contact
-        alan  = FactoryGirl.create(:user, :gardener_a).contact
+        roger = FactoryGirl.create(:contact, :client_r)
+        ann   = FactoryGirl.create(:contact, :client_a)
+        alan  = FactoryGirl.create(:contact, :gardener_a)
 
         expect(Contact.all).to eq [roger, ann, alan]
 
@@ -109,11 +109,10 @@ describe Contact do
       end
 
       it 'returns case insensitive ordering of clients' do
-        roger = FactoryGirl.create(:user, :client_r).contact
-        ann   = FactoryGirl.create(:user, :client_a).contact
-        alan  = FactoryGirl.create(:user, :gardener_a).contact
-        john  = FactoryGirl.build(:contact, :client_j, first_name: 'john')
-        FactoryGirl.create(:user, :client_j, contact: john)
+        roger = FactoryGirl.create(:contact, :client_r)
+        ann   = FactoryGirl.create(:contact, :client_a)
+        alan  = FactoryGirl.create(:contact, :gardener_a)
+        john  = FactoryGirl.create(:contact, :client_j, first_name: 'john')
         expect(Contact.all).to eq [roger, ann, alan, john]
 
         expect(Contact.contacts_by_role('client')).to eq [ann, john, roger]

@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe 'Dashboard#show' do
   context 'standard user' do
-    let!(:user_r) { FactoryGirl.create(:user, :client_r) }
+    let!(:user_r) do
+      FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
+    end
     before do
       visit_signin_and_login user_r
       visit dashboard_path(user_r)

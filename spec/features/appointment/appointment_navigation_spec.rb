@@ -5,7 +5,9 @@ describe 'Appointments navigation' do
     Timecop.freeze(Time.zone.parse('1/9/2012 5:00'))
   end
 
-  let!(:user)         { FactoryGirl.create(:user, :client_r) }
+  let!(:user) do
+    FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
+  end
   let!(:gardener_a)   { FactoryGirl.create(:user, :gardener_a) }
   let!(:appointment)  { FactoryGirl.create(:appointment, :tomorrow_first_slot, appointee: gardener_a.contact, contact: user.contact) }
 

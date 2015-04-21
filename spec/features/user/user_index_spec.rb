@@ -17,7 +17,8 @@ describe 'users#index' do
     end
 
     let!(:standard_user)  do
-      FactoryGirl.create(:user, :client_j, contact: FactoryGirl.create(:contact, first_name: user_first_name, home_phone: user_home_phone))
+      contact = FactoryGirl.create(:contact, first_name: user_first_name, home_phone: user_home_phone)
+      FactoryGirl.create(:user, contact: contact)
     end
 
     before do
@@ -34,7 +35,11 @@ describe 'users#index' do
     end
 
     describe 'pagination' do
-      before(:all)  { 20.times { FactoryGirl.create(:user, :client_j) } }
+      before(:all) do
+        20.times do
+          FactoryGirl.create(:user, contact: FactoryGirl.create(:contact))
+        end
+      end
       after(:all)   do
         User.delete_all
         Contact.delete_all

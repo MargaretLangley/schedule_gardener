@@ -13,16 +13,10 @@ FactoryGirl.define do
       association :contact, :admin, strategy: :build
     end
 
-    trait :client_a do
+    # do not like as contact creates a user
+    #
+    trait :client do
       association :contact, :client_a, strategy: :build
-    end
-
-    trait :client_j do
-      association :contact, :client_j, strategy: :build
-    end
-
-    trait :client_r do
-      association :contact, :client_r, strategy: :build
     end
 
     trait :gardener_a do
@@ -103,7 +97,7 @@ FactoryGirl.define do
       role 'gardener'
     end
 
-    # user
+    user
     first_name 'contact_trait_not_set'
     last_name 'contact_trait_not_set'
     email  { "#{first_name}.#{last_name}@example.com".downcase }

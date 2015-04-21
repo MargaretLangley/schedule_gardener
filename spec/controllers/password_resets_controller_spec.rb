@@ -24,9 +24,14 @@ describe PasswordResetsController do
 
   describe '#update' do
     it 'should redirect a put with an expired token' do
-      client_with_expired_token = FactoryGirl.create(:user, :client_a, :expired_reset_password)
+      client_with_expired_token = create_user
       post :update, id: client_with_expired_token.password_reset_token
       expect(response).to redirect_to new_password_reset_path
+    end
+
+    def create_user
+      contact = FactoryGirl.create(:contact, :client_j)
+      FactoryGirl.create(:user, :expired_reset_password, contact: contact)
     end
   end
 end

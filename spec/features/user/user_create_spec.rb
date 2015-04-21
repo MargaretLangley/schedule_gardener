@@ -64,37 +64,34 @@ describe 'users#create' do
     end
   end
 
-  context 'gardener' do
+  context 'gardener with valid information' do
+    gardener = nil
     before do
       gardener = FactoryGirl.create(:user, :gardener_a)
       visit_signin_and_login gardener
       visit signup_path
+
+      fill_in 'First name',       with: 'Example'
+      fill_in 'Email',            with: 'user@example.com'
+      fill_in 'Password',         with: 'foobar'
+      fill_in 'Confirm password', with: 'foobar'
+      fill_in 'Street number',    with: '23'
+      fill_in 'Street name',      with: 'High Street'
+      fill_in 'Town',             with: 'Stratford'
+      fill_in 'Home phone',       with: '0181-333-4444'
     end
 
-    context 'with valid information' do
-      before do
-        fill_in 'First name',       with: 'Example'
-        fill_in 'Email',            with: 'user@example.com'
-        fill_in 'Password',         with: 'foobar'
-        fill_in 'Confirm password', with: 'foobar'
-        fill_in 'Street number',    with: '23'
-        fill_in 'Street name',      with: 'High Street'
-        fill_in 'Town',             with: 'Stratford'
-        fill_in 'Home phone',       with: '0181-333-4444'
-      end
+    it 'should create a user' do
+      expect { click_button 'Create account' }.to change(User, :count).by(1)
+    end
 
-      it 'should create a user' do
-        expect { click_button 'Create account' }.to change(User, :count).by(1)
-      end
+    context 'after saving the user' do
+      before { click_button 'Create account' }
 
-      context 'after saving the user' do
-        before { click_button 'Create account' }
-
-        it 'back to users' do
-          expect(current_path).to eq users_path
-        end
-        it  { should have_flash_success('New User Created') }
+      it 'back to users' do
+        expect(current_path).to eq users_path
       end
+      it  { should have_flash_success('New User Created') }
     end
   end
 end

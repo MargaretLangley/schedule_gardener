@@ -8,9 +8,9 @@ describe 'abilities' do
   let(:admin_ability)    { Ability.new(admin) }
 
   let(:admin)          { FactoryGirl.create(:user, :admin) }
-  let(:another_client) { FactoryGirl.create(:user, :client_a) }
-  let(:client)         { FactoryGirl.create(:user, :client_j) }
-  let(:gardener)       { FactoryGirl.create(:user, :gardener_a) }
+  let(:another_client) { FactoryGirl.create(:contact, :client_a).user }
+  let(:client)         { FactoryGirl.create(:contact, :client_j).user }
+  let(:gardener)       { FactoryGirl.create(:contact, :gardener_a).user }
 
   shared_examples_for 'can_manage_user' do |ability, user|
     it ('can show')     { expect(ability).to be_able_to(:show, user) }

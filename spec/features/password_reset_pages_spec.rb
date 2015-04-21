@@ -4,7 +4,10 @@ require 'spec_helper'
 describe 'PasswordReset' do
   subject { page }
 
-  let(:client) { FactoryGirl.create(:user, :client_j, :resetting_password) }
+  let(:client) do
+    contact = FactoryGirl.create(:contact, :client_j)
+    FactoryGirl.create(:user, :resetting_password, contact: contact)
+  end
 
   context '#new' do
     before do
@@ -103,7 +106,10 @@ describe 'PasswordReset' do
       end
     end
     context 'out of time' do
-      let!(:client_expired) { FactoryGirl.create(:user, :client_j, :expired_reset_password) }
+      let!(:client_expired) do
+        contact = FactoryGirl.create(:contact, :client_j)
+        FactoryGirl.create(:user, :expired_reset_password, contact: contact)
+      end
       before do
         visit edit_password_reset_path(client_expired.password_reset_token)
       end
