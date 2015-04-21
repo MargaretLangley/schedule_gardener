@@ -29,6 +29,10 @@ FactoryGirl.define do
       association :contact, :gardener_a, strategy: :build
     end
 
+    trait :gardener_p do
+      association :contact, :gardener_p, strategy: :build
+    end
+
     trait :email_tester do
       association :contact, :client_a, email: 'richard.wigley@gmail.com', strategy: :build
     end

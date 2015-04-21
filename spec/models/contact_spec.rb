@@ -18,13 +18,9 @@ require 'spec_helper'
 
 describe Contact do
   before { Timecop.freeze(Time.zone.parse('1/9/2012 8:00')) }
-  subject(:contact) { FactoryGirl.build(:contact, :client_r) }
+  subject(:contact) { FactoryGirl.build(:user, :client_r).contact }
 
   include_examples 'All Built Objects', Contact
-
-  it 'has a valid factory' do
-    expect(FactoryGirl.create(:contact, :client_r)).to be_valid
-  end
 
   describe 'Validations' do
     # role can't be validated in the same way because of the before validation
@@ -55,91 +51,69 @@ describe Contact do
     end
   end
 
-  describe '#appointments' do
-    context 'returns expected appointments ordered by date' do
-      app1 = app2 = app3 = nil
-      before do
-        (app2 = FactoryGirl.build(:appointment, :gardener_a, :today_fourth_slot, contact: contact)).save!
-        (app3 = FactoryGirl.build(:appointment, :gardener_a, :tomorrow_first_slot, contact: contact)).save!
-        (app1 = FactoryGirl.build(:appointment, :gardener_a, :today_first_slot, contact: contact)).save!
+  describe 'ordering' do
+    def create_appointment(date:, contact: nil, gardener: nil)
+      contact = FactoryGirl.build(:user, :client_r).contact unless contact
+      gardener = FactoryGirl.build(:user, :gardener_a).contact unless gardener
+      FactoryGirl.create(:appointment,
+                         date,
+                         contact: contact,
+                         appointee: gardener)
+    end
 
+    describe '#appointments' do
+      it 'returns expected appointments ordered by date' do
+        app2 = create_appointment(date: :today_fourth_slot, contact: contact)
+        app3 = create_appointment(date: :tomorrow_first_slot, contact: contact)
+        app1 = create_appointment(date: :today_first_slot, contact: contact)
         expect(Appointment.all).to eq [app2, app3, app1]
-      end
 
-      it 'true' do
         expect(contact.appointments).to eq [app1, app2, app3]
       end
     end
 
-    context 'only returns appointments for the expected user' do
-      contact1_app1 = contact2_app2 = nil
+    describe '#visits' do
+      it 'returns expected visits ordered by date' do
+        gardener = FactoryGirl.build(:user, :gardener_a).contact unless gardener
+        app2 = create_appointment date: :today_fourth_slot, gardener: gardener
+        app3 = create_appointment date: :tomorrow_first_slot, gardener: gardener
+        app1 = create_appointment date: :today_first_slot, gardener: gardener
+        expect(Appointment.all).to eq [app2, app3, app1]
 
-      before do
-        contact_2  = FactoryGirl.create(:contact, :client_a)
-        contact1_app1 = FactoryGirl.create(:appointment, :gardener_a, :today_first_slot, contact: contact)
-        contact2_app2 = FactoryGirl.create(:appointment, :gardener_a, :today_second_slot, contact: contact_2)
-        expect(Appointment.all).to eq [contact1_app1, contact2_app2]
-      end
-
-      it 'true' do
-        expect(contact.appointments).to eq [contact1_app1]
-      end
-    end
-  end
-
-  describe '#visits' do
-    context 'returns expected visits ordered by date and time' do
-      gardener_a = nil
-      contact1_app1 = contact1_app2 = contact1_app3 = nil
-      before do
-        gardener_a = FactoryGirl.create(:contact, :gardener_a)
-        (contact1_app2 = FactoryGirl.create(:appointment, :today_fourth_slot, contact: contact, appointee: gardener_a)).save!
-        (contact1_app3 = FactoryGirl.create(:appointment, :tomorrow_first_slot, contact: contact, appointee: gardener_a)).save!
-        (contact1_app1 = FactoryGirl.create(:appointment, :gardener_p, :today_first_slot, contact: contact)).save!
-
-        expect(Appointment.all).to eq [contact1_app2, contact1_app3, contact1_app1]
-      end
-
-      it 'true' do
-        expect(gardener_a.visits).to eq [contact1_app2, contact1_app3]
+        expect(gardener.visits).to eq [app1, app2, app3]
       end
     end
   end
 
   describe 'Custom finders' do
     context '#gardeners' do
-      percy = allan = roger = nil
-
-      before do
-        percy = FactoryGirl.create(:contact, :gardener_p)
-        allan = FactoryGirl.create(:contact, :gardener_a)
-        roger = FactoryGirl.create(:contact, :client_r)
-
-        expect(Contact.all).to eq [percy, allan, roger]
-      end
-
       it 'return first name ordered gardeners' do
+        percy = FactoryGirl.create(:user, :gardener_p).contact
+        allan = FactoryGirl.create(:user, :gardener_a).contact
+        roger = FactoryGirl.create(:user, :client_r).contact
+        expect(Contact.all).to eq [percy, allan, roger]
+
         expect(Contact.contacts_by_role('gardener')).to eq [allan, percy]
       end
     end
 
     context '#clients' do
       it 'return first name ordered clients' do
-        roger = FactoryGirl.create(:contact, :client_r)
-        ann   = FactoryGirl.create(:contact, :client_a)
-        alan  = FactoryGirl.create(:contact, :gardener_a)
+        roger = FactoryGirl.create(:user, :client_r).contact
+        ann   = FactoryGirl.create(:user, :client_a).contact
+        alan  = FactoryGirl.create(:user, :gardener_a).contact
 
         expect(Contact.all).to eq [roger, ann, alan]
 
         expect(Contact.contacts_by_role('client')).to eq [ann, roger]
       end
 
-      it 'returns case insenstitive ordering of clients' do
-        roger = FactoryGirl.create(:contact, :client_r)
-        ann   = FactoryGirl.create(:contact, :client_a)
-        alan  = FactoryGirl.create(:contact, :gardener_a)
-        john  = FactoryGirl.create(:contact, :client_j, first_name: 'john')
-
+      it 'returns case insensitive ordering of clients' do
+        roger = FactoryGirl.create(:user, :client_r).contact
+        ann   = FactoryGirl.create(:user, :client_a).contact
+        alan  = FactoryGirl.create(:user, :gardener_a).contact
+        john  = FactoryGirl.build(:contact, :client_j, first_name: 'john')
+        FactoryGirl.create(:user, :client_j, contact: john)
         expect(Contact.all).to eq [roger, ann, alan, john]
 
         expect(Contact.contacts_by_role('client')).to eq [ann, john, roger]
