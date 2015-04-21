@@ -14,44 +14,21 @@
 
 require 'spec_helper'
 
-class Helper
-  def self.create_appointment(contact, start_time, end_time)
-    FactoryGirl.create(:appointment, :gardener_a, contact: contact, starts_at: start_time, ends_at: end_time)
-  end
-end
-
 describe Appointment do
-  let!(:contact) { FactoryGirl.create(:contact, :client_r) }
   before { Timecop.freeze(Time.zone.parse('2012-9-1 8:00')) }
-  subject(:appointment) do
-    FactoryGirl.create(:appointment, :client_r, :gardener_a, :today_first_slot)
+
+  def create_appointment(contact: FactoryGirl.create(:user, :client_r).contact,
+                         appointee: FactoryGirl.create(:user, :gardener_a).contact,
+                         starts_at:, ends_at:)
+
+    Appointment.create!(contact: contact, appointee: appointee, starts_at: starts_at, ends_at: ends_at)
   end
 
-  include_examples 'All Built Objects', Appointment
-
-  context 'Validations' do
-    [:contact, :appointee].each do |validate_attr|
-      it { should validate_presence_of(validate_attr) }
-    end
-  end
-
-  context 'record for' do
-    it '#starts at matches expected time' do
-      expect(appointment.starts_at)
-        .to eq Time.zone.local(2012, 9, 1, 9, 30)
-    end
-
-    it '#ends at matches expected time' do
-      expect(appointment.ends_at)
-        .to eq Time.zone.local(2012, 9, 1, 11, 0)
-    end
-  end
-
-  context 'slots' do
+  describe 'slots' do
     context 'single booking' do
       before do
-        e1 = Helper.create_appointment(contact, '01/09/2012 11:30', '01/09/2012 13:00')
-        expect(Appointment.all).to eq [e1]
+        a1 = create_appointment(starts_at: '01/09/2012 11:30', ends_at: '01/09/2012 13:00')
+        expect(Appointment.all).to eq [a1]
       end
       it 'exclude slots before' do
         expect(Appointment.first.include_slot_number?(1)).to be false
@@ -65,76 +42,46 @@ describe Appointment do
     end
   end
 
-  context 'Custom finders' do
-    context '#in_time_range' do
-      context 'on start boundary' do
-        e1 = nil
-        before do
+  describe 'Custom finders' do
+    describe '#in_time_range' do
+      describe 'start boundary' do
+        it 'misses appointments that end before the start boundary' do
+          Timecop.travel Time.zone.parse('2012-8-1 10:00')
+          create_appointment starts_at: '31/08/2012 22:00',
+                             ends_at: '31/08/2012 23:59'
+
+          expect(Appointment.in_time_range(Time.zone.local(2012, 9, 1)..
+                                           Time.zone.local(2012, 9, 30, 23, 59)))
+            .to eq []
+        end
+
+        it 'finds appointments that end after the start boundary' do
           Timecop.travel(Time.zone.parse('2012-8-1 10:00'))
-          e1 = Helper.create_appointment(contact, '31/08/2012 22:00', '31/08/2012 23:59')
-          expect(Appointment.all).to eq [e1]
-        end
+          a1 = create_appointment(starts_at: '31/08/2012 22:00',
+                                  ends_at: '01/09/2012 00:00')
 
-        it 'fails' do
-          expect(contact.appointments.in_time_range(Time.zone.local(2012, 9, 1)..Time.zone.local(2012, 9, 30, 23, 59))).to eq []
-        end
-      end
-
-      context 'on start boundary' do
-        e1 = nil
-        before do
-          Timecop.travel(Time.zone.parse('2012-8-1 10:00'))
-          e1 = Helper.create_appointment(contact, '31/08/2012 22:00', '01/09/2012 00:00')
-
-          expect(Appointment.all).to eq [e1]
-        end
-
-        it 'succeeds' do
-          expect(contact.appointments.in_time_range(Time.zone.local(2012, 9, 1)..Time.zone.local(2012, 9, 30, 23, 59))).to eq [e1]
+          expect(Appointment.in_time_range(Time.zone.local(2012, 9, 1)..
+                                           Time.zone.local(2012, 9, 30, 23, 59)))
+            .to eq [a1]
         end
       end
 
-      context 'on end boundary' do
-        e1 = e2 = nil
-        before do
-          e1 = Helper.create_appointment(contact, '30/09/2012 22:00', '30/09/2012 23:59')
-          e2 = Helper.create_appointment(contact, '01/10/2012 00:00', '01/10/2012 01:30')
+      describe 'end boundary' do
+        it 'finds appointments that start before the end boundary' do
+          a1 = create_appointment(starts_at: '30/09/2012 22:00',
+                                  ends_at: '01/10/2012 01:30')
 
-          expect(Appointment.all).to eq [e1, e2]
+          expect(Appointment.in_time_range(Time.zone.local(2012, 9, 1)..
+                                           Time.zone.local(2012, 9, 30, 23, 59)))
+            .to eq [a1]
         end
 
-        it 'succeeds' do
-          expect(contact.appointments.in_time_range(Time.zone.local(2012, 9, 1)..Time.zone.local(2012, 9, 30, 23, 59))).to eq [e1]
-        end
-      end
-
-      context 'across boundary' do
-        e1 = e2 = nil
-        before do
-          Timecop.travel(Time.zone.parse('2012-8-1 10:00'))
-          e1 = Helper.create_appointment(contact, '31/08/2012 23:00', '01/09/2012 01:00')
-          e2 = Helper.create_appointment(contact, '30/09/2012 22:30', '01/10/2012 01:30')
-          Timecop.travel(Time.zone.parse('2012-9-1 10:00'))
-
-          expect(Appointment.all).to eq [e1, e2]
-        end
-        it 'succeeds' do
-          expect(contact.appointments.in_time_range(Time.zone.local(2012, 9, 1)..Time.zone.local(2012, 9, 30, 23, 59))).to eq [e1, e2]
-        end
-      end
-
-      context "doesn't pick up other contacts appointments" do
-        e1 = e2 = nil
-        before do
-          Timecop.travel(Time.zone.parse('2012-8-1 8:00'))
-          e1 = Helper.create_appointment(FactoryGirl.create(:contact, :client_a), '01/09/2012 01:00', '01/09/2012 02:00')
-          e2 = Helper.create_appointment(contact, '02/09/2012 01:00', '02/09/2012 02:00')
-
-          expect(Appointment.all).to eq [e1, e2]
-        end
-
-        it 'succeeds' do
-          expect(contact.appointments.in_time_range(Time.zone.local(2012, 9, 1)..Time.zone.local(2012, 9, 30, 23, 59))).to eq [e2]
+        it 'misses appointments that start after the end boundary' do
+          create_appointment(starts_at: '01/10/2012 00:00',
+                             ends_at: '01/10/2012 01:30')
+          expect(Appointment.in_time_range(Time.zone.local(2012, 9, 1)..
+                                           Time.zone.local(2012, 9, 30, 23, 59)))
+            .to eq []
         end
       end
     end
