@@ -29,8 +29,7 @@ module ScheduleGardener
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**/}'),
                                  "#{config.root}/lib/**/"]
 
-    # Upgrading to rails 4 -
-    #
-    # config.active_record.whitelist_attributes = false
+    # Do not swallow errors in after_commit/after_rollback callbacks.
+    config.active_record.raise_in_transactional_callbacks = true
   end
 end

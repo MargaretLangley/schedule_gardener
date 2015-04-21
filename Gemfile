@@ -84,7 +84,7 @@ ruby '2.1.2'
 #
 # Production
 #
-gem 'rails', '~> 4.1.0'
+gem 'rails', '~> 4.2.1'
 
 gem 'active_attr', '~> 0.8.0'
 gem 'bootstrap-sass', '~> 3.3.4'
@@ -96,17 +96,16 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'date_validator', '~> 0.7.0'
 gem 'figaro', '~> 1.1.0'
 gem 'jquery-rails', '~> 3.1.2'
-gem 'jquery-ui-rails', '~> 4.2.1'
+gem 'jquery-ui-rails', '~> 5.0.0'
 gem 'jquery-rest-rails', '~> 1.0.0'
 gem 'lograge', '~> 0.3.0'
 gem 'pg', '~> 0.18.0'
 gem 'simple_form', '~> 3.1.0'
-gem 'rails_admin', '~> 0.6.0'
+gem 'rails_admin', '~> 0.6.7'
 gem 'rails-i18n', '~> 0.7.0'
 gem 'rake', '~> 10.4.0'
-gem 'sass-rails',   '~> 4.0.0'
+gem 'sass-rails',   '~> 5.0.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
-gem 'spring',        group: :development
 gem 'squeel', '~> 1.2.0'
 gem 'turbolinks', '~> 2.5.0'
 gem 'uglifier', '~> 2.7.0'
@@ -149,6 +148,9 @@ group :development, :test do
   gem 'byebug', '3.5.1'
   gem 'rb-readline'
   gem 'rspec-rails', '~> 3.2.0'
+  gem 'spring'
+  gem 'table_print'
+  gem 'web-console', '~> 2.0'
 end
 
 group :test do

@@ -103,7 +103,7 @@ FactoryGirl.define do
       role 'gardener'
     end
 
-    user
+    # user
     first_name 'contact_trait_not_set'
     last_name 'contact_trait_not_set'
     email  { "#{first_name}.#{last_name}@example.com".downcase }
