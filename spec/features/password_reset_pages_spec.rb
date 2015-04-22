@@ -20,11 +20,12 @@ describe 'PasswordReset' do
 
     context 'with valid email' do
       before do
-        FactoryGirl.create(:user, :email_tester)
+        contact = FactoryGirl.create(:contact, email: 'me@example.com')
+        FactoryGirl.create(:user, contact: contact)
       end
       context 'in database' do
         before do
-          fill_in 'email',       with: 'richard.wigley@gmail.com'
+          fill_in 'email',       with: 'me@example.com'
           click_button 'Email me password reset instructions'
         end
 

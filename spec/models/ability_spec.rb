@@ -126,7 +126,10 @@ describe 'abilities' do
       subject { unexpected_ability }
 
       it 'causes exception' do
-        expect { Ability.new(FactoryGirl.create(:user, :unexpected)) }.to raise_error(RuntimeError, 'Missing Role: unexpected in Ability#initialize')
+        contact = FactoryGirl.create(:contact, role: 'unexpected')
+        expect { Ability.new(FactoryGirl.create(:user, contact: contact)) }
+          .to raise_error(RuntimeError,
+                          'Missing Role: unexpected in Ability#initialize')
       end
     end
   end
