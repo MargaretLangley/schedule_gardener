@@ -13,12 +13,6 @@ FactoryGirl.define do
       association :contact, :admin, strategy: :build
     end
 
-    # do not like as contact creates a user
-    #
-    trait :client do
-      association :contact, :client_a, strategy: :build
-    end
-
     trait :resetting_password do
       password_reset_token 'i8pCKXq7UArg164qUXfJXg'
       password_reset_sent_at { Time.zone.now }

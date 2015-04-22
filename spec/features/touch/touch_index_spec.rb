@@ -7,7 +7,10 @@ describe 'Touches#index' do
   context 'standard user' do
     context 'displays' do
       before do
-        visit_signin_and_login FactoryGirl.create(:user, :client)
+        contact = FactoryGirl.create(:contact,
+                                     first_name: 'Ann',
+                                     last_name: 'Abbey')
+        visit_signin_and_login FactoryGirl.create(:user, contact: contact)
 
         FactoryGirl.create(:touch, :client_j, :tomorrow, by_phone: true)
         visit touches_path
@@ -18,7 +21,8 @@ describe 'Touches#index' do
     end
 
     it 'deletes touch' do
-      user = FactoryGirl.create(:user, :client)
+      contact = FactoryGirl.create(:contact)
+      user = FactoryGirl.create(:user, contact: contact)
       FactoryGirl.create(:touch, :tomorrow, contact: user.contact)
 
       visit_signin_and_login user
