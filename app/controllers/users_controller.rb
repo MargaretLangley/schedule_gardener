@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   end
 
   def new
+    @user = User.new
     @user.contact = Contact.new
     @user.contact.address = Address.new
   end
