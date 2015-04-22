@@ -31,5 +31,8 @@ module ScheduleGardener
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+     # specifies whether or not to use ANSI color codes when logging information. Defaults to true.
+    config.colorize_logging = false
   end
 end
