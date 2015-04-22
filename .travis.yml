@@ -6,7 +6,7 @@ rvm:
   - "2.1.2"
 
 env:
-  - DB=postgresql HOST=localhost:3000 DOMAIN=test.domain.com
+  - DB=postgresql HOST=localhost:3000 DOMAIN=test.example.com
 
 addons:
   postgresql: 9.3

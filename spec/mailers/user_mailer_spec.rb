@@ -13,7 +13,7 @@ describe UserMailer do
     end
 
     it 'sent from' do
-      expect(mail.from).to eq(['robot.gardener@test.domain.com'])
+      expect(mail.from).to eq(['robot.gardener@test.example.com'])
     end
 
     it 'renders the body' do
