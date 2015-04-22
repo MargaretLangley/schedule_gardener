@@ -7,26 +7,25 @@
 Application for scheduling a gardener to come to a premise and garden.
 
 
-## Application Setup
+## 1. Development environment:
 
-### 1. Development:
+1. `git clone git@github.com:BCS-io/schedule_gardener.git  && cd schedule_gardener`
+2. `cp config/database.example.yml  config/database.yml`
+3. `cp config/secrets.example.yml  config/secrets.yml`
+  * update production variables
+4. `rake db:create && rake db:migrate`
+5. Add schedule gardener csv data to `import_data`
+  
+  1\. `git clone git@bitbucket.org:bcsltd/schedule_gardener_import_data.git import_data`
+  2\. `rake import`
+6. `rails s`
+7. Navigate browser to localhost:3000
 
-1. git clone
-2. rename config/database.example.yml -> config/database.yml
-3. rename config/application.example.yml -> config/application.yml
-4. rake db:create
-5. Download dump from google drive: code/apps/schedule_gardener/schedule_gardener_development.dump
-6. Restore database: 
+## 2. Deployment:
 
-   ````
-   pg_restore --verbose --clean --no-acl --no-owner -d schedule_gardener_development --role richard  -U postgres schedule_gardener_development.dump
-   ````
-
-### 2. Production:
-
-#### Code Setup
+### Code Setup
 1. `cap <environment> setup`
 2. `cap <environment> deploy`
 
-#### Database Setup
-3. `cap production db:push`
+### Database Setup
+3. `cap <environment> db:push`

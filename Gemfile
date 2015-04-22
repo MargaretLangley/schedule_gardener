@@ -94,7 +94,6 @@ gem 'bootstrap-will_paginate', '~> 0.0.0'
 gem 'cancancan', '~> 1.10'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'date_validator', '~> 0.7.0'
-gem 'figaro', '~> 1.1.0'
 gem 'jquery-rails', '~> 3.1.2'
 gem 'jquery-ui-rails', '~> 5.0.0'
 gem 'jquery-rest-rails', '~> 1.0.0'
@@ -129,8 +128,8 @@ group :development do
   gem 'capistrano-rails', '~> 1.1.2'
   gem 'capistrano-rbenv', '~> 2.0.0'
   gem 'capistrano-rails-collection', '~> 0.0.3'
+  gem 'capistrano-secrets-yml', '~> 1.0.0'
   gem 'capistrano-unicorn-nginx', github: 'BCS-io/capistrano-unicorn-nginx'
-  gem 'mascherano', '~> 1.1.0'
 end
 
 group :development do

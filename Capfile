@@ -9,7 +9,7 @@ require 'capistrano/unicorn_nginx'
 # rails rake tasks
 require 'capistrano/rails/collection'
 require 'capistrano-db-tasks'
-require 'mascherano/figaro'
+require 'capistrano/secrets_yml'
 require 'airbrussh/capistrano'
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.

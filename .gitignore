@@ -20,7 +20,11 @@ coverage
 # Ignore import_data as going to github public
 /import_data
 
+# No configuration files included
+#
 .env
+config/secrets.yml
+
 
 Procfile
 
