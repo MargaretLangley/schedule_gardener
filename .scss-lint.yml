@@ -1,9 +1,10 @@
 scss_files: 'app/assets/stylesheets/**/*.css.scss'
 
 exclude:
+  - 'public/assets/*.css'
   - 'app/assets/stylesheets/generic.normalize.css'
   - 'tmp/rubycritic/assets/stylesheets/*.css'
-  # - 'app/assets/stylesheets/custom.css.scss'
+  - 'app/assets/stylesheets/custom.css.scss'
   - 'app/assets/stylesheets/events.css.scss'
 
 #
