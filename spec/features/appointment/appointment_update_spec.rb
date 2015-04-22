@@ -9,7 +9,9 @@ describe 'Appointments#update' do
   let!(:user) do
     FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
   end
-  let!(:gardener_a)   { FactoryGirl.create(:user, :gardener_a) }
+  let!(:gardener_a) do
+    FactoryGirl.create :user, contact: FactoryGirl.create(:contact, :gardener_a)
+  end
   let!(:appointment)  { FactoryGirl.create(:appointment, :tomorrow_first_slot, appointee: gardener_a.contact, contact: user.contact) }
 
   subject { page }

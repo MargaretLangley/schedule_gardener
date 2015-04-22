@@ -65,9 +65,10 @@ describe 'users#create' do
   end
 
   context 'gardener with valid information' do
-    gardener = nil
     before do
-      gardener = FactoryGirl.create(:user, :gardener_a)
+      gardener =
+        FactoryGirl
+        .create(:user, contact: FactoryGirl.create(:contact, :gardener_a))
       visit_signin_and_login gardener
       visit signup_path
 

@@ -58,20 +58,16 @@ describe 'users#update' do
   end
 
   context 'gardener' do
-    before do
-      gardener = FactoryGirl.create(:user, :gardener_a)
-      # puts "gardener id" + gardener.inspect
+    it 'displays users on update' do
+      gardener = FactoryGirl
+                 .create(:user,
+                         contact: FactoryGirl.create(:contact, :gardener_a))
       visit_signin_and_login gardener
       visit edit_profile_path (standard_user)
-    end
-    context 'on update' do
-      before do
-        fill_in 'Street number',    with: '99'
-        click_button update_profile
-      end
-      it 'displays users' do
-        expect(current_path).to eq users_path
-      end
+      fill_in 'Street number',    with: '99'
+      click_button update_profile
+
+      expect(current_path).to eq users_path
     end
   end
 end

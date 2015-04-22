@@ -74,7 +74,7 @@ describe Contact do
 
     describe '#visits' do
       it 'returns expected visits ordered by date' do
-        gardener = FactoryGirl.build(:user, :gardener_a).contact unless gardener
+        gardener = FactoryGirl.build(:contact, :gardener_a)
         app2 = create_appointment date: :today_fourth_slot, gardener: gardener
         app3 = create_appointment date: :tomorrow_first_slot, gardener: gardener
         app1 = create_appointment date: :today_first_slot, gardener: gardener

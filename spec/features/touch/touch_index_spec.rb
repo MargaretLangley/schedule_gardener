@@ -31,7 +31,9 @@ describe 'Touches#index' do
   context 'Gardener' do
     touch_a = nil
     before do
-      visit_signin_and_login FactoryGirl.create(:user, :gardener_a)
+      user = FactoryGirl
+             .create(:user, contact: FactoryGirl.create(:contact, :gardener_a))
+      visit_signin_and_login user
 
       touch_a = FactoryGirl.create(:touch, :client_j, :tomorrow, by_phone: true)
       visit touches_path

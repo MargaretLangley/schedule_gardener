@@ -4,7 +4,9 @@ describe 'Authentication' do
   let(:user) do
     FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_j))
   end
-  let(:gardener) { FactoryGirl.create(:user, :gardener_a) }
+  let(:gardener) do
+    FactoryGirl.create :user, contact: FactoryGirl.create(:contact, :gardener_a)
+  end
   let(:admin) { FactoryGirl.create(:user, :admin) }
 
   subject { page }

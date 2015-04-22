@@ -1,14 +1,16 @@
 require 'spec_helper'
 
 describe 'Appointments#create' do
-  let!(:user) do
-    FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
-  end
-  let!(:gardener_alan) { FactoryGirl.create(:user, :gardener_a) }
-
   subject { page }
 
   context 'standard user' do
+    let!(:user) do
+      FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
+    end
+    let!(:gardener_alan) do
+      gardener = FactoryGirl.create(:contact, :gardener_a)
+      FactoryGirl.create(:user, contact: gardener)
+    end
     before(:each) do
       Timecop.freeze(Time.zone.parse('1/9/2012 5:00'))
       visit_signin_and_login user
@@ -49,6 +51,14 @@ describe 'Appointments#create' do
   end
 
   context 'gardener' do
+    let!(:user) do
+      FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
+    end
+    let!(:gardener_alan) do
+      gardener = FactoryGirl.create(:contact, :gardener_a)
+      FactoryGirl.create(:user, contact: gardener)
+    end
+
     before do
       Timecop.freeze(Time.zone.parse('1/9/2012 5:00'))
       visit_signin_and_login gardener_alan

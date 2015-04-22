@@ -65,7 +65,10 @@ describe 'Touches#create' do
   end
 
   context 'gardener' do
-    let(:gardener_a) { FactoryGirl.create(:user, :gardener_a) }
+    let(:gardener_a) do
+      FactoryGirl.create(:user,
+                         contact: FactoryGirl.create(:contact, :gardener_a))
+    end
 
     describe 'has gardener only content' do
       before do
@@ -78,7 +81,7 @@ describe 'Touches#create' do
       it ('completed') { should have_content 'Completed' }
     end
 
-    it 'with valid informcation it adds touch' do
+    it 'with valid information it adds touch' do
       FactoryGirl.create(:contact, :client_a)
       visit_signin_and_login gardener_a
       visit new_touch_path
