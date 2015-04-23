@@ -11,31 +11,30 @@ require 'optparse'
 STDOUT.sync = true
 
 desc 'Imports data from the import_data directory.'
-task :import, [:test] => :environment do |_task, args|
+task :import, [:import_users] => :environment do |_task, args|
   # Rails.logger = Logger.new(STDOUT)
-
   options = parse_options args
 
   Rails.logger.info 'import:truncate_all'
-  Rake::Task['import:truncate_all'].execute
+  Rake::Task['import:truncate_all'].invoke(options[:import_users])
 
   Rails.logger.info 'import:addresses'
-  Rake::Task['import:addresses'].invoke(options[:test])
+  Rake::Task['import:addresses'].invoke
 
   Rails.logger.info 'import:contacts'
-  Rake::Task['import:contacts'].invoke(options[:test])
+  Rake::Task['import:contacts'].invoke
 
   Rails.logger.info 'import:users'
-  Rake::Task['import:users'].invoke(options[:test])
+  Rake::Task['import:users'].invoke(options[:import_users])
 
   Rails.logger.info 'import:appointment_slots'
-  Rake::Task['import:appointment_slots'].invoke(options[:test])
+  Rake::Task['import:appointment_slots'].invoke
 
   Rails.logger.info 'import:appointments'
-  Rake::Task['import:appointments'].invoke(options[:test])
+  Rake::Task['import:appointments'].invoke
 
   Rails.logger.info 'import:touches'
-  Rake::Task['import:touches'].invoke(options[:test])
+  Rake::Task['import:touches'].invoke
 
   Rails.logger.info 'import:reset_autoincrement'
   Rake::Task['import:reset_autoincrement'].invoke
@@ -46,11 +45,11 @@ end
 def parse_options args
   options = {}
   OptionParser.new(args) do |opts|
-    opts.banner = 'Usage: rake db:import -- [options]'
+    opts.banner = 'Usage: rake import -- [options]'
 
-    options[:test] = false
-    opts.on('-t', '--test', "Make users with password 'password'", String) do
-      options[:test] = true
+    options[:import_users] = true
+    opts.on('-s', '--skip_users', 'skip importing users table', String) do
+      options[:import_users] = false
     end
 
     opts.on('-h', '--help', 'Display this screen') do

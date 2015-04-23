@@ -6,11 +6,13 @@ STDOUT.sync = true
 
 namespace :import do
   desc 'Truncates all the database tables'
-  task truncate_all: :environment do
-    ActiveRecord::Base.connection
-      .tables
-      .reject { |t| t == 'schema_migrations' }
-      .each do |table|
+  task :truncate_all, [:import_users] => :environment do |_task, args|
+    truncate = ActiveRecord::Base.connection.tables
+               .reject { |t| t == 'schema_migrations' }
+
+    # truncate users if we are going to import users
+    truncate = truncate.reject { |t| t == 'users' } unless args.import_users
+    truncate.each do |table|
       ActiveRecord::Base
         .connection.execute("TRUNCATE TABLE #{table} RESTART IDENTITY;")
     end

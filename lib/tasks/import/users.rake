@@ -1,8 +1,12 @@
 require 'csv'
 
 namespace :import do
-  task users: :environment do |_task, _args|
+  task :users, [:import_users] => :environment do |_task, args|
     Rails.logger.error "Missing users: #{filename}" unless filename
+    unless args.import_users
+      Rails.logger.error 'Users will not be imported'
+      next
+    end
 
     CSV.foreach(filename, headers: true) do |row|
       next if row.empty?
