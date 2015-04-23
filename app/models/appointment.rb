@@ -30,8 +30,8 @@ class Appointment < ActiveRecord::Base
   after_initialize :initialize_datetimes
 
   def initialize_datetimes
-    self.starts_at ||= Time.zone.now.beginning_of_day + 1.day
-    self.ends_at ||= Time.zone.now.beginning_of_day + 1.day
+    self.starts_at ||= Time.zone.now.beginning_of_day
+    self.ends_at ||= Time.zone.now.beginning_of_day
   end
 
   def appointment_time
