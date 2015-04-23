@@ -83,12 +83,10 @@ describe 'Authentication' do
           expect(current_path).to eq signin_path
         end
 
-        context 'for admin user' do
-          before { login_user(admin) }
+        it 'redirects admin user to signin path' do
+          login_user(admin)
 
-          it 'redirected to signin path' do
-            expect(current_path).to eq rails_admin_path + '/'
-          end
+          expect(current_path).to eq rails_admin_path + '/'
         end
 
         context 'for standard user' do
