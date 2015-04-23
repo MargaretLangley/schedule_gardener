@@ -4,8 +4,6 @@ exclude:
   - 'public/assets/*.css'
   - 'app/assets/stylesheets/generic.normalize.css'
   - 'tmp/rubycritic/assets/stylesheets/*.css'
-  - 'app/assets/stylesheets/custom.css.scss'
-  - 'app/assets/stylesheets/events.css.scss'
 
 #
 # Disable Linters
@@ -37,8 +35,6 @@ linters:
   ColorVariable:
     enabled: false
   HexNotation:
-    enabled: false
-  IdSelector:
     enabled: false
   SelectorDepth:
     enabled: false
