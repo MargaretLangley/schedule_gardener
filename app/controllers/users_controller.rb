@@ -18,10 +18,11 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new user_params
-    @user.save!
-    signed_in? ? create_another_user : new_user_signed_up
-    rescue ActiveRecord::RecordInvalid
+    if @user.save
+      signed_in? ? create_another_user : new_user_signed_up
+    else
       render :new
+    end
   end
 
   def create_another_user
@@ -37,18 +38,19 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update user_params
-    if editing_self
-      flash[:success] = 'Profile updated'
-      # if the account we are using changes, The remember token changes
-      # we then need to re-signin
-      sign_in_remember_session @user
-      render 'edit'
+    if @user.update user_params
+      if editing_self
+        flash[:success] = 'Profile updated'
+        # if the account we are using changes, The remember token changes
+        # we then need to re-signin
+        sign_in_remember_session @user
+        render 'edit'
+      else
+        redirect_to users_path, flash: { success: 'Updated User' }
+      end
     else
-      redirect_to users_path, flash: { success: 'Updated User' }
-    end
-    rescue ActiveRecord::RecordInvalid
       render :edit
+    end
   end
 
   def editing_self
