@@ -55,17 +55,19 @@ class AppointmentsController < ApplicationController
 
   def create
     @appointment = Appointment.new appointment_params
-    @appointment.save!
-    redirect_to appointments_path, flash: { success: 'appointment was successfully created.' }
-   rescue ActiveRecord::RecordInvalid
-     render :new
+    if @appointment.save
+      redirect_to appointments_path, flash: { success: 'appointment was successfully created.' }
+    else
+      render :new
+    end
   end
 
   def update
-    @appointment.update appointment_params
-    redirect_to appointments_path, flash: { success: 'appointment was successfully updated.' }
-    rescue ActiveRecord::RecordInvalid
+    if @appointment.update appointment_params
+      redirect_to appointments_path, flash: { success: 'appointment was successfully updated.' }
+    else
       render :edit
+    end
   end
 
   def destroy
