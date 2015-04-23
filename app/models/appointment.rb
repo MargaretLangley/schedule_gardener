@@ -23,14 +23,9 @@ class Appointment < ActiveRecord::Base
   belongs_to :appointee, class_name: 'Contact', foreign_key: 'appointee_id'
 
   validates :appointee, :contact, :starts_at, presence: true
-  validates_datetime :starts_at, after: :now, before: :this_date_next_year
-  validates_datetime :ends_at, on_or_after: :starts_at
-
-  # TODO: change date time validation to use only 1 datetime gem
-  # This code could replace the above and then remove validates_timeliness
-  # validates :starts_at, date: { after: proc { Time.zone.now },
-  #                               before: proc { Time.zone.now + 1.year } }
-  # validates :ends_at, date: { after_or_equal_to: :starts_at }
+  validates :starts_at, date: { after: proc { Time.zone.now },
+                                before: proc { Time.zone.now + 1.year } }
+  validates :ends_at, date: { after_or_equal_to: :starts_at }
 
   after_initialize :initialize_datetimes
 
