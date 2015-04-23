@@ -3,8 +3,8 @@
 #
 # A request for work
 #
-#  - TODO: not sure if we are entering a contract to do the work?
-#    - best guess is yes
+#  - From a gardener it is the intent to contact someone
+#  - From a client it is a request to be contacted
 #
 # == Schema Information
 #
