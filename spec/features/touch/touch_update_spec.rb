@@ -30,4 +30,15 @@ describe 'Touches#update' do
       should have_flash_success('Contact me was successfully updated.')
     end
   end
+
+  context 'invalid information' do
+    it 'errors' do
+      touch = FactoryGirl.create(:touch, :tomorrow, contact: user.contact)
+      visit edit_touch_path(touch)
+      fill_in 'Contact from', with: '1 Aug 2012'
+      click_on('Contact Me')
+
+      should have_content('error')
+    end
+  end
 end

@@ -13,20 +13,22 @@ class TouchesController < ApplicationController
 
   def create
     @touch = Touch.new touch_params
-    @touch.save!
-    redirect_to touches_path, flash: { success: 'Contact me was successfully created.' }
-   rescue ActiveRecord::RecordInvalid
-     render :new
+    if @touch.save
+      redirect_to touches_path, flash: { success: 'Contact me was successfully created.' }
+    else
+      render :new
+    end
   end
 
   def edit
   end
 
   def update
-    @touch.update touch_params
-    redirect_to touches_path, flash: { success: 'Contact me was successfully updated.' }
-    rescue ActiveRecord::RecordInvalid
+    if @touch.update touch_params
+      redirect_to touches_path, flash: { success: 'Contact me was successfully updated.' }
+    else
       render :edit
+    end
   end
 
   def destroy
