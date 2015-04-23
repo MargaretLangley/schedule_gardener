@@ -46,7 +46,7 @@ describe Contact do
       end
 
       it 'with bad format are invalid' do
-        should_not allow_value('foo@bar_baz.com').for(:email)
+        should_not allow_value('foobar_baz.com').for(:email)
       end
     end
   end
