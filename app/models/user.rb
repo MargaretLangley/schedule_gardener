@@ -32,7 +32,7 @@
 class User < ActiveRecord::Base
   has_one :contact, autosave: true, dependent: :destroy, inverse_of: :user
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }, on: :create, confirmation: true
+  validates :password, length: { minimum: 6 }, on: :create, confirmation: true
   before_save { generate_token(:remember_token) }
 
   delegate :appointments, :email, :first_name, :full_name, :home_phone, :role, :visits, to: :contact
