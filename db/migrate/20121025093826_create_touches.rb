@@ -1,15 +1,14 @@
 class CreateTouches < ActiveRecord::Migration
   def change
     create_table :touches do |t|
-      t.references :contact, null: false
-      t.boolean :by_phone
-      t.boolean :by_visit
+      t.belongs_to :contact, null: false, index: true
+      t.boolean :by_phone, null: true
+      t.boolean :by_visit, null: true
       t.datetime :touch_from, null: false
-      t.boolean :completed
+      t.boolean :completed, null: true
       t.text :additional_information
 
-      t.timestamps
+      t.timestamps null: false
     end
-    add_index :touches, :contact_id
   end
 end

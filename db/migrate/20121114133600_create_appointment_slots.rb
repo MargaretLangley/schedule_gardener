@@ -5,7 +5,7 @@ class CreateAppointmentSlots < ActiveRecord::Migration
       t.string :humanize_time, null: false
       t.integer :value, null: false
 
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end

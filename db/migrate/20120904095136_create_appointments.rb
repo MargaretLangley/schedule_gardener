@@ -1,15 +1,13 @@
 class CreateAppointments < ActiveRecord::Migration
   def change
     create_table :appointments do |t|
-      t.references :contact
-      t.references :appointee
+      t.belongs_to :contact, null: false, index: true
+      t.belongs_to :appointee, null: false, index: true
       t.datetime :starts_at, null: false
       t.datetime :ends_at, null: false
-      t.text :description
+      t.text :description, null: true
 
-      t.timestamps
+      t.timestamps null: false
     end
-    add_index :appointments, :contact_id
-    add_index :appointments, :appointee_id
   end
 end

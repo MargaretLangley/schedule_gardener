@@ -25,26 +25,28 @@ ActiveRecord::Schema.define(version: 20121114133600) do
     t.string   "address_line_2"
     t.string   "town",             null: false
     t.string   "post_code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
+
+  add_index "addresses", ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id", using: :btree
 
   create_table "appointment_slots", force: :cascade do |t|
     t.string   "time",          null: false
     t.string   "humanize_time", null: false
     t.integer  "value",         null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "appointments", force: :cascade do |t|
-    t.integer  "contact_id"
-    t.integer  "appointee_id"
+    t.integer  "contact_id",   null: false
+    t.integer  "appointee_id", null: false
     t.datetime "starts_at",    null: false
     t.datetime "ends_at",      null: false
     t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   add_index "appointments", ["appointee_id"], name: "index_appointments_on_appointee_id", using: :btree
@@ -58,17 +60,19 @@ ActiveRecord::Schema.define(version: 20121114133600) do
     t.string   "home_phone",             null: false
     t.string   "mobile"
     t.integer  "role",       default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "contacts", ["user_id"], name: "index_contacts_on_user_id", using: :btree
 
   create_table "gardens", force: :cascade do |t|
-    t.integer  "contact_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "contact_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
+
+  add_index "gardens", ["contact_id"], name: "index_gardens_on_contact_id", using: :btree
 
   create_table "rails_admin_histories", force: :cascade do |t|
     t.text     "message"
@@ -77,8 +81,8 @@ ActiveRecord::Schema.define(version: 20121114133600) do
     t.string   "table"
     t.integer  "month",      limit: 2
     t.integer  "year",       limit: 8
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   add_index "rails_admin_histories", ["item", "table", "month", "year"], name: "index_rails_admin_histories", using: :btree
@@ -90,8 +94,8 @@ ActiveRecord::Schema.define(version: 20121114133600) do
     t.datetime "touch_from",             null: false
     t.boolean  "completed"
     t.text     "additional_information"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "touches", ["contact_id"], name: "index_touches_on_contact_id", using: :btree
@@ -104,8 +108,8 @@ ActiveRecord::Schema.define(version: 20121114133600) do
     t.boolean  "email_verified",         default: false
     t.string   "verify_email_token"
     t.datetime "verify_email_sent_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
