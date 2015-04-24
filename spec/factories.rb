@@ -140,6 +140,7 @@ FactoryGirl.define do
       starts_at '2012-09-01 09:30:00'
       ends_at '2012-09-01 11:00:00'
     end
+
     trait :today_second_slot do
       starts_at '2012-09-01 11:30:00'
       ends_at '2012-09-01 13:00:00'
@@ -149,6 +150,7 @@ FactoryGirl.define do
       starts_at '2012-09-01 13:30:00'
       ends_at '2012-09-01 15:00:00'
     end
+
     trait :today_fourth_slot do
       starts_at '2012-09-01 15:30:00'
       ends_at '2012-09-01 17:00:00'
@@ -163,6 +165,12 @@ FactoryGirl.define do
       starts_at '2012-09-08 9:30:00'
       ends_at '2012-09-08 11:00:00'
     end
+
+    trait :next_month_first_slot do
+      starts_at '2012-10-01 9:30:00'
+      ends_at '2012-10-01 11:00:00'
+    end
+
 
     contact
     association :appointee, factory: :contact, first_name: 'Alan', last_name: 'Titmarsh', role: 'gardener'

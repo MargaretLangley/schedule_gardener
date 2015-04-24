@@ -18,13 +18,8 @@
       <% object.each do |appointment| %>
         <tr>
           <td><%= appointment.title %></td>
-          <% if current_gardener? %>
-          <td><%= appointment_client_home_phone_without_area_code(appointment) %></td>
-          <% else %>
-          <td><%= appointment_gardener_full_name(appointment) %></td>
-          <% end %>
-
-          <td><%= l appointment.starts_at, format: :short  %></td>
+          <td><%= meeting_information(appointment) %></td>
+          <td><%= minimum_time_info(appointment)  %></td>
           <td><%= link_to_edit(edit_appointment_path(appointment)) %></td>
           <td><%= link_to_delete(appointment) %></td>
         </tr>
