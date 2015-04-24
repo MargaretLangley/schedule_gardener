@@ -14,7 +14,7 @@ class TouchesController < ApplicationController
   def create
     @touch = Touch.new touch_params
     if @touch.save
-      redirect_to touches_path, flash: { success: 'Contact me was successfully created.' }
+      redirect_to touches_path, flash: { notice: 'Contact me was successfully created.' }
     else
       render :new
     end
@@ -25,7 +25,7 @@ class TouchesController < ApplicationController
 
   def update
     if @touch.update touch_params
-      redirect_to touches_path, flash: { success: 'Contact me was successfully updated.' }
+      redirect_to touches_path, flash: { notice: 'Contact me was successfully updated.' }
     else
       render :edit
     end
@@ -33,7 +33,7 @@ class TouchesController < ApplicationController
 
   def destroy
     @touch.destroy
-    redirect_to touches_path
+    redirect_to touches_path, flash: { alert: 'Contact Deleted!' }
   end
 
   private

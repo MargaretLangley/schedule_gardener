@@ -1,6 +1,6 @@
 RSpec::Matchers.define :have_flash_error do |expected|
   match do |actual|
-    expect(actual).to have_selector('div.alert.alert-alert', text: expected)
+    expect(actual).to have_selector('.alert.alert-danger', text: expected)
   end
 
   failure_message do |actual|
@@ -14,7 +14,7 @@ end
 
 RSpec::Matchers.define :have_flash_notice do |expected|
   match do |actual|
-    expect(actual).to have_selector('div.alert.alert-notice', text: expected)
+    expect(actual).to have_selector('.alert.alert-success', text: expected)
   end
 
   failure_message do |actual|
@@ -28,7 +28,7 @@ end
 
 RSpec::Matchers.define :have_flash_success do |expected|
   match do |actual|
-    expect(actual).to have_selector('div.alert.alert-success', text: expected)
+    expect(actual).to have_selector('.alert.alert-success', text: expected)
   end
 
   failure_message do |actual|

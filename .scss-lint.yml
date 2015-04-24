@@ -36,11 +36,7 @@ linters:
     enabled: false
   HexNotation:
     enabled: false
-  SelectorDepth:
-    enabled: false
   NameFormat:
     enabled: false
   PlaceholderInExtend:
-    enabled: false
-  QualifyingElement:
     enabled: false

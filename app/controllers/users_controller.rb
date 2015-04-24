@@ -26,12 +26,12 @@ class UsersController < ApplicationController
   end
 
   def create_another_user
-    redirect_to users_path, flash: { success: 'New User Created' }
+    redirect_to users_path, flash: { notice: 'New User Created' }
   end
 
   def new_user_signed_up
     sign_in_remember_session @user
-    redirect_to dashboard_path(@user), flash: { success: 'Welcome to Garden Care!' }
+    redirect_to dashboard_path(@user), flash: { notice: 'Welcome to Garden Care!' }
   end
 
   def edit
@@ -40,13 +40,13 @@ class UsersController < ApplicationController
   def update
     if @user.update user_params
       if editing_self
-        flash[:success] = 'Profile updated'
+        flash.now[:notice] = 'Profile updated'
         # if the account we are using changes, The remember token changes
         # we then need to re-signin
         sign_in_remember_session @user
         render 'edit'
       else
-        redirect_to users_path, flash: { success: 'Updated User' }
+        redirect_to users_path, flash: { notice: 'Updated User' }
       end
     else
       render :edit
@@ -59,7 +59,7 @@ class UsersController < ApplicationController
 
   def destroy
     User.find(params[:id]).destroy
-    redirect_to users_path, flash: { success: 'user destroyed.' }
+    redirect_to users_path, flash: { alert: 'User Deleted!.' }
   end
 
   private

@@ -56,7 +56,7 @@ class AppointmentsController < ApplicationController
   def create
     @appointment = Appointment.new appointment_params
     if @appointment.save
-      redirect_to appointments_path, flash: { success: 'appointment was successfully created.' }
+      redirect_to appointments_path, flash: { notice: 'appointment was successfully created.' }
     else
       render :new
     end
@@ -64,7 +64,7 @@ class AppointmentsController < ApplicationController
 
   def update
     if @appointment.update appointment_params
-      redirect_to appointments_path, flash: { success: 'appointment was successfully updated.' }
+      redirect_to appointments_path, flash: { notice: 'appointment was successfully updated.' }
     else
       render :edit
     end
@@ -72,7 +72,7 @@ class AppointmentsController < ApplicationController
 
   def destroy
     @appointment.destroy
-    redirect_to appointments_path
+    redirect_to appointments_path, flash: { alert: 'Appointment Deleted!' }
   end
 
   private

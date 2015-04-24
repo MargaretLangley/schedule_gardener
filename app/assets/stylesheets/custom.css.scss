@@ -48,12 +48,12 @@ textarea {
 /* Flash Messages - to correspond to bootstrap styling */
 
 /* :alert styled as bootstrap alert */
-div.alert.alert-alert {
+.alert.alert-alert {
   @extend .alert-danger;
 }
 
 /* :notice styled as bootstrap notice */
-div.alert.alert-notice {
+.alert.alert-notice {
   @extend .alert-info;
 }
 
