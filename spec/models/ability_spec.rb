@@ -112,13 +112,6 @@ describe 'abilities' do
 
       context 'another user' do
         it_should_behave_like 'can_manage_user', Ability.new(FactoryGirl.create(:user, :admin)), User.new
-        # it ("can show")     { should     be_able_to(:show, User.new) }
-        # it ("can new")      { should     be_able_to(:new, User.new) }
-        # it ("can create")   { should     be_able_to(:create, User.new) }
-        # it ("can edit")     { should     be_able_to(:edit, User.new) }
-        # it ("can update")   { should     be_able_to(:update, User.new) }
-        # it ("can destroy")  { should     be_able_to(:destroy, User.new) }
-        # it ("can manage")   { should     be_able_to(:manage, User.new) }
       end
     end
   end
