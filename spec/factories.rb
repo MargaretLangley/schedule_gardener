@@ -9,7 +9,6 @@ FactoryGirl.define do
     password_confirmation 'foobar'
 
     trait :admin do
-      admin true
       association :contact, :admin, strategy: :build
     end
 

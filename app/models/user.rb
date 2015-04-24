@@ -13,7 +13,6 @@
 #  id                     :integer          not null, primary key
 #  password_digest        :string(255)      not null
 #  remember_token         :string(255)
-#  admin                  :boolean          default(FALSE)
 #  password_reset_token   :string(255)
 #  password_reset_sent_at :datetime
 #  email_verified         :boolean          default(FALSE)
@@ -22,9 +21,6 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #
-
-# TODO: remove Roles - does not look attached to anything. Does not break a test
-# rubocop: disable Style/ConstantName
 
 # TODO: maybe remove not that important
 # rubocop: disable Style/MultilineBlockChain
@@ -37,8 +33,6 @@ class User < ActiveRecord::Base
 
   delegate :appointments, :email, :first_name, :full_name, :home_phone, :role, :visits, to: :contact
   accepts_nested_attributes_for :contact
-
-  Roles = %w(admin client gardner)
 
   def self.find_by_email(email)
     User.joins { contact }.where { (contacts.email.eq(email)) }.readonly(false).first

@@ -5,7 +5,6 @@
 #  id                     :integer          not null, primary key
 #  password_digest        :string(255)      not null
 #  remember_token         :string(255)
-#  admin                  :boolean          default(FALSE)
 #  password_reset_token   :string(255)
 #  password_reset_sent_at :datetime
 #  email_verified         :boolean          default(FALSE)
@@ -22,10 +21,6 @@ describe User do
 
   include_examples 'All Built Objects', User
 
-  context 'validate factory' do
-    it { should_not be_admin }
-  end
-
   context 'validations' do
     [:password].each do |validate_attr|
       it { should validate_length_of(validate_attr).is_at_least(6) }
@@ -35,11 +30,6 @@ describe User do
       user.password_confirmation = 'mismatched'
       should_not be_valid
     end
-  end
-
-  context '#toggle admin' do
-    before { user.toggle(:admin) }
-    it { should be_admin }
   end
 
   context '#authenticate' do
