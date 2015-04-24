@@ -81,9 +81,6 @@ describe Touch do
         expect(Touch.all).to eq [ann, john, roger]
       end
 
-      it 'all ordered' do
-        expect(Touch.all_ordered).to eq [roger, ann, john]
-      end
       it 'outstanding' do
         expect(Touch.outstanding).to eq [roger, ann, john]
       end
@@ -105,7 +102,6 @@ describe Touch do
         expect(Touch.all).to eq [john, ann, roger]
       end
 
-      it ('all ordered') { expect(Touch.all_ordered).to eq [ann, john, roger] }
       it ('outstanding') { expect(Touch.outstanding).to eq [ann, john, roger] }
     end
 
