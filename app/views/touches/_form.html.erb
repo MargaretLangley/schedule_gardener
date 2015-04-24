@@ -2,7 +2,7 @@
   <%= render 'shared/error_messages', object: f.object  %>
 
     <% if current_user.gardener? %>
-      <%= f.association :contact, label: 'Client', input_html: { class: 'col-md-6' }, collection: Contact.contacts_by_role('client'), label_method: 'first_name', include_blank: false %>
+      <%= f.association :contact, label: 'Client', input_html: { class: 'col-md-6' }, collection: Contact.contacts_by_role('client'), label_method: 'first_name', include_blank: 'Please select...' %>
       <%= f.input :by_phone, as: :boolean %>
       <%= f.input :by_visit, as: :boolean %>
     <% else %>

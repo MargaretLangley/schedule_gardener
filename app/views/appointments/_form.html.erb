@@ -9,7 +9,7 @@
       <% if current_user.gardener? %>
         <div class='form-group'>
           <%= f.association :contact, label: 'Client', collection: Contact.contacts_by_role('client'),
-          label_method: lambda { |contact| "#{contact.full_name} / #{number_to_phone_without_area_code(contact.home_phone)}" }, include_blank: false %>
+          label_method: lambda { |contact| "#{contact.full_name} / #{number_to_phone_without_area_code(contact.home_phone)}" }, include_blank: 'Please select...' %>
         </div>
       <% else %>
         <%= f.hidden_field :contact_id, value: current_user.contact.id %>
