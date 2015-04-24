@@ -11,6 +11,11 @@
  * file per style scope.
  *
  *= require bootstrap-datepicker
- *= require_tree .
+ *= require generic.box-sizing
+ *= require generic.normalize
+ *= require base.list
+ *= require base.typography
+ *= require custom
+ *= require events
  *= require_self
  */
