@@ -1,6 +1,6 @@
 <div class='row'>
   <div class='col-md-6 col-md-offset-3'>
-    <%= simple_form_for @appointment, html: { class: 'form-horizontal' } do |f| %>
+    <%= simple_form_for appointment, html: { class: 'form-horizontal' } do |f| %>
       <%= render 'shared/error_messages', object: f.object  %>
       <div class='form-group'>
         <%= f.association :appointee, label: 'Gardener', collection: Contact.contacts_by_role('gardener'), label_method: 'first_name', include_blank: false %>
@@ -41,5 +41,3 @@
     <% end %>
   </div>  <!-- col-md-6 col-md-offset-3 -->
 </div>  <!-- row -->
-<%= debug ('starts' + @appointment.inspect) unless Rails.env.production? %>
-
