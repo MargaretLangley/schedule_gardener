@@ -32,7 +32,6 @@ body {
      argument to go for rem (size of font relative to html element) */
 }
 
-
 section {
   overflow: auto;
 }
@@ -41,25 +40,6 @@ textarea {
   resize: vertical;
 }
 
-/* typography */
-
-h1 {
-  text-align: center;
-}
-
-h2 {
-  color: $grayLight;
-  text-align: center;
-}
-
-h3 {
-  @extend h2;
-}
-
-p {
-  font-size: 1.1em;
-  line-height: 1.7em;
-}
 
 /* Nav bar  see also colour overrides at the top of scss*/
 .icon-leaf.icon-white { vertical-align: 5px; }

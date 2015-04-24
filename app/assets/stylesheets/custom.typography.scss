@@ -1,0 +1,28 @@
+//
+// Overrides basic typography
+//   - basic typography concerns itself with sizing
+//   - this provides the 'skin of the application'
+
+
+//
+// TODO: colour mixin
+//
+$grayLight: purple;
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  color: $grayLight;
+  text-align: center;
+}
+
+h3 {
+  @extend h2;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}

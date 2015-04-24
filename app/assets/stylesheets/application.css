@@ -16,6 +16,7 @@
  *= require base.list
  *= require base.typography
  *= require custom
+ *= require custom.typography
  *= require events
  *= require_self
  */
