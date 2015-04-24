@@ -10,15 +10,13 @@
     <%= favicon_link_tag 'icons/favicon.png' if Rails.env.production?  %>
   </head>
   <body>
-
-
-  <%= render 'layouts/navigation' %>
-  <%= render 'layouts/messages' %>
-    <div class='container'>
+    <header>
+      <%= render 'layouts/navigation' %>
+    </header>
+    <main class='container' role='main'>
+      <%= render 'layouts/messages' %>
       <%= yield %>
       <%= render 'layouts/footer' %>
-      <%= debug(params) unless Rails.env.production?  %>
-      <%= debug(Rails.env) unless Rails.env.production? | true %>
-    </div><!--</container>-->
+    </main>
   </body>
 </html>
