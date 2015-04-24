@@ -1,0 +1,137 @@
+
+/*----------------------------------------------------------------------------*\
+
+  $COLORS
+
+  Defined colors
+
+  $COLORSCHEME
+
+  Color schemes only reside in this colors file.
+  Variables that are used in the application should be
+  expressed in terms of the colour scheme where appropriate.
+
+  Colors from:
+  http://paletton.com/#uid=43w0Z0krWE7hbNgmGHXBHy3BFoJ
+  Chose triad and added darker variant .... maybe should calculate it?
+
+  Color naming hexidecimal from:
+  http://chir.ag/projects/name-that-color/
+
+\*----------------------------------------------------------------------------*/
+
+@import 'settings.globals';
+
+
+
+
+/*----------------------------------------------------------------------------*\
+
+
+  $PALLET COLORS
+
+  The list of colors used in the application.
+
+\*----------------------------------------------------------------------------*/
+
+// scss-lint:disable SpaceAfterComma, SpaceBetweenParens
+
+// Primary color, Blue, and shades
+$color-primary-shade-0:        rgba( 34, 125, 190, 1);    // $color-mariner
+$color-primary-shade-1:        rgba(107, 171, 216, 1);    // $color-danube
+$color-primary-shade-2:        rgba( 67, 145, 201, 1);    // $color-Shakespeare
+$color-primary-shade-3:        rgba(  8, 103, 169, 1);    // $color-bahama-blue
+$color-primary-shade-4:        rgba(  6,  77, 126, 1);    // $color-venice-blue
+
+// Secondary Color 1, Yellow, and shades
+$color-secondary-shade-0:      rgba(255, 236,  32, 1);    // $color-broom
+$color-secondary-shade-1:      rgba(255, 243, 118, 1);    // $color-paris-daisy
+$color-secondary-shade-2:      rgba(255, 240,  74, 1);    // $color-gorse
+$color-secondary-shade-3:      rgba(255, 233,   0, 1);    // $color-turbo
+$color-secondary-shade-4:      rgba(197, 180,   0, 1);    // $color-buddha-gold
+
+
+// Secondary Color 2 (calling tenary otherwise too close a name), Red/Pink
+$color-ternary-shade-0:        rgba(232,  30, 101 ,1);    // $color-amaranth
+$color-ternary-shade-1:        rgba(241, 112, 158 ,1);    // $color-froly
+$color-ternary-shade-2:        rgba(236,  69, 128, 1);    // $color-french-rose
+$color-ternary-shade-3:        rgba(225,   0,  80, 1);    // $color-razzmatazz
+$color-ternary-shade-4:        rgba(173,   0,  61, 1);    // $color-shiraz
+
+
+// Complimentary color, Orange
+$color-complimentary-shade-0:  rgba(255, 158,  32, 1);     // $color-tree-poppy
+$color-complimentary-shade-1:  rgba(255, 195, 118, 1);     // $color-macaroni-and-cheese
+$color-complimentary-shade-2:  rgba(255, 176,  74, 1);     // $color-yellow-orange
+$color-complimentary-shade-3:  rgba(255, 144,   0, 1);     // $color-pizass
+$color-complimentary-shade-4:  rgba(197, 111,   0, 1);     // $color-indochine
+
+
+//
+// Neutral Colors
+//
+
+// Whites
+$color-white:                  white;
+$color-alabaster:              rgba(248, 248, 248, 1);      // off-white
+$color-cream:                  rgba(255, 255, 204, 1);      // ffffcc Cream
+
+
+// Greys
+$color-grey-alto:              rgba(220, 220, 220, 1);      // Pale Grey Gainsbro
+$color-silver-chalice:         rgba(170, 170, 170, 1);      // Light Grey
+$color-silver-chalice-opaque:  rgba(170, 170, 170, .85);
+$color-boulder:                rgba(119, 119, 119, 1);      // Medium Dark Grey
+$color-tundora:                rgba(68, 68, 68, 1);         // Very Dark Grey
+
+
+// Flash Colors
+$color-snowy-mint:             rgba(219, 255, 221, 1);      // Pale Green
+
+
+// Process these colors into pallet
+// -  Currently none!
+
+
+
+
+/*----------------------------------------------------------------------------*\
+
+
+  $COLORVARIABLES
+
+  Color variables are referenced throughout the application
+
+
+\*----------------------------------------------------------------------------*/
+
+
+$color-neutral:                       $color-alabaster;           // off white
+
+$color-line:                          $color-grey-alto;           // Very Pale Grey
+$color-line-print:                    black;                      // When printing out we want black
+$color-shadow:                        $color-silver-chalice;      // box-shadows on all the controls
+
+$transparent:                         transparent;
+
+//
+// $TYPOGRAPHY
+//
+$color-text-primary:                  $color-tundora;    // Very Dark Gray
+$color-text-faded:                    $color-boulder;    // Medium Gray
+$color-text-black:                    black;
+
+// Scheme
+//
+// Colors which work together.
+//
+// Contains
+// Contrasting Pairs 'Opposites'
+// - Given the palette color as background what should be the foreground?
+// - Given the palette color as foreground what should be the background?
+// Shadow color used for low-lighting, borders
+//
+
+// disabled
+$scheme-disabled-background:     $color-grey-alto;           // Very Pale Grey
+$scheme-disabled-foreground:     $color-text-primary;

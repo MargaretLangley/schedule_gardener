@@ -2,6 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+/* tables  */
+
+table {
+  table-layout: fixed;  /* makes columns line up with and without data */
+}
+
 .calendar {
   border-collapse: collapse;
   width: 100%;

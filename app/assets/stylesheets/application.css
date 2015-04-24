@@ -1,22 +1,64 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
+/**
+ *  InuitCSS Based Architecture
  *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *                    CATEGORIES
  *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any styles
- * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
- * file per style scope.
+ * SETTINGS ............. shared variables
+ * TOOLS ................ public mixins and helper functions
+ * GENERIC .............. Low specificity, far reaching
+ * BASE ................. Element styling
+ * CUSTOM ............... Designed pieces of UI
+ * TRUMPS ............... Overrides
+ * SHAME ................ Any
  *
- *= require bootstrap-datepicker
+ *                     CONTENT
+ *
+ * SETTINGS
+ * bootstrap ............ bootstrap variables.
+ * colors ............... Color variables.
+ * global ............... Globally-available variables and config.
+ *
+ * TOOLS
+ * no tools
+ *
+ * GENERIC
+ * box-sizing ........... Better default `box-sizing`.
+ * normalize.css ........ A level playing field.
+ *
+ * BASE
+ * form ................. input, textarea
+ * list ................. ul
+ * typography ........... H1–H6
+ *
+ * CUSTOM
+ * events ............... Calendar classes
+ * flash ................ User banner notifications
+ * footer ............... Customized footer
+ * form ................. Form classes and errors
+ * page ................. body
+ * spacing .............. line-spacers, spacer
+ * typography ........... text modifiers
+ *
+ * TRUMPS
+ * no trumps ............. Nothing
+ *
+ * SHAME
+ * no shame ............. Any CSS which you can not find place for.
+ *
+ *
  *= require generic.box-sizing
  *= require generic.normalize
+ *= require base.form
  *= require base.list
  *= require base.typography
- *= require custom
+ *= require custom.events
+ *= require custom.flash
+ *= require custom.form
+ *= require custom.footer
+ *= require custom.page
+ *= require custom.spacing
  *= require custom.typography
- *= require events
+ *= require bootstrap-datepicker
  *= require_self
  */

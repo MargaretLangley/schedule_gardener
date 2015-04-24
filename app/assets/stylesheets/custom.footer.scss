@@ -1,0 +1,32 @@
+@import 'settings.colors';
+
+/* footer */
+
+footer {
+  border-top: 1px solid $color-line;
+  color: $color-text-faded;
+  margin-top: 3%;
+  padding-top: 5px;
+
+  a {
+    color: $color-text-faded;
+
+    &:hover {
+      color: $color-text-primary;
+    }
+  }
+
+  small {
+    float: left;
+  }
+
+  ul {
+    float: right;
+    list-style: none;
+
+    li {
+      float: left;
+      margin-left: 1em;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+// Flash Messages
+//
+//  - to correspond to bootstrap styling
+//    - extends bootstrap V.3 classes .alert-info and .alert-danger
+//  - Conforms to Rails's two message forms
+//    - notice
+//    - alert
+
+@import 'settings.bootstrap';
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+
+// notice
+.alert.alert-notice {
+  @extend .alert-info;
+}
+
+// alert
+.alert.alert-alert {
+  @extend .alert-danger;
+}
