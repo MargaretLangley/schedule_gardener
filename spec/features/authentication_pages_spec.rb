@@ -75,24 +75,24 @@ describe 'Authentication' do
       end
 
       context 'admin area' do
-        before do
-          visit rails_admin_path
-        end
-
         it 'redirected to signin path' do
+          visit rails_admin_path
+
           expect(current_path).to eq signin_path
         end
 
         it 'redirects admin user to signin path' do
+          visit rails_admin_path
           login_user(admin)
 
           expect(current_path).to eq rails_admin_path + '/'
         end
 
         context 'for standard user' do
-          before { login_user(user) }
-
           it 'redirected to root path' do
+            visit rails_admin_path
+            login_user(user)
+
             expect(current_path).to eq root_path
           end
         end
@@ -101,11 +101,11 @@ describe 'Authentication' do
   end # visit signin page
 
   context 'guests visits a protected page without signin' do
-    before do
+    it 'forwards to the requested (protected) start page' do
       visit edit_profile_path(user)
       visit_signin_and_login(user)
-    end
 
-    it ('forwards to the requested (protected) start page') { expect(current_path).to eq edit_profile_path(user) }
+      expect(current_path).to eq edit_profile_path(user)
+    end
   end
 end
