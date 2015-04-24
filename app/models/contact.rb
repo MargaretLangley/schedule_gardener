@@ -21,6 +21,7 @@
 #
 
 class Contact < ActiveRecord::Base
+  enum role: { client: 0, gardener: 1, admin: 2 }
   belongs_to :user, inverse_of: :contact
   has_one :address,  autosave: true, dependent: :destroy, as: :addressable
   accepts_nested_attributes_for :address
@@ -33,7 +34,6 @@ class Contact < ActiveRecord::Base
   validates :first_name, :last_name, length: { maximum: 50 }
   validates :email, allow_blank: true, email_format: true
 
-  before_validation :set_default
   before_save :before_save
 
   def full_name
@@ -57,17 +57,14 @@ class Contact < ActiveRecord::Base
   end
 
   def self.contacts_by_role(role)
-    Contact.where { contacts.role == role }.order { 'contacts.first_name ASC' }
+    Contact.where('role = ?', Contact.roles[role])
+      .order ( 'contacts.first_name ASC')
   end
 
   private
 
   def strip_none_numeric(phone_number_string)
     phone_number_string.gsub(/\D/, '')
-  end
-
-  def set_default
-    self.role ||= 'client'
   end
 
   def before_save

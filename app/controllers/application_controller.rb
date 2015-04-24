@@ -38,11 +38,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_admin?
-    current_user && current_user.role == 'admin'
+    current_user && current_user.admin?
   end
 
   def current_gardener?
-    current_user && current_user.role == 'gardener'
+    current_user && current_user.gardener?
   end
 
   # Authenticated users continue using application

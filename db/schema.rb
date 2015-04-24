@@ -51,13 +51,13 @@ ActiveRecord::Schema.define(version: 20121114133600) do
   add_index "appointments", ["contact_id"], name: "index_appointments_on_contact_id", using: :btree
 
   create_table "contacts", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.string   "first_name", null: false
+    t.integer  "user_id",                null: false
+    t.string   "first_name",             null: false
     t.string   "last_name"
     t.string   "email"
-    t.string   "home_phone", null: false
+    t.string   "home_phone",             null: false
     t.string   "mobile"
-    t.string   "role",       null: false
+    t.integer  "role",       default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

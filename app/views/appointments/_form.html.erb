@@ -6,7 +6,7 @@
         <%= f.association :appointee, label: 'Gardener', collection: Contact.contacts_by_role('gardener'), label_method: 'first_name', include_blank: false %>
       </div>
 
-      <% if current_user.role == 'gardener' %>
+      <% if current_user.gardener? %>
         <div class='form-group'>
           <%= f.association :contact, label: 'Client', collection: Contact.contacts_by_role('client'),
           label_method: lambda { |contact| "#{contact.full_name} / #{number_to_phone_without_area_code(contact.home_phone)}" }, include_blank: false %>

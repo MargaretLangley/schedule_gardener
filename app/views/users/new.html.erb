@@ -38,7 +38,7 @@
         <div class='col-xs-5  col-sm-3  col-md-5'>
           <%= f.button :submit, value: 'Create account', class: 'btn  btn-primary' %>
         </div>
-        <% if current_user && current_user.role == 'gardener' %>
+        <% if current_user && current_user.gardener? %>
           <div class='col-xs-5  col-sm-3  col-md-3'>
             <%= link_to 'Cancel', appointments_path, class: 'btn  btn-danger' %>
           </div>

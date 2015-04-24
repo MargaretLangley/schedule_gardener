@@ -121,17 +121,6 @@ describe 'abilities' do
         # it ("can manage")   { should     be_able_to(:manage, User.new) }
       end
     end
-
-    context 'unexpected role' do
-      subject { unexpected_ability }
-
-      it 'causes exception' do
-        contact = FactoryGirl.create(:contact, role: 'unexpected')
-        expect { Ability.new(FactoryGirl.create(:user, contact: contact)) }
-          .to raise_error(RuntimeError,
-                          'Missing Role: unexpected in Ability#initialize')
-      end
-    end
   end
 
   describe 'Appointment' do

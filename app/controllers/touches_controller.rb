@@ -4,7 +4,7 @@ class TouchesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    if current_user.role == 'gardener'
+    if current_user.gardener?
       @touches = Touch.outstanding
     else
       @touches = Touch.outstanding_by_contact(current_user.contact)

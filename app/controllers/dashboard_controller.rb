@@ -5,7 +5,7 @@ class DashboardController < ApplicationController
 
   def show
     @user = current_user
-    if current_user.role == 'gardener'
+    if current_user.gardener?
       @touches = Touch.outstanding
     else
       @touches = Touch.outstanding_by_contact(current_user.contact)

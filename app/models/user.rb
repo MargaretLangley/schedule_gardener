@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6 }, on: :create, confirmation: true
   before_save { generate_token(:remember_token) }
 
-  delegate :appointments, :email, :first_name, :full_name, :home_phone, :role, :visits, to: :contact
+  delegate :admin?, :appointments, :email, :first_name, :full_name, :gardener?, :home_phone, :role, :visits, to: :contact
   accepts_nested_attributes_for :contact
 
   def self.find_by_email(email)

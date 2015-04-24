@@ -26,7 +26,7 @@ class Ability
 
     else
       # All Registered users
-      Rails.logger.debug 'user role is:' + user.role.to_s
+      Rails.logger.debug 'user role is:' + user.role
 
       can [:show, :create, :update], User, id: user.id
       can [:manage], [Appointment, Touch], contact_id: user.contact.id

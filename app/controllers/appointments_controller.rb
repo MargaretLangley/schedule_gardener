@@ -10,7 +10,7 @@ class AppointmentsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @appointments = current_user.visits if current_user.role == 'gardener'
+    @appointments = current_user.visits if current_user.gardener?
     @appointments = @appointments.in_time_range(time_range_from_params_or_session).order('starts_at ASC')
   end
 
