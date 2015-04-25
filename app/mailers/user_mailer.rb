@@ -1,3 +1,7 @@
+#
+# UserMailer
+#  - email users - about password resets
+#
 class UserMailer < ActionMailer::Base
   default from: "robot.gardener@#{Rails.application.secrets.DOMAIN}"
 

@@ -1,6 +1,10 @@
+#
+# PasswordResetsController
+#   - managing a user getting a new password to log in.
+#
 # TODO_002: remove this disable
 # rubocop:  disable  Metrics/MethodLength
-
+#
 class PasswordResetsController < ApplicationController
   def new
     @password_reset = PasswordReset.new

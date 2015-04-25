@@ -1,3 +1,9 @@
+#
+# DateAndTimeRange
+#  - wraps up datetime range
+#    - written for usage with appointments
+#
+#
 class DateAndTimeRange
   attr_accessor :end, :start
 

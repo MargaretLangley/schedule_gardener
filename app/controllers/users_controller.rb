@@ -1,3 +1,7 @@
+#
+# UsersController
+#  - manage users within the application
+#
 class UsersController < ApplicationController
   before_action :guest_redirect_to_signin_path,   except: [:new, :create]
   check_authorization

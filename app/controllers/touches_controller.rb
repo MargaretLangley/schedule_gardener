@@ -1,3 +1,9 @@
+#
+# TouchesController
+#
+#   - managing requests for 'Contact Me'
+#   - touch is word used in models, 'Contact Me' is for the user.
+#
 class TouchesController < ApplicationController
   before_action :guest_redirect_to_signin_path
   check_authorization

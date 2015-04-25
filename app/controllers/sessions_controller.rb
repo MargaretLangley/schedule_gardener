@@ -1,7 +1,14 @@
+#
+# SessionsController
+#  - Signing in and out of the application
+#
 class SessionsController < ApplicationController
   def new
   end
 
+  #
+  # Sign in
+  #
   def create
     # Passes the emails from the sessions hash
     user = User.find_by_email(params[:session][:email])
@@ -14,6 +21,9 @@ class SessionsController < ApplicationController
     end
   end
 
+  #
+  # Sign out
+  #
   def destroy
     sign_out_forget_session
     redirect_to root_path
