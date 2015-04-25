@@ -1,3 +1,7 @@
+# CalendarHelper
+#
+#   - write out the event's calendar table and classes
+#
 module CalendarHelper
   def calendar(date = Time.zone.today, &block)
     Calendar.new(self, date, block).table

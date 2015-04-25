@@ -18,7 +18,7 @@
           <td><%= touch.by_phone? ? 'Yes' : 'No' %></td>
           <td><%= touch.by_visit? ? 'Yes' : 'No' %></td>
           <td><%= l touch.touch_from  %></td>
-          <td><%= number_to_phone_without_area_code(touch.home_phone) %></td>
+          <td><%= phone_without_area_code(touch.home_phone) %></td>
           <td><%= link_to_edit(edit_touch_path(touch)) %></td>
           <td><%= link_to_delete(touch) %></td>
         </tr>
