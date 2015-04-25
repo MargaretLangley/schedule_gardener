@@ -6,44 +6,36 @@
 # Community follow on from RyanBate's original cancan
 # https://github.com/CanCanCommunity/cancancan
 #
+#
+# Authorizing Controller Actions
+#  - most requests are authorized see link for more information
+# https://github.com/CanCanCommunity/cancancan/wiki/authorizing-controller-actions
+#
+#
 # See also:
 # GoRails Video: 20-authorization-with-cancancan
-#
-# TODO_004: remove these
-# rubocop: disable Metrics/MethodLength
-# rubocop: disable Style/UnlessElse
 #
 class Ability
   include CanCan::Ability
 
   #
-  # user - the current_user
+  # initialize called for any request that requires authorization
+  #   - most requests are authorized
+  # user - the controller's current_user
   #
   def initialize(user)
-    unless user
-      # Guest
-      Rails.logger.debug 'user role is guest'
-      can [:create], [User]
-
-    else
-      # All Registered users
+    if user
+      # All Authenticated users
       Rails.logger.debug 'user role is:' + user.role
 
-      can [:show, :create, :update], User, id: user.id
-      can [:manage], [Appointment, Touch], contact_id: user.contact.id
-      # Different Roles
-      case user.role
-      when 'client'
-        # nothing more to do
-      when 'gardener'
-        can :manage, [Appointment, Touch]
-        can [:read, :create, :update], User
-      when 'admin'
-        can :manage, :all
-        cannot :destroy, user, id: user.id
-      else
-        fail "Missing Role: #{user.role} in Ability#initialize"
-      end
+      merge Abilities::Authenticated.new(user)
+      merge Abilities::Gardener.new(user) if user.gardener?
+      merge Abilities::Admin.new(user) if user.admin?
+    else
+      # Guest users
+      Rails.logger.debug 'user role is guest'
+
+      merge Abilities::Guest.new(user)
     end
   end
 end
