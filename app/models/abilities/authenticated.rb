@@ -1,4 +1,10 @@
 module Abilities
+  #
+  # Authenticated
+  #  - authorization for authenticated users
+  #    - all users that login will get these abilities.
+  #  - part of CanCanCan abilities authorization - see ability.rb
+  #
   class Authenticated
     include CanCan::Ability
 
