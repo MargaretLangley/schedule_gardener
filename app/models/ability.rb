@@ -10,7 +10,8 @@
 # GoRails Video: 20-authorization-with-cancancan
 #
 # TODO_004: remove these
-# rubocop: disable Metrics/MethodLength, disable Style/UnlessElse
+# rubocop: disable Metrics/MethodLength
+# rubocop: disable Style/UnlessElse
 #
 class Ability
   include CanCan::Ability
