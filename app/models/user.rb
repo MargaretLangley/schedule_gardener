@@ -22,9 +22,6 @@
 #  updated_at             :datetime
 #
 
-# TODO_005: maybe remove not that important
-# rubocop: disable Style/MultilineBlockChain
-
 class User < ActiveRecord::Base
   has_one :contact, autosave: true, dependent: :destroy, inverse_of: :user
 
@@ -49,11 +46,12 @@ class User < ActiveRecord::Base
   def self.search_ordered(search = nil)
     if search
       like_search =  "%#{search}%"
-      User.joins { contact }.where do
+      users = User.joins { contact }.where do
         (contacts.first_name =~ like_search) |
-          (contacts.last_name =~ like_search) | (contacts.first_name.op('||', ' ').op('||', contacts.last_name) =~ like_search) |
-          (contacts.home_phone =~ like_search)
-      end.order { 'contacts.first_name ASC' }
+        (contacts.last_name =~ like_search) | (contacts.first_name.op('||', ' ').op('||', contacts.last_name) =~ like_search) |
+        (contacts.home_phone =~ like_search)
+      end
+      users.order { 'contacts.first_name ASC' }
     else
       User.joins { contact }.order('contacts.first_name ASC')
     end
