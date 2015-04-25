@@ -23,7 +23,6 @@
 
 class Touch < ActiveRecord::Base
   belongs_to :contact
-  delegate :full_name, :home_phone, to: :contact
 
   validates :contact, presence: true
   validates :touch_from,
@@ -31,6 +30,8 @@ class Touch < ActiveRecord::Base
                     before: proc { Time.zone.now + 1.year },
                     message: 'We can contact you from today. Please choose a date which can be today or in the future.' }
   validate :touch_by_method_must_be_selected
+
+  delegate :full_name, :home_phone, to: :contact
 
   after_initialize :initialize_record
 

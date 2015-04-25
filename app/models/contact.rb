@@ -24,13 +24,14 @@ class Contact < ActiveRecord::Base
   enum role: { client: 0, gardener: 1, admin: 2 }
   belongs_to :user, inverse_of: :contact
   has_one :address,  autosave: true, dependent: :destroy, as: :addressable
-  accepts_nested_attributes_for :address
   has_many :gardens, dependent: :destroy
   has_many :appointments, -> { order('appointments.starts_at ASC') }, dependent: :destroy
   has_many :touches
   has_many :visits, -> { order('appointments.starts_at ASC') }, class_name: 'Appointment', foreign_key: 'appointee_id', dependent: :destroy
 
-  validates :first_name, :home_phone, :role, presence: true
+  accepts_nested_attributes_for :address
+
+  validates :address, :first_name, :home_phone, :role, :user, presence: true
   validates :first_name, :last_name, length: { maximum: 50 }
   validates :email, allow_blank: true, email_format: true
 

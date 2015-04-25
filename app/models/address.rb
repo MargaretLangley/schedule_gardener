@@ -1,3 +1,7 @@
+#
+# Address
+#   - the information in a home address
+#
 # == Schema Information
 #
 # Table name: addresses
@@ -16,12 +20,8 @@
 #
 
 class Address < ActiveRecord::Base
-  # Does not allow you to validate id and type, probably a bug
-  # validates  :addressable_id, :addressable_type, presence: true
-
-  validates :street_number, presence: true
-  validates :street_name, presence: true
-  validates :town, presence: true, length: { maximum: 50 }
-
   belongs_to :addressable, polymorphic: true
+
+  validates :street_number, :street_name, presence: true
+  validates :town, presence: true, length: { maximum: 50 }
 end
