@@ -50,7 +50,8 @@ describe Touch do
         touch.by_visit = false
         touch.valid?
 
-        expect(touch.errors[:by_phone]).to include('You have to select a way to contact us. Either choose by phone or by visit.')
+        expect(touch.errors[:how_to_contact_missing])
+          .to include('- select a way to contact us. Choose by phone or by visit.')
       end
     end
     describe 'when arranging to be contacted' do
@@ -58,13 +59,15 @@ describe Touch do
         touch.touch_from = '2012/08/31'
         touch.valid?
 
-        expect(touch.errors[:touch_from]).to include('We can contact you from today. Please choose a date which can be today or in the future.')
+        expect(touch.errors[:touch_from])
+          .to include('from today - please choose a date which can be today or in the future.')
       end
       it 'if arranging in the distant future' do
         touch.touch_from = '2013/09/02'
         touch.valid?
 
-        expect(touch.errors[:touch_from]).to include('We can contact you within a year. Please choose a date within a year from today.')
+        expect(touch.errors[:touch_from])
+          .to include('within a year - please choose a date within a year from today.')
       end
     end
   end

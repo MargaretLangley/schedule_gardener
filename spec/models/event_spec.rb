@@ -15,5 +15,5 @@
 require 'spec_helper'
 
 describe Event do
-  # TODO: Do we need this and if so what tests?
+  # TODO_006: Do we need this and if so what tests?
 end

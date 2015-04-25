@@ -5,6 +5,10 @@
 #
 #  - From a gardener it is the intent to contact someone
 #  - From a client it is a request to be contacted
+#  - Contact is from today
+#    - contact date only important if you do not want to be contacted immediately
+#      - we expect most contacts to be from today
+#    - cf Appointments which need time and should feedback if set in past
 #
 # == Schema Information
 #
@@ -26,9 +30,8 @@ class Touch < ActiveRecord::Base
 
   validates :contact, presence: true
   validates :touch_from,
-            date: { after_or_equal_to: proc { Time.zone.now },
-                    before: proc { Time.zone.now + 1.year },
-                    message: 'We can contact you from today. Please choose a date which can be today or in the future.' }
+            date: { after_or_equal_to: proc { Time.zone.now.beginning_of_day },
+                    before: proc { Time.zone.now + 1.year } }
   validate :touch_by_method_must_be_selected
 
   delegate :full_name, :home_phone, to: :contact
@@ -52,6 +55,6 @@ class Touch < ActiveRecord::Base
   end
 
   def touch_by_method_must_be_selected
-    errors.add(:by_phone, 'You have to select a way to contact us. Either choose by phone or by visit.')  unless self.by_phone? || self.by_visit?
+    errors.add(:how_to_contact_missing, '- select a way to contact us. Choose by phone or by visit.')  unless self.by_phone? || self.by_visit?
   end
 end

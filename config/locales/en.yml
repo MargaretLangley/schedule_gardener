@@ -175,6 +175,10 @@
     models:
       touch: Contact Me
     attributes:
+      touch:
+        contact: Client
+        touch_from: Contact
+
       user:
         password_digest: "Password"
     errors:
@@ -190,9 +194,8 @@
         touch:
           attributes:
             touch_from:
-              on_or_after:  'We can contact you from today. Please choose a date which can be today or in the future.'
-              before: 'We can contact you within a year. Please choose a date within a year from today.'
-
+              after_or_equal_to: 'from today - please choose a date which can be today or in the future.'
+              before: 'within a year - please choose a date within a year from today.'
   date:
     formats:
       default: ! '%d/%m/%Y'

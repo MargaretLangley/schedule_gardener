@@ -22,7 +22,7 @@
 #  updated_at             :datetime
 #
 
-# TODO: maybe remove not that important
+# TODO_005: maybe remove not that important
 # rubocop: disable Style/MultilineBlockChain
 
 class User < ActiveRecord::Base

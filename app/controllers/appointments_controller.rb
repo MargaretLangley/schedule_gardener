@@ -3,6 +3,9 @@
 #   - Management of appointments
 #     - Where an appointment is a client arranging a time, slot, with a gardener
 #
+# TODO_007: Appointment should have ID and be used in appointments
+#           redirect messages to give specific information.
+#
 class AppointmentsController < ApplicationController
   before_action :guest_redirect_to_signin_path
   helper_method :active_nav?

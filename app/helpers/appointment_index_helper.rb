@@ -1,9 +1,20 @@
+#
+# AppointmentIndexHelper
+#   - Cleaning the Appointment Index View code
+#
 module AppointmentIndexHelper
+  #
+  # Gardeners and Clients need different meeting information
+  #   - gardeners given phone number
+  #   - clients given name of gardener
+  #
+  # appointment - the created appointment object between client and gardener
+  #
   def meeting_information appointment
     if current_gardener?
-      appointment_client_home_phone_without_area_code(appointment)
+      number_to_phone_without_area_code(appointment.contact.home_phone)
     else
-      appointment_gardener_full_name(appointment)
+      appointment.appointee.full_name
     end
   end
 

@@ -9,7 +9,7 @@
 # See also:
 # GoRails Video: 20-authorization-with-cancancan
 #
-# TODO: remove these
+# TODO_004: remove these
 # rubocop: disable Metrics/MethodLength, disable Style/UnlessElse
 #
 class Ability
