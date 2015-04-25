@@ -1,12 +1,9 @@
-# TODO_003: remove this
-# rubocop: disable Style/StructInheritance
-
 module CalendarHelper
   def calendar(date = Time.zone.today, &block)
     Calendar.new(self, date, block).table
   end
 
-  class Calendar < Struct.new(:view, :date, :callback)
+  Calendar = Struct.new(:view, :date, :callback) do
     HEADER = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday)
     START_DAY = :sunday
 
