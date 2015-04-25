@@ -19,7 +19,6 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
-
 class Contact < ActiveRecord::Base
   enum role: { client: 0, gardener: 1, admin: 2 }
   belongs_to :user, inverse_of: :contact

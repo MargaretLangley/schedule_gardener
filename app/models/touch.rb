@@ -24,7 +24,6 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #
-
 class Touch < ActiveRecord::Base
   belongs_to :contact
 

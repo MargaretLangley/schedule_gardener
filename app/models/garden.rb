@@ -13,7 +13,6 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
-
 class Garden < ActiveRecord::Base
   belongs_to :contact
   has_one :address, autosave: true, dependent: :destroy, as: :addressable

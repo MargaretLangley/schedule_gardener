@@ -21,7 +21,6 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #
-
 class User < ActiveRecord::Base
   has_one :contact, autosave: true, dependent: :destroy, inverse_of: :user
 

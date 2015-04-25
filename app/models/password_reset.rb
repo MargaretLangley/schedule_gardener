@@ -1,4 +1,8 @@
-
+#
+# PasswordReset
+#  - model for password reset functionality
+#
+#
 class PasswordReset
   include ActiveAttr::Model
 
