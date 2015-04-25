@@ -18,7 +18,7 @@ task export:  :environment do
   CSV.open('import_data/contacts.csv', 'w') do |csv|
     csv << Contact.attribute_names
     Contact.all.each do |contact|
-      csv << contact.attributes.values
+      csv << contact.attributes.merge('role' => contact.role).values
     end
   end
 
