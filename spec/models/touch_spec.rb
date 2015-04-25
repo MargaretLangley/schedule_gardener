@@ -33,7 +33,7 @@ describe Touch do
       it ('has empty information') { expect(new_touch.additional_information).to eq ''   }
       it ('completed not be nil') { expect(new_touch.completed).to_not be_nil  }
       it ('not completed')     { expect(new_touch.completed).to eq false  }
-      it ('be valid') do
+      it 'be valid' do
         new_touch.by_phone = true
         expect(new_touch).to be_valid
       end
