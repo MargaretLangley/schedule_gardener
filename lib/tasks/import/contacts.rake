@@ -6,6 +6,7 @@ namespace :import do
 
     CSV.foreach(contacts_file, headers: true) do |row|
       next if row.empty?
+
       Contact.create!(row.to_hash)
     end
   end
