@@ -1,3 +1,7 @@
+#
+# DashboardController
+#  - the gardening 'lowdown' - what is import to know
+#
 class DashboardController < ApplicationController
   before_action :guest_redirect_to_signin_path
   check_authorization
