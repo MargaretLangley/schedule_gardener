@@ -25,7 +25,7 @@ task export:  :environment do
   CSV.open('import_data/users.csv', 'w') do |csv|
     csv << User.attribute_names
     User.all.each do |user|
-      csv << user.attributes.values
+      csv << user.attributes.merge('remember_token' => nil).values
     end
   end
 
