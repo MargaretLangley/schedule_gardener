@@ -6,6 +6,11 @@
   <% end %>
 </td>
 <td>
+  <% if can? :new, :masquerade, user %>
+    <%= link_to 'Masquerade', new_user_masquerade_path(user) %>
+  <% end %>
+</td>
+<td>
   <% if  can? :destroy, user %>
     <%= link_to_delete(user) %>
   <% end %>

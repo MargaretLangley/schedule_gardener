@@ -185,4 +185,38 @@ describe 'abilities' do
       end
     end
   end
+
+  describe 'Masquerade' do
+    context 'client role' do
+      subject { client_ability }
+      it 'cannot new masquerade' do
+        should_not be_able_to(:new, :masquerade)
+      end
+      it 'can destroy masquerade' do
+        should be_able_to(:destroy, :masquerade)
+      end
+    end
+
+    context 'gardener role' do
+      subject { gardener_ability }
+
+      it 'cannot new masquerade' do
+        should_not be_able_to(:new, :masquerade)
+      end
+      it 'can destroy masquerade' do
+        should be_able_to(:destroy, :masquerade)
+      end
+    end
+
+    context 'admin role' do
+      subject { admin_ability }
+
+      it 'can new masquerade' do
+        should be_able_to(:new, :masquerade)
+      end
+      it 'can destroy masquerade' do
+        should be_able_to(:destroy, :masquerade)
+      end
+    end
+  end
 end

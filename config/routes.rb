@@ -9,7 +9,11 @@ Rails.application.routes.draw do
   post '/signup',                to: 'users#create'
   get '/settings/profile/:id',  to: 'users#edit',  as: :edit_profile
   patch '/settings/profile/:id',  to: 'users#update', as: :update_profile
-  resources :users, only: [:index, :destroy]
+  resources :users, only: [:index, :destroy] do
+    resources :masquerades, only: [:new]
+  end
+
+  get '/endmasquerade', to: 'masquerades#destroy', via: :delete
 
   get '/signin',                to: 'sessions#new'
   post '/signin',                to: 'sessions#create'

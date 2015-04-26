@@ -60,6 +60,11 @@ class ApplicationController < ActionController::Base
     redirect_to signin_path, notice: 'Please sign in.'
   end
 
+  def masquerading?
+    session[:masked_id].present?
+  end
+  helper_method :masquerading?
+
   rescue_from CanCan::AccessDenied do |exception|
     logger.debug "CanCan::AccessDenied Controller: #{exception.subject.class} Action: #{exception.action}"
     sign_out_forget_session
