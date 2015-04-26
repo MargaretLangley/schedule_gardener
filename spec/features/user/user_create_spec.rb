@@ -73,6 +73,7 @@ describe 'users#create' do
       visit signup_path
 
       fill_in 'First name',       with: 'Example'
+      fill_in 'Last name',        with: 'Example'
       fill_in 'Email',            with: 'user@example.com'
       fill_in 'Password',         with: 'foobar'
       fill_in 'Confirm password', with: 'foobar'

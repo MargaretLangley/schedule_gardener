@@ -11,7 +11,7 @@
 #  id         :integer          not null, primary key
 #  user_id    :integer          not null
 #  first_name :string(255)      not null
-#  last_name  :string(255)
+#  last_name  :string(255)      not null
 #  email      :string(255)
 #  home_phone :string(255)      not null
 #  mobile     :string(255)
@@ -30,7 +30,7 @@ class Contact < ActiveRecord::Base
 
   accepts_nested_attributes_for :address
 
-  validates :address, :first_name, :home_phone, :role, :user, presence: true
+  validates :address, :first_name, :last_name, :home_phone, :role, :user, presence: true
   validates :first_name, :last_name, length: { maximum: 50 }
   validates :email, allow_blank: true, email_format: true
 

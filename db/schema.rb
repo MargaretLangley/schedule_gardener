@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20121114133600) do
   create_table "contacts", force: :cascade do |t|
     t.integer  "user_id",                null: false
     t.string   "first_name",             null: false
-    t.string   "last_name"
+    t.string   "last_name",              null: false
     t.string   "email"
     t.string   "home_phone",             null: false
     t.string   "mobile"
