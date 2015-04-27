@@ -33,6 +33,15 @@ FactoryGirl.define do
   #   - has_many visits
   #
   factory :contact do
+    user
+    first_name 'contact_trait_not_set'
+    last_name 'contact_trait_not_set'
+    email  { "#{first_name}.#{last_name}@example.com".downcase }
+    home_phone '0181-100-1001'
+    mobile '0701-200-2007'
+    role 'client'
+    association :address, strategy: :build
+
     trait :admin do
       first_name 'Alice'
       last_name 'Springs'
@@ -73,14 +82,6 @@ FactoryGirl.define do
       home_phone '0181-200-2002'
       role 'gardener'
     end
-
-    user
-    first_name 'contact_trait_not_set'
-    last_name 'contact_trait_not_set'
-    email  { "#{first_name}.#{last_name}@example.com".downcase }
-    home_phone '0181-100-1001'
-    mobile '0701-200-2007'
-    association :address, strategy: :build
   end
 
 
@@ -118,6 +119,15 @@ FactoryGirl.define do
   #   - belongs_to appointee  (class name contact)
   #
   factory :appointment do
+    contact
+    association :appointee, factory: :contact, first_name: 'Alan', last_name: 'Titmarsh', role: 'gardener'
+    starts_at '2012-09-01 09:30:00'
+    ends_at '2012-09-01 11:00:00'
+    description 'I am describing a new example event. For testing only.'
+
+    #
+    # contacts
+    #
     trait :client_a do
       association :contact, :client_a
     end
@@ -134,8 +144,9 @@ FactoryGirl.define do
       association :appointee, factory: :contact, first_name: 'Percy', last_name: 'Thrower', role: 'gardener'
     end
 
-    description 'I am describing a new example event. For testing only.'
-
+    #
+    # times
+    #
     trait :today_first_slot do
       starts_at '2012-09-01 09:30:00'
       ends_at '2012-09-01 11:00:00'
@@ -170,10 +181,6 @@ FactoryGirl.define do
       starts_at '2012-10-01 9:30:00'
       ends_at '2012-10-01 11:00:00'
     end
-
-
-    contact
-    association :appointee, factory: :contact, first_name: 'Alan', last_name: 'Titmarsh', role: 'gardener'
   end
 
 
@@ -182,8 +189,16 @@ FactoryGirl.define do
   #   - belongs_to contact
   #
   factory :touch do
+    association :contact, :client_a
+    # association :appointee, factory: :contact, first_name: 'Alan', last_name: 'Titmarsh', role: 'gardener'
     by_phone true
+    by_visit false
+    touch_from '2012-09-15'
+    completed false
 
+    #
+    # contacts
+    #
     trait :client_a do
       association :contact, :client_a
     end
@@ -196,6 +211,9 @@ FactoryGirl.define do
       association :contact, :client_r
     end
 
+    #
+    # times
+    #
     trait :today do
       touch_from '2012-09-01'
     end
@@ -211,8 +229,5 @@ FactoryGirl.define do
     trait :fortnight do
       touch_from '2012-09-15'
     end
-
-    association :contact, :client_a
-    touch_from '2012-09-15'
   end
 end
