@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20121114133600) do
 
   create_table "touches", force: :cascade do |t|
     t.integer  "contact_id",             null: false
+    t.integer  "appointee_id",           null: false
     t.boolean  "by_phone"
     t.boolean  "by_visit"
     t.datetime "touch_from",             null: false
@@ -98,6 +99,7 @@ ActiveRecord::Schema.define(version: 20121114133600) do
     t.datetime "updated_at",             null: false
   end
 
+  add_index "touches", ["appointee_id"], name: "index_touches_on_appointee_id", using: :btree
   add_index "touches", ["contact_id"], name: "index_touches_on_contact_id", using: :btree
 
   create_table "users", force: :cascade do |t|

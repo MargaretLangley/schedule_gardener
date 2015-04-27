@@ -47,6 +47,7 @@ class TouchesController < ApplicationController
   def touch_params
     params.require(:touch)
       .permit :additional_information,
+              :appointee_id,
               :between_end,
               :between_start,
               :completed,

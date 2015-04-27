@@ -19,8 +19,7 @@ describe Touch do
   before { Timecop.freeze(Time.zone.parse('1/9/2012 12:00')) }
 
   context 'new record' do
-    let!(:client_a) {  FactoryGirl.create(:contact, :client_a) }
-    subject(:new_touch) { Touch.new(contact: client_a) }
+    subject(:new_touch) { Touch.new }
 
     describe 'state' do
       it ('phone not be nil') { expect(new_touch.by_phone).to_not be_nil  }
@@ -33,15 +32,11 @@ describe Touch do
       it ('has empty information') { expect(new_touch.additional_information).to eq ''   }
       it ('completed not be nil') { expect(new_touch.completed).to_not be_nil  }
       it ('not completed')     { expect(new_touch.completed).to eq false  }
-      it 'be valid' do
-        new_touch.by_phone = true
-        expect(new_touch).to be_valid
-      end
     end
   end
 
   context 'invalid' do
-    let!(:client_a) {  FactoryGirl.create(:contact, :client_a) }
+    let!(:client_a) { FactoryGirl.create(:contact, :client_a) }
     subject(:touch) { FactoryGirl.create(:touch, by_phone: true, contact: client_a) }
 
     describe 'when asked to make appointment' do

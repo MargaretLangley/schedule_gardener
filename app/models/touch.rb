@@ -25,9 +25,10 @@
 #  updated_at             :datetime
 #
 class Touch < ActiveRecord::Base
-  belongs_to :contact
+  belongs_to :contact, class_name: 'Contact', foreign_key: 'contact_id'
+  belongs_to :appointee, class_name: 'Contact', foreign_key: 'appointee_id'
 
-  validates :contact, presence: true
+  validates :appointee, :contact, presence: true
   validates :touch_from,
             date: { after_or_equal_to: proc { Time.zone.now.beginning_of_day },
                     before: proc { Time.zone.now + 1.year } }

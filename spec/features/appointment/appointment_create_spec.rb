@@ -26,7 +26,7 @@ describe 'Appointments#create' do
 
     context 'with valid information' do
       it 'adds appointment' do
-        select 'Alan', from: 'appointment_appointee_id'
+        select 'Alan', from: 'Gardener'
 
         expect { click_on('Create Appointment') }
           .to change(Appointment, :count).by(1)
@@ -34,14 +34,14 @@ describe 'Appointments#create' do
 
       describe 'success' do
         it 'navigates to index' do
-          select 'Alan', from: 'appointment_appointee_id'
+          select 'Alan', from: 'Gardener'
           click_on('Create Appointment')
 
           expect(current_path).to eq appointments_path
         end
 
         it 'flashes success' do
-          select 'Alan', from: 'appointment_appointee_id'
+          select 'Alan', from: 'Gardener'
           click_on('Create Appointment')
 
           should have_flash_success ('appointment was successfully created.')
@@ -72,8 +72,8 @@ describe 'Appointments#create' do
 
     context 'with valid information' do
       before do
-        select 'Alan', from: 'appointment_appointee_id'
-        select 'Roger', from: 'appointment_contact_id'
+        select 'Alan', from: 'Gardener'
+        select 'Roger', from: 'Client'
       end
 
       it ('adds appointment') { expect { click_on('Create Appointment') }.to change(Appointment, :count).by(1) }

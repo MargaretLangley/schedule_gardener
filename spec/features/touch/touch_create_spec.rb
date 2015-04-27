@@ -8,6 +8,11 @@ describe 'Touches#create' do
     let(:user_r) do
       FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
     end
+    let!(:gardener_alan) do
+      gardener = FactoryGirl.create(:contact, :gardener_a)
+      FactoryGirl.create(:user, contact: gardener)
+    end
+
     before(:each) do
       visit_signin_and_login user_r
       visit new_touch_path
@@ -28,6 +33,7 @@ describe 'Touches#create' do
 
     context 'with valid information' do
       it 'adds touch' do
+        select 'Alan', from: 'Gardener'
         fill_in 'Contact from', with: '1 Oct 2012'
 
         expect { click_on('Contact Me') }.to change(Touch, :count).by(1)

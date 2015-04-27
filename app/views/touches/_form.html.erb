@@ -1,6 +1,6 @@
 <%= simple_form_for touch, html: { class: 'form-horizontal' } do |f| %>
   <%= render 'shared/error_messages', object: f.object  %>
-
+    <%= f.association :appointee, label: 'Gardener', collection: Contact.contacts_by_role('gardener'), label_method: 'first_name', include_blank: false %>
     <% if current_user.gardener? %>
       <%= f.association :contact, label: 'Client', input_html: { class: 'col-md-6' }, collection: Contact.contacts_by_role('client'), label_method: 'first_name', include_blank: 'Please select...' %>
       <%= f.input :by_phone, as: :boolean %>

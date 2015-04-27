@@ -190,7 +190,7 @@ FactoryGirl.define do
   #
   factory :touch do
     association :contact, :client_a
-    # association :appointee, factory: :contact, first_name: 'Alan', last_name: 'Titmarsh', role: 'gardener'
+    association :appointee, factory: :contact, first_name: 'Alan', last_name: 'Titmarsh', role: 'gardener'
     by_phone true
     by_visit false
     touch_from '2012-09-15'
