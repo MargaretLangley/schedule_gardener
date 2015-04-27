@@ -76,6 +76,11 @@
 #
 # Gem                     Using      Last tested   Gem Bug
 # byebug                  3.5.1            4.0.3         Y
+# rake                   10.1.0           10.4.2         Y   ARG parsing changes
+#
+# rake - arg parsing changes
+# rake made changes to arg parsing - I don't know if they are going to wind back
+# or if this sticks. Keeping this open for now.
 #
 
 source 'https://rubygems.org'
@@ -102,7 +107,7 @@ gem 'pg', '~> 0.18.0'
 gem 'simple_form', '~> 3.1.0'
 gem 'rails_admin', '~> 0.6.7'
 gem 'rails-i18n', '~> 4.0.0'
-gem 'rake', '~> 10.4.0'
+gem 'rake', '~> 10.1.0'
 gem 'sass-rails',   '~> 5.0.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'squeel', '~> 1.2.0'
