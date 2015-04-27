@@ -10,12 +10,54 @@ class AppointmentsController < ApplicationController
   before_action :guest_redirect_to_signin_path
   helper_method :active_nav?
   check_authorization
-  load_and_authorize_resource
+  authorize_resource
 
   def index
-    @appointments = current_user.visits if current_user.gardener?
-    @appointments = @appointments.in_time_range(time_range_from_params_or_session).order('starts_at ASC')
+    if current_user.gardener?
+      @appointments = current_user.visits
+    else
+      @appointments = current_user.appointments
+    end
+    @appointments = @appointments.in_time_range(time_range_from_params_or_session).order(starts_at: :asc)
   end
+
+  #
+  # new appointment
+  #   - start_at: the time an appointment begins.
+  #
+  def new
+    @appointment = Appointment.new(starts_at: params[:starts_at])
+  end
+
+  def create
+    @appointment = Appointment.new appointment_params
+    if @appointment.save
+      redirect_to appointments_path, flash: { notice: 'appointment was successfully created.' }
+    else
+      render :new
+    end
+  end
+
+  def edit
+    @appointment = Appointment.find params[:id]
+  end
+
+  def update
+    @appointment = Appointment.find params[:id]
+    if @appointment.update appointment_params
+      redirect_to appointments_path, flash: { notice: 'appointment was successfully updated.' }
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @appointment = Appointment.find params[:id]
+    @appointment.destroy
+    redirect_to appointments_path, flash: { alert: 'Appointment Deleted!' }
+  end
+
+  private
 
   def time_range_from_params_or_session
     initialize_nil_params_from_session
@@ -47,38 +89,6 @@ class AppointmentsController < ApplicationController
   def active_nav?(link)
     params[:nav] == link
   end
-
-  #
-  # new appointment
-  #   - start_at: the time an appointment begins.
-  #
-  def new
-    @appointment = Appointment.new(starts_at: params[:starts_at])
-  end
-
-  def create
-    @appointment = Appointment.new appointment_params
-    if @appointment.save
-      redirect_to appointments_path, flash: { notice: 'appointment was successfully created.' }
-    else
-      render :new
-    end
-  end
-
-  def update
-    if @appointment.update appointment_params
-      redirect_to appointments_path, flash: { notice: 'appointment was successfully updated.' }
-    else
-      render :edit
-    end
-  end
-
-  def destroy
-    @appointment.destroy
-    redirect_to appointments_path, flash: { alert: 'Appointment Deleted!' }
-  end
-
-  private
 
   def appointment_params
     params.require(:appointment)

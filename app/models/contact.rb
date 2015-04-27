@@ -63,7 +63,7 @@ class Contact < ActiveRecord::Base
 
   def self.contacts_by_role(role)
     Contact.where('role = ?', Contact.roles[role])
-      .order('contacts.first_name ASC')
+      .order(first_name: :asc)
   end
 
   private
