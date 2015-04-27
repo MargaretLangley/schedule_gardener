@@ -46,15 +46,9 @@ class Touch < ActiveRecord::Base
     self.completed ||= false
   end
 
-  def self.outstanding
-    Touch.joins { contact }.where { touches.completed == false }.order { 'touches.touch_from ASC, contacts.first_name ASC' }
-  end
-
-  def self.outstanding_by_contact(by_contact)
-    Touch.joins { contact }.where { (touches.completed == false) & (touches.contact_id == by_contact.id) }.order { 'touches.touch_from ASC, contacts.first_name ASC' }
-  end
-
   def touch_by_method_must_be_selected
     errors.add(:how_to_contact_missing, '- select a way to contact us. Choose by phone or by visit.')  unless self.by_phone? || self.by_visit?
   end
+
+  scope :outstanding, -> { where('completed = false') }
 end

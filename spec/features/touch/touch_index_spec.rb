@@ -33,13 +33,15 @@ describe 'Touches#index' do
   end
 
   context 'Gardener' do
-    touch_a = nil
+    touch = nil
     before do
-      user = FactoryGirl
-             .create(:user, contact: FactoryGirl.create(:contact, :gardener_a))
-      visit_signin_and_login user
+      gardener = FactoryGirl
+                 .create(:user, contact: FactoryGirl.create(:contact, :gardener_a)).contact
+      client = FactoryGirl
+               .create(:user, contact: FactoryGirl.create(:contact, :client_j)).contact
+      visit_signin_and_login gardener.user
 
-      touch_a = FactoryGirl.create(:touch, :client_j, :tomorrow, by_phone: true)
+      touch = FactoryGirl.create(:touch, :tomorrow, contact: client, appointee: gardener, by_phone: true)
       visit touches_path
     end
 
@@ -51,7 +53,7 @@ describe 'Touches#index' do
 
     it 'edits touch' do
       first(:link, 'Edit').click
-      expect(current_path).to eq edit_touch_path(touch_a)
+      expect(current_path).to eq edit_touch_path(touch)
     end
 
     it 'deletes touch' do

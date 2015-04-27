@@ -24,9 +24,14 @@ class Contact < ActiveRecord::Base
   belongs_to :user, inverse_of: :contact
   has_one :address,  autosave: true, dependent: :destroy, as: :addressable
   has_many :gardens, dependent: :destroy
-  has_many :appointments, -> { order('appointments.starts_at ASC') }, dependent: :destroy
-  has_many :touches
-  has_many :visits, -> { order('appointments.starts_at ASC') }, class_name: 'Appointment', foreign_key: 'appointee_id', dependent: :destroy
+
+  # Gardener
+  has_many :visits, -> { order(starts_at: :asc) }, class_name: 'Appointment', foreign_key: 'appointee_id', dependent: :destroy
+  has_many :calls, -> { order(touch_from: :asc) }, class_name: 'Touch', foreign_key: 'appointee_id', dependent: :destroy
+
+  # Client
+  has_many :appointments, -> { order(starts_at: :asc) }, foreign_key: 'contact_id', dependent: :destroy
+  has_many :touches, -> { order(touch_from: :asc) }, foreign_key: 'contact_id', dependent: :destroy
 
   accepts_nested_attributes_for :address
 

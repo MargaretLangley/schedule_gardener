@@ -11,9 +11,9 @@ class TouchesController < ApplicationController
 
   def index
     if current_user.gardener?
-      @touches = Touch.outstanding
+      @touches = current_user.calls.outstanding
     else
-      @touches = Touch.outstanding_by_contact(current_user.contact)
+      @touches = current_user.touches.outstanding
     end
   end
 

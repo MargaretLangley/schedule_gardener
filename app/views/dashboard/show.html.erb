@@ -14,9 +14,9 @@
   <div class='col-md-6 well'>
     <h2>Appointments</h2>
     <h2>Today</h2>
-    <%= render 'appointments/appointments_table', object: @user.contact.visits.in_time_range(Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)  %>
+    <%= render 'appointments/appointments_table', object: @appointments.in_time_range(Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)  %>
     <h2>Tomorrow</h2>
-    <%= render 'appointments/appointments_table', object: @user.contact.visits.in_time_range(Time.zone.now.beginning_of_day + 1.day ..Time.zone.now.end_of_day + 1.day) %>
+    <%= render 'appointments/appointments_table', object: @appointments.in_time_range(Time.zone.now.beginning_of_day + 1.day ..Time.zone.now.end_of_day + 1.day) %>
   </div>
   <article class='col-md-6 well'>
     <h2>Contact Me</h2>

@@ -67,42 +67,7 @@ describe Touch do
     end
   end
 
-  describe 'Custom finders - ordering' do
-    describe 'by date order' do
-      ann = john = roger = nil
-
-      before do
-        ann = FactoryGirl.create(:touch, :client_a, :next_week)
-        john = FactoryGirl.create(:touch, :client_j, :fortnight)
-        roger = FactoryGirl.create(:touch, :client_r, :tomorrow)
-
-        expect(Touch.all).to eq [ann, john, roger]
-      end
-
-      it 'outstanding' do
-        expect(Touch.outstanding).to eq [roger, ann, john]
-      end
-      it 'outstanding by contact' do
-        contact_john = Contact.find_by first_name: 'John'
-
-        expect(Touch.outstanding_by_contact(contact_john)).to eq [john]
-      end
-    end
-
-    describe 'by date then name' do
-      ann = john = roger = nil
-
-      before do
-        john = FactoryGirl.create(:touch, :client_j, :tomorrow)
-        ann = FactoryGirl.create(:touch, :client_a, :tomorrow)
-        roger = FactoryGirl.create(:touch, :client_r, :tomorrow)
-
-        expect(Touch.all).to eq [john, ann, roger]
-      end
-
-      it ('outstanding') { expect(Touch.outstanding).to eq [ann, john, roger] }
-    end
-
+  describe 'Custom finders' do
     describe 'return only outstanding' do
       ann = john =  nil
 
