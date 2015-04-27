@@ -14,9 +14,9 @@ class AppointmentsController < ApplicationController
 
   def index
     if current_user.gardener?
-      @appointments = current_user.visits
+      @appointments = current_user.visits.includes(:contact)
     else
-      @appointments = current_user.appointments
+      @appointments = current_user.appointments.includes(:contact)
     end
     @appointments = @appointments.in_time_range(time_range_from_params_or_session).order(starts_at: :asc)
   end

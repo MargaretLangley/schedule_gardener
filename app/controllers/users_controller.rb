@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @users = User.search_ordered(params[:search]).paginate(per_page: 10, page: params[:page])
+    @users = User.includes(:contact).search_ordered(params[:search]).paginate(per_page: 10, page: params[:page])
   end
 
   def show

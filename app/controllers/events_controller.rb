@@ -12,7 +12,10 @@ class EventsController < ApplicationController
   #
   def index
     @date = params[:date].blank? ? default_date : Date.parse(params[:date])
-    @appointments_by_date = @appointments.in_time_range(@date - 7.day..@date.end_of_month + 7.day).group_by { |appointment| appointment.starts_at.to_date }
+    @appointments_by_date = @appointments
+                            .includes(:contact)
+                            .in_time_range(@date - 7.day..@date.end_of_month + 7.day)
+                            .group_by { |appointment| appointment.starts_at.to_date }
   end
 
   def default_date

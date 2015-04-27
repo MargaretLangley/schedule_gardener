@@ -10,10 +10,10 @@ class DashboardController < ApplicationController
   def show
     @user = current_user
     if current_user.gardener?
-      @appointments = current_user.visits
+      @appointments = current_user.visits.includes(:contact)
       @touches = current_user.calls.outstanding
     else
-      @appointments = current_user.appointments
+      @appointments = current_user.appointments.includes(:contact)
       @touches = current_user.touches.outstanding
     end
   end
