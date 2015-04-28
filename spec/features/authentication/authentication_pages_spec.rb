@@ -11,20 +11,21 @@ describe 'Authentication' do
 
   subject { page }
 
-  context 'visit sigin page' do
-    before  do
+  describe 'visit sign_in page' do
+    it 'remains on sign_in' do
       visit signin_path
-    end
-
-    it 'remains on signin' do
       expect(current_path).to eq signin_path
     end
 
-    context 'visible' do
-      it ('has forgotten password link')   { should have_link('forgotten password?', href: new_password_reset_path) }
+    it 'has forgotten password link' do
+      visit signin_path
+      should have_link('forgotten password?', href: new_password_reset_path)
     end
 
-    context 'signin' do
+    describe 'sign_in' do
+      before  do
+        visit signin_path
+      end
       context 'succeeds' do
         context 'for standard user' do
           before { login_user(user) }
@@ -55,52 +56,23 @@ describe 'Authentication' do
         context 'for admin user' do
           before { login_user(admin) }
 
-          xit ('opens start page')      { expect(current_path).to eq dashboard_path(admin) }
+          it ('opens start page')      { expect(current_path).to eq dashboard_path(admin) }
         end
       end
 
-      context 'fails for all-users' do
-        before { click_button 'Sign in' }
+      context 'fails' do
+        before { fail_login_user }
 
-        it ('remains on signin page')       { expect(current_path).to eq signin_path }
+        it ('remains on sign_in page')      { expect(current_path).to eq signin_path }
         it ('has error banner')             { should have_flash_error('Invalid') }
         it ("has no 'full name' link")      { should_not have_link(user.full_name,   href: '#') }
         it ("has no 'Update Profile' link") { should_not have_link('Update Profile', href: edit_profile_path(user)) }
         it ("has no 'Sign out' link")       { should_not have_link('Sign out',       href: signout_path) }
-
-        describe 'after visiting another page' do
-          before { click_link 'logo' }
-          it ('has no error banner') { should_not have_content('Invalid') }
-        end
-      end
-
-      context 'admin area' do
-        it 'redirected to signin path' do
-          visit rails_admin_path
-
-          expect(current_path).to eq signin_path
-        end
-
-        it 'redirects admin user to signin path' do
-          visit rails_admin_path
-          login_user(admin)
-
-          expect(current_path).to eq rails_admin_path + '/'
-        end
-
-        context 'for standard user' do
-          it 'redirected to root path' do
-            visit rails_admin_path
-            login_user(user)
-
-            expect(current_path).to eq root_path
-          end
-        end
       end
     end
-  end # visit signin page
+  end # visit sign_in page
 
-  context 'guests visits a protected page without signin' do
+  context 'guests visits a protected page without sign_in' do
     it 'forwards to the requested (protected) start page' do
       visit edit_profile_path(user)
       visit_signin_and_login(user)
