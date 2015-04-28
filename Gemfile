@@ -151,6 +151,7 @@ group :development, :test do
   # Throwing exceptions when it hits breakpoints
   #
   gem 'byebug', '3.5.1'
+  gem 'mailcatcher', '~> 0.6.1', require: false
   gem 'rb-readline'
   gem 'rspec-rails', '~> 3.2.0'
   gem 'spring'

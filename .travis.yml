@@ -6,7 +6,7 @@ rvm:
   - "2.1.2"
 
 env:
-  - DB=postgresql HOST=localhost:3000 DOMAIN=test.example.com
+  - DB=postgresql HOST=localhost:1025 DOMAIN=test.example.com
 
 addons:
   postgresql: 9.3
@@ -17,6 +17,8 @@ before_script:
 script:
   - cp config/secrets.example.yml config/secrets.yml
   - bundle exec rake db:migrate
+  - gem instal mailcatcher
+  - mailcatcher
   - bundle exec xvfb-run rspec
   - bundle exec rake db:seed RAILS_ENV=test
 

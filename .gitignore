@@ -34,3 +34,5 @@ Procfile
 # posgres db dump
 schedule_gardener_development.dump
 pdrestore.dump
+# cap db:push generates these files
+db/schedule_gardener_development_*

@@ -29,3 +29,8 @@ Application for scheduling a gardener to come to a premise and garden.
 
 ### Database Setup
 3. `cap <environment> db:push`
+
+## 3. Test:
+
+Requires mailcatcher to be running:
+`mailcatcher &`

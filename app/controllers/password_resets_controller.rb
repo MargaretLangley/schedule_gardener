@@ -27,7 +27,7 @@ class PasswordResetsController < ApplicationController
 
   def password_reset_and_mail_sent(user)
     user.password_reset_token_and_password_sent_at_saved
-    UserMailer.password_reset(user).deliver
+    UserMailer.password_reset(user).deliver_now
   end
 
   def log_unknown_email(_email)
