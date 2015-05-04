@@ -121,20 +121,20 @@ gem 'will_paginate', '~> 3.0.0'
 #
 group :development do
   gem 'airbrussh', require: false
-  gem 'capistrano', '~> 3.4.0'
-  gem 'capistrano-bundler', '~> 1.1.3'
+  gem 'capistrano', '~> 3.4.0', require: false
+  gem 'capistrano-bundler', '~> 1.1.3', require: false
 
   #
   # Upgrading to 0.4.0 caused
   # createdb: database creation failed: ERROR:  permission denied to create
   gem 'capistrano-db-tasks', '0.3', require: false
-  gem 'capistrano-postgresql', '~> 4.2.0'
-  gem 'capistrano-rails', '~> 1.1.3'
-  gem 'capistrano-rails-console', '~> 0.5.0'
-  gem 'capistrano-rbenv', '~> 2.0.0'
-  gem 'capistrano-rails-collection', '~> 0.0.3'
-  gem 'capistrano-secrets-yml', '~> 1.0.0'
-  gem 'capistrano-unicorn-nginx', github: 'BCS-io/capistrano-unicorn-nginx'
+  gem 'capistrano-postgresql', '~> 4.2.0', require: false
+  gem 'capistrano-rails', '~> 1.1.3', require: false
+  gem 'capistrano-rails-console', '~> 0.5.0', require: false
+  gem 'capistrano-rbenv', '~> 2.0.0', require: false
+  gem 'capistrano-rails-collection', '~> 0.0.3', require: false
+  gem 'capistrano-secrets-yml', '~> 1.0.0', require: false
+  gem 'capistrano-unicorn-nginx', github: 'BCS-io/capistrano-unicorn-nginx', require: false
 end
 
 group :development do
