@@ -1,17 +1,21 @@
-# Load DSL and Setup Up Stages
-require 'capistrano/setup'
+
+# Capistrano Main Gem
 require 'capistrano/deploy'
-require 'capistrano/rbenv'
-require 'capistrano/bundler'
-require 'capistrano/rails'
-require 'capistrano/postgresql'
-require 'capistrano/unicorn_nginx'
-# rails rake tasks
-require 'capistrano/rails/collection'
-require 'capistrano-db-tasks'
-require 'capistrano/secrets_yml'
+require 'capistrano/setup'
+
+#
+# Capistrano gems
+#
 require 'airbrussh/capistrano'
+require 'capistrano/bundler'
+require 'capistrano-db-tasks'
+require 'capistrano/postgresql'
+require 'capistrano/rails'
+require 'capistrano/rails/collection'
 require 'capistrano/rails/console'
+require 'capistrano/rbenv'
+require 'capistrano/secrets_yml'
+require 'capistrano/unicorn_nginx'
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 Dir.glob('lib/capistrano/tasks/*.cap').each { |r| import r }
