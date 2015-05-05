@@ -105,6 +105,7 @@ gem 'jquery-rest-rails', '~> 1.0.0'
 gem 'lograge', '~> 0.3.0'
 gem 'pg', '~> 0.18.0'
 gem 'simple_form', '~> 3.1.0'
+gem 'rack-dev-mark', '~> 0.7.0'     # corner banner on staging environment
 gem 'rails_admin', '~> 0.6.7'
 gem 'rails-i18n', '~> 4.0.0'
 gem 'rake', '~> 10.1.0'
