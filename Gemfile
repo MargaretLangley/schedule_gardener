@@ -75,7 +75,7 @@
 # A list of Gems that if updated will break the application.
 #
 # Gem                     Using      Last tested   Gem Bug
-# byebug                  3.5.1            4.0.3         Y
+# capistrano-db-tasks     0.3.0            0.4.0         Y   Backup failed
 # rake                   10.1.0           10.4.2         Y   ARG parsing changes
 #
 # rake - arg parsing changes
@@ -147,11 +147,7 @@ group :development do
 end
 
 group :development, :test do
-  #
-  # BREAKING GEM
-  # Throwing exceptions when it hits breakpoints
-  #
-  gem 'byebug', '3.5.1'
+  gem 'byebug', '~> 4.0.0'
   gem 'mailcatcher', '~> 0.6.1', require: false
   gem 'rb-readline'
   gem 'rspec-rails', '~> 3.2.0'
