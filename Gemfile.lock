@@ -48,7 +48,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.3.8)
-    airbrussh (0.3.0)
+    airbrussh (0.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
     annotate (2.6.5)
       activerecord (>= 2.3.0)
@@ -73,9 +73,9 @@ GEM
     bootstrap-will_paginate (0.0.10)
       will_paginate
     builder (3.2.2)
-    bullet (4.14.4)
+    bullet (4.14.6)
       activesupport (>= 3.0.0)
-      uniform_notifier (>= 1.6.0)
+      uniform_notifier (~> 1.9.0)
     byebug (4.0.5)
       columnize (= 0.9.0)
     cancancan (1.10.1)
@@ -186,7 +186,7 @@ GEM
       thin (~> 1.5.0)
     mime-types (2.4.3)
     mini_portile (0.6.2)
-    minitest (5.6.0)
+    minitest (5.6.1)
     nested_form (0.3.2)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -298,7 +298,7 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (~> 1.1)
-    scss-lint (0.37.0)
+    scss-lint (0.38.0)
       rainbow (~> 2.0)
       sass (~> 3.4.1)
     sdoc (0.4.1)
@@ -363,7 +363,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    uniform_notifier (1.7.0)
+    uniform_notifier (1.9.0)
     web-console (2.1.2)
       activemodel (>= 4.0)
       binding_of_caller (>= 0.7.2)
@@ -379,7 +379,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_attr (~> 0.8.0)
-  airbrussh
+  airbrussh (~> 0.4.0)
   annotate (~> 2.6.0)
   bcrypt-ruby (~> 3.1.0)
   bootstrap-datepicker-rails (~> 1.4.0)
@@ -420,7 +420,7 @@ DEPENDENCIES
   rspec-rails (~> 3.2.0)
   rubocop (~> 0.30.0)
   sass-rails (~> 5.0.0)
-  scss-lint (~> 0.37.0)
+  scss-lint (~> 0.38.0)
   sdoc (~> 0.4.0)
   shoulda-matchers
   simple_form (~> 3.1.0)

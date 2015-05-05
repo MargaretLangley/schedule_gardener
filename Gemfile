@@ -122,7 +122,7 @@ gem 'will_paginate', '~> 3.0.0'
 group :development do
   gem 'capistrano', '~> 3.4.0', require: false
 
-  gem 'airbrussh', require: false
+  gem 'airbrussh', '~> 0.4.0', require: false
   gem 'capistrano-bundler', '~> 1.1.3', require: false
 
   #
@@ -143,7 +143,7 @@ group :development do
   gem 'bullet', '~>4.14.0'
   gem 'rails-erd', '~> 1.3.0'
   gem 'rubocop', '~> 0.30.0', require: false
-  gem 'scss-lint', '~> 0.37.0'
+  gem 'scss-lint', '~> 0.38.0'
 end
 
 group :development, :test do
