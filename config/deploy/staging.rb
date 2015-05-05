@@ -8,11 +8,11 @@
 set :stage, :staging
 set :branch, 'master'
 
-role :app, %w(deployer@10.0.0.35)
-role :web, %w(deployer@10.0.0.35)
-role :db,  %w(deployer@10.0.0.35)
+role :app, %w(deployer@10.0.0.32)
+role :web, %w(deployer@10.0.0.32)
+role :db,  %w(deployer@10.0.0.32)
 
-server '10.0.0.35', user: 'deployer', roles: %w(web app db), primary: true
+server '10.0.0.32', user: 'deployer', roles: %w(web app db), primary: true
 
 set :rails_env, :staging
 
