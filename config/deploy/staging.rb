@@ -19,4 +19,5 @@ set :rails_env, :staging
 #
 # Unicorn
 #
-set :nginx_server_name, 'letting-staging.local.bcs.io'
+# choose local prefixing an already owned domain
+set :nginx_server_name, 'garden.local.bcs.io'
