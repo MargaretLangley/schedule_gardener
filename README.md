@@ -10,12 +10,13 @@ Application for scheduling a gardener to come to a premise and garden.
 ## 1. Development environment:
 
 1. `git clone git@github.com:BCS-io/schedule_gardener.git  && cd schedule_gardener`
-2. `cp config/database.example.yml  config/database.yml`
+2. Install sql-lite if not present
+  * `sudo apt-get install libsqlite3-dev`
 3. `cp config/secrets.example.yml  config/secrets.yml`
   * update production variables
 4. `rake db:create && rake db:migrate`
 5. Add schedule gardener csv data to `import_data`
-  
+
   1\. `git clone git@bitbucket.org:bcsltd/schedule_gardener_import_data.git import_data`
   2\. `rake import`
 6. `rails s`
