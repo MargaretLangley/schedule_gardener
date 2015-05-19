@@ -35,3 +35,11 @@ Application for scheduling a gardener to come to a premise and garden.
 
 Requires mailcatcher to be running:
 `mailcatcher &`
+
+
+## 4. Backing up a database into CSV and saved onto remote repository:
+1. `cap <environment> db:pull`
+2. `rake export`
+3. `cd ./import_data`
+4. `git add . && git commit`
+5. `git push`
