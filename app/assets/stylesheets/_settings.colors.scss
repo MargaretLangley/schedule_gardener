@@ -59,13 +59,14 @@ $color-ternary-shade-3:        rgba(225,   0,  80, 1);    // $color-razzmatazz
 $color-ternary-shade-4:        rgba(173,   0,  61, 1);    // $color-shiraz
 
 
-// Complimentary color, Orange
-$color-complimentary-shade-0:  rgba(255, 158,  32, 1);     // $color-tree-poppy
+// Complimentary color, Orange/Brown
+$color-complimentary-shade-0:  rgba(140, 70, 70, 1);     // deep red brown
+/*$color-complimentary-shade-0:  rgba(255, 158,  32, 1);     // $color-tree-poppy
 $color-complimentary-shade-1:  rgba(255, 195, 118, 1);     // $color-macaroni-and-cheese
 $color-complimentary-shade-2:  rgba(255, 176,  74, 1);     // $color-yellow-orange
 $color-complimentary-shade-3:  rgba(255, 144,   0, 1);     // $color-pizass
 $color-complimentary-shade-4:  rgba(197, 111,   0, 1);     // $color-indochine
-
+*/
 
 //
 // Neutral Colors
@@ -104,6 +105,7 @@ $color-snowy-mint:             rgba(219, 255, 221, 1);      // Pale Green
 
 
 \*----------------------------------------------------------------------------*/
+$background:                  rgba(224, 238, 224, 1);      // pale green
 
 
 $color-neutral:                       $color-alabaster;           // off white
