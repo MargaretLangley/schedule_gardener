@@ -1,3 +1,4 @@
+@import 'settings.colors';
 //
 // Overrides basic typography
 //   - basic typography concerns itself with sizing
@@ -10,6 +11,7 @@
 $grayLight: purple;
 
 h1 {
+  color: $color-complimentary-shade-0;
   text-align: center;
 }
 
@@ -25,4 +27,9 @@ h3 {
 p {
   font-size: 1.1em;
   line-height: 1.7em;
+}
+
+img {
+  border: 3px solid;
+  color: $color-complimentary-shade-0;
 }

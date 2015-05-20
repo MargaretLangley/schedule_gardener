@@ -60,5 +60,6 @@
  *= require custom.spacing
  *= require custom.typography
  *= require bootstrap-datepicker
+ *= require flex
  *= require_self
  */

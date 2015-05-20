@@ -1,0 +1,35 @@
+.flex-container {
+  display: flex;
+
+  justify-content: center;
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+// Used between main 2 blocks to give a small space
+
+.flex-middle {
+  height: 100px;
+  width: 100px;
+}
+
+.flex-item {
+  height: 300px;
+  text-align: left;
+  width: 310px;
+}
+.flex-item2 {
+  height: 100px;
+  background-color: blue;
+  text-align: left;
+  width: 130px;
+}
+
+.article {
+  font-size: 16px;
+  height: 300px;
+  text-align: left;
+  width: 310px;
+}
