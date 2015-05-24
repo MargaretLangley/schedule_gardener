@@ -8,18 +8,20 @@
   <%= render 'shared/main_navigation' %>
 </div>
 
-<div class='row'>
-  <div class='col-md-6 well'>
+<div class='flex-container'>
+  <div class='article500'>
     <h2>Appointments</h2>
     <h2>Today</h2>
     <%= render 'appointments/appointments_table', object: @appointments.in_time_range(Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)  %>
     <h2>Tomorrow</h2>
     <%= render 'appointments/appointments_table', object: @appointments.in_time_range(Time.zone.now.beginning_of_day + 1.day ..Time.zone.now.end_of_day + 1.day) %>
   </div>
-  <article class='col-md-6 well'>
+
+  <div class = 'flex-middle'></div>
+
+  <article class='article650'>
     <h2>Contact Me</h2>
     <%= render 'touches/touches_table', object: @touches %>
   </article>
 
 </div>
-
