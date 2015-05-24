@@ -1,11 +1,20 @@
+// Static pages and sign in use .flex_container
+// They use layout/application & .flex_container
+// 3 column image, middle & article
+
 .flex-container {
   display: flex;
-
   justify-content: center;
-
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.flex-image {
+  height: 300px;
+  padding-top: 20px;
+  text-align: left;
+  width: 310px;
 }
 
 // Used between main 2 blocks to give a small space
@@ -15,28 +24,39 @@
   width: 100px;
 }
 
-.flex-image{
-  height: 300px;
-  padding-top: 20px;
-  text-align: left;
-  width: 310px;
-}
-
-.flex-item {
-  height: 300px;
-  text-align: left;
-  width: 310px;
-}
-.flex-item2 {
-  height: 100px;
-  background-color: blue;
-  text-align: left;
-  width: 130px;
-}
-
 .article {
   font-size: 16px;
   height: 300px;
   text-align: left;
   width: 310px;
 }
+
+
+
+/* We tell all items to be 100% width */
+.flex-header,
+.flex-nav,
+.flex-footer {
+  flex: 1 100%;
+}
+
+
+.flex-item {
+  height: 300px;
+  text-align: left;
+  width: 310px;
+}
+
+.flex400 {
+  height: 300px;
+  text-align: left;
+  width: 40%;
+}
+
+.flex-item2 {
+  background-color: blue;
+  height: 100px;
+  text-align: left;
+  width: 130px;
+}
+

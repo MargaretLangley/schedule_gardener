@@ -1,7 +1,8 @@
-
-
 <% provide(:title, "Forgot your password?") %>
-<h1>Forgot your password?</h1>
+
+<div class='flex-header'>
+  <h1>Forgot your password?</h1>
+<div>
 
 <%= simple_form_for @password_reset do |f| %>
 <%= render 'shared/error_messages', object: f.object  %>
