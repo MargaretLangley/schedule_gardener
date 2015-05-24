@@ -4,12 +4,37 @@
 
 @import 'settings.colors';
 
+/* Different flexistyles */
+/* Large */
 .flex-container {
   display: flex;
   justify-content: center;
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+/* Medium screens */
+@media all and (max-width: 800px) {
+  .flex-container {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* On small screens, we are no longer using row direction but column */
+@media all and (max-width: 500px) {
+  .flex-container {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-direction: column;
+  }
 }
 
 .flex-image {
@@ -36,6 +61,7 @@
 
 /* We tell all items to be 100% width */
 .flex-header,
+.flex-100pc,
 .flex-nav,
 .flex-footer {
   flex: 1 100%;
@@ -64,17 +90,15 @@
   width: 650px;
 }
 
-
 .flex-item {
   height: 300px;
   text-align: left;
   width: 310px;
 }
 
-.flex400 {
-  height: 300px;
+.flex50pc {
   text-align: left;
-  width: 40%;
+  width: 50%;
 }
 
 .flex-item2 {
@@ -84,3 +108,6 @@
   width: 130px;
 }
 
+.flex-side {
+  width: 25%;
+}
