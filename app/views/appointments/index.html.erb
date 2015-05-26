@@ -8,19 +8,21 @@
   <%= render 'shared/main_navigation' %>
 </div>
 
-<div class='row'>
+<div class='flex-container'>
 
-  <div class='col-md-3'>
+  <div class='flex1'>
     <% if current_gardener? %>
       <%= render 'nav_index' %>
     <% end %>
-    <p><img  src = '/images/appointments.jpg' /></p>
-  </div>  <!-- col-md-3 -->
+  </div>
 
-  <div class='col-md-9'>
+  <div class='flex2'>
    <%= render 'appointments_table', object: @appointments %>
    <%= link_to 'Create Appointment', new_appointment_path, class: 'btn btn-primary btn-lg' %>
-  </div> <!--col-md-9-->
-</div> <!--/row-->
+  </div>
+
+  <div class = 'flex-middle'></div>
+
+</div>
 
 <!-- <%= debug(@appointments) unless (Rails.env.production? ) %> -->
