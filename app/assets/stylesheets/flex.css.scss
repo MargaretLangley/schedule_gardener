@@ -4,20 +4,25 @@
 
 @import 'settings.colors';
 
-/* Different flexistyles */
-/* Large */
-.flex-container {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
 
-/* Medium screens */
-@media all and (max-width: 800px) {
+@media all{
+
   .flex-container {
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .flex1 { order: 1; }
+    .flex2 { order: 3; }
+    .flex-middle { order: 2; }
+  }
+
+  .flex-static {
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     list-style: none;
     margin: 0;
@@ -25,15 +30,37 @@
   }
 }
 
-/* On small screens, we are no longer using row direction but column */
-@media all and (max-width: 500px) {
+/* Medium screens  centralise column*/
+@media all and (max-width: 1100px) {
   .flex-container {
+    align-items: center;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     list-style: none;
     margin: 0;
     padding: 0;
+
+    .flex1 { order: 1; }
+    .flex2 { order: 2; }
+    .flex-middle { order: 3; }
+  }
+}
+
+/* On small screens, we are no longer using row direction but column */
+@media all and (max-width: 500px) {
+  .flex-container {
+    align-items: center;
+    display: flex;
     flex-direction: column;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .flex1 { order: 1; }
+    .flex2 { order: 2; }
+    .flex-middle { order: 3; }
   }
 }
 
@@ -47,8 +74,8 @@
 // Used between main 2 blocks to give a small space
 
 .flex-middle {
-  height: 100px;
-  width: 100px;
+  height: 5px;
+  width: 70px;
 }
 
 .article {
@@ -76,7 +103,14 @@
   padding: 0;
 }
 
-.article500 {
+.flex1 {
+  background-color: white;
+  font-size: 16px;
+  text-align: left;
+  width: 500px;
+}
+
+.flex2 {
   background-color: white;
   font-size: 16px;
   text-align: left;
