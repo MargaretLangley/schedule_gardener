@@ -121,6 +121,8 @@
 
 .flex1 {
   background-color: white;
+  border: 1px solid;
+  border-color: $color-complimentary-shade-0;
   font-size: 16px;
   text-align: left;
   width: 500px;
@@ -128,13 +130,18 @@
 
 .flex2 {
   background-color: white;
+  border: 1px solid;
+  border-color: $color-complimentary-shade-0;
   font-size: 16px;
   text-align: left;
   width: 500px;
 }
 
-.article650 {
+.article500 {
   background-color: white;
+  border: 1px solid;
+  border-color: $color-complimentary-shade-0;
+  border-radius: 20px;
   font-size: 16px;
   text-align: left;
   width: 650px;
