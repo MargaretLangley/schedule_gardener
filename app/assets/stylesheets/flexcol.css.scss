@@ -1,0 +1,104 @@
+@import 'settings.colors';
+
+.contain {
+  display: flexbox;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  flex: 1 100%;
+      flex-direction: row;
+
+}
+
+@mixin setcolumn {
+  padding-left: 20px;
+  height: 20px;
+  width: 100px;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -ms-flex: 1;
+  box-flex: 1;
+}
+
+/* Headings */
+.contain > .columnhead50 {
+  @include setcolumn;
+  background: white;
+  color: $color-text-black;
+  width: 50px;
+}
+
+.contain > .columnhead {
+  @include setcolumn;
+  background: white;
+  color: $color-text-black;
+}
+
+.contain > .columnhead150 {
+  @include setcolumn;
+  background: white;
+  color: $color-text-black;
+  width: 150px;
+}
+
+.contain > .columnhead200 {
+  @include setcolumn;
+  background: white;
+  color: $color-text-black;
+  width: 200px;
+}
+
+/* Column white background */
+.contain > .columna50 {
+  @include setcolumn;
+  background: $color-white;
+  color: $color-text-primary;
+  width: 50px;
+}
+.contain > .columna {
+  @include setcolumn;
+  background: $color-white;
+  color: $color-text-primary;
+}
+
+.contain > .columna150 {
+  @include setcolumn;
+  background: $color-white;
+  color: $color-text-primary;
+  width: 150px;
+}
+
+.contain > .columna200 {
+  @include setcolumn;
+  background: $color-white;
+  color: $color-text-primary;
+  width: 200px;
+}
+
+/* Column darker background */
+.contain > .columnb50 {
+  @include setcolumn;
+  background: $color-white;
+  color: $color-text-primary;
+  width: 50px;
+}
+
+.contain > .columnb {
+  @include setcolumn;
+  background: $color-white;
+  color: $color-text-primary;
+}
+
+.contain > .columnb150 {
+  @include setcolumn;
+  background: $color-white;
+  color: $color-text-primary;
+  width: 150px;
+}
+
+.contain > .columnb200 {
+  @include setcolumn;
+  background: $color-white;
+  color: $color-text-primary;
+  width: 200px;
+}

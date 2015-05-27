@@ -62,8 +62,8 @@ describe 'users#index' do
       let(:search_button) { 'go_search' }
 
       before do
-        expect(page).to have_selector('td', text: admin_first_name)
-        expect(page).to have_selector('td', text: user_first_name)
+        expect(page).to have_text(admin_first_name)
+        expect(page).to have_text(user_first_name)
       end
 
       context 'by name' do
@@ -71,8 +71,8 @@ describe 'users#index' do
           fill_in(search, with: admin_first_name)
           click_button(search_button)
         end
-        it ('returned matches') { expect(page).to have_selector('td', text: admin_first_name) }
-        it ('left unmatched') { expect(page).to_not have_selector('td', text: user_first_name) }
+        it ('returned matches') { expect(page).to have_text(admin_first_name) }
+        it ('left unmatched') { expect(page).to_not have_text(user_first_name) }
       end
 
       context 'by phone number' do
@@ -80,8 +80,8 @@ describe 'users#index' do
           fill_in(search, with: admin_home_phone[2, 5])
           click_button(search_button)
         end
-        it ('returned matches') { expect(page).to have_selector('td', text: admin_first_name) }
-        it ('left unmatched') { expect(page).to_not have_selector('td', text: user_first_name) }
+        it ('returned matches') { expect(page).to have_text(admin_first_name) }
+        it ('left unmatched') { expect(page).to_not have_text(user_first_name) }
       end
     end   # search
 

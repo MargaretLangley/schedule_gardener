@@ -61,5 +61,6 @@
  *= require custom.typography
  *= require bootstrap-datepicker
  *= require flex
+ *= require flexcol
  *= require_self
  */

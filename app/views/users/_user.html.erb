@@ -1,18 +1,21 @@
-<td><%= user.full_name %></td>
-<td><%= number_to_phone(user.home_phone) %></td>
-<td>
-  <% if can? :edit, user %>
-   <%= link_to_edit(edit_profile_path(user)) %>
-  <% end %>
-</td>
-<td>
-  <% if can? :new, :masquerade, user %>
-    <%= link_to 'Masquerade', new_user_masquerade_path(user) %>
-  <% end %>
-</td>
-<td>
-  <% if  can? :destroy, user %>
-    <%= link_to_delete(user) %>
-  <% end %>
-</td>
+ <div class='contain'>
 
+    <div class='columna200'><%= user.full_name %></div>
+    <div class='columna150'><%= number_to_phone(user.home_phone) %></div>
+    <div class='columna50'>
+      <% if can? :edit, user %>
+        <%= link_to_edit(edit_profile_path(user)) %>
+      <% end %>
+    </div>
+    <div class='columna50'>
+      <% if can? :new, :masquerade, user %>
+        <%= link_to 'Masquerade', new_user_masquerade_path(user) %>
+      <% end %>
+    </div>
+    <div class='columna50'>
+      <% if  can? :destroy, user %>
+        <%= link_to_delete(user) %>
+      <% end %>
+    </div>
+
+</div>
