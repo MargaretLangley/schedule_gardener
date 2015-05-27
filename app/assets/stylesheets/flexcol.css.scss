@@ -6,6 +6,8 @@
   display: -ms-flexbox;
   display: -webkit-box;
   flex: 1 100%;
+  justify-content: center;
+
 }
 
 @mixin setcolumn {
