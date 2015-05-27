@@ -31,7 +31,7 @@ class Touch < ActiveRecord::Base
   validates :appointee, :contact, presence: true
   validates :touch_from,
             date: { after_or_equal_to: proc { Time.zone.now.beginning_of_day },
-                    before: proc { Time.zone.now + 1.year } }
+                    before: proc { Time.zone.now + 1.year } }, on: :create
   validate :touch_by_method_must_be_selected
 
   delegate :full_name, :home_phone, to: :contact

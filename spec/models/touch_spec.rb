@@ -37,7 +37,7 @@ describe Touch do
 
   context 'invalid' do
     let!(:client_a) { FactoryGirl.create(:contact, :client_a) }
-    subject(:touch) { FactoryGirl.create(:touch, by_phone: true, contact: client_a) }
+    subject(:touch) { FactoryGirl.build(:touch, by_phone: true, contact: client_a) }
 
     describe 'when asked to make appointment' do
       it 'without a way to contact' do
