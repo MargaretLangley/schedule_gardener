@@ -1,11 +1,11 @@
 <% provide(:title, 'Update Profile') %>
 
-<div class='flex-header'>
+<div class = 'flex-header'>
   <h1>Update Profile</h1>
 <div>
 
-<div class='flex-form'>
-  <div class='article-form'>
+<div class = 'flex-form'>
+  <div class = 'article-form'>
 
     <%= simple_form_for(@user, html: {}, url: edit_profile_path(@user)) do |f| %>
       <%= render 'shared/error_messages', object: f.object  %>
@@ -21,10 +21,11 @@
         <div><%= c.input :home_phone %></div>
       <% end %>
 
-      <div>
-        <%= f.button :submit, value: 'Update Profile',class: 'btn  btn-primary' %>
-        <%= link_to 'Cancel', users_path, class: 'btn  btn-danger' %>
-      </div>
+      <div class = 'flex-form'>
+          <%= f.button :submit, value: 'Update Profile',class: 'flex-button-box  btn  btn-primary' %>
+          <%= link_to 'Cancel', users_path, class: 'flex-button-box  btn  btn-danger' %>
+      </div> <!-- flex-form -->
+
     <% end %>
 
   </div> <!-- article-form -->

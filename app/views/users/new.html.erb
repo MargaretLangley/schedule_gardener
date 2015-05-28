@@ -1,11 +1,11 @@
 <% provide(:title, 'Sign up') %>
 
-<div class='flex-header'>
+<div class ='flex-header'>
   <h1>Sign up</h1>
 <div>
 
-<div class='flex-form'>
-  <div class='article-form'>
+<div class ='flex-form'>
+  <div class ='article-form'>
 
     <%= simple_form_for @user, html: {}, url: :signup, method: :post do |f| %>
       <%= render 'shared/error_messages', object: f.object  %>
@@ -22,15 +22,13 @@
           <%= c.simple_fields_for :address do |address| %>
             <%= render partial: 'shared/address', locals: { f: address } %>
           <% end %>
-
           <div><%= c.input :home_phone %></div>
-
       <% end %>
 
-      <div>
-        <%= f.button :submit, value: 'Create account', class: 'btn  btn-primary' %>
+      <div class = 'flex-form'>
+        <%= f.button :submit, value: 'Create account', class: 'flex-button-box  btn  btn-primary' %>
         <% if current_user && current_user.gardener? %>
-            <%= link_to 'Cancel', appointments_path, class: 'btn  btn-danger' %>
+          <%= link_to 'Cancel', appointments_path, class: 'flex-button-box  btn  btn-danger' %>
         <% end %>
       </div>
     <% end %>
