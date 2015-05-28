@@ -36,6 +36,11 @@
     @include setflex;
     flex-direction: row;
   }
+
+  .flex-col {
+    @include setflex;
+    flex-direction: column;
+  }
 }
 
 /* Medium screens  centralise column*/
@@ -117,7 +122,7 @@
 }
 
 .flex1 {
-  background-color: white;
+  background-color: #F5F5F5;
   border: 1px solid;
   border-color: $color-complimentary-shade-0;
   font-size: 16px;
@@ -150,12 +155,6 @@
   width: 500px;
 }
 
-.flex-item {
-  height: 300px;
-  text-align: left;
-  width: 310px;
-}
-
 .flex50pc {
   text-align: left;
   width: 50%;
@@ -166,8 +165,4 @@
   height: 100px;
   text-align: left;
   width: 130px;
-}
-
-.flex-side {
-  width: 25%;
 }
