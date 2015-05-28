@@ -25,39 +25,13 @@
 }
 
   /* Headings */
-.columnhead50 {
+.columnhead {
   @include setcolumn;
   @include setcolor;
-  width: 50px;
-  }
-
-.columnhead150 {
-  @include setcolumn;
-  @include setcolor;
-  width: 150px;
-}
-
-.columnhead200 {
-  @include setcolumn;
-  @include setcolor;
-  width: 200px;
 }
 
 /* Column white background */
-.columna50 {
+.columna {
   @include setcolumn;
   @include setcolor;
-  width: 50px;
-}
-
-.columna150 {
-  @include setcolumn;
-  @include setcolor;
-  width: 150px;
-}
-
-.columna200 {
-  @include setcolumn;
-  @include setcolor;
-  width: 200px;
 }

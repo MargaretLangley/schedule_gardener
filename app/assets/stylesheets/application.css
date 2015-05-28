@@ -49,18 +49,20 @@
  *
  *= require generic.box-sizing
  *= require generic.normalize
+ *= require base.buttons
+ *= require base.flex
  *= require base.form
  *= require base.list
  *= require base.typography
  *= require custom.events
  *= require custom.flash
+ *= require custom.flexcol
  *= require custom.form
  *= require custom.footer
  *= require custom.page
  *= require custom.spacing
  *= require custom.typography
+ *= require custom.width
  *= require bootstrap-datepicker
- *= require flex
- *= require flexcol
  *= require_self
  */

@@ -17,16 +17,16 @@
       <% end %>
 </div>
 
-<div class='flex-single'>
-  <div class='article500'>
+<div class='flex-form'>
+  <div class='article  width500'>
 
     <br>
     <div class='contain'>
-        <div class='columnhead200'>Name</div>
-        <div class='columnhead150'>Phone</div>
-        <div class='columnhead50'>Edit</div>
-        <div class='columnhead50'>Actions</div>
-        <div class='columnhead50'></div>
+        <div class='columnhead  width200'>Name</div>
+        <div class='columnhead  width150'>Phone</div>
+        <div class='columnhead  width50'>Edit</div>
+        <div class='columnhead  width50'>Actions</div>
+        <div class='columnhead  width50'></div>
     </div>
 
     <% if @users.count > 0 %>
@@ -37,8 +37,9 @@
       <div colspan='4'><h2>No Matching Users</h2></div>
     <% end %>
     <%= will_paginate %>
-    <div class='clear-fix  form-group'>
-      <%= link_to 'Create User', signup_path, class: 'btn  btn-primary  btn-lg  spacer-left' %>
+    <div>
+      <%= link_to 'Create User', signup_path, class: 'button  butts' %>
     </div>
+    <br>
   </div><!-- article500 -->
 </div><!--flex-single-->

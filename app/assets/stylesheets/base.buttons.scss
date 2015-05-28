@@ -1,0 +1,42 @@
+//
+// Buttons
+//
+
+@import 'settings.colors';
+
+.flex-button-box {
+  margin-right: 50px;
+  width: 100px;
+}
+
+.butts {
+  background-color: $color-primary-shade-0;
+  color: white;
+}
+
+.butts:hover {
+  background-color: grey;
+  color: $color-primary-shade-0;
+}
+
+.cancel {
+  background-color: red;
+  color: white;
+}
+
+.cancel:hover {
+  background-color: grey;
+  color: red;
+}
+
+.button {
+  border: 1px solid grey;
+  border-radius: 8px;
+  font-family: Georgia, serif;
+  margin: 20px;
+  padding: 10px;
+}
+
+.button:active {
+  color: white;
+}

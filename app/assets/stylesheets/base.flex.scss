@@ -99,14 +99,6 @@
   width: 70px;
 }
 
-.article {
-  font-size: 16px;
-  height: 300px;
-  text-align: left;
-  width: 310px;
-}
-
-
 /* We tell all items to be 100% width */
 .flex-header,
 .flex-100pc,
@@ -142,14 +134,13 @@
   width: 500px;
 }
 
-.article500 {
+.article {
   background-color: white;
   border: 1px solid;
   border-color: $color-complimentary-shade-0;
   border-radius: 20px;
   font-size: 16px;
   text-align: left;
-  width: 500px;
 }
 
 .article-form {
