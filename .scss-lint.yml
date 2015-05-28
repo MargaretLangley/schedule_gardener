@@ -28,10 +28,6 @@ linters:
   SpaceBetweenParens:
     enabled: false
 
-
-#
-# Linters we want to Enable
-#
   ColorVariable:
     enabled: false
   HexNotation:
@@ -39,4 +35,6 @@ linters:
   NameFormat:
     enabled: false
   PlaceholderInExtend:
+    enabled: false
+  VendorPrefix:
     enabled: false

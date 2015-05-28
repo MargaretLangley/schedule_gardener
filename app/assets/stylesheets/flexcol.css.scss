@@ -7,7 +7,6 @@
   display: -webkit-box;
   flex: 1 100%;
   justify-content: center;
-
 }
 
 @mixin setcolumn {
@@ -20,85 +19,45 @@
   box-flex: 1;
 }
 
-/* Headings */
-.contain > .columnhead50 {
-  @include setcolumn;
+@mixin setcolor {
   background: white;
   color: $color-text-black;
+}
+
+  /* Headings */
+.columnhead50 {
+  @include setcolumn;
+  @include setcolor;
   width: 50px;
-}
+  }
 
-.contain > .columnhead {
+.columnhead150 {
   @include setcolumn;
-  background: white;
-  color: $color-text-black;
-}
-
-.contain > .columnhead150 {
-  @include setcolumn;
-  background: white;
-  color: $color-text-black;
+  @include setcolor;
   width: 150px;
 }
 
-.contain > .columnhead200 {
+.columnhead200 {
   @include setcolumn;
-  background: white;
-  color: $color-text-black;
+  @include setcolor;
   width: 200px;
 }
 
 /* Column white background */
-.contain > .columna50 {
+.columna50 {
   @include setcolumn;
-  background: $color-white;
-  color: $color-text-primary;
-  width: 50px;
-}
-.contain > .columna {
-  @include setcolumn;
-  background: $color-white;
-  color: $color-text-primary;
-}
-
-.contain > .columna150 {
-  @include setcolumn;
-  background: $color-white;
-  color: $color-text-primary;
-  width: 150px;
-}
-
-.contain > .columna200 {
-  @include setcolumn;
-  background: $color-white;
-  color: $color-text-primary;
-  width: 200px;
-}
-
-/* Column darker background */
-.contain > .columnb50 {
-  @include setcolumn;
-  background: $color-white;
-  color: $color-text-primary;
+  @include setcolor;
   width: 50px;
 }
 
-.contain > .columnb {
+.columna150 {
   @include setcolumn;
-  background: $color-white;
-  color: $color-text-primary;
-}
-
-.contain > .columnb150 {
-  @include setcolumn;
-  background: $color-white;
-  color: $color-text-primary;
+  @include setcolor;
   width: 150px;
 }
 
-.contain > .columnb200 {
+.columna200 {
   @include setcolumn;
-  background: $color-white;
-  color: $color-text-primary;
+  @include setcolor;
   width: 200px;
 }
