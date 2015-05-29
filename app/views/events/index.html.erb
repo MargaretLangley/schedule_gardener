@@ -1,22 +1,22 @@
 <% provide(:title, 'Calendar of Appointments') %>
 
-<div class='flex-header'>
+<div class = 'flex-header'>
   <h1>Calendar of Appointments</h1>
 <div>
 
-<div class='flex-nav'>
+<div class = 'flex-nav'>
   <%= render 'shared/main_navigation' %>
 </div>
 
-<h2 class='month'>
-  <div class='flex-form'>
+<h2 class = 'month'>
+  <div class = 'flex-form'>
     <%= link_to '<', date: @date.prev_month %>
     <%= @date.strftime('%B %Y') %>
     <%= link_to '>', date: @date.next_month %>
   <div>
 </h2>
 
-<div class='flex-form'>
+<div class = 'flex-form'>
   <%= calendar @date do |date| %>
     <%= date.day %>
     <% 1.upto(4) do |slot| %>

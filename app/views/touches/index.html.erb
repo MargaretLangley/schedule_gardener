@@ -1,19 +1,19 @@
 <% provide(:title, 'Contact Me') %>
 
-<div class='flex-header'>
+<div class = 'flex-header'>
   <h1>Contact Requests</h1>
 <div>
 
-<div class='flex-nav'>
+<div class = 'flex-nav'>
   <%= render 'shared/main_navigation' %>
 </div>
 
-<div class='row'>
+<div class = 'row'>
 
-  <div class='col-md-3'>
+  <div class = 'col-md-3'>
   </div><!--col-md-3 -->
 
-  <div class='col-md-9'>
+  <div class = 'col-md-9'>
     <%= render 'touches_table', object: @touches %>
     <%= link_to 'Create Contact Me', new_touch_path, class: 'btn btn-primary btn-lg' %>
   </div>  <!--col-md-9 -->
