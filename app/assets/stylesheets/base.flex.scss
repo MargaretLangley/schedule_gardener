@@ -28,7 +28,7 @@
     flex-direction: row;
 
     .flex-image { order: 1; }
-    .article { order: 3; }
+    .article-form { order: 3; }
     .flex-middle { order: 2; }
   }
 
@@ -61,7 +61,7 @@
     flex-direction: column;
 
     .flex-image { order: 1; }
-    .article { order: 2; }
+    .article-form { order: 2; }
     .flex-middle { order: 3; }
   }
 
@@ -84,7 +84,7 @@
     flex-direction: column;
 
     .flex-image { order: 1; }
-    .article { order: 2; }
+    .article-form { order: 2; }
     .flex-middle { order: 3; }
   }
 
