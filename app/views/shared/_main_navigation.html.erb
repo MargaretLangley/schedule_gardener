@@ -1,10 +1,10 @@
-<ul class='nav nav-tabs'>
-  <li class='<%= 'active' if current_page?(dashboard_path(current_user)) %>'><%= link_to 'Dashboard', dashboard_path(current_user) %></li>
-  <li class='<%= 'active' if current_page?(appointments_path) %>'><%= link_to 'Appointments', appointments_path %></li>
-  <li class='<%= 'active' if current_page?(events_path) %>'><%= link_to 'Calendar', events_path %></li>
-  <li class='<%= 'active' if current_page?(touches_path) %>'><%= link_to 'Contact Me', touches_path %></li>
+<ul class = 'nav nav-tabs'>
+  <li class = '<%= 'active' if current_page?(dashboard_path(current_user)) %>'><%= link_to 'Dashboard', dashboard_path(current_user) %></li>
+  <li class = '<%= 'active' if current_page?(appointments_path) %>'><%= link_to 'Appointments', appointments_path %></li>
+  <li class = '<%= 'active' if current_page?(events_path) %>'><%= link_to 'Calendar', events_path %></li>
+  <li class = '<%= 'active' if current_page?(touches_path) %>'><%= link_to 'Contact Me', touches_path %></li>
   <% if current_gardener? || current_admin? %>
-    <li class='<%= 'active' if current_page?(users_path) %>'><%= link_to 'Users', users_path %></li>
+    <li class = '<%= 'active' if current_page?(users_path) %>'><%= link_to 'Users', users_path %></li>
   <% end %>
 </ul>
 <br>
