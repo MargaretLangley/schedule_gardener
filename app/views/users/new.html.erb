@@ -1,28 +1,28 @@
 <% provide(:title, 'Sign up') %>
 
-<div class ='flex-header'>
+<div class = 'flex-header'>
   <h1>Sign up</h1>
 <div>
 
-<div class ='flex-form'>
-  <div class ='article-form'>
+<div class = 'flex-form'>
+  <div class = 'article-form'>
 
     <%= simple_form_for @user, html: {}, url: :signup, method: :post do |f| %>
       <%= render 'shared/error_messages', object: f.object  %>
 
       <%= f.simple_fields_for :contact do |c| %>
-          <div><%= c.input :first_name %></div>
-          <div><%= c.input :last_name %></div>
-          <div><%= f.input :password %></div>
-          <div>
-            <%= f.input :password_confirmation, label: 'Confirm password' %>
-          </div>
-          <div><%= c.input :email %></div>
+        <div><%= c.input :first_name %></div>
+        <div><%= c.input :last_name %></div>
+        <div><%= f.input :password %></div>
+        <div>
+          <%= f.input :password_confirmation, label: 'Confirm password' %>
+        </div>
+        <div><%= c.input :email %></div>
 
-          <%= c.simple_fields_for :address do |address| %>
-            <%= render partial: 'shared/address', locals: { f: address } %>
-          <% end %>
-          <div><%= c.input :home_phone %></div>
+        <%= c.simple_fields_for :address do |address| %>
+          <%= render partial: 'shared/address', locals: { f: address } %>
+        <% end %>
+        <div><%= c.input :home_phone %></div>
       <% end %>
 
       <div class = 'flex-form'>
