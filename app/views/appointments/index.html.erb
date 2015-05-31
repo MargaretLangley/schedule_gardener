@@ -18,8 +18,10 @@
 
   <div class = 'flex2'>
     <%= render 'appointments_table', object: @appointments %>
-    <%= link_to 'Create Appointment', new_appointment_path, class: 'btn  btn-primary  btn-lg  spacer-left' %>
-    <br>&nbsp;
+    <div class = 'flex-ht-button-box'>
+      <%= link_to 'Create Appointment', new_appointment_path, class: 'button' %>
+    </div>
+
   </div>
 
   <div class = 'flex-middle'></div>
