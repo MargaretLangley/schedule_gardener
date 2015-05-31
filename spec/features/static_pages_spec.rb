@@ -31,11 +31,6 @@ describe 'Static pages' do
         click_link 'About'
         expect(current_path).to eq about_path
       end
-
-      it 'links to contact' do
-        click_link 'Contact'
-        expect(current_path).to eq contact_path
-      end
     end
 
     context 'header' do

@@ -2,7 +2,7 @@
 # Garden
 #
 # The physical garden's location
-#   - a garden to work on can be at a different address from the contact address
+#   - garden to work on can be at a different address from the person's address
 #
 # == Schema Information
 #
