@@ -151,15 +151,15 @@ describe 'abilities' do
     end
   end
 
-  describe 'Touch' do
+  describe 'Contact' do
     context 'client role' do
       subject { client_ability }
 
-      it 'can manage own touch' do
-        should be_able_to(:manage, Touch.new(person: client.person))
+      it 'can manage own contact' do
+        should be_able_to(:manage, Contact.new(person: client.person))
       end
       it 'cannot manage appointment owned by another user' do
-        should_not be_able_to(:manage, Touch.new(person: another_client.person))
+        should_not be_able_to(:manage, Contact.new(person: another_client.person))
       end
     end
 
@@ -167,10 +167,10 @@ describe 'abilities' do
       subject { gardener_ability }
 
       it 'can manage own appointments' do
-        should be_able_to(:manage, Touch.new(person: gardener.person))
+        should be_able_to(:manage, Contact.new(person: gardener.person))
       end
       it 'can manage appointment owned by another user' do
-        should be_able_to(:manage, Touch.new(person: another_client.person))
+        should be_able_to(:manage, Contact.new(person: another_client.person))
       end
     end
 
@@ -178,10 +178,10 @@ describe 'abilities' do
       subject { admin_ability }
 
       it 'can manage own appointments' do
-        should be_able_to(:manage, Touch.new(person: admin.person))
+        should be_able_to(:manage, Contact.new(person: admin.person))
       end
       it 'can manage appointment owned by another user' do
-        should be_able_to(:manage, Touch.new(person: another_client.person))
+        should be_able_to(:manage, Contact.new(person: another_client.person))
       end
     end
   end

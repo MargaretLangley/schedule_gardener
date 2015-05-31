@@ -1,6 +1,6 @@
-class CreateTouches < ActiveRecord::Migration
+class CreateContacts < ActiveRecord::Migration
   def change
-    create_table :touches do |t|
+    create_table :contacts do |t|
       t.belongs_to :person, null: false, index: true
       t.belongs_to :appointee, null: false, index: true
       t.boolean :by_phone, null: true

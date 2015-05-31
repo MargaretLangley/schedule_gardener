@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :person
   delegate :admin?, :appointments, :calls, :email, :first_name,
-           :full_name, :gardener?, :home_phone, :role, :touches, :visits, to: :person
+           :full_name, :gardener?, :home_phone, :role, :contacts, :visits, to: :person
 
   before_save { generate_token(:remember_token) }
 

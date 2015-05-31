@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Touches#index' do
+describe 'Contacts#index' do
   before(:each) { Timecop.freeze(Time.zone.parse('2012-9-1 5:00')) }
   subject { page }
 
@@ -12,28 +12,28 @@ describe 'Touches#index' do
                                     last_name: 'Abbey')
         visit_signin_and_login FactoryGirl.create(:user, person: person)
 
-        FactoryGirl.create(:touch, :client_j, :tomorrow, by_phone: true)
-        visit touches_path
+        FactoryGirl.create(:contact, :client_j, :tomorrow, by_phone: true)
+        visit contacts_path
       end
       it ('is on page') { expect(page.title).to eq 'Garden Care | Contact Me' }
       it ('own listed') { should have_content 'Ann Abbey' }
       it ('others not listed') { should_not have_content 'John Smith' }
     end
 
-    it 'deletes touch' do
+    it 'deletes contact' do
       person = FactoryGirl.create(:person)
       user = FactoryGirl.create(:user, person: person)
-      FactoryGirl.create(:touch, :tomorrow, person: user.person)
+      FactoryGirl.create(:contact, :tomorrow, person: user.person)
 
       visit_signin_and_login user
-      visit touches_path
+      visit contacts_path
 
-      expect { click_on('Delete') }.to change(Touch, :count).by(-1)
+      expect { click_on('Delete') }.to change(Contact, :count).by(-1)
     end
   end
 
   context 'Gardener' do
-    touch = nil
+    contact = nil
     before do
       gardener = FactoryGirl
                  .create(:user, person: FactoryGirl.create(:person, :gardener_a)).person
@@ -41,8 +41,8 @@ describe 'Touches#index' do
                .create(:user, person: FactoryGirl.create(:person, :client_j)).person
       visit_signin_and_login gardener.user
 
-      touch = FactoryGirl.create(:touch, :tomorrow, person: client, appointee: gardener, by_phone: true)
-      visit touches_path
+      contact = FactoryGirl.create(:contact, :tomorrow, person: client, appointee: gardener, by_phone: true)
+      visit contacts_path
     end
 
     it ('displayed') { expect(page.title).to eq 'Garden Care | Contact Me' }
@@ -51,13 +51,13 @@ describe 'Touches#index' do
       should have_content 'John Smith'
     end
 
-    it 'edits touch' do
+    it 'edits contact' do
       first(:link, 'Edit').click
-      expect(current_path).to eq edit_touch_path(touch)
+      expect(current_path).to eq edit_contact_path(contact)
     end
 
-    it 'deletes touch' do
-      expect { first(:link, 'Delete').click }.to change(Touch, :count).by(-1)
+    it 'deletes contact' do
+      expect { first(:link, 'Delete').click }.to change(Contact, :count).by(-1)
     end
   end
 end

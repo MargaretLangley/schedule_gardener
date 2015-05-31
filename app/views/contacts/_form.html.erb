@@ -1,4 +1,4 @@
-<%= simple_form_for touch, html: { class: 'form-horizontal' } do |f| %>
+<%= simple_form_for contact, html: { class: 'form-horizontal' } do |f| %>
 
   <%= render 'shared/error_messages', object: f.object  %>
 
@@ -26,7 +26,7 @@
         <%= f.submit class: 'btn btn-primary btn-lg' %>
       </div>
       <div class='col-xs-5  col-sm-3  col-md-3'>
-        <%= link_to 'Cancel', touches_path, class: 'btn btn-danger btn-lg' %>
+        <%= link_to 'Cancel', contacts_path, class: 'btn btn-danger btn-lg' %>
       </div>
     </div>
   </div>

@@ -27,11 +27,11 @@ class Person < ActiveRecord::Base
 
   # Gardener
   has_many :visits, -> { order(starts_at: :asc) }, class_name: 'Appointment', foreign_key: 'appointee_id', dependent: :destroy
-  has_many :calls, -> { order(touch_from: :asc) }, class_name: 'Touch', foreign_key: 'appointee_id', dependent: :destroy
+  has_many :calls, -> { order(touch_from: :asc) }, class_name: 'Contact', foreign_key: 'appointee_id', dependent: :destroy
 
   # Client
   has_many :appointments, -> { order(starts_at: :asc) }, foreign_key: 'person_id', dependent: :destroy
-  has_many :touches, -> { order(touch_from: :asc) }, foreign_key: 'person_id', dependent: :destroy
+  has_many :contacts, -> { order(touch_from: :asc) }, foreign_key: 'person_id', dependent: :destroy
 
   accepts_nested_attributes_for :address
 

@@ -14,11 +14,11 @@
   </div><!--col-md-3 -->
 
   <div class = 'col-md-9'>
-    <%= render 'touches_table', object: @touches %>
-    <%= link_to 'Create Contact Me', new_touch_path, class: 'btn btn-primary btn-lg' %>
+    <%= render 'contacts_table', object: @contacts %>
+    <%= link_to 'Create Contact Me', new_contact_path, class: 'btn btn-primary btn-lg' %>
   </div>  <!--col-md-9 -->
 </div>  <!-- row-->
 
 
-<%= debug(@touches) unless (Rails.env.production?) %>
+<%= debug(@contacts) unless (Rails.env.production?) %>
 

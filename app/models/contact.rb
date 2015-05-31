@@ -1,5 +1,5 @@
 #
-# Touch
+# Contact
 #
 # A request for work
 #
@@ -12,19 +12,19 @@
 #
 # == Schema Information
 #
-# Table name: touches
+# Table name: contacts
 #
 #  id                     :integer          not null, primary key
 #  person_id              :integer          not null
 #  by_phone               :boolean
 #  by_visit               :boolean
-#  touch_from             :datetime         not null
+#  touch_from           :datetime         not null
 #  completed              :boolean
 #  additional_information :text
 #  created_at             :datetime
 #  updated_at             :datetime
 #
-class Touch < ActiveRecord::Base
+class Contact < ActiveRecord::Base
   belongs_to :person, class_name: 'Person', foreign_key: 'person_id'
   belongs_to :appointee, class_name: 'Person', foreign_key: 'appointee_id'
 
@@ -32,7 +32,7 @@ class Touch < ActiveRecord::Base
   validates :touch_from,
             date: { after_or_equal_to: proc { Time.zone.now.beginning_of_day },
                     before: proc { Time.zone.now + 1.year } }, on: :create
-  validate :touch_by_method_must_be_selected
+  validate :contact_by_method_must_be_selected
 
   delegate :full_name, :home_phone, to: :person
 
@@ -46,7 +46,7 @@ class Touch < ActiveRecord::Base
     self.completed ||= false
   end
 
-  def touch_by_method_must_be_selected
+  def contact_by_method_must_be_selected
     errors.add(:how_to_contact_missing, '- select a way to contact us. Choose by phone or by visit.')  unless self.by_phone? || self.by_visit?
   end
 

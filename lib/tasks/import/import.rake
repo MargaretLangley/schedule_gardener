@@ -33,8 +33,8 @@ task :import, [:import_users] => :environment do |_task, args|
   Rails.logger.info 'import:appointments'
   Rake::Task['import:appointments'].invoke
 
-  Rails.logger.info 'import:touches'
-  Rake::Task['import:touches'].invoke
+  Rails.logger.info 'import:contacts'
+  Rake::Task['import:contacts'].invoke
 
   Rails.logger.info 'import:reset_autoincrement'
   Rake::Task['import:reset_autoincrement'].invoke

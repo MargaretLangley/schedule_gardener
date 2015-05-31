@@ -173,9 +173,9 @@
   #
   activerecord:
     models:
-      touch: Contact Me
+      contact: Contact Me
     attributes:
-      touch:
+      contact:
         person: Client
         touch_from: Contact
 
@@ -191,7 +191,7 @@
               before: "You cannot book more than a year in advance."
             ends_at:
               on_or_after: "The appointment can not finish before it begins."
-        touch:
+        contact:
           attributes:
             touch_from:
               after_or_equal_to: 'from today - please choose a date which can be today or in the future.'

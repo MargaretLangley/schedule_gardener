@@ -29,7 +29,7 @@ FactoryGirl.define do
   #   - belongs_to user
   #   - has_many gardens
   #   - has_many appointments
-  #   - has_many touches
+  #   - has_many contacts
   #   - has_many visits
   #
   factory :person do
@@ -185,10 +185,10 @@ FactoryGirl.define do
 
 
 
-  # TOUCH
+  # CONTACT
   #   - belongs_to person
   #
-  factory :touch do
+  factory :contact do
     association :person, :client_a
     association :appointee, factory: :person, first_name: 'Alan', last_name: 'Titmarsh', role: 'gardener'
     by_phone true

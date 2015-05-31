@@ -1,0 +1,30 @@
+<table class = "table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>Visit</th>
+      <th>Contact From</th>
+      <th>Phone No</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if object.count > 0 %>
+      <% object.each do |contact| %>
+        <tr>
+          <td><%= contact.full_name %></td>
+          <td><%= contact.by_phone? ? 'Yes' : 'No' %></td>
+          <td><%= contact.by_visit? ? 'Yes' : 'No' %></td>
+          <td><%= l contact.touch_from  %></td>
+          <td><%= phone_without_area_code(contact.home_phone) %></td>
+          <td><%= link_to_edit(edit_contact_path(contact)) %></td>
+          <td><%= link_to_delete(contact) %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr><td colspan="7"><h3>Nobody to contact</h3></td></tr>
+    <% end %>
+  </tbody>
+</table>

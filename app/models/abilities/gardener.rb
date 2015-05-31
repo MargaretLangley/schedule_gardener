@@ -9,7 +9,7 @@ module Abilities
     include CanCan::Ability
 
     def initialize(*)
-      can :manage, [Appointment, Touch]
+      can :manage, [Appointment, Contact]
       can [:read, :create, :update], User
     end
   end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Touches#update' do
+describe 'Contacts#update' do
   before(:each) do
     Timecop.freeze(Time.zone.parse('2012-9-1 5:00'))
     visit_signin_and_login user
@@ -14,26 +14,26 @@ describe 'Touches#update' do
     subject { page }
 
     it 'displays' do
-      touch = FactoryGirl.create(:touch, :tomorrow, person: user.person)
-      visit edit_touch_path(touch)
+      contact = FactoryGirl.create(:contact, :tomorrow, person: user.person)
+      visit edit_contact_path(contact)
 
-      expect(current_path).to eq edit_touch_path(touch)
+      expect(current_path).to eq edit_contact_path(contact)
     end
 
     context 'with valid update' do
       before do
-        touch = FactoryGirl.create(:touch, :tomorrow, person: user.person)
-        visit edit_touch_path(touch)
+        contact = FactoryGirl.create(:contact, :tomorrow, person: user.person)
+        visit edit_contact_path(contact)
         click_on('Update Contact Me')
       end
 
-      it ('displays #index') { expect(current_path).to eq touches_path }
+      it ('displays #index') { expect(current_path).to eq contacts_path }
       it 'flashes success' do
         should have_flash_success('Contact me was successfully updated.')
       end
     end
 
-    # client - not thought of way to error on touch update
+    # client - not thought of way to error on contact update
   end
 
   context 'as gardener' do
@@ -45,8 +45,8 @@ describe 'Touches#update' do
 
     context 'invalid information' do
       it 'errors' do
-        touch = FactoryGirl.create(:touch, :tomorrow, person: user.person)
-        visit edit_touch_path(touch)
+        contact = FactoryGirl.create(:contact, :tomorrow, person: user.person)
+        visit edit_contact_path(contact)
 
         fill_in 'Contact from', with: '1 Aug 2012'
         uncheck 'By phone'

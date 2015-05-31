@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Touches#create' do
+describe 'Contacts#create' do
   before(:each) { Timecop.freeze(Time.zone.parse('2012-9-1 5:00')) }
   subject { page }
 
@@ -15,13 +15,13 @@ describe 'Touches#create' do
 
     before(:each) do
       visit_signin_and_login user_r
-      visit new_touch_path
+      visit new_contact_path
     end
 
-    it ('displayed') { expect(current_path).to eq new_touch_path }
+    it ('displayed') { expect(current_path).to eq new_contact_path }
     it 'can cancel' do
       click_on('Cancel')
-      expect(current_path).to eq touches_path
+      expect(current_path).to eq contacts_path
     end
 
     describe 'hides gardener only content' do
@@ -32,18 +32,18 @@ describe 'Touches#create' do
     end
 
     context 'with valid information' do
-      it 'adds touch' do
+      it 'adds contact' do
         select 'Alan', from: 'Gardener'
         fill_in 'Contact from', with: '1 Oct 2012'
 
-        expect { click_on('Contact Me') }.to change(Touch, :count).by(1)
+        expect { click_on('Contact Me') }.to change(Contact, :count).by(1)
       end
 
       context 'on create' do
         it ('displays #index') do
           click_on('Contact Me')
 
-          expect(current_path).to eq touches_path
+          expect(current_path).to eq contacts_path
         end
         it 'flash success' do
           fill_in 'Contact from', with: '1 Oct 2012'
@@ -58,7 +58,7 @@ describe 'Touches#create' do
       it 'fails' do
         fill_in 'Contact from', with: '1 Aug 2012'
 
-        expect { click_on('Contact Me') }.to change(Touch, :count).by(0)
+        expect { click_on('Contact Me') }.to change(Contact, :count).by(0)
       end
 
       it 'flash error' do
@@ -79,7 +79,7 @@ describe 'Touches#create' do
     describe 'has gardener only content' do
       before do
         visit_signin_and_login gardener_a
-        visit new_touch_path
+        visit new_contact_path
       end
       it ('has client') { should have_content('Client') }
       it ('by phone')  { should have_content 'By phone' }
@@ -87,15 +87,15 @@ describe 'Touches#create' do
       it ('completed') { should have_content 'Completed' }
     end
 
-    it 'with valid information it adds touch' do
+    it 'with valid information it adds contact' do
       FactoryGirl.create(:person, :client_a)
       visit_signin_and_login gardener_a
-      visit new_touch_path
+      visit new_contact_path
 
       select('Ann', from: 'Client') # Explicit but works anyway
       fill_in 'Contact from', with: '1 Oct 2012'
       check 'By phone'
-      expect { click_on('Contact Me') }.to change(Touch, :count).by(1)
+      expect { click_on('Contact Me') }.to change(Contact, :count).by(1)
     end
   end
 end
