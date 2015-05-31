@@ -12,7 +12,7 @@ module AppointmentIndexHelper
   #
   def meeting_information appointment
     if current_gardener?
-      phone_without_area_code(appointment.contact.home_phone)
+      phone_without_area_code(appointment.person.home_phone)
     else
       appointment.appointee.full_name
     end

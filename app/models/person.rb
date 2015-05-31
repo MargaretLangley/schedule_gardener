@@ -1,12 +1,12 @@
 #
-# Contact
+# Person
 #
 # The person we contact about gardening
-#   - contacts have the information to complete the creation of an appointment
+#   - persons have the information to complete the creation of an appointment
 #
 # == Schema Information
 #
-# Table name: contacts
+# Table name: persons
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer          not null
@@ -19,9 +19,9 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
-class Contact < ActiveRecord::Base
+class Person < ActiveRecord::Base
   enum role: { client: 0, gardener: 1, admin: 2 }
-  belongs_to :user, inverse_of: :contact
+  belongs_to :user, inverse_of: :person
   has_one :address,  autosave: true, dependent: :destroy, as: :addressable
   has_many :gardens, dependent: :destroy
 
@@ -30,8 +30,8 @@ class Contact < ActiveRecord::Base
   has_many :calls, -> { order(touch_from: :asc) }, class_name: 'Touch', foreign_key: 'appointee_id', dependent: :destroy
 
   # Client
-  has_many :appointments, -> { order(starts_at: :asc) }, foreign_key: 'contact_id', dependent: :destroy
-  has_many :touches, -> { order(touch_from: :asc) }, foreign_key: 'contact_id', dependent: :destroy
+  has_many :appointments, -> { order(starts_at: :asc) }, foreign_key: 'person_id', dependent: :destroy
+  has_many :touches, -> { order(touch_from: :asc) }, foreign_key: 'person_id', dependent: :destroy
 
   accepts_nested_attributes_for :address
 
@@ -61,8 +61,8 @@ class Contact < ActiveRecord::Base
     self[:mobile] = num ? strip_none_numeric(num) : nil
   end
 
-  def self.contacts_by_role(role)
-    Contact.where('role = ?', Contact.roles[role])
+  def self.by_role(role)
+    Person.where('role = ?', Person.roles[role])
       .order(first_name: :asc)
   end
 

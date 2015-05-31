@@ -6,17 +6,17 @@ describe 'Appointments navigation' do
   end
 
   let!(:user) do
-    FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
+    FactoryGirl.create(:user, person: FactoryGirl.create(:person, :client_r))
   end
   let!(:gardener_a)   do
-    FactoryGirl.create :user, contact: FactoryGirl.create(:contact, :gardener_a)
+    FactoryGirl.create :user, person: FactoryGirl.create(:person, :gardener_a)
   end
 
   subject { page }
 
   describe '#index' do
     context 'standard user' do
-      let!(:appointment)  { FactoryGirl.create(:appointment, :tomorrow_first_slot, appointee: gardener_a.contact, contact: user.contact) }
+      let!(:appointment)  { FactoryGirl.create(:appointment, :tomorrow_first_slot, appointee: gardener_a.person, person: user.person) }
       before(:each) do
         visit_signin_and_login user
         visit appointments_path
@@ -34,9 +34,9 @@ describe 'Appointments navigation' do
     end
 
     context 'gardener' do
-      let!(:appointment)  { FactoryGirl.create(:appointment, :tomorrow_first_slot, appointee: gardener_a.contact, contact: user.contact) }
+      let!(:appointment)  { FactoryGirl.create(:appointment, :tomorrow_first_slot, appointee: gardener_a.person, person: user.person) }
       before(:each) do
-        (FactoryGirl.create(:appointment, :next_month_first_slot, :client_a, appointee: gardener_a.contact)).save!
+        (FactoryGirl.create(:appointment, :next_month_first_slot, :client_a, appointee: gardener_a.person)).save!
         visit_signin_and_login gardener_a
         visit appointments_path
       end

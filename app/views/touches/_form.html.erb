@@ -2,14 +2,14 @@
 
   <%= render 'shared/error_messages', object: f.object  %>
 
-  <%= f.association :appointee, label: 'Gardener', collection: Contact.contacts_by_role('gardener'), label_method: 'first_name', include_blank: false %>
+  <%= f.association :appointee, label: 'Gardener', collection: Person.by_role('gardener'), label_method: 'first_name', include_blank: false %>
 
   <% if current_user.gardener? %>
-    <%= f.association :contact, label: 'Client', input_html: { class: 'col-md-6' }, collection: Contact.contacts_by_role('client'), label_method: lambda { |contact| information(contact) }, include_blank: 'Please select...' %>
+    <%= f.association :person, label: 'Client', input_html: { class: 'col-md-6' }, collection: Person.by_role('client'), label_method: lambda { |person| information(person) }, include_blank: 'Please select...' %>
     <%= f.input :by_phone, as: :boolean %>
     <%= f.input :by_visit, as: :boolean %>
   <% else %>
-    <%= f.hidden_field :contact_id %>
+    <%= f.hidden_field :person_id %>
     <%= f.hidden_field :by_phone, value: true %>
   <% end %>
 

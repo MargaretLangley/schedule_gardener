@@ -68,7 +68,7 @@ describe 'users#create' do
     before do
       gardener =
         FactoryGirl
-        .create(:user, contact: FactoryGirl.create(:contact, :gardener_a))
+        .create(:user, person: FactoryGirl.create(:person, :gardener_a))
       visit_signin_and_login gardener
       visit signup_path
 

@@ -28,10 +28,10 @@ RailsAdmin.config do |config|
   # config.default_items_per_page = 20
 
   # Exclude specific models (keep the others):
-  # config.excluded_models = ['Address', 'Appointment', 'Contact', 'Garden']
+  # config.excluded_models = ['Address', 'Appointment', 'Person', 'Garden']
 
   # Include specific models (exclude the others):
-  # config.included_models = ['Address', 'Appointment', 'Contact', 'Garden']
+  # config.included_models = ['Address', 'Appointment', 'Person', 'Garden']
 
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
@@ -106,13 +106,13 @@ RailsAdmin.config do |config|
 
   #   # Found associations:
 
-  #     configure :contact, :belongs_to_association
+  #     configure :person, :belongs_to_association
   #     configure :appointee, :belongs_to_association
 
   #   # Found columns:
 
   #     configure :id, :integer
-  #     configure :contact_id, :integer         # Hidden
+  #     configure :person_id, :integer         # Hidden
   #     configure :appointee_id, :integer         # Hidden
   #     configure :title, :string
   #     configure :starts_at, :datetime
@@ -147,11 +147,11 @@ RailsAdmin.config do |config|
   #     # using `field` instead of `configure` will exclude all other fields and force the ordering
   # end
 
-  ###  Contact  ###
+  ###  Person  ###
 
-  # config.model 'Contact' do
+  # config.model 'Person' do
 
-  #   # You can copy this to a 'rails_admin do ... end' block inside your contact.rb model definition
+  #   # You can copy this to a 'rails_admin do ... end' block inside your person.rb model definition
 
   #   # Found associations:
 
@@ -207,13 +207,13 @@ RailsAdmin.config do |config|
 
   #   # Found associations:
 
-  #     configure :contact, :belongs_to_association
+  #     configure :person, :belongs_to_association
   #     configure :address, :has_one_association
 
   #   # Found columns:
 
   #     configure :id, :integer
-  #     configure :contact_id, :integer         # Hidden
+  #     configure :person_id, :integer         # Hidden
   #     configure :created_at, :datetime
   #     configure :updated_at, :datetime
 

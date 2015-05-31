@@ -30,8 +30,8 @@ describe PasswordResetsController do
     end
 
     def create_user
-      contact = FactoryGirl.create(:contact, :client_j)
-      FactoryGirl.create(:user, :expired_reset_password, contact: contact)
+      person = FactoryGirl.create(:person, :client_j)
+      FactoryGirl.create(:user, :expired_reset_password, person: person)
     end
   end
 end

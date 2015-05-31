@@ -9,21 +9,21 @@
 # Table name: gardens
 #
 #  id         :integer          not null, primary key
-#  contact_id :integer
+#  person_id :integer
 #  created_at :datetime
 #  updated_at :datetime
 #
 class Garden < ActiveRecord::Base
-  belongs_to :contact
+  belongs_to :person
   has_one :address, autosave: true, dependent: :destroy, as: :addressable
 
   accepts_nested_attributes_for :address
 
-  validates :address, :contact, presence: true
+  validates :address, :person, presence: true
 
   alias_method :garden_address, :address
   def address
     # owned address || parent address
-    garden_address || contact.address
+    garden_address || person.address
   end
 end

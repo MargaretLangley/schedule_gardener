@@ -5,11 +5,11 @@ describe 'Appointments#create' do
 
   context 'standard user' do
     let!(:user) do
-      FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
+      FactoryGirl.create(:user, person: FactoryGirl.create(:person, :client_r))
     end
     let!(:gardener_alan) do
-      gardener = FactoryGirl.create(:contact, :gardener_a)
-      FactoryGirl.create(:user, contact: gardener)
+      gardener = FactoryGirl.create(:person, :gardener_a)
+      FactoryGirl.create(:user, person: gardener)
     end
     before(:each) do
       Timecop.freeze(Time.zone.parse('1/9/2012 5:00'))
@@ -52,11 +52,11 @@ describe 'Appointments#create' do
 
   context 'gardener' do
     let!(:user) do
-      FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
+      FactoryGirl.create(:user, person: FactoryGirl.create(:person, :client_r))
     end
     let!(:gardener_alan) do
-      gardener = FactoryGirl.create(:contact, :gardener_a)
-      FactoryGirl.create(:user, contact: gardener)
+      gardener = FactoryGirl.create(:person, :gardener_a)
+      FactoryGirl.create(:user, person: gardener)
     end
 
     before do

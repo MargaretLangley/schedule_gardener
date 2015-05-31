@@ -2,14 +2,14 @@
 # Appointment
 #
 # Physical appointment - represents the intention to complete a job of work
-#                        between a contact and a gardener within a time range.
+#                        between a person and a gardener within a time range.
 #
 # == Schema Information
 #
 # Table name: appointments
 #
 #  id           :integer          not null, primary key
-#  contact_id   :integer
+#  person_id   :integer
 #  appointee_id :integer
 #  starts_at    :datetime         not null
 #  ends_at      :datetime         not null
@@ -18,10 +18,10 @@
 #  updated_at   :datetime
 #
 class Appointment < ActiveRecord::Base
-  belongs_to :contact, class_name: 'Contact', foreign_key: 'contact_id'
-  belongs_to :appointee, class_name: 'Contact', foreign_key: 'appointee_id'
+  belongs_to :person, class_name: 'Person', foreign_key: 'person_id'
+  belongs_to :appointee, class_name: 'Person', foreign_key: 'appointee_id'
 
-  validates :appointee, :contact, :starts_at, presence: true
+  validates :appointee, :person, :starts_at, presence: true
   validates :starts_at, date: { after: proc { Time.zone.now },
                                 before: proc { Time.zone.now + 1.year } }
   validates :ends_at, date: { after_or_equal_to: :starts_at }
@@ -46,7 +46,7 @@ class Appointment < ActiveRecord::Base
   end
 
   def title
-    contact.first_name
+    person.first_name
   end
 
   def include_slot_number?(slot_number)

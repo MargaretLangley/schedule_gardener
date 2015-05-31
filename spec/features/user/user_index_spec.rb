@@ -13,12 +13,12 @@ describe 'users#index' do
     let(:users)   { 'Users' }
 
     let!(:admin)  do
-      FactoryGirl.create(:user, :admin, contact: FactoryGirl.create(:contact, role: 'admin', first_name: admin_first_name, home_phone: admin_home_phone))
+      FactoryGirl.create(:user, :admin, person: FactoryGirl.create(:person, role: 'admin', first_name: admin_first_name, home_phone: admin_home_phone))
     end
 
     let!(:standard_user)  do
-      contact = FactoryGirl.create(:contact, first_name: user_first_name, home_phone: user_home_phone)
-      FactoryGirl.create(:user, contact: contact)
+      person = FactoryGirl.create(:person, first_name: user_first_name, home_phone: user_home_phone)
+      FactoryGirl.create(:user, person: person)
     end
 
     before do
@@ -37,12 +37,12 @@ describe 'users#index' do
     describe 'pagination' do
       before(:all) do
         20.times do
-          FactoryGirl.create(:user, contact: FactoryGirl.create(:contact))
+          FactoryGirl.create(:user, person: FactoryGirl.create(:person))
         end
       end
       after(:all)   do
         User.delete_all
-        Contact.delete_all
+        Person.delete_all
         Address.delete_all
       end
 
@@ -96,14 +96,14 @@ describe 'users#index' do
         end
 
         context 'an admin user' do
-          let!(:admin_edit_self) { FactoryGirl.create(:user, :admin, contact: FactoryGirl.create(:contact, first_name: 'admin_edit_self')) }
+          let!(:admin_edit_self) { FactoryGirl.create(:user, :admin, person: FactoryGirl.create(:person, first_name: 'admin_edit_self')) }
           before { visit users_path }
           it ('present for self-edit') { should have_link('Edit', href: edit_profile_path(admin)) }
         end
       end
 
       describe 'Delete' do
-        let!(:admin_undeleteable) { FactoryGirl.create(:user, :admin, contact: FactoryGirl.create(:contact, first_name: 'admin_undeletable')) }
+        let!(:admin_undeleteable) { FactoryGirl.create(:user, :admin, person: FactoryGirl.create(:person, first_name: 'admin_undeletable')) }
         before { visit users_path }
 
         context 'a standard user' do

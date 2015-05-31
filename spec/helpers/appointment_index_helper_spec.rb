@@ -26,14 +26,14 @@ describe AppointmentIndexHelper do
   end
 
   def appointment(starts_at:, ends_at:)
-    client = FactoryGirl.create :user, contact: FactoryGirl.create(:contact, :client_r)
+    client = FactoryGirl.create :user, person: FactoryGirl.create(:person, :client_r)
     gardener = FactoryGirl.create :user,
-                                  contact: FactoryGirl.create(:contact, :gardener_a)
+                                  person: FactoryGirl.create(:person, :gardener_a)
 
     FactoryGirl.create(:appointment,
                        starts_at: starts_at,
                        ends_at: ends_at,
-                       appointee: gardener.contact,
-                       contact: client.contact)
+                       appointee: gardener.person,
+                       person: client.person)
   end
 end

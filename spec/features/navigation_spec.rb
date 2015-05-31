@@ -5,7 +5,7 @@ describe 'Navigation' do
 
   context 'standard user' do
     let!(:user) do
-      FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
+      FactoryGirl.create(:user, person: FactoryGirl.create(:person, :client_r))
     end
 
     it 'hides users' do
@@ -18,7 +18,7 @@ describe 'Navigation' do
 
   context 'Gardener' do
     let(:gardener) do
-      FactoryGirl.create :user, contact: FactoryGirl.create(:contact, :gardener_a)
+      FactoryGirl.create :user, person: FactoryGirl.create(:person, :gardener_a)
     end
 
     it 'displays users' do
@@ -31,7 +31,7 @@ describe 'Navigation' do
 
   context 'Admin' do
     let(:admin) do
-      FactoryGirl.create :user, contact: FactoryGirl.create(:contact, :admin)
+      FactoryGirl.create :user, person: FactoryGirl.create(:person, :admin)
     end
 
     it 'displays users' do

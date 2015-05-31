@@ -51,31 +51,31 @@ describe User do
 
   describe 'Custom finders' do
     def create_user(trait:)
-      contact = FactoryGirl.create(:contact, trait)
-      FactoryGirl.create(:user, contact: contact)
+      person = FactoryGirl.create(:person, trait)
+      FactoryGirl.create(:user, person: person)
     end
 
     describe '#find_by_email' do
       it 'should create in order' do
-        user1 = FactoryGirl.create(:contact, :client_j).user
-        user2 = FactoryGirl.create(:contact, :client_a).user
-        user3 = FactoryGirl.create(:contact, :client_r).user
+        user1 = FactoryGirl.create(:person, :client_j).user
+        user2 = FactoryGirl.create(:person, :client_a).user
+        user3 = FactoryGirl.create(:person, :client_r).user
 
         expect(User.all).to match [user1, user2, user3]
       end
 
       it 'return user by email' do
-        FactoryGirl.create(:contact, :client_j)
-        user2 = FactoryGirl.create(:contact, :client_a).user
-        FactoryGirl.create(:contact, :client_r)
+        FactoryGirl.create(:person, :client_j)
+        user2 = FactoryGirl.create(:person, :client_a).user
+        FactoryGirl.create(:person, :client_r)
 
         expect(User.find_by_email('ann.abbey@example.com')).to eq user2
       end
 
       it 'empty email should not return a user' do
-        FactoryGirl.create(:contact, :client_j)
-        FactoryGirl.create(:contact, :client_a)
-        FactoryGirl.create(:contact, :client_r)
+        FactoryGirl.create(:person, :client_j)
+        FactoryGirl.create(:person, :client_a)
+        FactoryGirl.create(:person, :client_r)
 
         expect(User.find_by_email('')).to eq nil
       end
@@ -85,9 +85,9 @@ describe User do
       john = roger = ann = nil
 
       before(:each) do
-        john = FactoryGirl.create(:contact, :client_j).user
-        roger = FactoryGirl.create(:contact, :client_r).user
-        ann = FactoryGirl.create(:contact, :client_a).user
+        john = FactoryGirl.create(:person, :client_j).user
+        roger = FactoryGirl.create(:person, :client_r).user
+        ann = FactoryGirl.create(:person, :client_a).user
       end
 
       it 'should create in order' do

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Dashboard#show' do
   context 'standard user' do
     let!(:user_r) do
-      FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
+      FactoryGirl.create(:user, person: FactoryGirl.create(:person, :client_r))
     end
 
     it 'displayed' do
@@ -16,7 +16,7 @@ describe 'Dashboard#show' do
 
   context 'Gardener' do
     let(:gardener_a) do
-      FactoryGirl.create :user, contact: FactoryGirl.create(:contact, :gardener_a)
+      FactoryGirl.create :user, person: FactoryGirl.create(:person, :gardener_a)
     end
 
     it 'displayed' do

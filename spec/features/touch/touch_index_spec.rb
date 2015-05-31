@@ -7,10 +7,10 @@ describe 'Touches#index' do
   context 'standard user' do
     context 'displays' do
       before do
-        contact = FactoryGirl.create(:contact,
-                                     first_name: 'Ann',
-                                     last_name: 'Abbey')
-        visit_signin_and_login FactoryGirl.create(:user, contact: contact)
+        person = FactoryGirl.create(:person,
+                                    first_name: 'Ann',
+                                    last_name: 'Abbey')
+        visit_signin_and_login FactoryGirl.create(:user, person: person)
 
         FactoryGirl.create(:touch, :client_j, :tomorrow, by_phone: true)
         visit touches_path
@@ -21,9 +21,9 @@ describe 'Touches#index' do
     end
 
     it 'deletes touch' do
-      contact = FactoryGirl.create(:contact)
-      user = FactoryGirl.create(:user, contact: contact)
-      FactoryGirl.create(:touch, :tomorrow, contact: user.contact)
+      person = FactoryGirl.create(:person)
+      user = FactoryGirl.create(:user, person: person)
+      FactoryGirl.create(:touch, :tomorrow, person: user.person)
 
       visit_signin_and_login user
       visit touches_path
@@ -36,12 +36,12 @@ describe 'Touches#index' do
     touch = nil
     before do
       gardener = FactoryGirl
-                 .create(:user, contact: FactoryGirl.create(:contact, :gardener_a)).contact
+                 .create(:user, person: FactoryGirl.create(:person, :gardener_a)).person
       client = FactoryGirl
-               .create(:user, contact: FactoryGirl.create(:contact, :client_j)).contact
+               .create(:user, person: FactoryGirl.create(:person, :client_j)).person
       visit_signin_and_login gardener.user
 
-      touch = FactoryGirl.create(:touch, :tomorrow, contact: client, appointee: gardener, by_phone: true)
+      touch = FactoryGirl.create(:touch, :tomorrow, person: client, appointee: gardener, by_phone: true)
       visit touches_path
     end
 

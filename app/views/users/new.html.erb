@@ -10,7 +10,7 @@
     <%= simple_form_for @user, html: {}, url: :signup, method: :post do |f| %>
       <%= render 'shared/error_messages', object: f.object  %>
 
-      <%= f.simple_fields_for :contact do |c| %>
+      <%= f.simple_fields_for :person do |c| %>
         <div><%= c.input :first_name %></div>
         <div><%= c.input :last_name %></div>
         <div><%= f.input :password %></div>

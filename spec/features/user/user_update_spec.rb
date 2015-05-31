@@ -5,7 +5,7 @@ describe 'users#update' do
   subject { page }
 
   let(:standard_user) do
-    FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_j))
+    FactoryGirl.create(:user, person: FactoryGirl.create(:person, :client_j))
   end
   context 'standard user' do
     before do
@@ -61,7 +61,7 @@ describe 'users#update' do
     it 'displays users on update' do
       gardener = FactoryGirl
                  .create(:user,
-                         contact: FactoryGirl.create(:contact, :gardener_a))
+                         person: FactoryGirl.create(:person, :gardener_a))
       visit_signin_and_login gardener
       visit edit_profile_path (standard_user)
       fill_in 'Street number',    with: '99'

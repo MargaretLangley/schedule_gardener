@@ -8,13 +8,13 @@ describe 'Touches#update' do
 
   context 'as client' do
     let(:user) do
-      FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
+      FactoryGirl.create(:user, person: FactoryGirl.create(:person, :client_r))
     end
 
     subject { page }
 
     it 'displays' do
-      touch = FactoryGirl.create(:touch, :tomorrow, contact: user.contact)
+      touch = FactoryGirl.create(:touch, :tomorrow, person: user.person)
       visit edit_touch_path(touch)
 
       expect(current_path).to eq edit_touch_path(touch)
@@ -22,7 +22,7 @@ describe 'Touches#update' do
 
     context 'with valid update' do
       before do
-        touch = FactoryGirl.create(:touch, :tomorrow, contact: user.contact)
+        touch = FactoryGirl.create(:touch, :tomorrow, person: user.person)
         visit edit_touch_path(touch)
         click_on('Update Contact Me')
       end
@@ -38,14 +38,14 @@ describe 'Touches#update' do
 
   context 'as gardener' do
     let(:user) do
-      FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :gardener_a))
+      FactoryGirl.create(:user, person: FactoryGirl.create(:person, :gardener_a))
     end
 
     subject { page }
 
     context 'invalid information' do
       it 'errors' do
-        touch = FactoryGirl.create(:touch, :tomorrow, contact: user.contact)
+        touch = FactoryGirl.create(:touch, :tomorrow, person: user.person)
         visit edit_touch_path(touch)
 
         fill_in 'Contact from', with: '1 Aug 2012'

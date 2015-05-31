@@ -3,7 +3,7 @@
 # Table name: touches
 #
 #  id                     :integer          not null, primary key
-#  contact_id             :integer          not null
+#  person_id             :integer          not null
 #  by_phone               :boolean
 #  by_visit               :boolean
 #  touch_from             :datetime         not null
@@ -36,8 +36,8 @@ describe Touch do
   end
 
   context 'invalid' do
-    let!(:client_a) { FactoryGirl.create(:contact, :client_a) }
-    subject(:touch) { FactoryGirl.build(:touch, by_phone: true, contact: client_a) }
+    let!(:client_a) { FactoryGirl.create(:person, :client_a) }
+    subject(:touch) { FactoryGirl.build(:touch, by_phone: true, person: client_a) }
 
     describe 'when asked to make appointment' do
       it 'without a way to contact' do

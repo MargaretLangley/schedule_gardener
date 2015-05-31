@@ -6,11 +6,11 @@ describe 'Touches#create' do
 
   context 'standard user' do
     let(:user_r) do
-      FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
+      FactoryGirl.create(:user, person: FactoryGirl.create(:person, :client_r))
     end
     let!(:gardener_alan) do
-      gardener = FactoryGirl.create(:contact, :gardener_a)
-      FactoryGirl.create(:user, contact: gardener)
+      gardener = FactoryGirl.create(:person, :gardener_a)
+      FactoryGirl.create(:user, person: gardener)
     end
 
     before(:each) do
@@ -73,7 +73,7 @@ describe 'Touches#create' do
   context 'gardener' do
     let(:gardener_a) do
       FactoryGirl.create(:user,
-                         contact: FactoryGirl.create(:contact, :gardener_a))
+                         person: FactoryGirl.create(:person, :gardener_a))
     end
 
     describe 'has gardener only content' do
@@ -88,7 +88,7 @@ describe 'Touches#create' do
     end
 
     it 'with valid information it adds touch' do
-      FactoryGirl.create(:contact, :client_a)
+      FactoryGirl.create(:person, :client_a)
       visit_signin_and_login gardener_a
       visit new_touch_path
 

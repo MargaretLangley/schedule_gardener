@@ -3,7 +3,7 @@
 # Table name: gardens
 #
 #  id         :integer          not null, primary key
-#  contact_id :integer
+#  person_id :integer
 #  created_at :datetime
 #  updated_at :datetime
 #
@@ -11,17 +11,17 @@
 require 'spec_helper'
 
 describe Garden do
-  let(:contact) do
-    FactoryGirl.create(:contact, :client_a)
+  let(:person) do
+    FactoryGirl.create(:person, :client_a)
   end
   let(:garden) do
     garden = FactoryGirl.build(:garden)
-    contact.gardens << garden
+    person.gardens << garden
     garden
   end
   let(:garden_own_address) do
     garden = FactoryGirl.build(:garden_own_address)
-    contact.gardens << garden
+    person.gardens << garden
     garden
   end
 
@@ -35,27 +35,27 @@ describe Garden do
   end
 
   context 'Validations' do
-    # would like to validate contact_id but seems to cause
+    # would like to validate person_id but seems to cause
     # problems. left it in as it would improve data quality
-    # [ :contact_id ].each do |validate_attr|
+    # [ :person_id ].each do |validate_attr|
     #   it { should validate_presence_of(validate_attr) }
     # end
   end
 
   context 'Associations' do
     it { should have_one(:address).dependent(:destroy) }
-    it { should belong_to(:contact) }
+    it { should belong_to(:person) }
 
     context 'Address' do
-      context 'when from contact' do
-        it 'should match contact' do
-          expect(garden.address).to eq garden.contact.address
+      context 'when from person' do
+        it 'should match person' do
+          expect(garden.address).to eq garden.person.address
         end
       end
       context 'when owned' do
         subject { garden_own_address }
-        it "can be different from contact's address" do
-          expect(garden_own_address.address).to_not eq garden_own_address.contact.address
+        it "can be different from person's address" do
+          expect(garden_own_address.address).to_not eq garden_own_address.person.address
         end
       end
     end

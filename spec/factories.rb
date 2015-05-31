@@ -2,14 +2,14 @@
 
 FactoryGirl.define do
   # USER
-  #  - has_one contact
+  #  - has_one person
   #
   factory :user do
     password 'foobar'
     password_confirmation 'foobar'
 
     trait :admin do
-      association :contact, :admin, strategy: :build
+      association :person, :admin, strategy: :build
     end
 
     trait :resetting_password do
@@ -25,17 +25,17 @@ FactoryGirl.define do
 
 
 
-  # CONTACT
+  # PERSON
   #   - belongs_to user
   #   - has_many gardens
   #   - has_many appointments
   #   - has_many touches
   #   - has_many visits
   #
-  factory :contact do
+  factory :person do
     user
-    first_name 'contact_trait_not_set'
-    last_name 'contact_trait_not_set'
+    first_name 'person_trait_not_set'
+    last_name 'person_trait_not_set'
     email  { "#{first_name}.#{last_name}@example.com".downcase }
     home_phone '0181-100-1001'
     mobile '0701-200-2007'
@@ -87,11 +87,11 @@ FactoryGirl.define do
 
 
   # GARDEN
-  #   - belongs_to contact
+  #   - belongs_to person
   #   - has_one address
   #
   factory :garden do
-    contact
+    person
   end
 
   factory :garden_own_address, parent: :garden, class: 'Garden'  do
@@ -115,33 +115,33 @@ FactoryGirl.define do
 
 
   # APPOINTMENT
-  #   - belongs_to contact  (class name contact)
-  #   - belongs_to appointee  (class name contact)
+  #   - belongs_to person  (class name person)
+  #   - belongs_to appointee  (class name person)
   #
   factory :appointment do
-    contact
-    association :appointee, factory: :contact, first_name: 'Alan', last_name: 'Titmarsh', role: 'gardener'
+    person
+    association :appointee, factory: :person, first_name: 'Alan', last_name: 'Titmarsh', role: 'gardener'
     starts_at '2012-09-01 09:30:00'
     ends_at '2012-09-01 11:00:00'
     description 'I am describing a new example event. For testing only.'
 
     #
-    # contacts
+    # persons
     #
     trait :client_a do
-      association :contact, :client_a
+      association :person, :client_a
     end
 
     trait :client_r do
-      association :contact, :client_r
+      association :person, :client_r
     end
 
     trait :gardener_a do
-      association :appointee, factory: :contact, first_name: 'Alan', last_name: 'Titmarsh', role: 'gardener'
+      association :appointee, factory: :person, first_name: 'Alan', last_name: 'Titmarsh', role: 'gardener'
     end
 
     trait :gardener_p do
-      association :appointee, factory: :contact, first_name: 'Percy', last_name: 'Thrower', role: 'gardener'
+      association :appointee, factory: :person, first_name: 'Percy', last_name: 'Thrower', role: 'gardener'
     end
 
     #
@@ -186,29 +186,29 @@ FactoryGirl.define do
 
 
   # TOUCH
-  #   - belongs_to contact
+  #   - belongs_to person
   #
   factory :touch do
-    association :contact, :client_a
-    association :appointee, factory: :contact, first_name: 'Alan', last_name: 'Titmarsh', role: 'gardener'
+    association :person, :client_a
+    association :appointee, factory: :person, first_name: 'Alan', last_name: 'Titmarsh', role: 'gardener'
     by_phone true
     by_visit false
     touch_from '2012-09-15'
     completed false
 
     #
-    # contacts
+    # persons
     #
     trait :client_a do
-      association :contact, :client_a
+      association :person, :client_a
     end
 
     trait :client_j do
-      association :contact, :client_j
+      association :person, :client_j
     end
 
     trait :client_r do
-      association :contact, :client_r
+      association :person, :client_r
     end
 
     #

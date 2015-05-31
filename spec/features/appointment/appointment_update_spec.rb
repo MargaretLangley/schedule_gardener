@@ -7,12 +7,12 @@ describe 'Appointments#update' do
   end
 
   let!(:user) do
-    FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_r))
+    FactoryGirl.create(:user, person: FactoryGirl.create(:person, :client_r))
   end
   let!(:gardener_a) do
-    FactoryGirl.create :user, contact: FactoryGirl.create(:contact, :gardener_a)
+    FactoryGirl.create :user, person: FactoryGirl.create(:person, :gardener_a)
   end
-  let!(:appointment)  { FactoryGirl.create(:appointment, :tomorrow_first_slot, appointee: gardener_a.contact, contact: user.contact) }
+  let!(:appointment)  { FactoryGirl.create(:appointment, :tomorrow_first_slot, appointee: gardener_a.person, person: user.person) }
 
   subject { page }
 

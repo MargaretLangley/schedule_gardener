@@ -8,9 +8,9 @@ describe 'abilities' do
   let(:admin_ability)    { Ability.new(admin) }
 
   let(:admin)          { FactoryGirl.create(:user, :admin) }
-  let(:another_client) { FactoryGirl.create(:contact, :client_a).user }
-  let(:client)         { FactoryGirl.create(:contact, :client_j).user }
-  let(:gardener)       { FactoryGirl.create(:contact, :gardener_a).user }
+  let(:another_client) { FactoryGirl.create(:person, :client_a).user }
+  let(:client)         { FactoryGirl.create(:person, :client_j).user }
+  let(:gardener)       { FactoryGirl.create(:person, :gardener_a).user }
 
   shared_examples_for 'can_manage_user' do |ability, user|
     it ('can show')     { expect(ability).to be_able_to(:show, user) }
@@ -121,10 +121,10 @@ describe 'abilities' do
       subject { client_ability }
 
       it 'can manage own appointment' do
-        should be_able_to(:manage, Appointment.new(contact: client.contact))
+        should be_able_to(:manage, Appointment.new(person: client.person))
       end
       it 'cannot manage appointment owned by another user' do
-        should_not be_able_to(:manage, Appointment.new(contact: another_client.contact))
+        should_not be_able_to(:manage, Appointment.new(person: another_client.person))
       end
     end
 
@@ -132,10 +132,10 @@ describe 'abilities' do
       subject { gardener_ability }
 
       it 'can manage own appointments' do
-        should be_able_to(:manage, Appointment.new(contact: gardener.contact))
+        should be_able_to(:manage, Appointment.new(person: gardener.person))
       end
       it 'can manage appointment owned by another user' do
-        should be_able_to(:manage, Appointment.new(contact: another_client.contact))
+        should be_able_to(:manage, Appointment.new(person: another_client.person))
       end
     end
 
@@ -143,10 +143,10 @@ describe 'abilities' do
       subject { admin_ability }
 
       it 'can manage own appointments' do
-        should be_able_to(:manage, Appointment.new(contact: admin.contact))
+        should be_able_to(:manage, Appointment.new(person: admin.person))
       end
       it 'can manage appointment owned by another user' do
-        should be_able_to(:manage, Appointment.new(contact: another_client.contact))
+        should be_able_to(:manage, Appointment.new(person: another_client.person))
       end
     end
   end
@@ -156,10 +156,10 @@ describe 'abilities' do
       subject { client_ability }
 
       it 'can manage own touch' do
-        should be_able_to(:manage, Touch.new(contact: client.contact))
+        should be_able_to(:manage, Touch.new(person: client.person))
       end
       it 'cannot manage appointment owned by another user' do
-        should_not be_able_to(:manage, Touch.new(contact: another_client.contact))
+        should_not be_able_to(:manage, Touch.new(person: another_client.person))
       end
     end
 
@@ -167,10 +167,10 @@ describe 'abilities' do
       subject { gardener_ability }
 
       it 'can manage own appointments' do
-        should be_able_to(:manage, Touch.new(contact: gardener.contact))
+        should be_able_to(:manage, Touch.new(person: gardener.person))
       end
       it 'can manage appointment owned by another user' do
-        should be_able_to(:manage, Touch.new(contact: another_client.contact))
+        should be_able_to(:manage, Touch.new(person: another_client.person))
       end
     end
 
@@ -178,10 +178,10 @@ describe 'abilities' do
       subject { admin_ability }
 
       it 'can manage own appointments' do
-        should be_able_to(:manage, Touch.new(contact: admin.contact))
+        should be_able_to(:manage, Touch.new(person: admin.person))
       end
       it 'can manage appointment owned by another user' do
-        should be_able_to(:manage, Touch.new(contact: another_client.contact))
+        should be_able_to(:manage, Touch.new(person: another_client.person))
       end
     end
   end

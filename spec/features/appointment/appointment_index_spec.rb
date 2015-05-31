@@ -41,20 +41,20 @@ describe 'Appointments#index' do
 
   def create_client
     @create_client ||=
-      FactoryGirl.create :user, contact: FactoryGirl.create(:contact, :client_r)
+      FactoryGirl.create :user, person: FactoryGirl.create(:person, :client_r)
   end
 
   def create_gardener(name: 'Titmarsh')
     @create_gardener ||=
     FactoryGirl
     .create :user,
-            contact: FactoryGirl.create(:contact, :gardener_a, last_name: name)
+            person: FactoryGirl.create(:person, :gardener_a, last_name: name)
   end
 
   def create_appointment(gardener:, client:)
     FactoryGirl.create(:appointment,
                        :tomorrow_first_slot,
-                       appointee: gardener.contact,
-                       contact: client.contact)
+                       appointee: gardener.person,
+                       person: client.person)
   end
 end

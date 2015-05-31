@@ -176,7 +176,7 @@
       touch: Contact Me
     attributes:
       touch:
-        contact: Client
+        person: Client
         touch_from: Contact
 
       user:

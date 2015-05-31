@@ -22,7 +22,7 @@ describe UserMailer do
   end
 
   def create_user
-    contact = FactoryGirl.create(:contact, :client_j)
-    FactoryGirl.create(:user, :resetting_password, contact: contact)
+    person = FactoryGirl.create(:person, :client_j)
+    FactoryGirl.create(:user, :resetting_password, person: person)
   end
 end

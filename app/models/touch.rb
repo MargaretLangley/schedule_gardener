@@ -15,7 +15,7 @@
 # Table name: touches
 #
 #  id                     :integer          not null, primary key
-#  contact_id             :integer          not null
+#  person_id              :integer          not null
 #  by_phone               :boolean
 #  by_visit               :boolean
 #  touch_from             :datetime         not null
@@ -25,16 +25,16 @@
 #  updated_at             :datetime
 #
 class Touch < ActiveRecord::Base
-  belongs_to :contact, class_name: 'Contact', foreign_key: 'contact_id'
-  belongs_to :appointee, class_name: 'Contact', foreign_key: 'appointee_id'
+  belongs_to :person, class_name: 'Person', foreign_key: 'person_id'
+  belongs_to :appointee, class_name: 'Person', foreign_key: 'appointee_id'
 
-  validates :appointee, :contact, presence: true
+  validates :appointee, :person, presence: true
   validates :touch_from,
             date: { after_or_equal_to: proc { Time.zone.now.beginning_of_day },
                     before: proc { Time.zone.now + 1.year } }, on: :create
   validate :touch_by_method_must_be_selected
 
-  delegate :full_name, :home_phone, to: :contact
+  delegate :full_name, :home_phone, to: :person
 
   after_initialize :initialize_record
 

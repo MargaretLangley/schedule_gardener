@@ -3,7 +3,7 @@
 # Table name: appointments
 #
 #  id           :integer          not null, primary key
-#  contact_id   :integer
+#  person_id   :integer
 #  appointee_id :integer
 #  starts_at    :datetime         not null
 #  ends_at      :datetime         not null
@@ -17,11 +17,11 @@ require 'spec_helper'
 describe Appointment do
   before { Timecop.freeze(Time.zone.parse('2012-9-1 8:00')) }
 
-  def create_appointment(contact: FactoryGirl.create(:contact, :client_r),
-                         appointee: FactoryGirl.create(:contact, :gardener_a),
+  def create_appointment(person: FactoryGirl.create(:person, :client_r),
+                         appointee: FactoryGirl.create(:person, :gardener_a),
                          starts_at:, ends_at:)
 
-    Appointment.create!(contact: contact, appointee: appointee, starts_at: starts_at, ends_at: ends_at)
+    Appointment.create!(person: person, appointee: appointee, starts_at: starts_at, ends_at: ends_at)
   end
 
   describe 'slots' do

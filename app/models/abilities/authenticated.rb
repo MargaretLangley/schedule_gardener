@@ -10,7 +10,7 @@ module Abilities
 
     def initialize(user)
       can [:show, :create, :update], User, id: user.id
-      can [:manage], [Appointment, Touch], contact_id: user.contact.id
+      can [:manage], [Appointment, Touch], person_id: user.person.id
       can :destroy, :masquerade
     end
   end

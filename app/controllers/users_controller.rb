@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @users = User.includes(:contact).search_ordered(params[:search]).paginate(per_page: 10, page: params[:page])
+    @users = User.includes(:person).search_ordered(params[:search]).paginate(per_page: 10, page: params[:page])
   end
 
   def show
@@ -16,8 +16,8 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    @user.contact = Contact.new
-    @user.contact.address = Address.new
+    @user.person = Person.new
+    @user.person.address = Address.new
   end
 
   def create
@@ -72,10 +72,10 @@ class UsersController < ApplicationController
     params.require(:user)
       .permit :password,
               :password_confirmation,
-              contact_attributes: contact_params
+              person_attributes: person_params
   end
 
-  def contact_params
+  def person_params
     %i(email first_name home_phone last_name mobile) +
       [address_attributes: address_params]
   end

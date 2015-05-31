@@ -1,6 +1,6 @@
-class CreateContacts < ActiveRecord::Migration
+class CreatePersons < ActiveRecord::Migration
   def change
-    create_table :contacts do |t|
+    create_table :persons do |t|
       t.belongs_to  :user, null: false, index: true
       t.string :first_name, null: false
       t.string :last_name, null: false

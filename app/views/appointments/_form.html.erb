@@ -3,16 +3,16 @@
   <%= simple_form_for appointment, html: { class: 'form-horizontal' } do |f| %>
     <%= render 'shared/error_messages', object: f.object  %>
     <div>
-      <%= f.association :appointee, label: 'Gardener', collection: Contact.contacts_by_role('gardener'), label_method: 'first_name', include_blank: false %>
+      <%= f.association :appointee, label: 'Gardener', collection: Person.by_role('gardener'), label_method: 'first_name', include_blank: false %>
     </div>
 
     <% if current_user.gardener? %>
       <div>
-        <%= f.association :contact, label: 'Client', collection: Contact.contacts_by_role('client'),
-        label_method: lambda { |contact| information(contact) }, include_blank: 'Please select...' %>
+        <%= f.association :person, label: 'Client', collection: Person.by_role('client'),
+        label_method: lambda { |person| information(person) }, include_blank: 'Please select...' %>
       </div>
     <% else %>
-      <%= f.hidden_field :contact_id, value: current_user.contact.id %>
+      <%= f.hidden_field :person_id, value: current_user.person.id %>
     <% end %>
     <%= f.fields_for :appointment_time do |t| %>
       <div>

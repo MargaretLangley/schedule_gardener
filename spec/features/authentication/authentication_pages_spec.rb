@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe 'Authentication' do
   let(:user) do
-    FactoryGirl.create(:user, contact: FactoryGirl.create(:contact, :client_j))
+    FactoryGirl.create(:user, person: FactoryGirl.create(:person, :client_j))
   end
   let(:gardener) do
-    FactoryGirl.create :user, contact: FactoryGirl.create(:contact, :gardener_a)
+    FactoryGirl.create :user, person: FactoryGirl.create(:person, :gardener_a)
   end
   let(:admin) { FactoryGirl.create(:user, :admin) }
 

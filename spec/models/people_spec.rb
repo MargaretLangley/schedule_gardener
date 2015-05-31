@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: contacts
+# Table name: persons
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer          not null
@@ -16,11 +16,11 @@
 
 require 'spec_helper'
 
-describe Contact do
+describe Person do
   before { Timecop.freeze(Time.zone.parse('1/9/2012 8:00')) }
-  subject(:contact) { FactoryGirl.build(:contact, :client_r) }
+  subject(:person) { FactoryGirl.build(:person, :client_r) }
 
-  include_examples 'All Built Objects', Contact
+  include_examples 'All Built Objects', Person
 
   describe 'Validations' do
     # role can't be validated in the same way because of the before validation
@@ -40,9 +40,9 @@ describe Contact do
       let(:mixed_case_email) { 'Foo@ExAMPLe.CoM' }
 
       it 'with upper-case saved as lower-case' do
-        contact.email = mixed_case_email
-        contact.save
-        expect(contact.reload.email).to eq mixed_case_email.downcase
+        person.email = mixed_case_email
+        person.save
+        expect(person.reload.email).to eq mixed_case_email.downcase
       end
 
       it 'with bad format are invalid' do
@@ -52,29 +52,29 @@ describe Contact do
   end
 
   describe 'ordering' do
-    def create_appointment(date:, contact: nil, gardener: nil)
-      contact = FactoryGirl.build(:contact, :client_r) unless contact
-      gardener = FactoryGirl.build(:contact, :gardener_a) unless gardener
+    def create_appointment(date:, person: nil, gardener: nil)
+      person = FactoryGirl.build(:person, :client_r) unless person
+      gardener = FactoryGirl.build(:person, :gardener_a) unless gardener
       FactoryGirl.create(:appointment,
                          date,
-                         contact: contact,
+                         person: person,
                          appointee: gardener)
     end
 
     describe '#appointments' do
       it 'returns expected appointments ordered by date' do
-        app2 = create_appointment(date: :today_fourth_slot, contact: contact)
-        app3 = create_appointment(date: :tomorrow_first_slot, contact: contact)
-        app1 = create_appointment(date: :today_first_slot, contact: contact)
+        app2 = create_appointment(date: :today_fourth_slot, person: person)
+        app3 = create_appointment(date: :tomorrow_first_slot, person: person)
+        app1 = create_appointment(date: :today_first_slot, person: person)
         expect(Appointment.all).to eq [app2, app3, app1]
 
-        expect(contact.appointments).to eq [app1, app2, app3]
+        expect(person.appointments).to eq [app1, app2, app3]
       end
     end
 
     describe '#visits' do
       it 'returns expected visits ordered by date' do
-        gardener = FactoryGirl.build(:contact, :gardener_a)
+        gardener = FactoryGirl.build(:person, :gardener_a)
         app2 = create_appointment date: :today_fourth_slot, gardener: gardener
         app3 = create_appointment date: :tomorrow_first_slot, gardener: gardener
         app1 = create_appointment date: :today_first_slot, gardener: gardener
@@ -88,53 +88,53 @@ describe Contact do
   describe 'Custom finders' do
     context '#gardeners' do
       it 'return first name ordered gardeners' do
-        percy = FactoryGirl.create(:contact, :gardener_p)
-        allan = FactoryGirl.create(:contact, :gardener_a)
-        roger = FactoryGirl.create(:contact, :client_r)
-        expect(Contact.all).to eq [percy, allan, roger]
+        percy = FactoryGirl.create(:person, :gardener_p)
+        allan = FactoryGirl.create(:person, :gardener_a)
+        roger = FactoryGirl.create(:person, :client_r)
+        expect(Person.all).to eq [percy, allan, roger]
 
-        expect(Contact.contacts_by_role('gardener')).to eq [allan, percy]
+        expect(Person.by_role('gardener')).to eq [allan, percy]
       end
     end
 
     context '#clients' do
       it 'return first name ordered clients' do
-        roger = FactoryGirl.create(:contact, :client_r)
-        ann   = FactoryGirl.create(:contact, :client_a)
-        alan  = FactoryGirl.create(:contact, :gardener_a)
+        roger = FactoryGirl.create(:person, :client_r)
+        ann   = FactoryGirl.create(:person, :client_a)
+        alan  = FactoryGirl.create(:person, :gardener_a)
 
-        expect(Contact.all).to eq [roger, ann, alan]
+        expect(Person.all).to eq [roger, ann, alan]
 
-        expect(Contact.contacts_by_role('client')).to eq [ann, roger]
+        expect(Person.by_role('client')).to eq [ann, roger]
       end
 
       it 'returns case insensitive ordering of clients' do
-        roger = FactoryGirl.create(:contact, :client_r)
-        ann   = FactoryGirl.create(:contact, :client_a)
-        alan  = FactoryGirl.create(:contact, :gardener_a)
-        john  = FactoryGirl.create(:contact, :client_j, first_name: 'john')
-        expect(Contact.all).to eq [roger, ann, alan, john]
+        roger = FactoryGirl.create(:person, :client_r)
+        ann   = FactoryGirl.create(:person, :client_a)
+        alan  = FactoryGirl.create(:person, :gardener_a)
+        john  = FactoryGirl.create(:person, :client_j, first_name: 'john')
+        expect(Person.all).to eq [roger, ann, alan, john]
 
-        expect(Contact.contacts_by_role('client')).to eq [ann, john, roger]
+        expect(Person.by_role('client')).to eq [ann, john, roger]
       end
     end
   end
 
   it 'full_name is correct' do
-    expect(contact.full_name).to eq 'Roger Smith'
+    expect(person.full_name).to eq 'Roger Smith'
   end
 
   context '#home_phone' do
     it 'only save numerics' do
-      contact.home_phone = '(0181).,;.300-1234'
-      expect(contact.home_phone).to eq '01813001234'
+      person.home_phone = '(0181).,;.300-1234'
+      expect(person.home_phone).to eq '01813001234'
     end
   end
 
   context '#mobile' do
     it 'only save numerics' do
-      contact.mobile = '(0181).,;.300-1234'
-      expect(contact.mobile).to eq '01813001234'
+      person.mobile = '(0181).,;.300-1234'
+      expect(person.mobile).to eq '01813001234'
     end
   end
 end

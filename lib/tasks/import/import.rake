@@ -24,8 +24,8 @@ task :import, [:import_users] => :environment do |_task, args|
   Rails.logger.info 'import:users'
   Rake::Task['import:users'].invoke(options[:import_users])
 
-  Rails.logger.info 'import:contacts'
-  Rake::Task['import:contacts'].invoke
+  Rails.logger.info 'import:persons'
+  Rake::Task['import:persons'].invoke
 
   Rails.logger.info 'import:appointment_slots'
   Rake::Task['import:appointment_slots'].invoke
