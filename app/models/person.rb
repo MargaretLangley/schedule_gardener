@@ -1,7 +1,7 @@
 #
 # Person
 #
-# The person we contact about gardening
+# The information about an entity in the system
 #   - persons have the information to complete the creation of an appointment
 #
 # == Schema Information

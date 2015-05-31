@@ -155,7 +155,6 @@ RailsAdmin.config do |config|
 
   #   # Found associations:
 
-  #     configure :contactable, :polymorphic_association         # Hidden
   #     configure :address, :has_one_association
   #     configure :gardens, :has_many_association
   #     configure :appointments, :has_many_association
