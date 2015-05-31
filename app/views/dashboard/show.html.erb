@@ -1,15 +1,15 @@
 <% provide(:title, 'Dashboard') %>
 
-<header class='flex-header'>
+<header class = 'flex-header'>
   <h1>Dashboard</h1>
 </header>
 
-<div class='flex-nav'>
+<div class = 'flex-nav'>
   <%= render 'shared/main_navigation' %>
 </div>
 
-<div class='flex-container'>
-  <div class='flex1'>
+<div class = 'flex-container'>
+  <div class = 'flex1'>
     <h2>Appointments</h2>
     <h2>Today</h2>
     <%= render 'appointments/appointments_table', object: @appointments.in_time_range(Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)  %>
@@ -17,7 +17,7 @@
     <%= render 'appointments/appointments_table', object: @appointments.in_time_range(Time.zone.now.beginning_of_day + 1.day ..Time.zone.now.end_of_day + 1.day) %>
   </div>
 
-  <article class='flex2'>
+  <article class = 'flex2'>
     <h2>Contact Me</h2>
     <%= render 'touches/touches_table', object: @touches %>
   </article>

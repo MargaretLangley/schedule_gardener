@@ -14,7 +14,8 @@
 
 label {
   @extend %ellipsis-text;
-}
+  line-height: 90%;
+ }
 
 input,
 textarea {
@@ -27,7 +28,8 @@ textarea {
 // scss-lint:disable QualifyingElement
 
 input[type=submit] {
-  padding: 2%;
+  background-color: $color-primary-shade-0;
+  color: $color-white;
 }
 
 input[readonly='readonly'] {
@@ -37,7 +39,6 @@ input[readonly='readonly'] {
 
 input[type='checkbox'] {
   height: 16px;
-  width: 16px;
 }
 
 // scss-lint:enable QualifyingElement

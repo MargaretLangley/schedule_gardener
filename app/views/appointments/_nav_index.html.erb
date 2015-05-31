@@ -1,9 +1,10 @@
-<div class='well sidebar-nav'>
-  <ul class='nav nav-pills'>
-    <li class='nav-header'>Appointments for</li>
-    <li class='col-md-12  <%= 'active' if active_nav? 'within_week' %>'><%= link_to 'Within Week', appointments_path(nav: 'within_week', begin: Time.zone.today, end: Time.zone.today + 6.days) %> </li>
-    <li class='col-md-12  <%= 'active' if active_nav? 'within_month' %>'><%= link_to 'Within Month', appointments_path(nav: 'within_month', begin: Time.zone.today, end: Time.zone.now.end_of_month ) %> </li>
-    <li class='col-md-12  <%= 'active' if active_nav? 'next_month' %>'><%= link_to 'Next Month', appointments_path(nav: 'next_month', begin: Time.zone.now.next_month.beginning_of_month, end: Time.zone.now.next_month.end_of_month ) %> </li>
+<div class = 'well  sidebar-nav'>
+  <ul class = 'nav  nav-pills  flex-col   width175'>
+    <li class = 'nav-header'>Appointments for</li>
+    <br>
+    <li class = 'col-md-12 <%= 'active' if active_nav? 'within_week' %>'><%= link_to 'Within Week', appointments_path(nav: 'within_week', begin: Time.zone.today, end: Time.zone.today + 6.days) %> </li>
+     <li class = 'col-md-12 <%= 'active' if active_nav? 'within_month' %>'><%= link_to 'Within Month', appointments_path(nav: 'within_month', begin: Time.zone.today, end: Time.zone.now.end_of_month ) %> </li>
+    <li class = 'col-md-12  <%= 'active' if active_nav? 'next_month' %>'><%= link_to 'Next Month', appointments_path(nav: 'next_month', begin: Time.zone.now.next_month.beginning_of_month, end: Time.zone.now.next_month.end_of_month ) %> </li>
   </ul>
 </div><!--/.well -->
 

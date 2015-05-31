@@ -28,8 +28,18 @@
     flex-direction: row;
 
     .flex-image { order: 1; }
-    .article { order: 3; }
+    .article-form { order: 3; }
     .flex-middle { order: 2; }
+  }
+
+  .flex-form {
+    @include setflex;
+    flex-direction: row;
+  }
+
+  .flex-col {
+    @include setflex;
+    flex-direction: column;
   }
 }
 
@@ -51,7 +61,7 @@
     flex-direction: column;
 
     .flex-image { order: 1; }
-    .article { order: 2; }
+    .article-form { order: 2; }
     .flex-middle { order: 3; }
   }
 
@@ -74,7 +84,7 @@
     flex-direction: column;
 
     .flex-image { order: 1; }
-    .article { order: 2; }
+    .article-form { order: 2; }
     .flex-middle { order: 3; }
   }
 
@@ -94,14 +104,6 @@
   width: 70px;
 }
 
-.article {
-  font-size: 16px;
-  height: 300px;
-  text-align: left;
-  width: 310px;
-}
-
-
 /* We tell all items to be 100% width */
 .flex-header,
 .flex-100pc,
@@ -110,54 +112,33 @@
   flex: 1 100%;
 }
 
-.flex-wrapping {
-  display: flex;
-  flex: 1 100%;
-  justify-content: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+@mixin flex-basic {
+  border: 1px solid;
+  border-color: $color-complimentary-shade-0;
+  font-size: 16px;
+  text-align: left;
+  width: 500px;
 }
 
 .flex1 {
-  background-color: white;
-  font-size: 16px;
-  text-align: left;
-  width: 500px;
+  @include flex-basic;
+  background-color: #F5F5F5;
 }
 
 .flex2 {
+  @include flex-basic;
   background-color: white;
+}
+
+.article {
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.article-form {
   font-size: 16px;
+  padding: 20px;
   text-align: left;
   width: 500px;
-}
-
-.article650 {
-  background-color: white;
-  font-size: 16px;
-  text-align: left;
-  width: 650px;
-}
-
-.flex-item {
-  height: 300px;
-  text-align: left;
-  width: 310px;
-}
-
-.flex50pc {
-  text-align: left;
-  width: 50%;
-}
-
-.flex-item2 {
-  background-color: blue;
-  height: 100px;
-  text-align: left;
-  width: 130px;
-}
-
-.flex-side {
-  width: 25%;
 }

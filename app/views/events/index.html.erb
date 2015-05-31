@@ -1,36 +1,37 @@
 <% provide(:title, 'Calendar of Appointments') %>
 
-<div class='flex-header'>
+<div class = 'flex-header'>
   <h1>Calendar of Appointments</h1>
 <div>
 
-<div class='flex-nav'>
+<div class = 'flex-nav'>
   <%= render 'shared/main_navigation' %>
 </div>
 
-<div class='row'>
-  <div class='col-md-12'>
-    <h2 class='month'>
-      <%= link_to '<', date: @date.prev_month %>
-      <%= @date.strftime('%B %Y') %>
-      <%= link_to '>', date: @date.next_month %>
-    </h2>
-    <%= calendar @date do |date| %>
-      <%= date.day %>
-      <% 1.upto(4) do |slot| %>
-        <ul>
-          <% if appointment_filled?(@appointments_by_date[date], slot) %>
-            <li>
-              <% appointment = find_appointment(@appointments_by_date[date], slot) %>
-              <%= link_to appointment.title, edit_appointment_path(appointment) %>
-            </li>
-          <% else %>
-            <li>
-              <%= new_appointment_link(date, slot) %>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
+<h2 class = 'month'>
+  <div class = 'flex-form'>
+    <%= link_to '<', date: @date.prev_month %>
+    <%= @date.strftime('%B %Y') %>
+    <%= link_to '>', date: @date.next_month %>
+  <div>
+</h2>
+
+<div class = 'flex-form'>
+  <%= calendar @date do |date| %>
+    <%= date.day %>
+    <% 1.upto(4) do |slot| %>
+      <ul>
+        <% if appointment_filled?(@appointments_by_date[date], slot) %>
+          <li>
+            <% appointment = find_appointment(@appointments_by_date[date], slot) %>
+            <%= link_to appointment.title, edit_appointment_path(appointment) %>
+          </li>
+        <% else %>
+          <li>
+            <%= new_appointment_link(date, slot) %>
+          </li>
+        <% end %>
+      </ul>
     <% end %>
-  </div>  <!-- col-md-12 -->
-</div> <!-- row appointments -->
+  <% end %>
+</div> <!-- flex-form appointments -->

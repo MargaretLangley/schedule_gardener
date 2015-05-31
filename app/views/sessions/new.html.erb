@@ -1,4 +1,4 @@
-<div class = 'flex-container'>
+<div class = 'flex-static'>
 
   <div class = 'flex-image'>
     <img  src = '/images/sign.jpg' />
@@ -13,25 +13,24 @@
 
     <%= form_for(:session, url: signin_path) do |f| %>
 
-      <div class='form-group'>
+      <div>
         <%= f.label :email %>
         <%= f.text_field :email %>
       </div>
 
-      <div class='form-group'>
+      <div>
         <%= f.label :password %>
         <%= f.password_field :password %>
       </div>
 
-      <div class='form-group'>
+      <div>
         <%= f.button :submit, value: 'Sign in', class: 'btn  btn-primary' %>
-        <%= link_to 'forgotten password?', new_password_reset_path, class: 'spacer-1-24' %>
+        <%= link_to 'forgotten password?', new_password_reset_path, class: 'spacer-left' %>
       </div>
 
-      <div class='form-group  line-spacer-3'>
+      <div class = 'line-spacer-3'>
         <%= link_to 'New user? Sign up now!', signup_path %>
       </div>
     <% end %>
   </div>
 </div>
-

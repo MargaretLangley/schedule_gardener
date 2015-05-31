@@ -1,0 +1,50 @@
+//
+// Buttons
+//
+
+@import 'settings.colors';
+
+/* Margins and padding do not work on flexbox,
+ if there is no height in the box they are in.
+ There is also a problem in buttons taking up whole line.
+ Either put in a new line or put within another
+ special flexbox for them. */
+
+.flex-button-box {
+  margin-right: 50px;
+  width: 150px;
+}
+
+.flex-ht-button-box {
+  height: 50px;
+  margin-left: 20px;
+  margin-right: 50px;
+}
+
+@mixin button-basic {
+  border: 1px solid $color-boulder;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.button {
+  @include button-basic;
+  background-color: $color-primary-shade-0;
+  color: $color-white;
+}
+
+.cancel {
+  @include button-basic;
+  background-color: red;
+  color: $color-white;
+}
+
+.button:hover {
+  background-color: $color-grey-alto;
+  color: $color-primary-shade-0;
+}
+
+.cancel:hover {
+  background-color: $color-white;
+  color: red;
+}

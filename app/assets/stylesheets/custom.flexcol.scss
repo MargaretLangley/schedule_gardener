@@ -1,0 +1,37 @@
+@import 'settings.colors';
+
+.contain {
+  display: flexbox;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  flex: 1 100%;
+  justify-content: center;
+}
+
+@mixin setcolumn {
+  padding-left: 20px;
+  height: 20px;
+  width: 100px;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -ms-flex: 1;
+  box-flex: 1;
+}
+
+@mixin setcolor {
+  background: white;
+  color: $color-text-black;
+}
+
+  /* Headings */
+.columnhead {
+  @include setcolumn;
+  @include setcolor;
+}
+
+/* Column white background */
+.columna {
+  @include setcolumn;
+  @include setcolor;
+}

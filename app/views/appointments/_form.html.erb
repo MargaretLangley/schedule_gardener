@@ -1,50 +1,39 @@
-<div class='flex-container'>
+<div class = 'flex-form'>
 
-  <div class='flex-side'></div>
+  <%= simple_form_for appointment, html: { class: 'form-horizontal' } do |f| %>
+    <%= render 'shared/error_messages', object: f.object  %>
+    <div>
+      <%= f.association :appointee, label: 'Gardener', collection: Contact.contacts_by_role('gardener'), label_method: 'first_name', include_blank: false %>
+    </div>
 
-  <div class='flex50pc'>
-
-    <%= simple_form_for appointment, html: { class: 'form-horizontal' } do |f| %>
-      <%= render 'shared/error_messages', object: f.object  %>
-      <div class='form-group'>
-        <%= f.association :appointee, label: 'Gardener', collection: Contact.contacts_by_role('gardener'), label_method: 'first_name', include_blank: false %>
+    <% if current_user.gardener? %>
+      <div>
+        <%= f.association :contact, label: 'Client', collection: Contact.contacts_by_role('client'),
+        label_method: lambda { |contact| information(contact) }, include_blank: 'Please select...' %>
       </div>
-
-      <% if current_user.gardener? %>
-        <div class='form-group'>
-          <%= f.association :contact, label: 'Client', collection: Contact.contacts_by_role('client'),
-          label_method: lambda { |contact| information(contact) }, include_blank: 'Please select...' %>
-        </div>
-      <% else %>
-        <%= f.hidden_field :contact_id, value: current_user.contact.id %>
-      <% end %>
-      <%= f.fields_for :appointment_time do |t| %>
-        <div class='form-group'>
-          <%= t.input :start_date, label: 'Date', as: :date_picker %>
-        </div>
-        <div class='form-group'>
-          <%= t.input :start_time, label: 'Time' , include_blank: false, collection: AppointmentSlot.all, label_method: :humanize_time, value_method: :time  %>
-        </div>
-        <div class='form-group'>
-          <%= t.input :length, required: true, label: 'Length',  include_blank: false, collection: slot_lengths %>
-        </div>
-      <% end %>
-      <div class='form-group'>
-        <%= f.input :description %>
+    <% else %>
+      <%= f.hidden_field :contact_id, value: current_user.contact.id %>
+    <% end %>
+    <%= f.fields_for :appointment_time do |t| %>
+      <div>
+        <%= t.input :start_date, label: 'Date', as: :date_picker %>
       </div>
-      <div class='form-group'>
-        <div class='row'>
-          <div class='col-xs-5  col-sm-3  col-md-5'>
-            <%= f.button :submit, class: 'btn  btn-primary' %>
-          </div>
-          <div class='col-xs-5  col-sm-3  col-md-3'>
-            <%= link_to 'Cancel', appointments_path, class: 'btn  btn-danger' %>
-          </div>
-        </div>
+      <div>
+        <%= t.input :start_time, label: 'Time' , include_blank: false, collection: AppointmentSlot.all, label_method: :humanize_time, value_method: :time  %>
+      </div>
+      <div>
+        <%= t.input :length, required: true, label: 'Length',  include_blank: false, collection: slot_lengths %>
       </div>
     <% end %>
-  </div>
 
-  <div class='flex-side'></div>
-
+    <div>
+      <%= f.input :description %>
+    </div>
+    <div>
+      <div class = 'flex-form'>
+        <%= f.button :submit, class: 'flex-button-box  btn  btn-primary' %>
+        <%= link_to 'Cancel', appointments_path, class: 'flex-button-box  btn  btn-danger' %>
+      </div>
+    </div>
+  <% end %>
 </div>
