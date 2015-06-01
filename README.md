@@ -24,20 +24,23 @@ Application for scheduling a gardener to come to a premise and garden.
 
 ## 2. Deployment:
 
-### Code Setup
+### 1. Code Setup
 1. `cap <environment> setup`
 2. `cap <environment> deploy`
 
-### Database Setup
+### 2. Database Setup
 3. `cap <environment> db:push`
 
-## 3. Test:
+## 3. Database Import
+  1\. Import from another database: `cap <environment> db:pull`
+  2\. Import from csv files `rake import`
+
+## 4. Test:
 
 Requires mailcatcher to be running:
 `mailcatcher &`
 
-
-## 4. Backing up a database into CSV and saved onto remote repository:
+## 5. Backing up a database into CSV and saved onto remote repository:
 1. `cap <environment> db:pull`
 2. `rake export`
 3. `cd ./import_data`
