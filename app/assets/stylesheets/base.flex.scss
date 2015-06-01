@@ -32,6 +32,16 @@
     .flex-middle { order: 2; }
   }
 
+  .flex-signin {
+    @include setflex;
+    flex-direction: row;
+
+    .flex-image { order: 3; }
+    .article { order: 1; }
+    .flex-middle { order: 2; }
+  }
+
+
   .flex-form {
     @include setflex;
     flex-direction: row;
