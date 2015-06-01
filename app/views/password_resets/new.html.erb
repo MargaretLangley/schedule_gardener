@@ -1,15 +1,18 @@
 <% provide(:title, "Forgot your password?") %>
 
-<div class = 'flex-header'>
-  <h1>Forgot your password?</h1>
-<div>
+<div class = 'flex-form'>
+  <div class = 'article-form'>
 
-<%= simple_form_for @password_reset do |f| %>
-  <%= render 'shared/error_messages', object: f.object  %>
-  <div class = 'form-inputs'>
-    <%= f.input :email, label: 'Enter your email address' %>
-  </div>
-  <div class = 'actions'>
-    <%= f.submit 'Email me password reset instructions', class: 'btn btn-primary btn-lg' %>
-  </div>
-<% end %>
+    <h1>Forgot your password?</h1>
+
+    <%= simple_form_for @password_reset do |f| %>
+      <%= render 'shared/error_messages', object: f.object  %>
+      <div class = 'form-inputs'>
+        <%= f.input :email, label: 'Enter your email address' %>
+      </div>
+      <div class = 'actions'>
+        <%= f.submit 'Email me password reset instructions', class: 'btn btn-primary btn-lg' %>
+      </div>
+    <% end %>
+  <div>
+<div>

@@ -41,7 +41,6 @@
     .flex-middle { order: 2; }
   }
 
-
   .flex-form {
     @include setflex;
     flex-direction: row;
@@ -137,11 +136,11 @@
 
 .flex2 {
   @include flex-basic;
-  background-color: white;
+  background-color: $color-white;
 }
 
 .article {
-  background-color: white;
+  background-color: $color-white;
   border-radius: 20px;
   padding: 20px;
 }
