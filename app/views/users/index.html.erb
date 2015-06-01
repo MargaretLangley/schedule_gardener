@@ -1,41 +1,42 @@
 <% provide(:title, 'Users') %>
 
-<div class = 'flex-header'>
-  <h1>Users</h1>
-<div>
-
-<div class = 'flex-nav'>
-  <%= render 'shared/main_navigation' %>
-</div>
-
-<div class = 'flex-single'>
-  <%= form_tag users_path, method: 'get', class: 'form-inline  well'  do %>
-    <%= text_field_tag :search, params[:search], placeholder: 'Search', class: 'input-query' %>
-      <button id='go_search' type='submit' value='search', class: 'standard_button' ><span class='glyphicon glyphicon-search'></span></button>
-  <% end %>
-</div>
-
 <div class = 'flex-form'>
-  <div class = 'article  width500'>
-    <br>
-    <div class = 'contain'>
-      <div class = 'columnhead  width200'>Name</div>
-      <div class = 'columnhead  width150'>Phone</div>
-      <div class = 'columnhead  width50'>Edit</div>
-      <div class = 'columnhead  width50'>Actions</div>
-      <div class = 'columnhead  width50'></div>
+  <div class = 'flex-user'>
+    <h1>Users</h1>
+
+    <%= render 'shared/main_navigation' %>
+
+    <div class = 'article  width500'>
+      <%= form_tag users_path, method: 'get', class: 'form-inline  well'  do %>
+      <%= text_field_tag :search, params[:search], placeholder: 'Search', class: 'input-query' %>
+        <button id='go_search' type='submit' value='search', class: 'standard_button' ><span class='glyphicon glyphicon-search'></span></button>
+      <% end %>
     </div>
 
-    <% if @users.count > 0 %>
-      <% @users.each do |user| %>
-        <%= render user  %>
-    <% end %>
-    <% else %>
-      <div colspan='4'><h2>No Matching Users</h2></div>
-    <% end %>
-    <%= will_paginate %>
-    <div>
-      <%= link_to 'Create User', signup_path, class: 'button' %>
+    <div class = 'article1  width500'>
+      <div class = 'contain'>
+        <div class = 'columnhead  width200'>Name</div>
+        <div class = 'columnhead  width150'>Phone</div>
+        <div class = 'columnhead  width50'>Edit</div>
+        <div class = 'columnhead  width50'>Actions</div>
+        <div class = 'columnhead  width50'></div>
+      </div>
+
+      <% if @users.count > 0 %>
+        <% @users.each do |user| %>
+          <%= render user  %>
+      <% end %>
+      <% else %>
+        <div colspan='4'><h2>No Matching Users</h2></div>
+      <% end %>
+      <%= will_paginate %>
     </div>
-  </div><!-- article -->
+
+    <div class = 'article2  width500'>
+      <%= link_to 'Create User', signup_path, class: 'button' %>
+    </div><!-- article -->
+
+    <%= render 'layouts/footer' %>
+
+  </div><!--flex-user-->
 </div><!--flex-form-->

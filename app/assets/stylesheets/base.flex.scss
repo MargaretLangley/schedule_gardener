@@ -41,6 +41,16 @@
     .flex-middle { order: 2; }
   }
 
+  .flex-user {
+    @include setflex;
+    flex-direction: column;
+
+    .article { order: 1; }
+    .article1 { order: 2; }
+    .article2 { order: 3; }
+    .flex-footer { order: 4; }
+  }
+
   .flex-form {
     @include setflex;
     flex-direction: row;
@@ -139,9 +149,10 @@
   background-color: $color-white;
 }
 
-.article {
+.article,
+.article1,
+.article2 {
   background-color: $color-white;
-  border-radius: 20px;
   padding: 20px;
 }
 

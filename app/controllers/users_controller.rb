@@ -7,6 +7,8 @@ class UsersController < ApplicationController
   check_authorization
   load_and_authorize_resource
 
+  layout 'application_no_footer'
+
   def index
     @users = User.includes(:person).search_ordered(params[:search]).paginate(per_page: 10, page: params[:page])
   end
