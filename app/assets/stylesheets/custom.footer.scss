@@ -5,20 +5,16 @@
 footer {
   border-top: 1px solid $color-complimentary-shade-0;
   color: $color-complimentary-shade-0;
-  font-size: 20px;
+  font-size: 16px;
   margin-top: 3%;
   padding-top: 5px;
 
   a {
-    color: $color-text-faded;
+    color: $color-complimentary-shade-0;
 
     &:hover {
       color: $color-text-primary;
     }
-  }
-
-  small {
-    float: left;
   }
 
   ul {
@@ -30,4 +26,12 @@ footer {
       margin-left: 1em;
     }
   }
+}
+
+.flex-left {
+  width: 50%;
+}
+
+.flex-right {
+  width: 50%;
 }
