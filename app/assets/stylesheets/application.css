@@ -59,6 +59,7 @@
  *= require custom.flexcol
  *= require custom.form
  *= require custom.footer
+ *= require custom.nav
  *= require custom.page
  *= require custom.spacing
  *= require custom.typography

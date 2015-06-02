@@ -1,0 +1,29 @@
+//
+// Main navigation bar 'Dashboard Appointments...'
+//
+// found in shared/_main-navigation
+//
+@import 'settings.colors';
+
+.linav {
+  background-color: $navbar-shade;
+  border: 1px solid $color-complimentary-shade-0;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  -moz-box-flex: 1;
+  -webkit-box-flex: 1;
+  box-flex: 1;
+  -ms-flex: 1;
+  padding: 8px;
+  text-align: center;
+  width: 20%;
+
+  a {
+    color: white;
+
+    &:hover {
+      color: $color-complimentary-shade-0;
+    }
+  }
+}
+
