@@ -14,12 +14,12 @@
   -webkit-box-flex: 1;
   box-flex: 1;
   -ms-flex: 1;
-  padding: 8px;
+  padding: 7px;
   text-align: center;
   width: 20%;
 
   a {
-    color: white;
+    color: $color-white;
 
     &:hover {
       color: $color-complimentary-shade-0;
