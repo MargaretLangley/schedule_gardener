@@ -1,10 +1,9 @@
-<% provide(:title, 'Users') %>
+<%= render 'shared/main_navigation' %>
 
+<% provide(:title, 'Users') %>
 <div class = 'flex-form'>
   <div class = 'flex-user'>
     <h1>Users</h1>
-
-    <%= render 'shared/main_navigation' %>
 
     <div class = 'article  width500'>
       <%= form_tag users_path, method: 'get', class: 'form-inline  well'  do %>

@@ -1,12 +1,9 @@
-<% provide(:title, 'Dashboard') %>
+<%= render 'shared/main_navigation' %>
 
+<% provide(:title, 'Dashboard') %>
 <header class = 'flex-header'>
   <h1>Dashboard</h1>
 </header>
-
-<div class = 'flex-nav'>
-  <%= render 'shared/main_navigation' %>
-</div>
 
 <div class = 'flex-container'>
   <div class = 'flex1'>
@@ -23,5 +20,4 @@
   </article>
 
   <div class = 'flex-middle'></div>
-
 </div>

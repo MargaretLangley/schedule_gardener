@@ -48,6 +48,11 @@
     flex-direction: row;
   }
 
+  .flex-nav {
+    @include setflex;
+    flex-direction: row;
+   }
+
   .flex-static {
     @include setflex;
     flex-direction: row;
@@ -136,8 +141,7 @@
 
 /* We tell all items to be 100% width */
 .flex-header,
-.flex-100pc,
-.flex-nav {
+.flex-100pc {
   flex: 1 100%;
 }
 
